@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutLogin.cshtml";
+}
+
+
+
+<style>
+    .form-control {
+        border-radius: 15px;
+    }
+
+    .form-group .fxt-btn-fill {
+        border-radius: 15px;
+    }
+</style>
+<div style="display:none;">
+    <span id="Message" class="d-none">@TempData["Message"]</span>
+    <span id="Warning" class="d-none">@TempData["Warning"]</span>
+    <span id="Error" class="d-none">@TempData["Error"]</span>
+</div>
+<section class="fxt-template-animation fxt-template-layout3" data-bg-image="/images/banner/lambor.jpg">
+    <div class="container" style="margin-left:300px;">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-12 fxt-none-991">
+                <div class="fxt-header" style="margin-bottom:300px;">
+                    <div class="fxt-transformY-50 fxt-transition-delay-1">
+                        @*<a href="login-3.html" class="fxt-logo"><img src="~/images/logo/HyperGear.png" alt="Logo"></a>*@
+                    </div>
+                    <div class="fxt-transformY-50 fxt-transition-delay-2">
+                        <a href="login-3.html" class="fxt-logo"><img src="~/images/logo/titleHyperGear.png" alt="Logo"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12 fxt-bg-color">
+                <div class="fxt-content" style="border-radius:20px;">
+                    <div class="fxt-form">
+                        <center>Đăng nhập để tiếp tục</center>
+                        @*<center><img src="~/images/logo/LOGO1.png" style="width:250px" alt="" /></center>*@
+                        @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                <label for="email" class="input-label">Tài khoản</label>
+                                @*@Html.TextBoxFor(m => m.Username, "", new { @class = "form-control", @placeholder = "Email", autocomplete = "off" })*@
+                                <input type="email" id="UserName" class="form-control" name="UserName" placeholder="demo@gmail.com" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="input-label">Mật khẩu</label>
+                                @*@Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })*@
+                                <input id="Password" type="password" class="form-control" name="Password" placeholder="********" required="required">
+                                <i toggle="#Password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                            </div>
+                            <div class="form-group">
+                                <div class="fxt-checkbox-area">
+                                    <div class="checkbox">
+                                        <input id="checkbox1" type="checkbox">
+                                        <label for="checkbox1">Keep me logged in</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <input class="fxt-btn-fill" type="submit" name="submit" value="Đăng Nhập" />
+                            </div>
+                        }
+
+                    </div>
+                    <div class="fxt-style-line">
+                        <h3>Admin</h3>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            var warning = $('#Warning').text();
+            var error = $('#Error').text();
+            if (message != '') {
+                toastr.success(message);
+            }
+
+            if (warning != '') {
+                toastr.warning(warning);
+            }
+
+            if (error != '') {
+                toastr.error(error);
+            }
+
+        });
+    </script>
+}
+
+
+
+
+
+
