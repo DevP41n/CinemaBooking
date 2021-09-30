@@ -131,6 +131,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3314,6 +3315,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Movie\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\src\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\test\" />
     <Folder Include="template\admin\assets\libs\chartist\scss\settings\" />
