@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -127,6 +135,66 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CinemaBooking.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CinemaBooking.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CinemaBooking.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CinemaBooking.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dao_dien.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dien_vien.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ghe_ngoi.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\gia_ve.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\khach_hang.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\lien_he.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\loai_ghe.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\phim.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\phong_chieu.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\suat_chieu.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\su_kien.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\the_loai_phim.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\thong_tin_cong_ty.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\user.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ve_ban.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +205,7 @@
     <Content Include="Content\Message.js" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Database\Database-Cinema-Booking.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Frontend\Client\assets\css\all.min.css" />
@@ -491,6 +560,16 @@
     <Content Include="images\product\tai-nghe-razer-blackshark-v2-pro10.jpg" />
     <Content Include="images\product\test720.jpg" />
     <Content Include="images\slider\lambor.png" />
+    <Content Include="Models\CinemaBooking.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CinemaBooking.Context.cs</LastGenOutput>
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\CinemaBooking.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+      <LastGenOutput>CinemaBooking.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Frontend\Client\assets\css\Flaticon-1.eot" />
@@ -582,6 +661,13 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Dashboard.cshtml" />
+    <EntityDeploy Include="Models\CinemaBooking.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CinemaBooking.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CinemaBooking.edmx.diagram">
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3228,7 +3314,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\src\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\test\" />
     <Folder Include="template\admin\assets\libs\chartist\scss\settings\" />
@@ -3304,6 +3389,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
