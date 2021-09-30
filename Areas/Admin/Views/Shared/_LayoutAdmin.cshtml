@@ -1,0 +1,480 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title | Admin HyperGear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/template/admin/assets/images/favicon.ico">
+
+    <link href="~/template/admin/assets/libs/chartist/chartist.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Css -->
+    <!--da Bootstrap Css -->
+    <link href="~/template/admin/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/template/admin/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/template/admin/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+    <!--  D App Css-->
+    <!-- DataTables -->
+    <link href="~/template/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/template/admin/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="~/template/admin/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!--Status-->
+    <link href="~/template/admin/status/css/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/template/admin/status/css/toastr.min.css" rel="stylesheet" />
+    <link href="~/template/admin/status/css/style.css" rel="stylesheet" />
+
+    <!--toastr-->
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+    <!--custom-->
+    <link href="~/template/admin/custom/tableorder.css" rel="stylesheet" />
+</head>
+<body data-sidebar="dark">
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="@Url.Action("Dashboard","Admin")" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="~/images/logo/LOGO6.png" alt="" height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="~/images/logo/LOGO6.png" alt="" height="17">
+                            </span>
+                        </a>
+
+                        <a href="@Url.Action("Dashboard","Admin")" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="~/images/logo/logo8.png" alt="" height="35">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="~/images/logo/LOGO6.png" alt="" height="50">
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+
+                    <div class="d-none d-sm-block">
+                        <div class="dropdown pt-3 d-inline-block">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <!-- App Search-->
+                    <form class="app-search d-none d-lg-block">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="fa fa-search"></span>
+                        </div>
+                    </form>
+
+                    <div class="dropdown d-inline-block d-lg-none ml-2">
+                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-magnify"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                             aria-labelledby="page-header-search-dropdown">
+
+                            <form class="p-3">
+                                <div class="form-group m-0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div class="dropdown d-none d-lg-inline-block">
+                        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                            <i class="mdi mdi-fullscreen"></i>
+                        </button>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-bell-outline"></i>
+                            <span class="badge badge-danger badge-pill">3</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                             aria-labelledby="page-header-notifications-dropdown">
+                            <div class="p-3">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h5 class="m-0 font-size-16"> Notifications (258) </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-simplebar style="max-height: 230px;">
+                                <a href="" class="text-reset notification-item">
+                                    <div class="media">
+                                        <div class="avatar-xs mr-3">
+                                            <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                <i class="mdi mdi-cart-outline"></i>
+                                            </span>
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">Dummy text of the printing and typesetting industry.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="" class="text-reset notification-item">
+                                    <div class="media">
+                                        <div class="avatar-xs mr-3">
+                                            <span class="avatar-title bg-warning rounded-circle font-size-16">
+                                                <i class="mdi mdi-message-text-outline"></i>
+                                            </span>
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="mt-0 mb-1">New Message received</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">You have 87 unread messages</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="" class="text-reset notification-item">
+                                    <div class="media">
+                                        <div class="avatar-xs mr-3">
+                                            <span class="avatar-title bg-info rounded-circle font-size-16">
+                                                <i class="mdi mdi-glass-cocktail"></i>
+                                            </span>
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="mt-0 mb-1">Your item is shipped</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">It is a long established fact that a reader will</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="" class="text-reset notification-item">
+                                    <div class="media">
+                                        <div class="avatar-xs mr-3">
+                                            <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                <i class="mdi mdi-cart-outline"></i>
+                                            </span>
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="mt-0 mb-1">Your order is placed</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">Dummy text of the printing and typesetting industry.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="" class="text-reset notification-item">
+                                    <div class="media">
+                                        <div class="avatar-xs mr-3">
+                                            <span class="avatar-title bg-danger rounded-circle font-size-16">
+                                                <i class="mdi mdi-message-text-outline"></i>
+                                            </span>
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="mt-0 mb-1">New Message received</h6>
+                                            <div class="font-size-12 text-muted">
+                                                <p class="mb-1">You have 87 unread messages</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-2 border-top">
+                                <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                                    View all
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle header-profile-user" src="~/template/admin/assets/images/users/user-4.jpg"
+                                 alt="Header Avatar">
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <!-- item-->
+                            <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle font-size-17 align-middle mr-1"></i> Profile</a>
+                            <a class="dropdown-item" href="#"><i class="mdi mdi-wallet font-size-17 align-middle mr-1"></i> My Wallet</a>
+                            <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings font-size-17 align-middle mr-1"></i> Settings</a>
+                            <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline font-size-17 align-middle mr-1"></i> Lock screen</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="@Url.Action("Logout","Auth")"><i class="bx bx-power-off font-size-17 align-middle mr-1 text-danger"></i> Logout</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                            <i class="mdi mdi-settings-outline"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu">
+
+            <div data-simplebar class="h-100">
+
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        <li class="menu-title">Main</li>
+
+                        <li>
+                            <a href="@Url.Action("Dashboard","Admin")" class="waves-effect">
+                                <i class="ti-home"></i><span class="badge badge-pill badge-primary float-right">2</span>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="fas fa-list-ul"></i>
+                                <span>Menu & Danh Mục</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("MenuList","Menu")">Danh Sách Menu</a></li>
+                                <li><a href="@Url.Action("CategoryList","Category")">Danh Sách Danh Mục</a></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="fas fa-laptop-code"></i>
+                                <span>Sản Phẩm</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("List","Product")">Danh Sách Sản Phẩm</a></li>
+                                <li><a href="@Url.Action("Create","Product")">Thêm Sản Phẩm</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="fas fa-store-alt"></i>
+                                <span>Thông Tin Cửa Hàng</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("Contact","Contact")">Danh Sách Cửa Hàng</a></li>
+                                <li><a href="@Url.Action("FeedBack","FeedBack")">Ý kiến khách hàng</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="fas fa-users-cog"></i>
+                                <span>Quản Lý Tài Khoản</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("ListUserAdmin","User")">Danh Sách User Admin</a></li>
+                                <li><a href="@Url.Action("ListCustomer","User")">Danh Sách khách hàng</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="mdi mdi-file-document-edit"></i>
+                                <span>Quản Lý Đơn Hàng</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("ListOrder","Order")">Danh Sách Đơn Hàng</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="mdi mdi-newspaper"></i>
+                                <span>Quản Lý Tin Tức</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("ListNews","News")">Danh Sách Tin Tức</a></li>
+                                <li><a href="@Url.Action("Create","News")">Thêm Tin Tức</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Sidebar -->
+            </div>
+        </div>
+        <!-- Left Sidebar End -->
+
+
+        <div>
+            @RenderBody()
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        ©
+                        <script>document.write(new Date().getFullYear())</script> Cinema<span class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i> by Tiến , Tân.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- end main content-->
+        <!-- END layout-wrapper -->
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="right-bar">
+        <div data-simplebar class="h-100">
+            <div class="rightbar-title px-3 py-4">
+                <a href="javascript:void(0);" class="right-bar-toggle float-right">
+                    <i class="mdi mdi-close noti-icon"></i>
+                </a>
+                <h5 class="m-0">Settings</h5>
+            </div>
+
+            <!-- Settings -->
+            <hr class="mt-0" />
+            <h6 class="text-center">Choose Layouts</h6>
+
+            <div class="p-4">
+                <div class="mb-2">
+                    <img src="~/template/admin/assets/images/layouts/layout-1.jpg" class="img-fluid img-thumbnail" alt="">
+                </div>
+                <div class="custom-control custom-switch mb-3">
+                    <input type="checkbox" class="custom-control-input theme-choice" id="light-mode-switch" checked />
+                    <label class="custom-control-label" for="light-mode-switch">Light Mode</label>
+                </div>
+
+                <div class="mb-2">
+                    <img src="~/template/admin/assets/images/layouts/layout-2.jpg" class="img-fluid img-thumbnail" alt="">
+                </div>
+                <div class="custom-control custom-switch mb-3">
+                    <input type="checkbox" class="custom-control-input theme-choice" id="dark-mode-switch" data-bsStyle="~/template/admin/assets/css/bootstrap-dark.min.css"
+                           data-appStyle="~/template/admin/assets/css/app-dark.min.css" />
+                    <label class="custom-control-label" for="dark-mode-switch">Dark Mode</label>
+                </div>
+
+                <div class="mb-2">
+                    <img src="~/template/admin/assets/images/layouts/layout-3.jpg" class="img-fluid img-thumbnail" alt="">
+                </div>
+                <div class="custom-control custom-switch mb-5">
+                    <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="~/template/admin/assets/css/app-rtl.min.css" />
+                    <label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
+                </div>
+            </div>
+
+
+        </div> <!-- end slimscroll-menu-->
+    </div>
+    <!-- /Right-bar -->
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- toastr -->
+    <div style="display:none">
+        <span id="Message" class="d-none">@TempData["Message"]</span>
+        <span id="Warning" class="d-none">@TempData["Warning"]</span>
+        <span id="Error" class="d-none">@TempData["Error"]</span>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="~/template/admin/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/template/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/template/admin/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="~/template/admin/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/template/admin/assets/libs/node-waves/waves.min.js"></script>
+
+    <!-- Peity chart-->
+    <script src="~/template/admin/assets/libs/peity/jquery.peity.min.js"></script>
+
+    <!-- Plugin Js-->
+    <script src="~/template/admin/assets/libs/chartist/chartist.min.js"></script>
+    <script src="~/template/admin/assets/libs/chartist-plugin-tooltips/chartist-plugin-tooltip.min.js"></script>
+    <script src="~/template/admin/assets/js/pages/dashboard.init.js"></script>
+
+    <!-- Required datatable js -->
+    <script src="~/template/admin/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/template/admin/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="~/template/admin/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/template/admin/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/template/admin/assets/libs/jszip/jszip.min.js"></script>
+    <script src="~/template/admin/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/template/admin/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+    <script src="~/template/admin/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/template/admin/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/template/admin/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="~/template/admin/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/template/admin/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <!-- Datatable init js -->
+    <script src="~/template/admin/assets/js/pages/datatables.init.js"></script>
+
+
+    <script src="~/template/admin/assets/js/app.js"></script>
+
+    <!-- Status -->
+    <script src="~/template/admin/status/js/karma.laclac.min.js"></script>
+    <script src="~/template/admin/status/js/sweetalert2.min.js"></script>
+    <script src="~/template/admin/status/js/toastr.min.js"></script>
+
+    <!--toastr-->
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Content/Message.js"></script>
+    <!--CKeditor-->
+    <script type="text/javascript" src="~/template/admin/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('mota');
+        CKEDITOR.replace('chitietsanpham');
+        CKEDITOR.replace('noidung');
+        CKEDITOR.replace('noidungtt');
+        CKEDITOR.replace('mota1');
+        CKEDITOR.replace('chitietsanpham1');
+        CKEDITOR.replace('noidung1');
+        CKEDITOR.replace('noidungtt1');
+    </script>
+
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>

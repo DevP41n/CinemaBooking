@@ -14,6 +14,18 @@ namespace CinemaBooking.Areas.Admin
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+            /* Dashboard*/
+            context.MapRoute(
+                "Dashboard",
+                "Admin",
+                new { Controller = "Admin", action = "Dashboard", id = UrlParameter.Optional }
+            );
+            /* Login*/
+            context.MapRoute(
+                "AuthLogin",
+                "Admin/Login",
+                new { Controller = "Auth", action = "Login", id = UrlParameter.Optional }
+            );
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
