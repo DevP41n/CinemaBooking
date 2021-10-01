@@ -1,0 +1,121 @@
+﻿@model CinemaBooking.Models.phim
+
+@{
+    ViewBag.Title = "EditMovie";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">Phim</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active">Chỉnh Sửa</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="float-right d-none d-md-block">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-settings mr-2"></i> Settings
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            @using (Html.BeginForm("EditMovie", "Movie", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.id)
+                                @Html.HiddenFor(model => model.status)
+                                @Html.HiddenFor(model => model.create_at)
+                                @Html.HiddenFor(model => model.anh)
+                                @Html.HiddenFor(model => model.create_by)
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.the_loai_phim_id, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.the_loai_phim_id, (SelectList)ViewBag.Movie, new { @class = "col-sm-2 col-form-label" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.ten_phim, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ten_phim, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ten_phim, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.ngay_cong_chieu, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ngay_cong_chieu, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ngay_cong_chieu, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.chi_tiet, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.TextAreaFor(model => model.chi_tiet, new { @class = "form-control", @id = "chitietsanpham" })
+                                        @Html.ValidationMessageFor(model => model.chi_tiet, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.anh, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.anh, new { htmlAttributes = new { type = "file", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.anh, "", new { @class = "text-danger" })
+                                        <img class="img-thumbnail" src="~/images/movies/" alt="" width="100" height="100" />(Ảnh hiện tại)
+                                    </div>
+                                </div>
+                                <div class="float-lg-right">
+                                    <div class="form-group mb-0">
+                                        <div>
+                                            <input type="submit" value="Save" class="btn btn-primary waves-effect waves-light mr-1" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+
+                                </div>
+
+                                <div class="form-group mb-0">
+                                    @Html.ActionLink("Back to List", "ListMovie")
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- end main content-->
