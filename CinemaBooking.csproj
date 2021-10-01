@@ -673,6 +673,9 @@
     <Content Include="Areas\Admin\Views\Movie\ListMovie.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\CreateMovie.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\EditMovie.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\ListCate.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\CreateCate.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\EditCate.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

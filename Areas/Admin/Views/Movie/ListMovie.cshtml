@@ -25,16 +25,9 @@
                 <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-settings mr-2"></i> Settings
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
+                            <a class="btn btn-primary dropdown-toggle waves-effect waves-light" href="@Url.Action("CreateMovie","Movie")">
+                                <i class="fas fa-upload"></i> Thêm thể loại mới
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -107,7 +100,7 @@
                                                     @Html.DisplayFor(modelItem => item.ten_phim)
                                                 </td>
                                                 <td>
-                                                    <img class="img-thumbnail" src="~/images/product/@item.anh" alt="" height="100" width="100" />
+                                                    <img class="img-thumbnail" src="~/images/movies/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.the_loai_phim.ten_the_loai)
@@ -203,7 +196,7 @@
                                                     @Html.DisplayFor(modelItem => item.ten_phim)
                                                 </td>
                                                 <td>
-                                                    <img class="img-thumbnail" src="~/images/product/@item.anh" alt="" height="100" width="100" />
+                                                    <img class="img-thumbnail" src="~/images/movies/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.the_loai_phim.ten_the_loai)
@@ -239,7 +232,7 @@
                                                         </a>
                                                     </button>
                                                     <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa">
-                                                        <a href="@Url.Action("DelToTrash", "Movie", new { id = item.id })" class="text-white">
+                                                        <a href="@Url.Action("DeleteConfirmed", "Movie", new { id = item.id })" class="text-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                 <line x1="4" y1="7" x2="20" y2="7" />

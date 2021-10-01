@@ -272,66 +272,78 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fas fa-list-ul"></i>
-                                <span>Menu & Danh Mục</span>
+                                <span>Phim</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("MenuList","Menu")">Danh Sách Menu</a></li>
-                                <li><a href="@Url.Action("CategoryList","Category")">Danh Sách Danh Mục</a></li>
+                                <li><a href="@Url.Action("ListCate","Movie")">Danh sách thể loại</a></li>
+                                <li><a href="@Url.Action("ListMovie","Movie")">Danh sách phim</a></li>
 
                             </ul>
                         </li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="fas fa-laptop-code"></i>
-                                <span>Sản Phẩm</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("List","Product")">Danh Sách Sản Phẩm</a></li>
-                                <li><a href="@Url.Action("Create","Product")">Thêm Sản Phẩm</a></li>
-                            </ul>
-                        </li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="fas fa-store-alt"></i>
-                                <span>Thông Tin Cửa Hàng</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("Contact","Contact")">Danh Sách Cửa Hàng</a></li>
-                                <li><a href="@Url.Action("FeedBack","FeedBack")">Ý kiến khách hàng</a></li>
-                            </ul>
-                        </li>
+                        @*<li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-list-ul"></i>
+                <span>Menu & Danh Mục</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="@Url.Action("MenuList","Menu")">Danh Sách Menu</a></li>
+                <li><a href="@Url.Action("CategoryList","Category")">Danh Sách Danh Mục</a></li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="fas fa-users-cog"></i>
-                                <span>Quản Lý Tài Khoản</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListUserAdmin","User")">Danh Sách User Admin</a></li>
-                                <li><a href="@Url.Action("ListCustomer","User")">Danh Sách khách hàng</a></li>
-                            </ul>
-                        </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-laptop-code"></i>
+                <span>Sản Phẩm</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="@Url.Action("List","Product")">Danh Sách Sản Phẩm</a></li>
+                <li><a href="@Url.Action("Create","Product")">Thêm Sản Phẩm</a></li>
+            </ul>
+        </li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="mdi mdi-file-document-edit"></i>
-                                <span>Quản Lý Đơn Hàng</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListOrder","Order")">Danh Sách Đơn Hàng</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="mdi mdi-newspaper"></i>
-                                <span>Quản Lý Tin Tức</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListNews","News")">Danh Sách Tin Tức</a></li>
-                                <li><a href="@Url.Action("Create","News")">Thêm Tin Tức</a></li>
-                            </ul>
-                        </li>
+        <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-store-alt"></i>
+                <span>Thông Tin Cửa Hàng</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="@Url.Action("Contact","Contact")">Danh Sách Cửa Hàng</a></li>
+                <li><a href="@Url.Action("FeedBack","FeedBack")">Ý kiến khách hàng</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="fas fa-users-cog"></i>
+                <span>Quản Lý Tài Khoản</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="@Url.Action("ListUserAdmin","User")">Danh Sách User Admin</a></li>
+                <li><a href="@Url.Action("ListCustomer","User")">Danh Sách khách hàng</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="mdi mdi-file-document-edit"></i>
+                <span>Quản Lý Đơn Hàng</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="@Url.Action("ListOrder","Order")">Danh Sách Đơn Hàng</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="mdi mdi-newspaper"></i>
+                <span>Quản Lý Tin Tức</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="@Url.Action("ListNews","News")">Danh Sách Tin Tức</a></li>
+                <li><a href="@Url.Action("Create","News")">Thêm Tin Tức</a></li>
+            </ul>
+        </li>*@
                     </ul>
                 </div>
                 <!-- Sidebar -->

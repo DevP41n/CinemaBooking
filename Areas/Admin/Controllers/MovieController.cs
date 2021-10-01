@@ -1,11 +1,9 @@
 ﻿using CinemaBooking.Models;
 using HyperGear;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Areas.Admin.Controllers
@@ -23,7 +21,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Tạo phim mới
         public ActionResult CreateMovie()
         {
-            ViewBag.theloai = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
+            ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             return View();
         }
 
@@ -31,7 +29,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateMovie(phim Phim)
         {
-            ViewBag.theloai = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
+            ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
@@ -60,7 +58,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Edit phim mới
         public ActionResult EditMovie(int? id)
         {
-            ViewBag.Movie = new SelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
+            ViewBag.the_loai_phim = new SelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
             phim Phim = db.phims.Find(id);
             if (Phim == null)
             {
@@ -72,7 +70,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditMovie(phim Phim)
         {
-            ViewBag.Movie = new SelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
+            ViewBag.the_loai_phim = new SelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
@@ -167,7 +165,88 @@ namespace CinemaBooking.Areas.Admin.Controllers
             db.phims.Remove(Phim);
             TempData["Message"] = "Xóa thành công!";
             db.SaveChanges();
-            return RedirectToAction("List");
+            return RedirectToAction("ListMovie");
+        }
+
+        // Danh sách thể loại phim
+        public ActionResult ListCate()
+        {
+            //Gọi danh sách thể loại từ bảng thể loại phim và sắp xếp tăng dần theo id
+            return View(db.the_loai_phim.OrderByDescending(m => m.id));
+        }
+
+        //Thêm thể loại phim
+        public ActionResult CreateCate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateCate(the_loai_phim TheLoai)
+        {
+            String strSlug = MyString.ToAscii(TheLoai.ten_the_loai); // Tạo slug cho tên thể loại phim
+            TheLoai.slug = strSlug;
+            TheLoai.create_at = DateTime.Now;
+            TheLoai.update_at = DateTime.Now;
+            db.the_loai_phim.Add(TheLoai);
+            TempData["Message"] = "Tạo thành công!";
+            db.SaveChanges();
+            return RedirectToAction("ListCate");
+        }
+
+        //Sửa thể loại
+        public ActionResult EditCate(int? id)
+        {
+            the_loai_phim TheLoai = db.the_loai_phim.Find(id);
+            if (TheLoai == null)
+            {
+                return HttpNotFound();
+            }
+            return View(TheLoai);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCate(the_loai_phim TheLoai)
+        {
+            if (ModelState.IsValid)
+            {
+                String strSlug = MyString.ToAscii(TheLoai.ten_the_loai); // Tạo slug cho tên thể loại phim
+                TheLoai.slug = strSlug;
+                TheLoai.update_at = DateTime.Now;
+                db.Entry(TheLoai).State = EntityState.Modified;
+                TempData["Message"] = "Cập nhật thành công!";
+                db.SaveChanges();
+                return RedirectToAction("ListCate");
+            }
+            else
+            {
+                TempData["Error"] = "Cập nhập không thành công!";
+            }
+            return View(TheLoai);
+        }
+
+        //Xóa thể loại
+        public ActionResult DeleteCate(int id)
+        {
+            //Tìm kiếm id thể loại phim có tồn tại trong phim nào không
+            var del = from dele in db.phims
+                      where dele.the_loai_phim_id == id
+                      select dele;
+            var coundel = del.Count(); //Đếm số lượng id thể loại phim có trong phim
+
+            if (coundel == 0) //Nếu không thì tiến hành xóa thể loại này
+            {
+                the_loai_phim TheLoai = db.the_loai_phim.Find(id);
+                db.the_loai_phim.Remove(TheLoai);
+                TempData["Message"] = "Xóa thành công!";
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["Warning"] = "Không thể xóa vì đang có phim tồn tại trong menu!";
+            }
+            return RedirectToAction("ListCate");
         }
     }
 }
