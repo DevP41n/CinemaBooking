@@ -1,13 +1,24 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@{
+    ViewBag.Title = "Lỗi trang";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+<!-- ==========Preloader========== -->
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<!-- ==========Preloader========== -->
+<!-- ==========Four-Not-Four-Section========== -->
+<section class="section-404 padding-top padding-bottom">
+    <div class="container">
+        <div class="thumb-404">
+            <img src="./assets/images/404.png" alt="404">
+        </div>
+        <h3 class="title">Oops.. Trang bạn đang bị lỗi rồi :( </h3>
+    </div>
+</section>
+<!-- ==========Four-Not-Four-Section========== -->

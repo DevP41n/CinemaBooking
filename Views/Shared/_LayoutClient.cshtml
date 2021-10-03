@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="~/Frontend/Client/assets/css/jquery.animatedheadline.css">
     <link rel="stylesheet" href="~/Frontend/Client/assets/css/main.css">
 
+
     <link rel="shortcut icon" href="~/Frontend/Client/assets/images/favicon.png" type="image/x-icon">
 
     <title>Boleto  - Online Ticket Booking Website HTML Template</title>
@@ -47,124 +48,57 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="/">
                         <img src="~/Frontend/Client/assets/images/logo/logo.png" alt="logo">
                     </a>
                 </div>
                 <ul class="menu">
                     <li>
-                        <a href="#0" class="active">Home</a>
+                        <a href="/" class="homepageac">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a id="nowshowing" href="#0" class="movieac">Phim</a>
                         <ul class="submenu">
                             <li>
-                                <a href="index.html">Home One</a>
+                                <a  href="@Url.Action("NowShowing","Movie")">Đang chiếu</a>
                             </li>
                             <li>
-                                <a href="#0" class="active">Home Two</a>
+                                <a href="@Url.Action("ComingSoon","Movie")">Sắp chiếu</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#0">movies</a>
+                        <a href="#0" class="newsfeedac">Tin tức</a>
                         <ul class="submenu">
                             <li>
-                                <a href="movie-grid.html">Movie Grid</a>
+                                <a href="events.html">Ưu đãi</a>
                             </li>
                             <li>
-                                <a href="movie-list.html">Movie List</a>
-                            </li>
-                            <li>
-                                <a href="movie-details.html">Movie Details</a>
-                            </li>
-                            <li>
-                                <a href="movie-details-2.html">Movie Details 2</a>
-                            </li>
-                            <li>
-                                <a href="movie-ticket-plan.html">Movie Ticket Plan</a>
-                            </li>
-                            <li>
-                                <a href="movie-seat-plan.html">Movie Seat Plan</a>
-                            </li>
-                            <li>
-                                <a href="movie-checkout.html">Movie Checkout</a>
-                            </li>
-                            <li>
-                                <a href="popcorn.html">Movie Food</a>
+                                <a href="@Url.Action("News","NewsFeed")">Điện ảnh</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#0">events</a>
+                        <a href="#0" class="informationac">Thông tin</a>
                         <ul class="submenu">
                             <li>
-                                <a href="events.html">Events</a>
+                                <a href="@Url.Action("Actor","Information")">Diễn viên</a>
                             </li>
                             <li>
-                                <a href="event-details.html">Event Details</a>
+                                <a href="@Url.Action("Director","Information")">Diễn viên</a>
                             </li>
                             <li>
-                                <a href="event-speaker.html">Event Speaker</a>
-                            </li>
-                            <li>
-                                <a href="event-ticket.html">Event Ticket</a>
-                            </li>
-                            <li>
-                                <a href="event-checkout.html">Event Checkout</a>
+                                <a href="@Url.Action("AboutUs","Information")">Về chúng tôi</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#0">sports</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="sports.html">Sports</a>
-                            </li>
-                            <li>
-                                <a href="sport-details.html">Sport Details</a>
-                            </li>
-                            <li>
-                                <a href="sports-ticket.html">Sport Ticket</a>
-                            </li>
-                            <li>
-                                <a href="sports-checkout.html">Sport Checkout</a>
-                            </li>
-                        </ul>
+                        <a href="@Url.Action("Contact","Information")" class="contactac">Liên hệ</a>
                     </li>
-                    <li>
-                        <a href="#0">pages</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="about.html">About Us</a>
-                            </li>
-                            <li>
-                                <a href="apps-download.html">Apps Download</a>
-                            </li>
-                            <li>
-                                <a href="sign-in.html">Sign In</a>
-                            </li>
-                            <li>
-                                <a href="sign-up.html">Sign Up</a>
-                            </li>
-                            <li>
-                                <a href="404.html">404</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#0">blog</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="blog.html">Blog</a>
-                            </li>
-                            <li>
-                                <a href="blog-details.html">Blog Single</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="contact.html">contact</a>
-                    </li>
+                </ul>
+                <ul class="right-header">
                     <li class="header-button pr-0">
-                        <a href="sign-up.html">join us</a>
+                        <a href="@Url.Action("SignIn","User")">Đăng nhập</a>
                     </li>
                 </ul>
                 <div class="header-bar d-lg-none">
@@ -176,24 +110,7 @@
         </div>
     </header>
     <!-- ==========Header-Section========== -->
-    <!-- ==========Banner-Section========== -->
-    <section class="banner-section">
-        <div class="banner-bg bg_img bg-fixed" data-background="~/Frontend/Client/assets/images/banner/banner01.jpg"></div>
-        <div class="container">
-            <div class="banner-content">
-                <h1 class="title  cd-headline clip">
-                    <span class="d-block">book your</span> tickets for
-                    <span class="color-theme cd-words-wrapper p-0 m-0">
-                        <b class="is-visible">Movie</b>
-                        <b>Event</b>
-                        <b>Sport</b>
-                    </span>
-                </h1>
-                <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p>
-            </div>
-        </div>
-    </section>
-    <!-- ==========Banner-Section========== -->
+
 
     @RenderBody()
 
@@ -228,21 +145,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#0" class="active">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#0">
-                            <i class="fab fa-pinterest-p"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#0">
-                            <i class="fab fa-google"></i>
-                        </a>
-                    </li>
-                    <li>
                         <a href="#0">
                             <i class="fab fa-instagram"></i>
                         </a>
@@ -252,23 +154,17 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-area">
                     <div class="left">
-                        <p>Copyright © 2020.All Rights Reserved By <a href="#0">Boleto </a></p>
+                        <p>Copyright © 2021.All Rights Reserved By <a href="#0">TTP </a></p>
                     </div>
                     <ul class="links">
                         <li>
-                            <a href="#0">About</a>
+                            <a href="#0">Điều khoản sử dụng</a>
                         </li>
                         <li>
-                            <a href="#0">Terms Of Use</a>
+                            <a href="#0">Chính sách bảo mật</a>
                         </li>
                         <li>
-                            <a href="#0">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="#0">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#0">Feedback</a>
+                            <a href="#0">Phản hồi</a>
                         </li>
                     </ul>
                 </div>
