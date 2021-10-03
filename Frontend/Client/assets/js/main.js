@@ -81,7 +81,7 @@
         $('.overlay').removeClass('active');
     });
     //Menu Dropdown Icon Adding
-    $("ul>li>.submenu").parent("li").addClass("menu-item-has-children");
+      $("ul>li>.submenu").parent("li").addClass("menu-item-has-children");
     // drop down menu width overflow problem fix
     $('ul').parent('li').hover(function () {
       var menu = $(this).find("ul");
@@ -93,6 +93,13 @@
         });
       }
     });
+/*      $('.menu li a').click(function () {
+          //Removes the active class from any <li> elements
+          $('a.active').removeClass('active');
+          //Adds it to the current element
+          $(this).addClass('active');
+
+      });*/
     $('.menu li a').on('click', function (e) {
       var element = $(this).parent('li');
       if (element.hasClass('open')) {
@@ -121,7 +128,7 @@
     $('.scrollToTop').on('click', function () {
       $('html, body').animate({
         scrollTop: 0
-      }, 500);
+      }, 100);
       return false;
     });
     // Header Sticky Here
@@ -205,13 +212,13 @@
               items:2,
           },
           768:{
-              items:2,
-          },
-          992:{
               items:3,
           },
-          1200:{
+          992:{
               items:4,
+          },
+          1200:{
+              items:5,
           }
       }
     })

@@ -653,14 +653,14 @@ html {
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-size: 16px;
-  color: #dbe2fb;
-  line-height: 28px;
-  overflow-x: hidden;
-  font-family: "Open Sans", sans-serif;
-  background: #001232;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    color: #dbe2fb;
+    line-height: 28px;
+    overflow-x: hidden;
+    font-family: "Open Sans", sans-serif;
+    background-color: rgb(19 23 32);
 }
 
 h1,
@@ -1317,28 +1317,49 @@ input[type="submit"] {
 @media (min-width: 992px) {
   .header-wrapper .menu {
     display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     -webkit-box-pack: end;
-        -ms-flex-pack: end;
             justify-content: flex-end;
     -webkit-box-align: center;
-        -ms-flex-align: center;
             align-items: center;
   }
-  .header-wrapper .menu li {
-    padding: 5px 12px;
-    position: relative;
-  }
-  .header-wrapper .menu li a {
+    .header-wrapper .menu li {
+        padding: 5px 12px;
+        position: relative;
+    }
+    .header-wrapper .menu li a {
     color: #e9eeff;
     font-size: 16px;
     font-weight: 700;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     padding: 5px;
-  }
+    }
+    .header-wrapper .right-header {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+    .header-wrapper .right-header li {
+        padding: 5px 12px;
+        position: relative;
+    }
+
+        .header-wrapper .right-header li a {
+            color: #e9eeff;
+            font-size: 16px;
+            font-weight: 700;
+            /*text-transform: uppercase;*/
+            padding: 5px;
+        }
   .header-wrapper .menu li .submenu {
     position: absolute;
     top: 100%;
@@ -1359,7 +1380,7 @@ input[type="submit"] {
     padding: 0 20px;
   }
   .header-wrapper .menu li .submenu li a {
-    text-transform: capitalize;
+    /*text-transform: capitalize;*/
     font-weight: 600;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1415,7 +1436,7 @@ input[type="submit"] {
     width: calc(100% - 10px);
     height: 2px;
     background: #31d7a9;
-    top: calc(100% + 30px);
+    top: calc(100% + 12px);
     position: absolute;
     content: "";
     -webkit-transform: scaleX(0);
@@ -1429,9 +1450,9 @@ input[type="submit"] {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
   }
-  .header-wrapper .menu > li.header-button a::before {
-    display: none;
-  }
+    .header-wrapper .right-header > li.header-button a::before {
+        display: none;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -1441,20 +1462,28 @@ input[type="submit"] {
   .header-wrapper .menu li a {
     font-size: 14px;
   }
+  .header-wrapper .right-header li {
+        padding: 5px;
+  }
+
+  .header-wrapper .right-header li a {
+            font-size: 14px;
+   }
 }
 
-.header-wrapper .menu li.header-button a {
-  background-image: -webkit-linear-gradient(169deg, #5560ff 17%, #aa52a1 63%, #ff4343 100%);
-  padding: 10px 49px;
-  font-weight: 600;
-  border-radius: 25px;
-  display: inline-block;
+.header-wrapper .right-header li.header-button a {
+    background-image: -webkit-linear-gradient(169deg, #424abb 17%, #85417e 63%, #a73030 100%);
+    padding: 8px 16px;
+    font-weight: 600;
+    border-radius: 25px;
+    display: inline-block;
+    color: #e9eeff;
 }
 
-.header-wrapper .menu li.header-button a:hover {
-  -webkit-box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
-          box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
-}
+    .header-wrapper .right-header li.header-button a:hover {
+        -webkit-box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+        box-shadow: 0px 10px 15px 0px rgba(59, 55, 188, 0.5);
+    }
 
 @media (max-width: 991px) {
   .header-wrapper .menu {
@@ -1471,6 +1500,7 @@ input[type="submit"] {
     padding-top: 20px;
     padding-bottom: 20px;
   }
+
 }
 
 @media (max-width: 991px) and (min-width: 576px) {
@@ -1524,9 +1554,9 @@ input[type="submit"] {
     padding-top: 7px;
     padding-bottom: 7px;
   }
-  .header-wrapper .menu li.header-button {
-    margin-top: 20px;
-  }
+    /*.header-wrapper .right-header li.header-button {
+        margin-top: 20px;
+    }*/
   .header-wrapper .menu.active {
     animation-name: fadeInLeft;
     -webkit-animation-name: fadeInLeft;
@@ -1540,7 +1570,7 @@ input[type="submit"] {
 
 .header-section {
   border-bottom: 1px solid rgba(255, 255, 255, 0.102);
-  padding: 21px 0;
+  padding: 6px 0;
   position: fixed;
   width: 100%;
   top: 0;
