@@ -24,6 +24,7 @@ namespace CinemaBooking.Models
         public int id { get; set; }
         public Nullable<int> so_luong_day { get; set; }
         public Nullable<int> so_luong_cot { get; set; }
+        public string ten_phong { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ghe_ngoi> ghe_ngoi { get; set; }

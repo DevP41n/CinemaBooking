@@ -18,7 +18,8 @@ namespace CinemaBooking.Areas.Admin
             context.MapRoute(
                 "Dashboard",
                 "Admin",
-                new { Controller = "Admin", action = "Dashboard", id = UrlParameter.Optional }
+                new { Controller = "Admin", action = "Dashboard", id = UrlParameter.Optional },
+                new[] { "CinemaBooking.Areas.Admin.Controllers" }
             );
             /* Login*/
             context.MapRoute(
@@ -29,7 +30,8 @@ namespace CinemaBooking.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional },
+                new[] { "CinemaBooking.Areas.Admin.Controllers" }
             );
         }
     }

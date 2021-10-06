@@ -55,6 +55,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -63,6 +66,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -131,9 +140,14 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CinemaRoomController.cs" />
     <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InformationController.cs" />
+    <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\NewsFeedController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -677,6 +691,9 @@
     <Content Include="Areas\Admin\Views\Movie\ListCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\CreateCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\EditCate.cshtml" />
+    <Content Include="Areas\Admin\Views\CinemaRoom\ListCinemaRoom.cshtml" />
+    <Content Include="Areas\Admin\Views\CinemaRoom\CreateCinemaRoom.cshtml" />
+    <Content Include="Areas\Admin\Views\CinemaRoom\EditCinemaRoom.cshtml" />
     <Content Include="Areas\Admin\Views\User\ListUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\EditUser.cshtml" />
@@ -3062,7 +3079,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LayoutClient.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="template\admin\assets\css\app-dark.min.css.map" />
@@ -3322,6 +3338,19 @@
     <Content Include="template\web\sass\_mixins.scss" />
     <Content Include="template\web\sass\_rules.scss" />
     <Content Include="template\web\sass\_variables.scss" />
+    <Content Include="Views\Movie\MovieDetail.cshtml" />
+    <Content Include="Views\Movie\NowShowing.cshtml" />
+    <Content Include="Views\Movie\ComingSoon.cshtml" />
+    <Content Include="Views\NewsFeed\News.cshtml" />
+    <Content Include="Views\NewsFeed\NewsDetail.cshtml" />
+    <Content Include="Views\Information\Actor.cshtml" />
+    <Content Include="Views\Information\AboutUs.cshtml" />
+    <Content Include="Views\Information\ActorDetail.cshtml" />
+    <Content Include="Views\Information\Director.cshtml" />
+    <Content Include="Views\Information\DirectorDetail.cshtml" />
+    <Content Include="Views\Information\Contact.cshtml" />
+    <Content Include="Views\User\SignIn.cshtml" />
+    <Content Include="Views\User\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -280,3 +280,9 @@ CREATE TABLE su_kien
 )
 
 GO
+
+
+
+/*------------------------------------------Thêm và xóa database----------------------------------------------------*/
+
+ALTER TABLE phong_chieu ADD ten_phong nvarchar(255);
