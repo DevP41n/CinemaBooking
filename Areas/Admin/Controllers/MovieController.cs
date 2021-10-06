@@ -1,5 +1,4 @@
 ﻿using CinemaBooking.Models;
-using HyperGear;
 using System;
 using System.Data.Entity;
 using System.IO;
@@ -244,7 +243,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             else
             {
-                TempData["Warning"] = "Không thể xóa vì đang có phim tồn tại trong menu!";
+                TempData["Warning"] = "Không thể xóa vì đang có phim tồn tại trong mục này!";
             }
             return RedirectToAction("ListCate");
         }

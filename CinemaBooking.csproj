@@ -140,6 +140,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CinemaRoomController.cs" />
     <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
@@ -689,6 +690,9 @@
     <Content Include="Areas\Admin\Views\Movie\ListCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\CreateCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\EditCate.cshtml" />
+    <Content Include="Areas\Admin\Views\CinemaRoom\ListCinemaRoom.cshtml" />
+    <Content Include="Areas\Admin\Views\CinemaRoom\CreateCinemaRoom.cshtml" />
+    <Content Include="Areas\Admin\Views\CinemaRoom\EditCinemaRoom.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
