@@ -132,6 +132,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthController.cs" />
     <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -676,6 +677,9 @@
     <Content Include="Areas\Admin\Views\Movie\ListCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\CreateCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\EditCate.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ListUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\EditUser.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

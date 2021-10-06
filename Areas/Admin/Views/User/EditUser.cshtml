@@ -1,0 +1,141 @@
+﻿@model CinemaBooking.Models.user
+
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">User</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active">Chỉnh Sửa</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="float-right d-none d-md-block">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-settings mr-2"></i> Settings
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            @using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.id)
+                                @Html.HiddenFor(model => model.password)
+                                @Html.HiddenFor(model => model.create_at)
+                                @Html.HiddenFor(model => model.create_by)
+                                @Html.HiddenFor(model => model.ngay_vao_lam)
+
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.ho_ten, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ho_ten, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ho_ten, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.ngay_sinh, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ngay_sinh, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ngay_sinh, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.gioi_tinh, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(m => m.gioi_tinh, new List<SelectListItem>() { new SelectListItem { Text = "Nam", Value = "true", Selected = System.Convert.ToBoolean(Model.gioi_tinh) }, new SelectListItem { Text = "Nữ", Value = "false", Selected = System.Convert.ToBoolean(Model.gioi_tinh) } })
+                                        @Html.ValidationMessageFor(model => model.gioi_tinh, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.sdt, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.sdt, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.sdt, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.role, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.role, (IEnumerable
+                                                            <SelectListItem>)ViewBag.role, new { @class = "col-sm-2 col-form-label" })
+                                        @*Chưa sửa xong*@
+                                    </div>
+                                </div>
+
+                                <div class="float-lg-right">
+                                    <div class="form-group mb-0">
+                                        <div>
+                                            <input type="submit" value="Save" class="btn btn-primary waves-effect waves-light mr-1" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+
+                                </div>
+
+                                <div class="form-group mb-0">
+                                    @Html.ActionLink("Back to List", "ListUser")
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- end main content-->
