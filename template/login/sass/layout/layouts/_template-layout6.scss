@@ -1,0 +1,339 @@
+.fxt-template-layout6 {
+    padding: 15px;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &:before {
+        content: "";
+        height: 100%;
+        width: 100%;
+        background-color: rgba(#000, 0.15);
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .fxt-content-between {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+
+    .fxt-content {
+        max-width: 660px;
+        width: 100%;
+        background-color: #fff;
+        padding: 90px 80px 70px;
+
+        @media only screen and (max-width: 991px) {
+            padding: 90px 70px 70px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            padding: 70px 50px 50px;
+        }
+
+        @media only screen and (max-width: 575px) {
+            padding: 50px 30px 30px;
+        }
+    }
+
+    .fxt-header {
+        background-color: transparent;
+        margin-bottom: 30px;
+
+        .fxt-logo {
+            display: block;
+            max-width: 40vw;
+        }
+    }
+
+    .fxt-form {
+        margin-bottom: 40px;
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        p {
+            margin-bottom: 30px;
+            font-size: 17px;
+        }
+
+        .form-group {
+            position: relative;
+            z-index: 1;
+
+            i {
+                position: absolute;
+                z-index: 1;
+                right: 5px;
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+            }
+
+            [class^="flaticon-"]:before,
+            [class*=" flaticon-"]:before,
+            [class^="flaticon-"]:after,
+            [class*=" flaticon-"]:after {
+                margin-left: 0;
+                font-size: 17px;
+                color: #a1a1a1;
+            }
+        }
+
+        .form-control {
+            background-color: #f6f6f6;
+            min-height: 50px;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 0;
+            padding: 10px 30px;
+            color: #111111;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #a1a1a1;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        input::-moz-placeholder {
+            color: #a1a1a1;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        input:-moz-placeholder {
+            color: #a1a1a1;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        input:-ms-input-placeholder {
+            color: #a1a1a1;
+            font-size: 15px;
+            font-weight: 300;
+        }
+    }
+
+    .fxt-btn-fill {
+        margin-right: 30px;
+        font-family: 'Roboto', sans-serif;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 17px;
+        font-weight: 500;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        outline: none;
+        border: 0;
+        color: #fff;
+        border-radius: 3px;
+        background-color: #ff5e13;
+        padding: 10px 36px;
+        margin-bottom: 10px;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: #f0530b;
+            border-color: #f0530b;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .switcher-text {
+        color: #9f9f9f;
+        font-size: 15px;
+        margin-bottom: 7px;
+        display: block;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            color: #666;
+        }
+    }
+
+    .switcher-text2 {
+        color: $fxt-link-color;
+        font-size: 15px;
+        display: inline-block;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+
+        &.inline-text {
+            margin-left: 3px;
+        }
+
+        &:hover {
+            color: #000;
+        }
+    }
+
+    ul.fxt-socials {
+        margin-right: 15px;
+        margin-bottom: 15px;
+
+        li {
+            display: inline-block;
+            margin-right: 4px;
+            margin-bottom: 10px;
+
+            @media only screen and (max-width: 575px) {
+                margin-right: 2px;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            a {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                font-size: 14px;
+                height: 40px;
+                width: 40px;
+                color: #ffffff;
+                border-radius: 50%;
+                border: 1px solid;
+                -webkit-transition: all 0.3s ease-in-out;
+                -o-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
+            }
+        }
+
+        li.fxt-facebook {
+            a {
+                background-color: $fxt-facebook;
+                border-color: $fxt-facebook;
+
+                &:hover {
+                    background-color: transparent;
+                    color: $fxt-facebook;
+                }
+            }
+        }
+
+        li.fxt-twitter {
+            a {
+                background-color: $fxt-twitter;
+                border-color: $fxt-twitter;
+
+                &:hover {
+                    background-color: transparent;
+                    color: $fxt-twitter;
+                }
+            }
+        }
+
+        li.fxt-google {
+            a {
+                background-color: $fxt-google;
+                border-color: $fxt-google;
+
+                &:hover {
+                    background-color: transparent;
+                    color: $fxt-google;
+                }
+            }
+        }
+
+        li.fxt-instagram {
+            a {
+                background-color: $fxt-instagram;
+                border-color: $fxt-instagram;
+
+                &:hover {
+                    background-color: transparent;
+                    color: $fxt-instagram;
+                }
+            }
+        }
+
+        li.fxt-linkedin {
+            a {
+                background-color: $fxt-linkedin;
+                border-color: $fxt-linkedin;
+
+                &:hover {
+                    background-color: transparent;
+                    color: $fxt-linkedin;
+                }
+            }
+        }
+
+        li.fxt-youtube {
+            a {
+                background-color: $fxt-youtube;
+                border-color: $fxt-youtube;
+
+                &:hover {
+                    background-color: transparent;
+                    color: $fxt-youtube;
+                }
+            }
+        }
+    }
+
+    .fxt-footer {
+        background-color: #fff;
+        text-align: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+
+        p {
+            color: #747474;
+        }
+    }
+}

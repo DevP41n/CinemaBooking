@@ -90,7 +90,7 @@
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.anh, new { htmlAttributes = new { type = "file", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.anh, "", new { @class = "text-danger" })
-                                        <img class="img-thumbnail" src="~/images/movies/" alt="" width="100" height="100" />(Ảnh hiện tại)
+                                        <img class="img-thumbnail" src="~/images/movies/@Model.anh" alt="" width="100" height="100" />(Ảnh hiện tại)
                                     </div>
                                 </div>
                                 <div class="float-lg-right">
