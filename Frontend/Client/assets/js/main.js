@@ -186,15 +186,11 @@
       });
     });
     $('.social-icons li a').on('mouseover', function(e) {
-      var social = $(this).parent('li');
-      if(social.children('a').hasClass('active')) {
-        social.siblings('li').children('a').removeClass('active');
         $(this).addClass('active');
-      } else {
-        social.siblings('li').children('a').removeClass('active');
-        $(this).addClass('active');
-      }
     });
+      $('.social-icons li a').on('mouseout', function (e) {
+          $(this).removeClass('active');
+      });
     $('.tab-slider').owlCarousel({
       loop:true,
       responsiveClass:true,

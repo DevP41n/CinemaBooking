@@ -3343,6 +3343,9 @@
     <Content Include="Views\Information\Contact.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
+    <Content Include="Views\Movie\BookTicket.cshtml" />
+    <Content Include="Views\Movie\BookSeat.cshtml" />
+    <Content Include="Views\Movie\CheckOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
