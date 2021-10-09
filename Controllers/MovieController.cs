@@ -26,6 +26,21 @@ namespace CinemaBooking.Controllers
         {
             return View();
         }
+        //Đặt vé
+        public ActionResult BookTicket()
+        {
+            return View();
+        }
+        //Chọn ghế
+        public ActionResult BookSeat()
+        {
+            return View();
+        }
+        //Thanh toán
+        public ActionResult CheckOut()
+        {
+            return View();
+        }
 
     }
 }

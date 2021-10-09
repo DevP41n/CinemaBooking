@@ -60,7 +60,7 @@
                         <a id="nowshowing" href="#0" class="movieac">Phim</a>
                         <ul class="submenu">
                             <li>
-                                <a  href="@Url.Action("NowShowing","Movie")">Đang chiếu</a>
+                                <a href="@Url.Action("NowShowing","Movie")">Đang chiếu</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("ComingSoon","Movie")">Sắp chiếu</a>
@@ -95,6 +95,23 @@
                     <li>
                         <a href="@Url.Action("Contact","Information")" class="contactac">Liên hệ</a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("Contact","Information")" class="contactac">PageTest</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="@Url.Action("MovieDetail","Movie")">Chi tiết phim</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("BookTicket","Movie")">Chọn vé</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("BookSeat","Movie")">Chọn chỗ</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("CheckOut","Movie")">Thanh toán</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="right-header">
                     <li class="header-button pr-0">
@@ -116,7 +133,7 @@
 
     <!-- ==========Newslater-Section========== -->
     <footer class="footer-section">
-        <div class="newslater-section padding-bottom">
+        @*<div class="newslater-section padding-bottom">
             <div class="container">
                 <div class="newslater-container bg_img" data-background="~/Frontend/Client/assets/images/newslater/newslater-bg01.jpg">
                     <div class="newslater-wrapper">
@@ -130,7 +147,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="container">
             <div class="footer-top">
                 <div class="logo">
