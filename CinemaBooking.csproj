@@ -708,6 +708,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="template\admin\assets\css\app-dark.css" />
     <Content Include="template\admin\assets\css\app-dark.min.css" />
     <Content Include="template\admin\assets\css\app-rtl.css" />
