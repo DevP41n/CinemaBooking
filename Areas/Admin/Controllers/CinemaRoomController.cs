@@ -50,7 +50,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             else
             {
-                TempData["Error"] = "Cập nhập không thành công!";
+                TempData["Error"] = "Cập nhật không thành công!";
             }
             return View(phongChieu);
         }
