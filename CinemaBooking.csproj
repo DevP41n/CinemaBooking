@@ -3445,11 +3445,9 @@
     <Content Include="Views\Information\Contact.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Movie\BookTicket.cshtml" />
     <Content Include="Views\Movie\BookSeat.cshtml" />
     <Content Include="Views\Movie\CheckOut.cshtml" />
-=======
     <Content Include="template\login\font\Flaticon.eot" />
     <Content Include="template\login\font\Flaticon.ttf" />
     <Content Include="template\login\font\Flaticon.woff" />
@@ -3512,7 +3510,6 @@
     <Content Include="template\login\webfonts\fa-solid-900.ttf" />
     <Content Include="template\login\webfonts\fa-solid-900.woff" />
     <Content Include="template\login\webfonts\fa-solid-900.woff2" />
->>>>>>> parent of 660aaca (Revert "Login Admin (fix noti)")
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
