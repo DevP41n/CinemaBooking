@@ -9,6 +9,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 {
     public class AuthController : Controller
     {
+        private CinemaBookingEntities db = new CinemaBookingEntities();
         // GET: Admin/Auth
         private CinemaBookingEntities db = new CinemaBookingEntities();
         // GET: Admin/Auth
