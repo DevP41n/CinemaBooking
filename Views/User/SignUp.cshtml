@@ -1,11 +1,11 @@
-﻿
+﻿@model CinemaBooking.Models.khach_hang
 @{
     ViewBag.Title = "SignUp";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
 <!-- ==========Sign-In-Section========== -->
-<section class="account-section bg_img" data-background="~/Frontend/Client/assets/images/account/account-bg.jpg">
+<section class="account-section bg_img" data-background="/Frontend/Client/assets/images/account/account-bg.jpg">
     <div class="container">
         <div class="padding-top padding-bottom">
             <div class="account-area">
@@ -13,18 +13,45 @@
                     <span class="cate">Cinema</span>
                     <h2 class="title">Đăng ký</h2>
                 </div>
-                <form class="account-form">
+                <form class="account-form" action="/User/SignUp" method="post">
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="email1">Email<span>*</span></label>
-                        <input type="text" placeholder="Nhập email" id="email1" required>
+                        <label for="email1">Họ&Tên<span>*</span></label>
+                        <input type="text" placeholder="Nhập họ tên" id="ho_ten" name="ho_ten" required>
+                        @Html.ValidationMessageFor(m => m.ho_ten, "", new { @class = "badge badge-danger" })
                     </div>
                     <div class="form-group">
+                        <label for="email1">Địa chỉ<span>*</span></label>
+                        <input type="text" placeholder="Nhập địa chỉ" id="dia_chi" name="dia_chi" required>
+                        @Html.ValidationMessageFor(m => m.dia_chi, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="email1">SĐT<span>*</span></label>
+                        <input type="text" placeholder="Nhập sdt" id="sdt" name="sdt" required>
+                        @Html.ValidationMessageFor(m => m.sdt, "", new { @class = "badge badge-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email1">Email<span>*</span></label>
+                        <input type="text" placeholder="Nhập email" id="email" name="email" required>
+                        @Html.ValidationMessageFor(m => m.email, "", new { @class = "badge badge-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email1">Tài khoản<span>*</span></label>
+                        <input type="text" placeholder="Nhập tài khoản" id="username" name="username" required>
+                        @Html.ValidationMessageFor(m => m.username, "", new { @class = "badge badge-danger" })
+                    </div>
+
+                    <div class="form-group">
                         <label for="pass1">Mật khẩu<span>*</span></label>
-                        <input type="password" placeholder="Nhập mật khẩu" id="pass1" required>
+                        <input type="password" placeholder="Nhập mật khẩu" id="password" name="password" required>
+                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "badge badge-danger" })
                     </div>
                     <div class="form-group">
                         <label for="pass2">Xác nhận mật khẩu<span>*</span></label>
-                        <input type="password" placeholder="Nhập lại mật khẩu" id="pass2" required>
+                        <input type="password" placeholder="Nhập lại mật khẩu" id="confirmpassword" name="confirmpassword" required>
+                        @Html.ValidationMessageFor(m => m.confirmpassword, "", new { @class = "badge badge-danger" })
                     </div>
                     <div class="form-group checkgroup">
                         <input type="checkbox" id="bal" required checked>
