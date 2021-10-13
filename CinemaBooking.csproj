@@ -698,6 +698,9 @@
     <Content Include="Areas\Admin\Views\User\ListUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\EditUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\ListFeedback.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Reply.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3514,7 +3517,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Feedback\" />
     <Folder Include="images\movies\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\src\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\test\" />

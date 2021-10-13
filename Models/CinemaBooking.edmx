@@ -84,6 +84,7 @@
           <Property Name="create_at" Type="datetime" />
           <Property Name="update_by" Type="nvarchar" MaxLength="250" />
           <Property Name="update_at" Type="datetime" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="loai_ghe">
           <Key>
@@ -493,6 +494,7 @@
           <Property Name="create_at" Type="DateTime" Precision="3" />
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
         </EntityType>
         <EntityType Name="loai_ghe">
           <Key>
@@ -909,6 +911,7 @@
           <EntitySetMapping Name="lien_he">
             <EntityTypeMapping TypeName="CinemaBookingModel.lien_he">
               <MappingFragment StoreEntitySet="lien_he">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ho_ten" ColumnName="ho_ten" />
                 <ScalarProperty Name="email" ColumnName="email" />
