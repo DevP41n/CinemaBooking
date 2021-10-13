@@ -11,8 +11,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
         // GET: Admin/Auth
-        private CinemaBookingEntities db = new CinemaBookingEntities();
-        // GET: Admin/Auth
         public ActionResult Login()
         {
             if (Session["HoTen"] != null)

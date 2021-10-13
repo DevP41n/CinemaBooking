@@ -1,11 +1,11 @@
-﻿
+﻿@model CinemaBooking.Models.user
 @{
     ViewBag.Title = "LogIn";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
 <!-- ==========Sign-In-Section========== -->
-<section class="account-section bg_img" data-background="~/Frontend/Client/assets/images/account/account-bg.jpg">
+<section class="account-section bg_img" data-background="/Frontend/Client/assets/images/account/account-bg.jpg">
     <div class="container">
         <div class="padding-top padding-bottom">
             <div class="account-area">
@@ -13,14 +13,15 @@
                     <span class="cate">Cinema</span>
                     <h2 class="title">Đăng nhập</h2>
                 </div>
-                <form class="account-form">
+                <form class="account-form" action="/User/SignIn" method="post">
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="email2">email<span>*</span></label>
-                        <input type="text" placeholder="Nhập email" id="email2" required>
+                        <input id="Taikhoan" name="Taikhoan" type="text" placeholder="Nhập email" required>
                     </div>
                     <div class="form-group">
                         <label for="pass3">Mật khẩu<span>*</span></label>
-                        <input type="password" placeholder="Mật khẩu" id="pass3" required>
+                        <input id="Matkhau" name="Matkhau" type="password" placeholder="Mật khẩu" required>
                     </div>
                     <div class="form-group checkgroup">
                         <input type="checkbox" id="bal2" required checked>

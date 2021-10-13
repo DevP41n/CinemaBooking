@@ -256,6 +256,7 @@
     <Content Include="Frontend\Client\assets\images\about\about-counter03.png" />
     <Content Include="Frontend\Client\assets\images\about\about-counter04.png" />
     <Content Include="Frontend\Client\assets\images\about\about01.png" />
+    <Content Include="Frontend\Client\assets\images\account\account-bg.jpg" />
     <Content Include="Frontend\Client\assets\images\apps\apps02.png" />
     <Content Include="Frontend\Client\assets\images\apps\apps03.png" />
     <Content Include="Frontend\Client\assets\images\blog\author.jpg" />
@@ -3510,6 +3511,7 @@
     <Content Include="template\login\webfonts\fa-solid-900.ttf" />
     <Content Include="template\login\webfonts\fa-solid-900.woff" />
     <Content Include="template\login\webfonts\fa-solid-900.woff2" />
+    <Content Include="Views\Shared\_LayoutAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
