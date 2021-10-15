@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 
 
-namespace HyperGear
+namespace CinemaBooking
 {
     public static class MyString
     {

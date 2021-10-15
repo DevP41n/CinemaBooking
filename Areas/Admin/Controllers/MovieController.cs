@@ -1,5 +1,5 @@
 ﻿using CinemaBooking.Models;
-using HyperGear;
+using CinemaBooking;
 using System;
 using System.Data.Entity;
 using System.IO;
