@@ -1,11 +1,9 @@
-﻿@model IEnumerable<CinemaBooking.Models.phim>
+﻿@model IEnumerable<CinemaBooking.Models.su_kien>
 
 @{
-    ViewBag.Title = "Sản Phẩm";
+    ViewBag.Title = "ListNews";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-
 <div class="main-content">
 
     <div class="page-content">
@@ -14,10 +12,10 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Phim</h4>
+                        <h4 class="font-size-18">Tin tức</h4>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                            <li class="breadcrumb-item active">Phim</li>
+                            <li class="breadcrumb-item active">Tin tức</li>
                         </ol>
                     </div>
                 </div>
@@ -25,8 +23,8 @@
                 <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
-                            <a class="btn btn-primary dropdown-toggle waves-effect waves-light" href="@Url.Action("CreateMovie","Movie")">
-                                <i class="fas fa-upload"></i> Thêm phim mới
+                            <a class="btn btn-primary dropdown-toggle waves-effect waves-light" href="@Url.Action("CreateNews","News")">
+                                <i class="fas fa-upload"></i> Thêm tin tức mới
                             </a>
                         </div>
                     </div>
@@ -63,22 +61,22 @@
                                                     STT
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ten_phim)
+                                                    Tiêu đề
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.anh)
+                                                    Ảnh
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.the_loai_phim.ten_the_loai)
+                                                    Nội dung
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.thoi_luong)
+                                                    Tạo bởi
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ngay_cong_chieu)
+                                                    Tạo ngày
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.status)
+                                                    Trạng thái
                                                 </th>
                                                 <th>
                                                     Công cụ
@@ -97,33 +95,33 @@
                                                     @(rownumber++)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ten_phim)
+                                                    @Html.DisplayFor(modelItem => item.tieu_de)
                                                 </td>
                                                 <td>
-                                                    <img class="img-thumbnail" src="~/images/movies/@item.anh" alt="" height="100" width="100" />
+                                                    <img class="img-thumbnail" src="~/images/news/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.the_loai_phim.ten_the_loai)
+                                                    @Html.DisplayFor(modelItem => item.noi_dung)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.thoi_luong)
+                                                    @Html.DisplayFor(modelItem => item.create_by)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ngay_cong_chieu)
+                                                    @Html.DisplayFor(modelItem => item.create_at)
                                                 </td>
                                                 <td>
                                                     <label class="switch">
                                                         @if (item.status == 1)
-                                                        {<input class="changeStatus" data-id="@item.id" data-controller="Movie" type="checkbox" checked>}
+                                                        {<input class="changeStatus" data-id="@item.id" data-controller="News" type="checkbox" checked>}
                                                         else
-                                                        {<input class="changeStatus" data-id="@item.id" data-controller="Movie" type="checkbox" unchecked>}
+                                                        {<input class="changeStatus" data-id="@item.id" data-controller="News" type="checkbox" unchecked>}
                                                         <span class="slider round"></span>
                                                     </label>
 
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
-                                                        <a  href="@Url.Action("EditMovie", "Movie", new { id = item.id })" class="text-white">
+                                                        <a href="@Url.Action("EditNews", "News", new { id = item.id })" class="text-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                 <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z" />
@@ -132,8 +130,8 @@
                                                             </svg>
                                                         </a>
                                                     </button>
-                                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa">
-                                                        <a href="@Url.Action("DelToTrash", "Movie", new { id = item.id })" class="text-white">
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Thùng rác">
+                                                        <a href="@Url.Action("DelToTrash", "News", new { id = item.id })" class="text-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                 <line x1="4" y1="7" x2="20" y2="7" />
@@ -159,22 +157,22 @@
                                                     STT
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ten_phim)
+                                                    Tiêu đề
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.anh)
+                                                   Ảnh
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.the_loai_phim.ten_the_loai)
+                                                    Nội dung
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.thoi_luong)
+                                                    Tạo bởi
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ngay_cong_chieu)
+                                                    Tạo ngày
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.status)
+                                                    Trạng thái
                                                 </th>
                                                 <th>
                                                     Công cụ
@@ -193,33 +191,33 @@
                                                     @(rown++)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ten_phim)
+                                                    @Html.DisplayFor(modelItem => item.tieu_de)
                                                 </td>
                                                 <td>
-                                                    <img class="img-thumbnail" src="~/images/movies/@item.anh" alt="" height="100" width="100" />
+                                                    <img class="img-thumbnail" src="~/images/news/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.the_loai_phim.ten_the_loai)
+                                                    @Html.DisplayFor(modelItem => item.noi_dung)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.thoi_luong)
+                                                    @Html.DisplayFor(modelItem => item.create_by)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ngay_cong_chieu)
+                                                    @Html.DisplayFor(modelItem => item.create_at)
                                                 </td>
                                                 <td>
                                                     <label class="switch">
                                                         @if (item.status == 1)
-                                                        {<input class="changeStatus" data-id="@item.id" data-controller="Movie" type="checkbox" checked>}
+                                                        {<input class="changeStatus" data-id="@item.id" data-controller="News" type="checkbox" checked>}
                                                         else
-                                                        {<input class="changeStatus" data-id="@item.id" data-controller="Movie" type="checkbox" unchecked>}
+                                                        {<input class="changeStatus" data-id="@item.id" data-controller="News" type="checkbox" unchecked>}
                                                         <span class="slider round"></span>
                                                     </label>
 
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Khôi phục">
-                                                        <a href="@Url.Action("Undo", "Movie", new { id = item.id })" class="text-white">
+                                                        <a href="@Url.Action("Undo", "News", new { id = item.id })" class="text-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-2" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                 <path d="M15 4.55a8 8 0 0 0 -6 14.9m0 -4.45v5h-5" />
@@ -231,8 +229,8 @@
                                                             </svg>
                                                         </a>
                                                     </button>
-                                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa">
-                                                        <a href="@Url.Action("DeleteConfirmed", "Movie", new { id = item.id })" class="text-white">
+                                                    <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa vĩnh viễn">
+                                                        <a href="@Url.Action("DeleteConfirmed", "News", new { id = item.id })" class="text-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                 <line x1="4" y1="7" x2="20" y2="7" />
@@ -267,4 +265,3 @@
 
 
 </div>
-<!-- end main content-->

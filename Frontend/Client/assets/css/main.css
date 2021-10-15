@@ -8254,7 +8254,7 @@ input[type="submit"] {
 }
 
 .post-item.post-details .post-content .content {
-  width: calc(100% - 95px);
+  width: calc(100% - 0px);
 }
 
 .post-item.post-details .post-content .content .entry-content {

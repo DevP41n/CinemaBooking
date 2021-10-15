@@ -1,4 +1,5 @@
 ﻿using CinemaBooking.Models;
+using CinemaBooking;
 using System;
 using System.Data.Entity;
 using System.IO;

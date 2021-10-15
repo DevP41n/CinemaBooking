@@ -52,6 +52,12 @@
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -60,6 +66,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -73,7 +80,6 @@
       <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
@@ -143,11 +149,12 @@
     <Compile Include="Areas\Admin\Controllers\CinemaRoomController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeedbackController.cs" />
     <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
-    <Compile Include="Controllers\NewsFeedController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -221,6 +228,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Message.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Database\Database-Cinema-Booking.sql" />
@@ -695,6 +703,9 @@
     <Content Include="Areas\Admin\Views\Movie\ListCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\CreateCate.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\EditCate.cshtml" />
+    <Content Include="Areas\Admin\Views\News\CreateNews.cshtml" />
+    <Content Include="Areas\Admin\Views\News\ListNews.cshtml" />
+    <Content Include="Areas\Admin\Views\News\EditNews.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\ListCinemaRoom.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\CreateCinemaRoom.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\EditCinemaRoom.cshtml" />
@@ -727,6 +738,7 @@
     <Content Include="template\admin\assets\css\bootstrap-dark.min.css" />
     <Content Include="template\admin\assets\css\bootstrap.css" />
     <Content Include="template\admin\assets\css\bootstrap.min.css" />
+    <Content Include="template\admin\assets\css\custom.css" />
     <Content Include="template\admin\assets\css\icons.css" />
     <Content Include="template\admin\assets\css\icons.min.css" />
     <Content Include="template\admin\assets\fonts\dripicons-v2.svg" />
@@ -3441,8 +3453,8 @@
     <Content Include="Views\Movie\MovieDetail.cshtml" />
     <Content Include="Views\Movie\NowShowing.cshtml" />
     <Content Include="Views\Movie\ComingSoon.cshtml" />
-    <Content Include="Views\NewsFeed\News.cshtml" />
-    <Content Include="Views\NewsFeed\NewsDetail.cshtml" />
+    <Content Include="Views\News\News.cshtml" />
+    <Content Include="Views\News\NewsDetail.cshtml" />
     <Content Include="Views\Information\Actor.cshtml" />
     <Content Include="Views\Information\AboutUs.cshtml" />
     <Content Include="Views\Information\ActorDetail.cshtml" />
