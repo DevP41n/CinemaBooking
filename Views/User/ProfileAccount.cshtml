@@ -1,0 +1,80 @@
+﻿@model CinemaBooking.Models.khach_hang
+@{
+    ViewBag.Title = "ProfileAccount";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+
+<style>
+    .contact-form .form-group {
+        margin-left: 260px;
+        margin-right: 260px;
+    }
+</style>
+
+
+<!-- ==========Banner-Section========== -->
+<section class="main-page-header speaker-banner bg_img" data-background="./assets/images/banner/banner07.jpg" style="padding: 130px 0 10px;">
+    <div class="container">
+        <div class="speaker-banner-content">
+            <h2 class="title">THÔNG TIN TÀI KHOẢN</h2>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/Home/Index">
+                        Trang chủ
+                    </a>
+                </li>
+                <li>
+                    Thông tin tài khoản
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Contact-Section========== -->
+<section class="contact-section padding-top" style="padding-top:50px;">
+    <div class="contact-container">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-7 col-lg-6 col-xl-12">
+                    <!--<div class="section-header-3 left-style">-->
+                        @*<span class="cate" style="text-align:center; font-weight:bold; font-size:50px;">THÔNG TIN TÀI KHOẢN</span>*@
+                        @*<h2 class="title" style="text-align:center;">@Model.ho_ten</h2>*@
+                    <!--</div>-->
+                    <form class="contact-form" id="contact_form_submit" action="/User/ProfileAccount/" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.id)
+                        @Html.HiddenFor(model => model.password)
+                        @Html.HiddenFor(model => model.confirmpassword)
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label for="name">Tài khoản <span>*</span></label>
+                            <input type="text" id="username" name="username" value="@Model.username" style="background:#0a1e5e;" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Họ Tên <span></span></label>
+                            <input type="text" id="ho_ten" name="ho_ten" value="@Model.ho_ten" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email <span></span></label>
+                            <input type="email" id="email" name="email" value="@Model.email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Số điện thoại <span></span></label>
+                            <input type="text" id="sđt" name="sdt" value="@Model.sdt" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Địa chỉ <span></span></label>
+                            <input type="text" id="dia_chi" name="dia_chi" value="@Model.dia_chi" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Lưu thông tin">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

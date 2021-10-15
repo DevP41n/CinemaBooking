@@ -1,6 +1,7 @@
 ﻿using CinemaBooking.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -46,7 +47,7 @@ namespace CinemaBooking.Controllers
                 else
                 {
                     TempData["Warning"] = "Sai tài khoản hoặc mật khẩu vui lòng nhập lại!";
-                    return RedirectToAction("CusLogin");
+                    return RedirectToAction("SignIn");
                 }
             }
             return View();
@@ -94,6 +95,68 @@ namespace CinemaBooking.Controllers
         {
             Session.Clear();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ProfileAccount(int? id)
+        {
+            var mak = Convert.ToInt32(Session["MaKH"]);
+            if (mak != id)
+            {
+                TempData["Warning"] = "Không đúng tài khoản của bạn!";
+                return RedirectToAction("Index", "Home");
+            }
+            var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();
+            return View(kh);
+        }
+        [HttpPost, ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult ProfileAccount(khach_hang kh)
+        {
+            db.Configuration.ValidateOnSaveEnabled = false;
+            db.Entry(kh).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["Message"] = "Cập nhật thành công!";
+            string url = "/ProfileAccount/" + kh.id;
+            return RedirectToAction(url);
+        }
+        public ActionResult ChangePass(int? id)
+        {
+            var mak = Convert.ToInt32(Session["MaKH"]);
+            if (mak != id)
+            {
+                TempData["Warning"] = "Không đúng tài khoản của bạn!";
+                return RedirectToAction("Index", "Home");
+            }
+            var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();
+            return View(kh);
+        }
+        [HttpPost, ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePass(khach_hang kh, FormCollection f)
+        {
+            var mkc = Request.Form["mkcu"];
+            var mkcuu = MyString.ToMD5(mkc);
+            if (kh.password != mkcuu)
+            {
+                TempData["Warning"] = "Sai mật khẩu cũ!";
+                string urla = "/ChangePass/" + kh.id;
+                return RedirectToAction(urla);
+            }
+            if (Request.Form["mkmoi"] != Request.Form["xnmk"])
+            {
+                TempData["Warning"] = "Mật khẩu không khớp!";
+                string urlaz = "/ChangePass/" + kh.id;
+                return RedirectToAction(urlaz);
+            }
+            var matkhau = Request.Form["mkmoi"];
+            kh.password = MyString.ToMD5(matkhau);
+            kh.confirmpassword = MyString.ToMD5(matkhau);
+            db.Configuration.ValidateOnSaveEnabled = false;
+            db.Entry(kh).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["Message"] = "Đổi mật khẩu thành công!";
+            string url = "/ProfileAccount/" + kh.id;
+            return RedirectToAction(url);
         }
     }
 }
