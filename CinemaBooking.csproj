@@ -277,6 +277,7 @@
     <Content Include="Frontend\Client\assets\images\client\client02.jpg" />
     <Content Include="Frontend\Client\assets\images\client\client03.jpg" />
     <Content Include="Frontend\Client\assets\images\client\client04.jpg" />
+    <Content Include="Frontend\Client\assets\images\contact\contact.jpg" />
     <Content Include="Frontend\Client\assets\images\contact\contact01.png" />
     <Content Include="Frontend\Client\assets\images\contact\contact02.png" />
     <Content Include="Frontend\Client\assets\images\event\event-about.jpg" />
