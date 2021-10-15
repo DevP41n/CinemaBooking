@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="dao_dien">
           <Key>
             <PropertyRef Name="id" />
@@ -84,6 +84,7 @@
           <Property Name="create_at" Type="datetime" />
           <Property Name="update_by" Type="nvarchar" MaxLength="250" />
           <Property Name="update_at" Type="datetime" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="loai_ghe">
           <Key>
@@ -123,6 +124,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="so_luong_day" Type="int" />
           <Property Name="so_luong_cot" Type="int" />
+          <Property Name="ten_phong" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="su_kien">
           <Key>
@@ -403,8 +405,7 @@
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CinemaBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -493,6 +494,7 @@
           <Property Name="create_at" Type="DateTime" Precision="3" />
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
         </EntityType>
         <EntityType Name="loai_ghe">
           <Key>
@@ -539,6 +541,7 @@
           <Property Name="so_luong_cot" Type="Int32" />
           <NavigationProperty Name="ghe_ngoi" Relationship="Self.Fk_GhePC" FromRole="phong_chieu" ToRole="ghe_ngoi" />
           <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_PhimPC" FromRole="phong_chieu" ToRole="suat_chieu" />
+          <Property Name="ten_phong" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="su_kien">
           <Key>
@@ -908,6 +911,7 @@
           <EntitySetMapping Name="lien_he">
             <EntityTypeMapping TypeName="CinemaBookingModel.lien_he">
               <MappingFragment StoreEntitySet="lien_he">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ho_ten" ColumnName="ho_ten" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -956,6 +960,7 @@
           <EntitySetMapping Name="phong_chieu">
             <EntityTypeMapping TypeName="CinemaBookingModel.phong_chieu">
               <MappingFragment StoreEntitySet="phong_chieu">
+                <ScalarProperty Name="ten_phong" ColumnName="ten_phong" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="so_luong_day" ColumnName="so_luong_day" />
                 <ScalarProperty Name="so_luong_cot" ColumnName="so_luong_cot" />

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/all.min.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/animate.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/flaticon.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/odometer.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/nice-select.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/main.css">
+    <!--toastr-->
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+
+    <link rel="shortcut icon" href="~/Frontend/Client/assets/images/favicon.png" type="image/x-icon">
+
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    <!-- toastr -->
+    <div style="display:none">
+        <span id="Message" class="d-none">@TempData["Message"]</span>
+        <span id="Warning" class="d-none">@TempData["Warning"]</span>
+        <span id="Error" class="d-none">@TempData["Error"]</span>
+    </div>
+
+    <script src="~/Frontend/Client/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/plugins.js"></script>
+    <script src="~/Frontend/Client/assets/js/bootstrap.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/isotope.pkgd.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/magnific-popup.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/owl.carousel.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/wow.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/countdown.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/odometer.min.js"></script>
+    <script src="~/Frontend/Client/assets/js/viewport.jquery.js"></script>
+    <script src="~/Frontend/Client/assets/js/nice-select.js"></script>
+    <script src="~/Frontend/Client/assets/js/main.js"></script>
+    <!--toastr-->
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Content/Message.js"></script>
+</body>
+</html>

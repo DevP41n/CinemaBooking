@@ -280,3 +280,12 @@ CREATE TABLE su_kien
 )
 
 GO
+
+
+
+/*------------------------------------------Thêm và xóa database----------------------------------------------------*/
+-- Thêm ten_phong cho bản phòng chiếu
+ALTER TABLE phong_chieu ADD ten_phong nvarchar(255);
+
+-- Thêm status cho bảng liên hệ
+ALTER TABLE lien_he ADD status int;
