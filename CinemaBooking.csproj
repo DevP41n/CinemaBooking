@@ -341,6 +341,7 @@
     <Content Include="Frontend\Client\assets\images\movie\popcorn\pop4.png" />
     <Content Include="Frontend\Client\assets\images\movie\screen-thumb.png" />
     <Content Include="Frontend\Client\assets\images\movie\seat-plan.png" />
+    <Content Include="Frontend\Client\assets\images\movie\seat01-booked.png" />
     <Content Include="Frontend\Client\assets\images\movie\seat01-free.png" />
     <Content Include="Frontend\Client\assets\images\movie\seat01.png" />
     <Content Include="Frontend\Client\assets\images\movie\seat02-booked.png" />
@@ -3515,6 +3516,8 @@
     <Content Include="template\login\webfonts\fa-solid-900.woff" />
     <Content Include="template\login\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
+    <Content Include="Views\User\ProfileAccount.cshtml" />
+    <Content Include="Views\User\ChangePass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

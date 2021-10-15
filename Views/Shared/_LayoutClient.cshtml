@@ -117,7 +117,14 @@
                 </ul>
                 <ul class="right-header">
                     <li class="header-button pr-0">
-                        <a href="@Url.Action("SignIn","User")">Đăng nhập</a>
+                        @if (Session["TenCus"] != null)
+                        {
+                            <a href="@Url.Action("ProfileAccount", "User", new { id = @Convert.ToInt32(Session["MaKH"]) })">Tài Khoản</a>                            
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("SignIn", "User")">Đăng nhập</a>
+                        }
                     </li>
                 </ul>
                 <div class="header-bar d-lg-none">
