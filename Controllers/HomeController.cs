@@ -1,4 +1,5 @@
 ﻿using CinemaBooking.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,18 @@ namespace CinemaBooking.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public JsonResult SearchMovie()
+        {
+           List<phim> film = db.phims.ToList();
+
+            string value = string.Empty;
+            value = JsonConvert.SerializeObject(film, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            return Json(value, JsonRequestBehavior.AllowGet);
         }
     }
 }

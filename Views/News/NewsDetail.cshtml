@@ -12,7 +12,7 @@
                 <article>
                     <div class="post-item post-details">
                         <div class="post-thumb">
-                            <img src="~/images/news/@Model.anh" alt="blog">
+                            <img src="~/images/news/@Model.anh" alt="blog" width="750" height="360">
                         </div>
                         <div class="post-content">
                             @*<div class="post-meta text-center">
@@ -76,15 +76,16 @@
                                 <li>
                                     <div class="blog-thumb">
                                         <a href="@Url.Action("NewsDetail","News", new {id=item.id })">
-                                            <img src="~/images/news/@item.anh" alt="sukien">
+                                            <img src="~/images/news/@item.anh" alt="sukien" >
                                         </a>
                                     </div>
                                     <div class="blog-thumb-info">
                                         <span>@item.create_at</span>
-                                        <h6 class="title"><a href="@Url.Action("NewsDetail","News", new {id=item.id })">@item.tieu_de</a></h6>
+                                        <h6 class="title"><a href="@Url.Action("NewsDetail","News", new {id=item.id })" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            @item.tieu_de</a></h6>
                                     </div>
                                     <div class="blog-content">
-                                        <p>
+                                        <p style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                             @item.noi_dung
                                         </p>
                                     </div>
