@@ -36,7 +36,7 @@
                             <div class="post-thumb">
 
                                 <div class="owl-carousel owl-theme blog-slider">
-                                    <img src="@item.anh" alt="blog">
+                                    <img src="~/images/news/@item.anh" alt="blog">
                                     <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
                                     <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
                                 </div>
@@ -51,7 +51,7 @@
                             <div class="post-content">
                                 <div class="post-header">
                                     <h4 class="title">
-                                        <a href="@Url.Action("NewsDetail","NewsFeed", new {idsukien=item.id })" title="@item.tieu_de">
+                                        <a href="@Url.Action("NewsDetail","News", new {id=item.id })" title="@item.tieu_de">
                                             @item.tieu_de
                                         </a>
                                     </h4>
@@ -73,7 +73,7 @@
                                             <h6 class="title"><a href="#0">@item.create_by</a></h6>
                                         </div>
                                     </div>
-                                    <a href="@Url.Action("NewsDetail","NewsFeed", new {idsukien=item.id })" class="buttons">Read More <i class="flaticon-right"></i></a>
+                                    <a href="@Url.Action("NewsDetail","News", new {id=item.id })" class="buttons">Read More <i class="flaticon-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                 </article>
                 
                 <div class="pagination-area text-center">
-                    @Html.PagedListPager(Model, page => Url.Action("News", "NewsFeed", new { page }))
+                    @Html.PagedListPager(Model, page => Url.Action("Index", "News", new { page }))
                     <a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a>
                     <a href="#0">1</a>
                     <a href="#0">2</a>

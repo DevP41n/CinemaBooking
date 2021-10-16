@@ -12,7 +12,7 @@ namespace CinemaBooking.Controllers
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
         // GET: News
-        public ActionResult News(string title, int? page)
+        public ActionResult Index(string title, int? page)
         {
             ViewBag.titleDisplay = title;
             int pageSize = 2;
