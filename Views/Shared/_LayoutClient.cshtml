@@ -22,8 +22,13 @@
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
 
     <link rel="shortcut icon" href="~/Frontend/Client/assets/images/favicon.png" type="image/x-icon">
-
     <title>Boleto  - Online Ticket Booking Website HTML Template</title>
+    <!--custom-->
+@*    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>*@
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 
 </head>
@@ -76,8 +81,8 @@
                                 <a href="@Url.Action("Index","News")">Ưu đãi</a>
                             </li>
                             @*<li>
-                                <a href="@Url.Action("News","News")">Điện ảnh</a>
-                            </li>*@
+                        <a href="@Url.Action("News","News")">Điện ảnh</a>
+                    </li>*@
                         </ul>
                     </li>
                     <li>
@@ -98,28 +103,38 @@
                         <a href="@Url.Action("Contact","Information")" class="contactac">Liên hệ</a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Contact","Information")" class="contactac">PageTest</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="@Url.Action("MovieDetail","Movie")">Chi tiết phim</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("BookTicket","Movie")">Chọn vé</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("BookSeat","Movie")">Chọn chỗ</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("CheckOut","Movie")">Thanh toán</a>
-                            </li>
-                        </ul>
+                        @*<a href="@Url.Action("Contact","Information")" class="contactac">PageTest</a>
+                <ul class="submenu">
+                    <li>
+                        <a href="@Url.Action("MovieDetail","Movie")">Chi tiết phim</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("BookTicket","Movie")">Chọn vé</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("BookSeat","Movie")">Chọn chỗ</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("CheckOut","Movie")">Thanh toán</a>
+                    </li>
+                </ul>*@
+
                     </li>
                 </ul>
+                <form class="ticket-search-form">
+                    <div class="form-group large">
+                        <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm..." autocomplete="off">
+                        <div class="tt-menu tt-open" style="position: absolute; top: 100%; left: 0px; z-index: 100; width: 100%; display: block; background-color: #163085; ">
+
+                        </div>
+                    </div>
+                </form>
+                
                 <ul class="right-header">
                     <li class="header-button pr-0">
                         @if (Session["TenCus"] != null)
                         {
-                            <a href="@Url.Action("ProfileAccount", "User", new { id = @Convert.ToInt32(Session["MaKH"]) })">Tài Khoản</a>                            
+                            <a href="@Url.Action("ProfileAccount", "User", new { id = @Convert.ToInt32(Session["MaKH"]) })">Tài Khoản</a>
                         }
                         else
                         {
@@ -150,7 +165,6 @@
 
     <!---=====================-->
     <section class="sports-section padding-top">
-
     </section>
     <!-- ==========Sports-Section========== -->
     <!-- ==========Newslater-Section========== -->
@@ -230,6 +244,70 @@
     <script src="~/Scripts/toastr.js"></script>
     <script src="~/Scripts/toastr.min.js"></script>
     <script src="~/Content/Message.js"></script>
+    <!--custom-->
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+       $("#txtSearch").keyup(function(){
+           var searchField = $('#txtSearch').val();
+           var expression = RegExp(searchField, "i");
+
+           $('.tt-dataset').remove();
+                $.ajax({
+                    url: '@Url.Action("SearchMovie", "Home")',
+                    type: "GET",
+                    success: function (response)
+                    {
+                        var data = JSON.parse(response);
+                        console.log(data);
+                        data = data.slice(0, 6);
+                        if (searchField != "") {
+                            var html_body =` <div class="tt-dataset tt-dataset-states">
+
+                                </div>`
+                        } $('.tt-menu').append(html_body);
+                        $.each(data, function (key, item) {
+                            if (item.ten_phim.search(expression) != -1 && searchField != "") {
+                                var html_Search = ` <div class="man-section tt-suggestion tt-selectable">
+                                    <a href="/Movie/MovieDetail/${item.id}" style="width: 100%;">
+                                  <div class="image-section">
+                                    <img src="https://i.pinimg.com/originals/4a/9c/9f/4a9c9f73d3f6ab9817291948c1247ed0.jpg">
+                                  </div>
+                                  <div class="description-section">
+                                    <h1 style="display: -webkit-box;
+                                                -webkit-line-clamp: 2;
+                                                -webkit-box-orient: vertical;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;">
+                                            ${item.ten_phim}</h1>
+                                    <p style="display: -webkit-box;
+                                                 -webkit-line-clamp: 3;
+                                                  -webkit-box-orient: vertical;
+                                                   overflow: hidden;
+                                                    text-overflow: ellipsis;">
+                                            ${item.chi_tiet}</p>
+                                    @*<span style="position: absolute;bottom: 0;">
+                                      <i class="fa fa-clock-o" aria-hidden="true">
+                                      </i> 12:00 PM <i class="fa fa-map-marker" aria-hidden="true"></i> Ha Noi</span>*@
+                                    <div class="more-section">
+                                    </div>
+                                  </div>
+                                    <div style="clear:both;">
+                                    </div>
+                                    </a>
+                                  </div>`;
+                                $('.tt-dataset').append(html_Search);
+                            }
+                        }
+                            );
+                    }
+                });
+
+
+        });
+    });
+
+    </script>
 </body>
 
 </html>
