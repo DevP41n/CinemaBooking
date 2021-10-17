@@ -28,5 +28,10 @@ namespace CinemaBooking.Controllers
 
             return Json(value, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult Search(string name)
+        {
+            return View(db.phims.Where(p => p.ten_phim.Contains(name)).OrderByDescending(x => x.ten_phim));
+        }
     }
 }
