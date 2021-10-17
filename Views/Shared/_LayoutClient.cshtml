@@ -24,11 +24,6 @@
     <link rel="shortcut icon" href="~/Frontend/Client/assets/images/favicon.png" type="image/x-icon">
     <title>Boleto  - Online Ticket Booking Website HTML Template</title>
     <!--custom-->
-@*    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>*@
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 
 </head>
@@ -67,10 +62,10 @@
                         <a id="nowshowing" href="#0" class="movieac">Phim</a>
                         <ul class="submenu">
                             <li>
-                                <a href="@Url.Action("NowShowing","Movie")">Đang chiếu</a>
+                                <a href="@Url.Action("NowShowing", "Movie")">Đang chiếu</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("ComingSoon","Movie")">Sắp chiếu</a>
+                                <a href="@Url.Action("ComingSoon", "Movie")">Sắp chiếu</a>
                             </li>
                         </ul>
                     </li>
@@ -78,7 +73,7 @@
                         <a href="#0" class="newsfeedac">Tin tức</a>
                         <ul class="submenu">
                             <li>
-                                <a href="@Url.Action("Index","News")">Ưu đãi</a>
+                                <a href="@Url.Action("Index", "News")">Ưu đãi</a>
                             </li>
                             @*<li>
                         <a href="@Url.Action("News","News")">Điện ảnh</a>
@@ -89,18 +84,18 @@
                         <a href="#0" class="informationac">Thông tin</a>
                         <ul class="submenu">
                             <li>
-                                <a href="@Url.Action("Actor","Information")">Diễn viên</a>
+                                <a href="@Url.Action("Actor", "Information")">Diễn viên</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Director","Information")">Diễn viên</a>
+                                <a href="@Url.Action("Director", "Information")">Diễn viên</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("AboutUs","Information")">Về chúng tôi</a>
+                                <a href="@Url.Action("AboutUs", "Information")">Về chúng tôi</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="@Url.Action("Contact","Information")" class="contactac">Liên hệ</a>
+                        <a href="@Url.Action("Contact", "Information")" class="contactac">Liên hệ</a>
                     </li>
                     <li>
                         @*<a href="@Url.Action("Contact","Information")" class="contactac">PageTest</a>
@@ -121,14 +116,18 @@
 
                     </li>
                 </ul>
-                <form class="ticket-search-form">
+                <div class="ticket-search-form">
                     <div class="form-group large">
-                        <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm..." autocomplete="off">
-                        <div class="tt-menu tt-open" style="position: absolute; top: 100%; left: 0px; z-index: 100; width: 100%; display: block; background-color: #163085; ">
-
+                        @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { style= "width: 100%;" }))
+                        {
+                            <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm..." autocomplete="off">
+                        <div class="tt-menu tt-open" style="position: absolute; top: 100%; left: 0px; z-index: 100; width: 100%; display: block; background-color: #ffffff00; border-radius: 10px; ">
                         </div>
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                         }
+                            
                     </div>
-                </form>
+                </div>
                 
                 <ul class="right-header">
                     <li class="header-button pr-0">
@@ -260,7 +259,7 @@
                     {
                         var data = JSON.parse(response);
                         console.log(data);
-                        data = data.slice(0, 6);
+                        data = data.slice(0, 8);
                         if (searchField != "") {
                             var html_body =` <div class="tt-dataset tt-dataset-states">
 
@@ -271,7 +270,7 @@
                                 var html_Search = ` <div class="man-section tt-suggestion tt-selectable">
                                     <a href="/Movie/MovieDetail/${item.id}" style="width: 100%;">
                                   <div class="image-section">
-                                    <img src="https://i.pinimg.com/originals/4a/9c/9f/4a9c9f73d3f6ab9817291948c1247ed0.jpg">
+                                    <img src="~/images/movie/${item.anh}">
                                   </div>
                                   <div class="description-section">
                                     <h1 style="display: -webkit-box;
@@ -287,8 +286,10 @@
                                                     text-overflow: ellipsis;">
                                             ${item.chi_tiet}</p>
                                     @*<span style="position: absolute;bottom: 0;">
-                                      <i class="fa fa-clock-o" aria-hidden="true">
-                                      </i> 12:00 PM <i class="fa fa-map-marker" aria-hidden="true"></i> Ha Noi</span>*@
+                                        <i class="fa fa-map-marker" aria-hidden="true">
+                                        </i>
+                                        Ha Noi
+                                    </span>*@
                                     <div class="more-section">
                                     </div>
                                   </div>

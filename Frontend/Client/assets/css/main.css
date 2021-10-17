@@ -794,14 +794,15 @@ ul li {
 }
 
 .man-section {
-    display:flex;
-    border-bottom: 1px solid #000000;
-    ;
+    display: flex;
+    border: 1px solid #343656;
     font-family: 'Roboto Condensed', sans-serif;
+    border-radius: 10px;
+    background-color: #0e1d37;
 }
 
 .image-section {
-    width: 30%;
+    width: 26%;
     float: left;
 }
 
@@ -815,7 +816,7 @@ ul li {
 
 .description-section {
     float: left;
-    width: 70%;
+    width: 74%;
 }
 
     .description-section h1 {
@@ -3723,9 +3724,9 @@ input[type="submit"] {
   padding-bottom: 0;
 }
 
-.ticket-search-form .form-group.large {
-  width: 260px;
-}
+    .ticket-search-form .form-group.large {
+        width: 330px;
+    }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .ticket-search-form .form-group {

@@ -1,0 +1,197 @@
+﻿@model IEnumerable < CinemaBooking.Models.phim>
+
+@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+<!-- ==========Movie-Section========== -->
+<section class="movie-section padding-top padding-bottom">
+    <div class="container">
+        <div class="row flex-wrap-reverse justify-content-center">
+            @*<div class="col-sm-10 col-md-8 col-lg-3">
+                <div class="widget-1 widget-banner">
+                        <div class="widget-1-body">
+                            <a href="#0">
+                                <img src="/Frontend/Client/assets/images/sidebar/banner/banner01.jpg" alt="banner">
+                            </a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>*@
+                @*<div class="widget-1 widget-banner">
+                    <div class="widget-1-body">
+                        <a href="#0">
+                            <img src="/Frontend/Client/assets/images/sidebar/banner/banner02.jpg" alt="banner">
+                        </a>
+                    </div>
+                </div>*@
+        </div>
+            <div class="col-lg-12 mb-50 mb-lg-0">
+                <div class="filter-tab tab">
+                    <div class="filter-area">
+                        <div class="filter-main">
+                            <div class="left">
+                                <div class="item">
+                                    <span class="show">Show :</span>
+                                    <select class="select-bar">
+                                        <option value="12">12</option>
+                                        <option value="15">15</option>
+                                        <option value="18">18</option>
+                                        <option value="21">21</option>
+                                        <option value="24">24</option>
+                                        <option value="27">27</option>
+                                        <option value="30">30</option>
+                                    </select>
+                                </div>
+                                <div class="item">
+                                    <span class="show">Sort By :</span>
+                                    <select class="select-bar">
+                                        <option value="showing">now showing</option>
+                                        <option value="exclusive">exclusive</option>
+                                        <option value="trending">trending</option>
+                                        <option value="most-view">most view</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <ul class="grid-button tab-menu">
+                                <li class="active">
+                                    <i class="fas fa-th"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-bars"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-area">
+                        <div class="tab-item active">
+                            <div class="row mb-10">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="movie-grid">
+                                            <div class="movie-thumb c-thumb">
+                                                <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })">
+                                                    <img src="/Frontend/Client/assets/images/movie/movie01.jpg" alt="movie">
+                                                </a>
+                                            </div>
+                                            <div class="movie-content bg-one">
+                                                <h5 class="title m-0">
+                                                    <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })">@item.ten_phim</a>
+                                                </h5>
+                                                <ul class="movie-rating-percent">
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
+                                                        </div>
+                                                        <span class="content">@item.thoi_luong phút</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
+                                                        </div>
+                                                        <span class="content">@item.ngay_cong_chieu</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="tab-item">
+                            <div class="movie-area mb-10">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="movie-list">
+                                        <div class="movie-thumb c-thumb">
+                                            <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })" class="w-100 bg_img h-100" data-background="/Frontend/Client/assets/images/movie/movie01.jpg">
+                                                <img class="d-sm-none" src="/Frontend/Client/assets/images/movie/movie01.jpg" alt="movie">
+                                            </a>
+                                        </div>
+                                        <div class="movie-content bg-one">
+                                            <h5 class="title">
+                                                <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })">@item.ten_phim</a>
+                                            </h5>
+                                            <p class="duration">@item.thoi_luong phút</p>
+                                            <div class="movie-tags">
+                                                <a href="#0">@item.the_loai_phim.ten_the_loai</a>
+                                                <a href="#0">adventure</a>
+                                                <a href="#0">fantasy</a>
+                                            </div>
+                                            <div class="release">
+                                                <span>Ngày công chiếu : </span> <a href="#0">@item.ngay_cong_chieu</a>
+                                            </div>
+                                            @*<ul class="movie-rating-percent">
+                                                <li>
+                                                    <div class="thumb">
+                                                        <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">88%</span>
+                                                </li>
+                                                <li>
+                                                    <div class="thumb">
+                                                        <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">88%</span>
+                                                </li>
+                                            </ul>*@
+                                            <div class="book-area">
+                                                <div class="book-ticket">
+                                                    <div class="react-item">
+                                                        <a href="#0">
+                                                            <div class="thumb">
+                                                                <img src="/Frontend/Client/assets/images/icons/heart.png" alt="icons">
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="react-item mr-auto">
+                                                        <a href="#0">
+                                                            <div class="thumb">
+                                                                <img src="/Frontend/Client/assets/images/icons/book.png" alt="icons">
+                                                            </div>
+                                                            <span>book ticket</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="react-item">
+                                                        <a href="#0" class="popup-video">
+                                                            <div class="thumb">
+                                                                <img src="/Frontend/Client/assets/images/icons/play-button.png" alt="icons">
+                                                            </div>
+                                                            <span>watch trailer</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  }
+                                  </div>
+                        </div>
+                        
+                        @*<div class="pagination-area text-center">
+                            <a href="#0"><i class="fas fa-angle-double-left"></i><span>Prev</span></a>
+                            <a href="#0">1</a>
+                            <a href="#0">2</a>
+                            <a href="#0" class="active">3</a>
+                            <a href="#0">4</a>
+                            <a href="#0">5</a>
+                            <a href="#0"><span>Next</span><i class="fas fa-angle-double-right"></i></a>
+                        </div>*@
+                        
+                     </div>
+                </div>
+            </div>
+    </div>
+</section>
+<!-- ==========Movie-Section========== -->
+<script>
+    function codeAddress() {
+        $('.menu li a.movieac').addClass('active');
+        document.getElementById("nowshowing").innerHTML = "Tìm kiếm";
+    }
+    window.onload = codeAddress;
+</script>
+
