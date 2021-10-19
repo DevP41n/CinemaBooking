@@ -19,12 +19,12 @@ namespace CinemaBooking.Controllers
         //Phim đang chiếu
         public ActionResult NowShowing()
         {
-            return View();
+            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1));
         }
         //Phim sắp chiếu
         public ActionResult ComingSoon()
         {
-            return View();
+            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2));
         }
         //Đặt vé
         public ActionResult BookTicket()
