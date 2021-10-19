@@ -1,8 +1,6 @@
 ﻿using CinemaBooking.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Controllers
@@ -12,9 +10,11 @@ namespace CinemaBooking.Controllers
         private CinemaBookingEntities db = new CinemaBookingEntities();
         // GET: Movie
         //Chi tiết phim
-        public ActionResult MovieDetail(/*int? id*/)
+        public ActionResult MovieDetail(String id)
         {
-            return View(/*db.phims.SingleOrDefault(p => p.id.Equals(id))*/);
+            var movie = db.phims
+                        .Where(m => m.slug == id && m.status == 1).First();
+            return View(movie);
         }
         //Phim đang chiếu
         public ActionResult NowShowing()

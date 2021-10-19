@@ -17,7 +17,7 @@
                 </a>
             </div>
             <div class="details-banner-content offset-lg-3">
-                <h3 class="title">Venus </h3>
+                <h3 class="title">@Model.ten_phim</h3>
                 <div class="tags">
                     <a href="#0">English</a>
                     <a href="#0">Hindi</a>
@@ -28,10 +28,10 @@
                 <div class="social-and-duration">
                     <div class="duration-area">
                         <div class="item">
-                            <i class="fas fa-calendar-alt"></i><span>06 Dec, 2020</span>
+                            <i class="fas fa-calendar-alt"></i><span>@Model.ngay_cong_chieu</span>
                         </div>
                         <div class="item">
-                            <i class="far fa-clock"></i><span>2 hrs 50 mins</span>
+                            <i class="far fa-clock"></i><span>@Model.thoi_luong</span>
                         </div>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                     <div class="tab summery-review">
                         <ul class="tab-menu">
                             <li class="active">
-                                summery
+                                Chi Tiết Phim
                             </li>
                             <li>
                                 user review <span>147</span>
@@ -217,8 +217,8 @@
                         <div class="tab-area">
                             <div class="tab-item active">
                                 <div class="item">
-                                    <h5 class="sub-title">Synopsis</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula eros sit amet est tincidunt aliquet. Fusce laoreet ligula ac ultrices eleifend. Donec hendrerit fringilla odio, ut feugiat mi convallis nec. Fusce elit ex, blandit vitae mattis sit amet, iaculis ac elit. Ut diam mauris, viverra sit amet dictum vel, aliquam ac quam. Ut mi nisl, fringilla sit amet erat et, convallis porttitor ligula. Sed auctor, orci id luctus venenatis, dui dolor euismod risus, et pharetra orci lectus quis sapien. Duis blandit ipsum ac consectetur scelerisque. </p>
+                                    <h5 class="sub-title">Tóm tắt</h5>
+                                    @Html.Raw(Model.chi_tiet)
                                 </div>
                                 <div class="item">
                                     <div class="header">
