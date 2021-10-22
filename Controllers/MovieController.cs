@@ -12,9 +12,16 @@ namespace CinemaBooking.Controllers
         //Chi tiết phim
         public ActionResult MovieDetail(String id)
         {
-            var movie = db.phims
-                        .Where(m => m.slug == id && m.status == 1).First();
-            return View(movie);
+            try
+            {
+                var movie = db.phims
+                            .Where(m => m.slug == id && m.status == 1).First();
+                return View(movie);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
         //Phim đang chiếu
         public ActionResult NowShowing()

@@ -11,8 +11,8 @@
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-thumb">
-                <img src="~/Frontend/Client/assets/images/movie/venus.jpg" alt="movie">
-                <a href="https://www.youtube.com/embed/KGeBMAgc46E" class="video-popup">
+                <img src="~/images/movies/@Model.anh" alt="movie">
+                <a href="https://www.youtube.com/embed/j2dqpq8MBBM" class="video-popup">
                     <img src="~/Frontend/Client/assets/images/movie/video-button.png" alt="movie">
                 </a>
             </div>
@@ -24,14 +24,14 @@
                     <a href="#0">Telegu</a>
                     <a href="#0">Tamil</a>
                 </div>
-                <a href="#0" class="button">horror</a>
+                <a href="#0" class="button">@Model.the_loai_phim.ten_the_loai</a>
                 <div class="social-and-duration">
                     <div class="duration-area">
                         <div class="item">
-                            <i class="fas fa-calendar-alt"></i><span>@Model.ngay_cong_chieu</span>
+                            <i class="fas fa-calendar-alt"></i><span>@Html.FormatValue(@Model.ngay_cong_chieu,"{0:D}")</span>
                         </div>
                         <div class="item">
-                            <i class="far fa-clock"></i><span>@Model.thoi_luong</span>
+                            <i class="far fa-clock"></i><span>120 phút</span>
                         </div>
                     </div>
                 </div>
