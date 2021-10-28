@@ -1,6 +1,8 @@
 ﻿using CinemaBooking.Models;
+using Facebook;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -158,5 +160,78 @@ namespace CinemaBooking.Controllers
             string url = "/ProfileAccount/" + kh.id;
             return RedirectToAction(url);
         }
+        //Facebook
+        private Uri RedirectUri
+        {
+            get
+            {
+                var uriBuilder = new UriBuilder(Request.Url);
+                uriBuilder.Query = null;
+                uriBuilder.Fragment = null;
+                uriBuilder.Path = Url.Action("FacebookCallback");
+                return uriBuilder.Uri;
+            }
+        }
+
+        public ActionResult LoginWithFB()
+        {
+            var fb = new FacebookClient();
+            var loginUrl = fb.GetLoginUrl(new
+            {
+                client_id = ConfigurationManager.AppSettings["FbAppId"],
+                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+                redirect_uri = RedirectUri.AbsoluteUri,
+                response_type = "code",
+                scope = "email",
+            });
+
+            return Redirect(loginUrl.AbsoluteUri);
+        }
+
+        public ActionResult FacebookCallback(string code)
+        {
+            var fb = new FacebookClient();
+            dynamic result = fb.Post("oauth/access_token", new
+            {
+                client_id = ConfigurationManager.AppSettings["FbAppId"],
+                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+                redirect_uri = RedirectUri.AbsoluteUri,
+                code = code
+            });
+
+
+            var accessToken = result.access_token;
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                fb.AccessToken = accessToken;
+                // Get the user's information, like email,name etc
+                dynamic me = fb.Get("me?fields=name,id,email");
+                string email = me.email;
+                string userName = me.email;
+                string hoten = me.name;
+
+
+                var user = new khach_hang();
+                user.email = email;
+                user.username = userName;
+                user.ho_ten = hoten;
+                user.gioi_tinh = true;
+                user.update_at = DateTime.Now;
+                user.ngay_sinh = null;
+                user.sdt = "0123456789";
+                user.password = "@Cinema123";
+                user.confirmpassword = "@Cinema123";
+                var resultInsert = new khach_hang().InsertForFacebook(user);
+                if (resultInsert > 0)
+                {
+                    Session["MaKH"] = resultInsert;
+                    Session["TenCus"] = user.ho_ten;
+                    Session["EmailCus"] = user.email;
+                }
+                TempData["Message"] = "Đăng nhập thành công";
+            }
+            return Redirect("/");
+        }
+
     }
 }
