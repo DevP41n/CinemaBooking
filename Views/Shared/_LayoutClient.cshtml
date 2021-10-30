@@ -87,7 +87,7 @@
                                 <a href="@Url.Action("Actor", "Information")">Diễn viên</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Director", "Information")">Diễn viên</a>
+                                <a href="@Url.Action("Director", "Information")">Đạo diễn</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("AboutUs", "Information")">Về chúng tôi</a>
@@ -247,7 +247,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
 
-       $("#txtSearch").keyup(function(){
+        $("#txtSearch").keyup(function () {
            var searchField = $('#txtSearch').val();
            var expression = RegExp(searchField, "i");
 
