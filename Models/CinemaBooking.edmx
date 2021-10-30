@@ -94,6 +94,18 @@
           <Property Name="ten_ghe" Type="nvarchar" MaxLength="250" />
           <Property Name="phu_thu" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="movie_rate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="movie_id" Type="int" />
+          <Property Name="khachhang_id" Type="int" />
+          <Property Name="rate" Type="float" />
+          <Property Name="comment" Type="nvarchar(max)" />
+          <Property Name="ten_khachhang" Type="nvarchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
         <EntityType Name="phim">
           <Key>
             <PropertyRef Name="id" />
@@ -352,6 +364,7 @@
           <EntitySet Name="khach_hang" EntityType="Self.khach_hang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lien_he" EntityType="Self.lien_he" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="loai_ghe" EntityType="Self.loai_ghe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movie_rate" EntityType="Self.movie_rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phim" EntityType="Self.phim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phong_chieu" EntityType="Self.phong_chieu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="su_kien" EntityType="Self.su_kien" Schema="dbo" store:Type="Tables" />
@@ -830,7 +843,20 @@
             <End Role="users" EntitySet="users" />
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
+          <EntitySet Name="movie_rate" EntityType="CinemaBookingModel.movie_rate" />
         </EntityContainer>
+        <EntityType Name="movie_rate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="movie_id" Type="Int32" />
+          <Property Name="khachhang_id" Type="Int32" />
+          <Property Name="rate" Type="Double" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ten_khachhang" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1056,6 +1082,19 @@
                 <ScalarProperty Name="gia_ve_id" ColumnName="gia_ve_id" />
                 <ScalarProperty Name="ghe_id" ColumnName="ghe_id" />
                 <ScalarProperty Name="users_id" ColumnName="users_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movie_rate">
+            <EntityTypeMapping TypeName="CinemaBookingModel.movie_rate">
+              <MappingFragment StoreEntitySet="movie_rate">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="ten_khachhang" ColumnName="ten_khachhang" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="khachhang_id" ColumnName="khachhang_id" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

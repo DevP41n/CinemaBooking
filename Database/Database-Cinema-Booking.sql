@@ -289,3 +289,15 @@ ALTER TABLE phong_chieu ADD ten_phong nvarchar(255);
 
 -- Thêm status cho bảng liên hệ
 ALTER TABLE lien_he ADD status int;
+
+-- Thêm bảng movie rate
+CREATE TABLE movie_rate(
+	id int IDENTITY(1,1) NOT NULL,
+	movie_id int,
+	khachhang_id int,
+	rate float,
+	comment nvarchar(max),
+	ten_khachhang nvarchar(255),
+	created_at datetime,
+	CONSTRAINT PK_MovieRate PRIMARY KEY(id),
+)

@@ -31,6 +31,7 @@
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CinemaBookingModel.movie_rate" Width="1.5" PointX="10.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

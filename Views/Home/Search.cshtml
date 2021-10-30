@@ -74,7 +74,7 @@
                                         <div class="movie-grid">
                                             <div class="movie-thumb c-thumb">
                                                 <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })">
-                                                    <img src="/Frontend/Client/assets/images/movie/movie01.jpg" alt="movie">
+                                                    <img src="/images/movies/@item.anh" alt="movie">
                                                 </a>
                                             </div>
                                             <div class="movie-content bg-one">
@@ -108,7 +108,7 @@
                                     <div class="movie-list">
                                         <div class="movie-thumb c-thumb">
                                             <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })" class="w-100 bg_img h-100" data-background="/Frontend/Client/assets/images/movie/movie01.jpg">
-                                                <img class="d-sm-none" src="/Frontend/Client/assets/images/movie/movie01.jpg" alt="movie">
+                                                <img class="d-sm-none" src="/images/movies/@item.anh" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
