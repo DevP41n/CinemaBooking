@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using PagedList;
 
 namespace CinemaBooking.Controllers
 {
@@ -24,14 +25,18 @@ namespace CinemaBooking.Controllers
             }
         }
         //Phim đang chiếu
-        public ActionResult NowShowing()
+        public ActionResult NowShowing(int? page)
         {
-            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1));
+            int pageNumber = (page ?? 1);
+            int pageSize = 5;
+            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderBy(s=>s.loai_phim_chieu == 1).ToPagedList(pageNumber,pageSize));
         }
         //Phim sắp chiếu
-        public ActionResult ComingSoon()
+        public ActionResult ComingSoon(int? page)
         {
-            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2));
+            int pageNumber = (page ?? 1);
+            int pageSize = 5;
+            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderBy(s => s.loai_phim_chieu == 2).ToPagedList(pageNumber,pageSize));
         }
         //Đặt vé
         public ActionResult BookTicket()

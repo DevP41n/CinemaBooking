@@ -1,6 +1,8 @@
 ﻿using CinemaBooking.Models;
 using System;
+using System.Linq;
 using System.Web.Mvc;
+using PagedList;
 
 namespace CinemaBooking.Controllers
 {
@@ -8,21 +10,25 @@ namespace CinemaBooking.Controllers
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
         // GET: Information
-        public ActionResult Actor()
+        public ActionResult Actor(int? page)
         {
-            return View();
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(db.dien_vien.OrderByDescending(a =>a.ho_ten).ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult ActorDetail()
+        public ActionResult ActorDetail(int id)
         {
-            return View();
+            return View(db.dien_vien.SingleOrDefault(s => s.id.Equals(id)));
         }
-        public ActionResult Director()
+        public ActionResult Director(int? page)
         {
-            return View();
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(db.dao_dien.OrderByDescending(a => a.ho_ten).ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult DirectorDetail()
+        public ActionResult DirectorDetail(int id)
         {
-            return View();
+            return View(db.dao_dien.SingleOrDefault(s => s.id.Equals(id)));
         }
         public ActionResult AboutUs()
         {
