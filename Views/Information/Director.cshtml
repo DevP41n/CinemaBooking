@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<CinemaBooking.Models.dao_dien>
 @using PagedList.Mvc
 @{
-    ViewBag.Title = "Đạo diễn";
+    ViewBag.Title = "Danh Sách Đạo Diễn";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
@@ -47,20 +47,19 @@
                         <div class="row mb-10">
                             @foreach (var item in Model)
                             {
-                                <div class="col-sm-6 col-lg-3" style="margin-bottom:40px">
+                                <div class="col-sm-4 col-lg-2" style=" margin-bottom: 40px;">
                                     <div class="speaker-item">
                                         <div class="speaker-thumb">
-                                            <a href="@Url.Action("DirectorDetail","Information", new { id=item.id })">
-                                                <img src="/Frontend/Client/assets/images/speaker/speaker01.jpg" alt="speaker">
+                                            <a href="@Url.Action("DirectorDetail","Information", new { id=item.slug })">
+                                                <img src="~/images/information/@item.anh" alt="speaker" style="height: 300px; width: fit-content;">
                                             </a>
                                         </div>
                                         <div class="speaker-content">
                                             <h5 class="title">
-                                                <a href="@Url.Action("DirectorDetail","Information", new { id=item.id })">
+                                                <a href="@Url.Action("DirectorDetail","Information", new { id=item.slug })">
                                                     @item.ho_ten
                                                 </a>
                                             </h5>
-                                            @*<span>@item.</span>*@
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 ﻿@model CinemaBooking.Models.dao_dien
 @{
-    ViewBag.Title = "Đạo diễn";
+    ViewBag.Title = Model.ho_ten;
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 <!-- ==========Preloader========== -->
@@ -19,71 +19,45 @@
     <i class="fas fa-angle-up"></i>
 </a>
 <!-- ==========Banner-Section========== -->
-<section class="speaker-banner bg_img" data-background="../Frontend/Client/assets/images/blog/blog01.jpg">
-    @*<img src="~/Frontend/Client/assets/images/blog/blog01.jpg" />*@
-    <div class="container">
-        <div class="speaker-banner-content">
-            <h2 class="title">Chi tiết</h2>
-        </div>
-    </div>
+<section class="speaker-banner bg_img" data-background="../../images/banner/lambor.jpg">
 </section>
 <!-- ==========Banner-Section========== -->
 <!-- ==========Speaker-Single========== -->
 <section class="speaker-single padding-top pt-lg-0">
     <div class="container">
-        <div class="speaker-wrapper bg-six padding-top padding-bottom">
+        <div class="speaker-wrapper bg-six">
             <div class="speaker-thumb">
-                <img src="/Frontend/Client/assets/images/speaker/speaker05.jpg" alt="speaker">
-                <a href="#0">www.website.com</a>
+                <img src="~/images/information/@Model.anh" alt="speaker" style="height: 373px; width: fit-content;">
+                <h3 class="titleactor">Thông tin cá nhân</h3>
+                <dl>
+                    <dt>Ngày sinh</dt>
+                    <dd>@Html.FormatValue(Model.ngay_sinh, "{0:dd/MM/yyyy}")</dd>
+                    <dt>Nơi sinh</dt>
+                    <dd>@Model.quoc_tich</dd>
+                </dl>
+
             </div>
             <div class="speaker-content">
                 <div class="author">
-                    <h2 class="title">@Model.ho_ten </h2>
-                    <div class="info">@Model.mo_ta</div>
+                    <h2 class="title" style="text-align: center;">@Model.ho_ten </h2>
+                    <h6 style="margin-bottom:15px">Tiểu sử :</h6>
+                    <div class="info">@Html.Raw(Model.mo_ta)</div>
                 </div>
-                <div class="speak-con-wrapper">
-                    <div class="speak-con-area">
-                        <div class="item">
-                            <div class="item-thumb">
-                                <img src="/Frontend/Client/assets/images/event/icon/event-icon03.png" alt="event">
-                            </div>
-                            <div class="item-content">
-                                <span class="up">Drop us a line:</span>
-                                <a href="MailTo:hello@Boleto .com">hello@Boleto .com</a>
-                            </div>
+                <h6 style=" margin-bottom: 7px; margin-top: 55px;">Các phim đã tham gia</h6>
+                <div class="actor-list-movies">
+                    @{CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
+                    @foreach (var item in db.phims.Where(x => x.id == Model.id))
+                    {
+                        <div class="thumb-list-movie" style="padding: 15px; flex: none; width: 25%; ">
+                            <a href="@Url.Action("MovieDetail", "Movie", new { id = item.slug })">
+                                <img src="~/images/movies/@item.anh" alt="@item.ten_phim" style="height: auto; max-width: 100%;">
+                            </a>
+                            <dl class="overflow-text-2" style="height: 52px; margin-bottom: 0px">
+                                <dt>@item.ten_phim</dt>
+                            </dl>
                         </div>
-                        <ul class="social-icons">
-                            <li>
-                                <a href="#0">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0" class="active">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <i class="fab fa-pinterest"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <i class="fab fa-behance"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content">
-                    <h3 class="subtitle">About me</h3>
-                    <p>@Model.chi_tiet</p>
+                    }
+
                 </div>
             </div>
         </div>

@@ -31,14 +31,14 @@ namespace CinemaBooking.Controllers
         {
             int pageNumber = (page ?? 1);
             int pageSize = 5;
-            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderBy(s => s.loai_phim_chieu == 1).ToPagedList(pageNumber, pageSize));
+            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
         }
         //Phim sắp chiếu
         public ActionResult ComingSoon(int? page)
         {
             int pageNumber = (page ?? 1);
             int pageSize = 5;
-            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderBy(s => s.loai_phim_chieu == 2).ToPagedList(pageNumber, pageSize));
+            return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
         }
         //Đặt vé
         public ActionResult BookTicket()

@@ -12,23 +12,23 @@ namespace CinemaBooking.Controllers
         // GET: Information
         public ActionResult Actor(int? page)
         {
-            int pageSize = 5;
+            int pageSize = 12;
             int pageNumber = (page ?? 1);
             return View(db.dien_vien.OrderByDescending(a =>a.ho_ten).ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult ActorDetail(int id)
+        public ActionResult ActorDetail(string id)
         {
-            return View(db.dien_vien.SingleOrDefault(s => s.id.Equals(id)));
+            return View(db.dien_vien.SingleOrDefault(s => s.slug.Equals(id)));
         }
         public ActionResult Director(int? page)
         {
-            int pageSize = 5;
+            int pageSize = 12;
             int pageNumber = (page ?? 1);
             return View(db.dao_dien.OrderByDescending(a => a.ho_ten).ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult DirectorDetail(int id)
+        public ActionResult DirectorDetail(string id)
         {
-            return View(db.dao_dien.SingleOrDefault(s => s.id.Equals(id)));
+            return View(db.dao_dien.SingleOrDefault(s => s.slug.Equals(id)));
         }
         public ActionResult AboutUs()
         {
