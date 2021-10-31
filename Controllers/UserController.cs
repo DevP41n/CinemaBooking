@@ -221,13 +221,13 @@ namespace CinemaBooking.Controllers
                 user.sdt = "0123456789";
                 user.password = "@Cinema123";
                 user.confirmpassword = "@Cinema123";
-                var resultInsert = new khach_hang().InsertForFacebook(user);
+                /*var resultInsert = new khach_hang().InsertForFacebook(user);
                 if (resultInsert > 0)
                 {
                     Session["MaKH"] = resultInsert;
                     Session["TenCus"] = user.ho_ten;
                     Session["EmailCus"] = user.email;
-                }
+                }*/
                 TempData["Message"] = "Đăng nhập thành công";
             }
             return Redirect("/");

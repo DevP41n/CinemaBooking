@@ -43,6 +43,7 @@
     <!--custom-->
     <link href="~/template/admin/custom/tableorder.css" rel="stylesheet" />
     <link href="~/template/admin/assets/css/custom.css" rel="stylesheet" />
+    
 </head>
 <body data-sidebar="dark">
 
@@ -56,20 +57,20 @@
                     <div class="navbar-brand-box">
                         <a href="@Url.Action("Dashboard","Admin")" class="logo logo-dark">
                             @*<span class="logo-sm">
-                        <img src="~/images/logo/LOGO6.png" alt="" height="22">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="~/images/logo/LOGO6.png" alt="" height="17">
-                    </span>*@
+                                    <img src="~/images/logo/LOGO6.png" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="~/images/logo/LOGO6.png" alt="" height="17">
+                                </span>*@
                         </a>
 
                         <a href="@Url.Action("Dashboard","Admin")" class="logo logo-light">
                             @*<span class="logo-sm">
-                        <img src="~/images/logo/logo8.png" alt="" height="35">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="~/images/logo/LOGO6.png" alt="" height="50">
-                    </span>*@
+                                    <img src="~/images/logo/logo8.png" alt="" height="35">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="~/images/logo/LOGO6.png" alt="" height="50">
+                                </span>*@
                         </a>
                     </div>
 
@@ -313,67 +314,74 @@
                             </ul>
                         </li>
                         @*<li>
-            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="fas fa-list-ul"></i>
-                <span>Menu & Danh Mục</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="@Url.Action("MenuList","Menu")">Danh Sách Menu</a></li>
-                <li><a href="@Url.Action("CategoryList","Category")">Danh Sách Danh Mục</a></li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-list-ul"></i>
+                                    <span>Menu & Danh Mục</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("MenuList","Menu")">Danh Sách Menu</a></li>
+                                    <li><a href="@Url.Action("CategoryList","Category")">Danh Sách Danh Mục</a></li>
 
-            </ul>
-        </li>
-        <li>
-            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="fas fa-laptop-code"></i>
-                <span>Sản Phẩm</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="@Url.Action("List","Product")">Danh Sách Sản Phẩm</a></li>
-                <li><a href="@Url.Action("Create","Product")">Thêm Sản Phẩm</a></li>
-            </ul>
-        </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-laptop-code"></i>
+                                    <span>Sản Phẩm</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("List","Product")">Danh Sách Sản Phẩm</a></li>
+                                    <li><a href="@Url.Action("Create","Product")">Thêm Sản Phẩm</a></li>
+                                </ul>
+                            </li>
 
-        <li>
-            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="fas fa-store-alt"></i>
-                <span>Thông Tin Cửa Hàng</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="@Url.Action("Contact","Contact")">Danh Sách Cửa Hàng</a></li>
-                <li><a href="@Url.Action("FeedBack","FeedBack")">Ý kiến khách hàng</a></li>
-            </ul>
-        </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-store-alt"></i>
+                                    <span>Thông Tin Cửa Hàng</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("Contact","Contact")">Danh Sách Cửa Hàng</a></li>
+                                    <li><a href="@Url.Action("FeedBack","FeedBack")">Ý kiến khách hàng</a></li>
+                                </ul>
+                            </li>
 
-        <li>
-            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="fas fa-users-cog"></i>
-                <span>Quản Lý Tài Khoản</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="@Url.Action("ListUserAdmin","User")">Danh Sách User Admin</a></li>
-                <li><a href="@Url.Action("ListCustomer","User")">Danh Sách khách hàng</a></li>
-            </ul>
-        </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-users-cog"></i>
+                                    <span>Quản Lý Tài Khoản</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("ListUserAdmin","User")">Danh Sách User Admin</a></li>
+                                    <li><a href="@Url.Action("ListCustomer","User")">Danh Sách khách hàng</a></li>
+                                </ul>
+                            </li>
 
-        <li>
-            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="mdi mdi-file-document-edit"></i>
-                <span>Quản Lý Đơn Hàng</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="@Url.Action("ListOrder","Order")">Danh Sách Đơn Hàng</a></li>
-            </ul>
-        </li>*@
-        <li>
-            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="mdi mdi-newspaper"></i>
-                <span>Quản Lý Tin Tức</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="@Url.Action("ListNews","News")">Danh Sách Tin Tức</a></li>
-            </ul>
-        </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="mdi mdi-file-document-edit"></i>
+                                    <span>Quản Lý Đơn Hàng</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("ListOrder","Order")">Danh Sách Đơn Hàng</a></li>
+                                </ul>
+                            </li>*@
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="mdi mdi-newspaper"></i>
+                                <span>Thông Tin/Sự Kiện</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("ListNews","News")">Danh Sách Tin Tức</a></li>
+                            </ul>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("ListActor","Information")">Diễn viên</a></li>
+                            </ul>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("ListDirector","Information")">Đạo diễn</a></li>
+                            </ul>
+
+                        </li>
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -514,7 +522,19 @@
         CKEDITOR.replace('noidungtt1');
     </script>
 
-
+    <!--Select2-->
+    <link href="~/Content/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dao_dien_id").select2();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#dienvienarray").select2();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 
 

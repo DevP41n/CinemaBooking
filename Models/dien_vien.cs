@@ -17,7 +17,7 @@ namespace CinemaBooking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public dien_vien()
         {
-            this.phims = new HashSet<phim>();
+            this.list_phim_dienvien = new HashSet<list_phim_dienvien>();
         }
     
         public int id { get; set; }
@@ -32,6 +32,6 @@ namespace CinemaBooking.Models
         public string phim_da_tham_gia { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<phim> phims { get; set; }
+        public virtual ICollection<list_phim_dienvien> list_phim_dienvien { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace CinemaBooking.Models
         public virtual DbSet<gia_ve> gia_ve { get; set; }
         public virtual DbSet<khach_hang> khach_hang { get; set; }
         public virtual DbSet<lien_he> lien_he { get; set; }
+        public virtual DbSet<list_phim_dienvien> list_phim_dienvien { get; set; }
         public virtual DbSet<loai_ghe> loai_ghe { get; set; }
         public virtual DbSet<phim> phims { get; set; }
         public virtual DbSet<phong_chieu> phong_chieu { get; set; }
