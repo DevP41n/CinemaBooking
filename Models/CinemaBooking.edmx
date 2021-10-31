@@ -103,6 +103,18 @@
           <Property Name="ten_ghe" Type="nvarchar" MaxLength="250" />
           <Property Name="phu_thu" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="movie_rate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="movie_id" Type="int" />
+          <Property Name="khachhang_id" Type="int" />
+          <Property Name="rate" Type="float" />
+          <Property Name="comment" Type="nvarchar(max)" />
+          <Property Name="ten_khachhang" Type="nvarchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
         <EntityType Name="phim">
           <Key>
             <PropertyRef Name="id" />
@@ -374,6 +386,7 @@
           <EntitySet Name="lien_he" EntityType="Self.lien_he" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="list_phim_dienvien" EntityType="Self.list_phim_dienvien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="loai_ghe" EntityType="Self.loai_ghe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movie_rate" EntityType="Self.movie_rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phim" EntityType="Self.phim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phong_chieu" EntityType="Self.phong_chieu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="su_kien" EntityType="Self.su_kien" Schema="dbo" store:Type="Tables" />
@@ -886,6 +899,82 @@
           </ReferentialConstraint>
         </Association>
         </Schema>
+        <EntityContainer Name="CinemaBookingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dao_dien" EntityType="Self.dao_dien" />
+          <EntitySet Name="dien_vien" EntityType="Self.dien_vien" />
+          <EntitySet Name="ghe_ngoi" EntityType="Self.ghe_ngoi" />
+          <EntitySet Name="gia_ve" EntityType="Self.gia_ve" />
+          <EntitySet Name="khach_hang" EntityType="Self.khach_hang" />
+          <EntitySet Name="lien_he" EntityType="Self.lien_he" />
+          <EntitySet Name="loai_ghe" EntityType="Self.loai_ghe" />
+          <EntitySet Name="phims" EntityType="Self.phim" />
+          <EntitySet Name="phong_chieu" EntityType="Self.phong_chieu" />
+          <EntitySet Name="su_kien" EntityType="Self.su_kien" />
+          <EntitySet Name="suat_chieu" EntityType="Self.suat_chieu" />
+          <EntitySet Name="the_loai_phim" EntityType="Self.the_loai_phim" />
+          <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="ve_ban" EntityType="Self.ve_ban" />
+          <AssociationSet Name="Fk_DaoDien" Association="Self.Fk_DaoDien">
+            <End Role="dao_dien" EntitySet="dao_dien" />
+            <End Role="phim" EntitySet="phims" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_DienVien" Association="Self.Fk_DienVien">
+            <End Role="dien_vien" EntitySet="dien_vien" />
+            <End Role="phim" EntitySet="phims" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_GhePC" Association="Self.Fk_GhePC">
+            <End Role="phong_chieu" EntitySet="phong_chieu" />
+            <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_LoaiGhe" Association="Self.Fk_LoaiGhe">
+            <End Role="loai_ghe" EntitySet="loai_ghe" />
+            <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_VeGhe" Association="Self.Fk_VeGhe">
+            <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
+            <End Role="ve_ban" EntitySet="ve_ban" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_VeGia" Association="Self.Fk_VeGia">
+            <End Role="gia_ve" EntitySet="gia_ve" />
+            <End Role="ve_ban" EntitySet="ve_ban" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_PhimSC" Association="Self.Fk_PhimSC">
+            <End Role="phim" EntitySet="phims" />
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_TheLoai" Association="Self.Fk_TheLoai">
+            <End Role="the_loai_phim" EntitySet="the_loai_phim" />
+            <End Role="phim" EntitySet="phims" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_PhimPC" Association="Self.Fk_PhimPC">
+            <End Role="phong_chieu" EntitySet="phong_chieu" />
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_VeSC" Association="Self.Fk_VeSC">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="ve_ban" EntitySet="ve_ban" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_VeNV" Association="Self.Fk_VeNV">
+            <End Role="users" EntitySet="users" />
+            <End Role="ve_ban" EntitySet="ve_ban" />
+          </AssociationSet>
+          <EntitySet Name="movie_rate" EntityType="CinemaBookingModel.movie_rate" />
+        </EntityContainer>
+        <EntityType Name="movie_rate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="movie_id" Type="Int32" />
+          <Property Name="khachhang_id" Type="Int32" />
+          <Property Name="rate" Type="Double" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ten_khachhang" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1119,6 +1208,19 @@
                 <ScalarProperty Name="suat_chieu_id" ColumnName="suat_chieu_id" />
                 <ScalarProperty Name="tong_tien" ColumnName="tong_tien" />
                 <ScalarProperty Name="ngay_ban" ColumnName="ngay_ban" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movie_rate">
+            <EntityTypeMapping TypeName="CinemaBookingModel.movie_rate">
+              <MappingFragment StoreEntitySet="movie_rate">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="ten_khachhang" ColumnName="ten_khachhang" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="khachhang_id" ColumnName="khachhang_id" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

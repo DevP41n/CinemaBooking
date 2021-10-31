@@ -28,7 +28,7 @@
                 <div class="social-and-duration">
                     <div class="duration-area">
                         <div class="item">
-                            <i class="fas fa-calendar-alt"></i><span>@Html.FormatValue(@Model.ngay_cong_chieu,"{0:D}")</span>
+                            <i class="fas fa-calendar-alt"></i><span>@Html.FormatValue(@Model.ngay_cong_chieu, "{0:D}")</span>
                         </div>
                         <div class="item">
                             <i class="far fa-clock"></i><span>120 phút</span>
@@ -82,18 +82,18 @@
                     <p>Users Rating</p>
                 </div>
                 @*<div class="item">
-                    <div class="item-header">
-                        <div class="rated rate-it">
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
+                        <div class="item-header">
+                            <div class="rated rate-it">
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h5 class="title">0.0</h5>
                         </div>
-                        <h5 class="title">0.0</h5>
-                    </div>
-                    <p><a href="#0">Rate It</a></p>
-                </div>*@
+                        <p><a href="#0">Rate It</a></p>
+                    </div>*@
             </div>
             <a href="@Url.Action("BookTicket","Movie")" class="custom-button">Đặt vé</a>
         </div>
@@ -211,7 +211,7 @@
                                 Chi Tiết Phim
                             </li>
                             <li>
-                                user review <span>147</span>
+                                Review <span>@ViewBag.RatesCount</span>
                             </li>
                         </ul>
                         <div class="tab-area">
@@ -336,7 +336,66 @@
                                 </div>
                             </div>
                             <div class="tab-item">
-                                <div class="movie-review-item">
+                                @foreach (var item in ViewBag.Rates)
+                                {
+                                    <div class="movie-review-item">
+                                        <div class="author">
+                                            <div class="thumb">
+                                                <a href="#0">
+                                                    <img src="~/Frontend/Client/assets/images/cast/cast02.jpg" alt="cast">
+                                                </a>
+                                            </div>
+                                            <div class="movie-review-info">
+                                                <span class="reply-date">@item.created_at</span>
+                                                <h6 class="subtitle"><a href="#0">@item.ten_khachhang</a></h6>
+                                                <span><i class="fas fa-check"></i> verified review</span>
+                                            </div>
+                                        </div>
+                                        <div class="movie-review-content">
+                                            <div class="review">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= item.rate)
+                                                    {
+                                                        <i class="flaticon-favorite-heart-button"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="flaticon-favorite-heart-button" style="color:#646464"></i>
+                                                    }
+                                                }
+
+                                            </div>
+                                            <h6 class="cont-title">Awesome Movie</h6>
+                                            <p>
+                                                @item.comment
+                                            </p>
+                                            <div class="review-meta">
+                                                <a href="#0">
+                                                    <i class="flaticon-hand"></i><span>8</span>
+                                                </a>
+                                                <a href="#0" class="dislike">
+                                                    <i class="flaticon-dont-like-symbol"></i><span>0</span>
+                                                </a>
+                                                <a href="#0">
+                                                    Report Abuse
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <label for="rate">Đánh giá:</label>
+                                <input id="rate" type="number" min="0" max="5" step="1" value="5" style="width:50px; height:30px" /><span class="fa fa-star checked"></span>
+                                <br />                              
+                                <textarea id="cmt" rows="5" cols="100"></textarea>
+                                <br />
+                                <button type="button" class="btn-primary" id="btnRate" data-id="@Model.id" title="Gửi" href="#">Gửi</button>
+                            </div>
+
+
+
+
+                            @*<div class="movie-review-item">
                                     <div class="author">
                                         <div class="thumb">
                                             <a href="#0">
@@ -482,13 +541,16 @@
                                 </div>
                                 <div class="load-more text-center">
                                     <a href="#0" class="custom-button transparent">load more</a>
-                                </div>
-                            </div>
+                                </div>*@
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!-- ==========Movie-Section========== -->
@@ -498,3 +560,30 @@
     }
     window.onload = codeAddress;
 </script>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#btnRate').click(function () {
+                var star = $('#rate').val();
+                var cmt = $('#cmt').val();
+                var movieID = $(this).data('id');
+                var movieRate = {
+                    rate: star,
+                    comment: cmt,
+                    movie_id: movieID
+                };
+                $.ajax({
+                    url: '/Movie/AddRate',
+                    type: 'POST',
+                    data: movieRate,
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -204,6 +204,9 @@
     <Compile Include="Models\loai_ghe.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\movie_rate.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\phim.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>

@@ -289,6 +289,7 @@ ALTER TABLE phong_chieu ADD ten_phong nvarchar(255);
 
 -- Thêm status cho bảng liên hệ
 ALTER TABLE lien_he ADD status int;
+
 -- Bảng danh sách giữa phim và diễn viên
 CREATE TABLE list_phim_dienvien(
 	ID bigint IDENTITY(1,1) NOT NULL,
@@ -300,3 +301,17 @@ CREATE TABLE list_phim_dienvien(
 	CONSTRAINT FK_list_phim_dienvien_phim FOREIGN KEY (id_phim) REFERENCES phim([id])
 )
 GO
+
+
+-- Thêm bảng movie rate
+CREATE TABLE movie_rate(
+	id int IDENTITY(1,1) NOT NULL,
+	movie_id int,
+	khachhang_id int,
+	rate float,
+	comment nvarchar(max),
+	ten_khachhang nvarchar(255),
+	created_at datetime,
+	CONSTRAINT PK_MovieRate PRIMARY KEY(id),
+)
+
