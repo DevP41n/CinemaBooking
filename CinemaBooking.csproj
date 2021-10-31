@@ -179,13 +179,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facebook.cs" />
     <Compile Include="Models\dao_dien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\dien_vien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Facebook.cs" />
     <Compile Include="Models\ghe_ngoi.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -604,8 +604,8 @@
     <Content Include="images\slider\lambor.png" />
     <Content Include="Models\CinemaBooking.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CinemaBooking.Context.cs</LastGenOutput>
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
+      <LastGenOutput>CinemaBooking.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\CinemaBooking.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -703,13 +703,6 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Dashboard.cshtml" />
-    <EntityDeploy Include="Models\CinemaBooking.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CinemaBooking.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\CinemaBooking.edmx.diagram">
-      <DependentUpon>CinemaBooking.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\Movie\ListMovie.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\CreateMovie.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\EditMovie.cshtml" />
@@ -734,6 +727,13 @@
     <None Include="Areas\Admin\Views\Information\ListDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\EditDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\CreateDirector.cshtml" />
+    <EntityDeploy Include="Models\CinemaBooking.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CinemaBooking.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CinemaBooking.edmx.diagram">
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
