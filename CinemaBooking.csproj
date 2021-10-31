@@ -245,6 +245,7 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Database\Database-Cinema-Booking.sql" />
+    <Content Include="Database\dataCinema.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Frontend\Client\assets\css\all.min.css" />

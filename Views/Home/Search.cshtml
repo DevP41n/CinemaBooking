@@ -73,13 +73,13 @@
                                     <div class="col-sm-6 col-lg-3">
                                         <div class="movie-grid">
                                             <div class="movie-thumb c-thumb">
-                                                <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })">
+                                                <a href="@Url.Action("MovieDetail","Movie", new { id=item.slug })">
                                                     <img src="/images/movies/@item.anh" alt="movie">
                                                 </a>
                                             </div>
                                             <div class="movie-content bg-one">
                                                 <h5 class="title m-0">
-                                                    <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })">@item.ten_phim</a>
+                                                    <a href="@Url.Action("MovieDetail","Movie", new { id=item.slug })">@item.ten_phim</a>
                                                 </h5>
                                                 <ul class="movie-rating-percent">
                                                     <li>
@@ -107,13 +107,13 @@
                                 {
                                     <div class="movie-list">
                                         <div class="movie-thumb c-thumb">
-                                            <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })" class="w-100 bg_img h-100" data-background="/Frontend/Client/assets/images/movie/movie01.jpg">
+                                            <a href="@Url.Action("MovieDetail","Movie", new { id=item.slug })" class="w-100 bg_img h-100" data-background="/Frontend/Client/assets/images/movie/movie01.jpg">
                                                 <img class="d-sm-none" src="/images/movies/@item.anh" alt="movie">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title">
-                                                <a href="@Url.Action("MovieDetail","Movie", new { id=item.id })">@item.ten_phim</a>
+                                                <a href="@Url.Action("MovieDetail","Movie", new { id=item.slug })">@item.ten_phim</a>
                                             </h5>
                                             <p class="duration">@item.thoi_luong phút</p>
                                             <div class="movie-tags">

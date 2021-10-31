@@ -22,7 +22,7 @@
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
 
     <link rel="shortcut icon" href="~/Frontend/Client/assets/images/favicon.png" type="image/x-icon">
-    <title>Boleto  - Online Ticket Booking Website HTML Template</title>
+    <title>@ViewBag.Title</title>
     <!--custom-->
 
 
@@ -120,7 +120,7 @@
                     <div class="form-group large">
                         @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { style = "width: 100%;" }))
                         {
-                            <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm..." autocomplete="off">
+                            <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm phim..." autocomplete="off">
                             <div class="tt-menu tt-open" style="position: absolute; top: 100%; left: 0px; z-index: 100; width: 100%; display: block; background-color: #ffffff00; border-radius: 10px; ">
                             </div>
                             <button type="submit"><i class="fas fa-search"></i></button>
@@ -259,7 +259,7 @@
                     {
                         var data = JSON.parse(response);
                         console.log(data);
-                        data = data.slice(0, 8);
+                        data = data.slice(0, 6);
                         if (searchField != "") {
                             var html_body =` <div class="tt-dataset tt-dataset-states">
 
@@ -279,12 +279,12 @@
                                                 overflow: hidden;
                                                 text-overflow: ellipsis;">
                                             ${item.ten_phim}</h1>
-                                    <p style="display: -webkit-box;
+                                    @*<p style="display: -webkit-box;
                                                  -webkit-line-clamp: 3;
                                                   -webkit-box-orient: vertical;
                                                    overflow: hidden;
                                                     text-overflow: ellipsis;">
-                                            ${item.chi_tiet}</p>
+                                            ${item.chi_tiet}</p>*@
                                     @*<span style="position: absolute;bottom: 0;">
                                         <i class="fa fa-map-marker" aria-hidden="true">
                                         </i>

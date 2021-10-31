@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
 
 namespace CinemaBooking.Areas.Admin.Controllers
 {
@@ -38,18 +39,23 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 Random rd = new Random();
                 var numrd = rd.Next(1, 100).ToString();
-                String strSlug = MyString.ToAscii(Phim.ten_phim) + numrd + Phim.id;
+                string except = " ";
+                string strResult = Regex.Replace(Phim.ten_phim, @"[^a-zA-Z0-9" + except + "]+", string.Empty);
+                string strSlug = MyString.ToAscii(strResult) + numrd + Phim.id;
                 Phim.slug = strSlug;
                 Phim.create_at = DateTime.Now;
                 Phim.update_at = DateTime.Now;
-                Phim.status = 1;
+                Phim.status = 2;
+                Phim.loai_phim_chieu = 2;
                 //Upload File
                 var file = Request.Files["anh"];
                 if (file != null && file.ContentLength > 0)
                 {
-                    String filename = strSlug + file.FileName.Substring(file.FileName.LastIndexOf("."));
+
+                    string filename = strSlug + file.FileName.Substring(file.FileName.LastIndexOf("."));
                     Phim.anh = filename;
-                    String StrPath = Path.Combine(Server.MapPath("~/images/movies/"), filename);
+                    string path = Server.MapPath("~/images/movies/");
+                    string StrPath = Path.Combine(path, filename);
                     file.SaveAs(StrPath);
                 }
                 db.phims.Add(Phim);
@@ -157,6 +163,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             //}
             phim Phim = db.phims.Find(id);
             Phim.status = 2;
+
 
             Phim.update_at = DateTime.Now;
             //Phim.update_by = (Session["Username"].ToString());
