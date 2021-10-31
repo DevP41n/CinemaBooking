@@ -11,7 +11,8 @@ namespace CinemaBooking.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class khach_hang
     {
         CinemaBookingEntities db = new CinemaBookingEntities();
