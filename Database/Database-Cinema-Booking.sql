@@ -22,6 +22,7 @@ CREATE TABLE khach_hang
 	cmnd varchar(9),
 	create_at datetime,
 	update_at datetime,
+	confirmpassword Varchar(100)
 
 	CONSTRAINT PK_KHang PRIMARY KEY(id),
 )
@@ -105,7 +106,6 @@ CREATE TABLE phim
 
 	CONSTRAINT PK_Phim PRIMARY KEY(id),
 	constraint Fk_TheLoai foreign key(the_loai_phim_id) references the_loai_phim(id),
-	constraint Fk_DienVien foreign key(dien_vien_id) references dien_vien(id),
 	constraint Fk_DaoDien foreign key(dao_dien_id) references dao_dien(id),
 )
 GO
@@ -289,3 +289,14 @@ ALTER TABLE phong_chieu ADD ten_phong nvarchar(255);
 
 -- Thêm status cho bảng liên hệ
 ALTER TABLE lien_he ADD status int;
+-- Bảng danh sách giữa phim và diễn viên
+CREATE TABLE list_phim_dienvien(
+	ID bigint IDENTITY(1,1) NOT NULL,
+	id_phim int NOT NULL,
+	id_dienvien int NOT NULL,
+
+	CONSTRAINT PK_list_phim_dienvien PRIMARY KEY(ID),
+	CONSTRAINT FK_list_phim_dienvien_dien_vien FOREIGN KEY (id_dienvien) REFERENCES dien_vien(id),
+	CONSTRAINT FK_list_phim_dienvien_phim FOREIGN KEY (id_phim) REFERENCES phim([id])
+)
+GO

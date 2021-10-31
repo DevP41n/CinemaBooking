@@ -22,14 +22,18 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult CreateMovie()
         {
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
+            ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
+            ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             return View();
         }
 
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateMovie(phim Phim)
+        public ActionResult CreateMovie(phim Phim,list_phim_dienvien listdienvien,String[] dienvienarray)
         {
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
+            ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
+            ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
@@ -51,6 +55,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 db.phims.Add(Phim);
                 TempData["Message"] = "Tạo thành công!";
                 db.SaveChanges();
+                foreach (string dienvienid in dienvienarray)
+                {
+                    dien_vien selectdienvien = db.dien_vien.ToList().Find(p => p.id.ToString() == dienvienid);
+                    listdienvien.id_phim = Phim.id;
+                    listdienvien.id_dienvien = selectdienvien.id;
+                    db.list_phim_dienvien.Add(listdienvien);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("ListMovie");
             }
             return View(Phim);

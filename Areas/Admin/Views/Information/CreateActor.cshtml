@@ -1,0 +1,126 @@
+﻿@model CinemaBooking.Models.dien_vien
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">Tin tức</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active">Tạo mới</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="float-right d-none d-md-block">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-settings mr-2"></i> Settings
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            @using (Html.BeginForm("CreateActor", "Information", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                                <div class="form-group row">
+                                    <label>Họ tên</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ho_ten, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ho_ten, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label>Mô tả</label>
+                                    <div class="col-md-10">
+                                        @Html.TextAreaFor(model => model.mo_ta, new { @class = "form-control", @id = "chitietsanpham" })
+                                        @Html.ValidationMessageFor(model => model.mo_ta, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label>Quốc tịch</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.quoc_tich, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.quoc_tich, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label>Chiều cao</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.chieu_cao, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.chieu_cao, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label>Ngày sinh</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ngay_sinh, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ngay_sinh, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label>Chi tiết</label>
+                                    <div class="col-md-10">
+                                        @Html.TextAreaFor(model => model.chi_tiet, new { @class = "form-control", @id = "chitietsanpham" })
+                                        @Html.ValidationMessageFor(model => model.chi_tiet, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label>Ảnh</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.anh, new { htmlAttributes = new { type = "file", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.anh, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="float-lg-right">
+                                    <div class="form-group mb-0">
+                                        <div>
+                                            <input type="submit" value="Create" class="btn btn-primary waves-effect waves-light mr-1" />
+                                            <a href="@Url.Action("ListActor","Information")" class="btn btn-primary waves-effect waves-light mr-1">
+                                                Cancel
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- end main content-->

@@ -40,7 +40,7 @@
                                         @Model.tieu_de
                                     </h4>
                                     <p>
-                                        @Model.noi_dung
+                                        @Html.Raw(Model.noi_dung)
                                     </p>
                                    @* <blockquote>
                                         Modi perferendis ipsa, dolorum eaque accusantium! Velitlibero fugit dolores repellendus consequatur nisi, deserunt aperiam a ea ex hic, iusto atque, quas. Aliquam rerum dolores saepe sunt, assumenda voluptas.
@@ -69,7 +69,7 @@
                             @foreach (var item in db.su_kien.SqlQuery("SELECT TOP 3 * FROM su_kien ORDER BY NEWID()"))
                             {
                                 qnt++;
-                                if (qnt > 4)
+                                if (qnt >= 4)
                                 {
                                     break;
                                 }

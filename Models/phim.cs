@@ -17,6 +17,7 @@ namespace CinemaBooking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public phim()
         {
+            this.list_phim_dienvien = new HashSet<list_phim_dienvien>();
             this.suat_chieu = new HashSet<suat_chieu>();
         }
     
@@ -40,7 +41,8 @@ namespace CinemaBooking.Models
         public Nullable<int> the_loai_phim_id { get; set; }
     
         public virtual dao_dien dao_dien { get; set; }
-        public virtual dien_vien dien_vien { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<list_phim_dienvien> list_phim_dienvien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<suat_chieu> suat_chieu { get; set; }
         public virtual the_loai_phim the_loai_phim { get; set; }

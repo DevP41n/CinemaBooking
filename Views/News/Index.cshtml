@@ -28,26 +28,31 @@
 <section class="blog-section padding-top padding-bottom">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8 mb-50 mb-lg-0">
+            <div class="col-lg-7 mb-50 mb-lg-0">
                 <article>
                     @foreach (var item in Model)
                     {
                         <div class="post-item">
-                            <div class="post-thumb">
+                                        <!--<div class="post-thumb">
+                                            <div class="owl-carousel owl-theme blog-slider">
+                                                <img src="~/images/news/@item.anh" alt="blog" width="750" height="360">
+                                                <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
+                                                <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
+                                            </div>
 
-                                <div class="owl-carousel owl-theme blog-slider">
-                                    <img src="~/images/news/@item.anh" alt="blog"  width="750" height="360">
-                                    <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
-                                    <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
-                                </div>
-                                @*<div class="blog-prev">
-                            <i class="flaticon-double-right-arrows-angles"></i>
-                        </div>
-                        <div class="blog-next active">
-                            <i class="flaticon-double-right-arrows-angles"></i>
-                        </div>*@
+                                            <div class="blog-prev">
+                                            <i class="flaticon-double-right-arrows-angles"></i>
+                                              </div>
+                                                 <div class="blog-next">
+                                            <i class="flaticon-double-right-arrows-angles"></i>
+                                                </div>
 
-                            </div>
+                                        </div>-->
+                                        <div class="post-thumb">
+                                            <a href="@Url.Action("NewsDetail","News", new {id=item.id })">
+                                                <img src="~/images/news/@item.anh" alt="blog" width="750" height="360">
+                                            </a>
+                                        </div>
                             <div class="post-content">
                                 <div class="post-header">
                                     <h4 class="title">
@@ -60,7 +65,7 @@
                                 <a href="#0"><i class="flaticon-view"></i>466 View</a>
                             </div>*@
                                     <p>
-                                        @item.noi_dung
+                                        @Html.Raw(item.noi_dung)
                                     </p>
                                 </div>
                                 <div class="entry-content">
@@ -73,7 +78,7 @@
                                             <h6 class="title"><a href="#0">@item.create_by</a></h6>
                                         </div>
                                     </div>
-                                    <a href="@Url.Action("NewsDetail","News", new {id=item.id })" class="buttons">Read More <i class="flaticon-right"></i></a>
+                                    <a href="@Url.Action("NewsDetail","News", new {id=item.id })" class="buttons">Đọc tiếp <i class="flaticon-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -135,37 +140,7 @@
                             </div>
                         </div>
                     </div>
-                    @*<div class="widget widget-follow">
-                            <h5 class="title">Follow Us</h5>
-                            <ul class="social-icons">
-                                <li>
-                                    <a href="#0" class="">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#0" class="active">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#0" class="">
-                                        <i class="fab fa-pinterest-p"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#0">
-                                        <i class="fab fa-google"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#0">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>*@
-                    <div class="widget widget-categories">
+                   @* <div class="widget widget-categories">
                         <h5 class="title">categories</h5>
                         <ul>
                             <li>
@@ -204,8 +179,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
-                    <div class="widget widget-tags">
+                    </div>*@
+                    @*<div class="widget widget-tags">
                         <h5 class="title">featured tags</h5>
                         <ul>
                             <li>
@@ -224,7 +199,7 @@
                                 <a href="#0" class="active">landing</a>
                             </li>
                         </ul>
-                    </div>
+                    </div>*@
                 </aside>
             </div>
         </div>
