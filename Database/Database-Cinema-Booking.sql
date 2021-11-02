@@ -91,6 +91,7 @@ CREATE TABLE phim
 	trailer varchar(max),
 	slug varchar(max),
 	anh varchar(max),
+	anhbackground varchar(max),
 	status int,
 	thoi_luong int,
 	ngay_cong_chieu datetime,
@@ -105,7 +106,6 @@ CREATE TABLE phim
 	the_loai_phim_id int,
 
 	CONSTRAINT PK_Phim PRIMARY KEY(id),
-	constraint Fk_TheLoai foreign key(the_loai_phim_id) references the_loai_phim(id),
 	constraint Fk_DaoDien foreign key(dao_dien_id) references dao_dien(id),
 )
 GO
@@ -301,6 +301,17 @@ CREATE TABLE list_phim_dienvien(
 	CONSTRAINT FK_list_phim_dienvien_phim FOREIGN KEY (id_phim) REFERENCES phim([id])
 )
 GO
+-- Bảng danh sách giữa phim và thể loại
+CREATE TABLE list_phim_theloai(
+	ID int IDENTITY(1,1) NOT NULL,
+	id_phim int  NULL,
+	id_theloai int NULL,
+
+	CONSTRAINT PK_list_phim_theloai PRIMARY KEY(ID),
+	CONSTRAINT FK_list_phim_theloai_the_loai_phim FOREIGN KEY (id_theloai) REFERENCES the_loai_phim(id),
+	CONSTRAINT FK_list_phim_theloai_phim FOREIGN KEY (id_phim) REFERENCES phim(id)
+)
+GO
 
 
 -- Thêm bảng movie rate
@@ -314,4 +325,5 @@ CREATE TABLE movie_rate(
 	created_at datetime,
 	CONSTRAINT PK_MovieRate PRIMARY KEY(id),
 )
+GO
 

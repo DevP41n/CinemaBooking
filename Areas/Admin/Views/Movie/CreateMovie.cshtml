@@ -49,17 +49,16 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                 <div class="form-group row">
-                                    @Html.LabelFor(model => model.the_loai_phim_id, "Thể loại phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("the_loai_phim_id", "<- - - - - Chọn thể loại - - - - ->")
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
                                     @Html.LabelFor(model => model.ten_phim, "Tên phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.ten_phim, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.ten_phim, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.Label("Thể loại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("theloaiarray", (MultiSelectList)ViewBag.the_loai_phim_id, new { multiple = "multiple" })
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -69,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    @Html.LabelFor(model => model.dien_vien_id, "Diễn viên", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.Label("Diễn viên", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("dienvienarray", (MultiSelectList)ViewBag.dien_vien_id, new { multiple = "multiple" })
                                     </div>

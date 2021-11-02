@@ -244,30 +244,31 @@
     <script src="~/Scripts/toastr.min.js"></script>
     <script src="~/Content/Message.js"></script>
     <!--custom-->
+    <script src="~/Scripts/custom.js"></script>
+
     <script type="text/javascript">
-    $(document).ready(function() {
+        $(document).ready(function () {
 
-        $("#txtSearch").keyup(function () {
-           var searchField = $('#txtSearch').val();
-           var expression = RegExp(searchField, "i");
+    $("#txtSearch").keyup(function () {
+        var searchField = $('#txtSearch').val();
+        var expression = RegExp(searchField, "i");
 
-           $('.tt-dataset').remove();
-                $.ajax({
-                    url: '@Url.Action("SearchMovie", "Home")',
-                    type: "GET",
-                    success: function (response)
-                    {
-                        var data = JSON.parse(response);
-                        console.log(data);
-                        data = data.slice(0, 6);
-                        if (searchField != "") {
-                            var html_body =` <div class="tt-dataset tt-dataset-states">
+        $('.tt-dataset').remove();
+        $.ajax({
+            url: '@Url.Action("SearchMovie", "Home")',
+            type: "GET",
+            success: function (response) {
+                var data = JSON.parse(response);
+                console.log(data);
+                data = data.slice(0, 6);
+                if (searchField != "") {
+                    var html_body = ` <div class="tt-dataset tt-dataset-states">
 
                                 </div>`
-                        } $('.tt-menu').append(html_body);
-                        $.each(data, function (key, item) {
-                            if (item.ten_phim.search(expression) != -1 && searchField != "") {
-                                var html_Search = ` <div class="man-section tt-suggestion tt-selectable">
+                } $('.tt-menu').append(html_body);
+                $.each(data, function (key, item) {
+                    if (item.ten_phim.search(expression) != -1 && searchField != "") {
+                        var html_Search = ` <div class="man-section tt-suggestion tt-selectable">
                                     <a href="/Movie/MovieDetail/${item.slug}" style="width: 100%;">
                                   <div class="image-section">
                                     <img src="/images/movies/${item.anh}">
@@ -297,18 +298,20 @@
                                     </div>
                                     </a>
                                   </div>`;
-                                $('.tt-dataset').append(html_Search);
-                            }
-                        }
-                            );
+                        $('.tt-dataset').append(html_Search);
                     }
-                });
-
-
+                }
+                );
+            }
         });
-    });
 
+
+    });
+});
     </script>
+
+
+
 </body>
 @RenderSection("scripts", required: false)
 </html>

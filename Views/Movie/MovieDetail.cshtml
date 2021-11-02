@@ -1,13 +1,12 @@
 ﻿@model CinemaBooking.Models.phim
 
 @{
-    ViewBag.Title = "Chi Tiết";
+    ViewBag.Title = Model.ten_phim;
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
-
-
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 <!-- ==========Banner-Section========== -->
-<section class="details-banner bg_img" data-background="~/Frontend/Client/assets/images/banner/banner03.jpg">
+<section class="details-banner bg_img" data-background="../../images/movies/banner/The-Conjuring-3.jpg">
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-thumb">
@@ -18,20 +17,25 @@
             </div>
             <div class="details-banner-content offset-lg-3">
                 <h3 class="title">@Model.ten_phim</h3>
-                <div class="tags">
-                    <a href="#0">English</a>
-                    <a href="#0">Hindi</a>
-                    <a href="#0">Telegu</a>
-                    <a href="#0">Tamil</a>
-                </div>
-                <a href="#0" class="button">@Model.the_loai_phim.ten_the_loai</a>
+                @*<div class="tags">
+                        <a href="#0">English</a>
+                        <a href="#0">Hindi</a>
+                        <a href="#0">Telegu</a>
+                        <a href="#0">Tamil</a>
+                    </div>*@
+
+                @foreach (var theloai in db.list_phim_theloai.Where(t => t.id_phim == Model.id))
+                {
+                    <a href="#0" class="button">@theloai.the_loai_phim.ten_the_loai</a>
+                }
+
                 <div class="social-and-duration">
                     <div class="duration-area">
                         <div class="item">
-                            <i class="fas fa-calendar-alt"></i><span>@Html.FormatValue(@Model.ngay_cong_chieu, "{0:D}")</span>
+                            <i class="fas fa-calendar-alt"></i><span>@Html.FormatValue(@Model.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                         </div>
                         <div class="item">
-                            <i class="far fa-clock"></i><span>120 phút</span>
+                            <i class="far fa-clock"></i><span>@Model.thoi_luong phút</span>
                         </div>
                     </div>
                 </div>
@@ -118,93 +122,43 @@
                         </li>
                     </ul>
                 </div>
-                <div class="widget-1 widget-offer">
-                    <h3 class="title">Applicable offer</h3>
-                    <div class="offer-body">
-                        <div class="offer-item">
-                            <div class="thumb">
-                                <img src="~/Frontend/Client/assets/images/sidebar/offer01.png" alt="sidebar">
-                            </div>
-                            <div class="content">
-                                <h6>
-                                    <a href="#0">Amazon Pay Cashback Offer</a>
-                                </h6>
-                                <p>Win Cashback Upto Rs 300*</p>
-                            </div>
-                        </div>
-                        <div class="offer-item">
-                            <div class="thumb">
-                                <img src="~/Frontend/Client/assets/images/sidebar/offer02.png" alt="sidebar">
-                            </div>
-                            <div class="content">
-                                <h6>
-                                    <a href="#0">PayPal Offer</a>
-                                </h6>
-                                <p>
-                                    Transact first time with Paypal and
-                                    get 100% cashback up to Rs. 500
-                                </p>
-                            </div>
-                        </div>
-                        <div class="offer-item">
-                            <div class="thumb">
-                                <img src="~/Frontend/Client/assets/images/sidebar/offer03.png" alt="sidebar">
-                            </div>
-                            <div class="content">
-                                <h6>
-                                    <a href="#0">HDFC Bank Offer</a>
-                                </h6>
-                                <p>
-                                    Get 15% discount up to INR 100*
-                                    and INR 50* off on F&B T&C apply
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget-1 widget-banner">
-                    <div class="widget-1-body">
-                        <a href="#0">
-                            <img src="~/Frontend/Client/assets/images/sidebar/banner/banner01.jpg" alt="banner">
-                        </a>
-                    </div>
-                </div>
             </div>
             <div class="col-lg-9 mb-50">
                 <div class="movie-details">
-                    <h3 class="title">photos</h3>
-                    <div class="details-photos owl-carousel">
-                        <div class="thumb">
-                            <a href="~/Frontend/Client/assets/images/movie/movie-details01.jpg" class="img-pop">
-                                <img src="~/Frontend/Client/assets/images/movie/movie-details01.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="~/Frontend/Client/assets/images/movie/movie-details02.jpg" class="img-pop">
-                                <img src="~/Frontend/Client/assets/images/movie/movie-details02.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="~/Frontend/Client/assets/images/movie/movie-details03.jpg" class="img-pop">
-                                <img src="~/Frontend/Client/assets/images/movie/movie-details03.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="~/Frontend/Client/assets/images/movie/movie-details01.jpg" class="img-pop">
-                                <img src="~/Frontend/Client/assets/images/movie/movie-details01.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="~/Frontend/Client/assets/images/movie/movie-details02.jpg" class="img-pop">
-                                <img src="~/Frontend/Client/assets/images/movie/movie-details02.jpg" alt="movie">
-                            </a>
-                        </div>
-                        <div class="thumb">
-                            <a href="~/Frontend/Client/assets/images/movie/movie-details03.jpg" class="img-pop">
-                                <img src="~/Frontend/Client/assets/images/movie/movie-details03.jpg" alt="movie">
-                            </a>
-                        </div>
-                    </div>
+                    <!--Photo here-->
+                    <!--<h3 class="title">photos</h3>
+                        <div class="details-photos owl-carousel">
+                            <div class="thumb">
+                                <a href="~/Frontend/Client/assets/images/movie/movie-details01.jpg" class="img-pop">
+                                    <img src="~/Frontend/Client/assets/images/movie/movie-details01.jpg" alt="movie">
+                                </a>
+                            </div>
+                            <div class="thumb">
+                                <a href="~/Frontend/Client/assets/images/movie/movie-details02.jpg" class="img-pop">
+                                    <img src="~/Frontend/Client/assets/images/movie/movie-details02.jpg" alt="movie">
+                                </a>
+                            </div>
+                            <div class="thumb">
+                                <a href="~/Frontend/Client/assets/images/movie/movie-details03.jpg" class="img-pop">
+                                    <img src="~/Frontend/Client/assets/images/movie/movie-details03.jpg" alt="movie">
+                                </a>
+                            </div>
+                            <div class="thumb">
+                                <a href="~/Frontend/Client/assets/images/movie/movie-details01.jpg" class="img-pop">
+                                    <img src="~/Frontend/Client/assets/images/movie/movie-details01.jpg" alt="movie">
+                                </a>
+                            </div>
+                            <div class="thumb">
+                                <a href="~/Frontend/Client/assets/images/movie/movie-details02.jpg" class="img-pop">
+                                    <img src="~/Frontend/Client/assets/images/movie/movie-details02.jpg" alt="movie">
+                                </a>
+                            </div>
+                            <div class="thumb">
+                                <a href="~/Frontend/Client/assets/images/movie/movie-details03.jpg" class="img-pop">
+                                    <img src="~/Frontend/Client/assets/images/movie/movie-details03.jpg" alt="movie">
+                                </a>
+                            </div>
+                        </div>-->
                     <div class="tab summery-review">
                         <ul class="tab-menu">
                             <li class="active">
@@ -242,68 +196,68 @@
                                                 <div class="cast-content">
                                                     <h6 class="cast-title"><a href="@Url.Action("ActorDetail","Information", new { id= ad.dien_vien.slug })">@ad.dien_vien.ho_ten</a></h6>
                                                     @*<span class="cate">actor</span>
-                            <p>As Richie Tozier</p>*@
+                                                        <p>As Richie Tozier</p>*@
                                                 </div>
                                             </div>
                                         }
 
                                     </div>
                                 </div>
-                                 <!--<div class="item">
-                                            <div class="header">
-                                                <h5 class="sub-title">crew</h5>
-                                                <div class="navigation">
-                                                    <div class="cast-prev-2"><i class="flaticon-double-right-arrows-angles"></i></div>
-                                                    <div class="cast-next-2"><i class="flaticon-double-right-arrows-angles"></i></div>
-                                                </div>
+                                <!--<div class="item">
+                                    <div class="header">
+                                        <h5 class="sub-title">crew</h5>
+                                        <div class="navigation">
+                                            <div class="cast-prev-2"><i class="flaticon-double-right-arrows-angles"></i></div>
+                                            <div class="cast-next-2"><i class="flaticon-double-right-arrows-angles"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="casting-slider-two owl-carousel">
+                                        <div class="cast-item">
+                                            <div class="cast-thumb">
+                                                <a href="#0">
+                                                    <img src="~/Frontend/Client/assets/images/cast/cast05.jpg" alt="cast">
+                                                </a>
                                             </div>
-                                            <div class="casting-slider-two owl-carousel">
-                                                <div class="cast-item">
-                                                    <div class="cast-thumb">
-                                                        <a href="#0">
-                                                            <img src="~/Frontend/Client/assets/images/cast/cast05.jpg" alt="cast">
-                                                        </a>
-                                                    </div>
-                                                    <div class="cast-content">
-                                                        <h6 class="cast-title"><a href="#0">pete warren</a></h6>
-                                                        <span class="cate">actor</span>
-                                                    </div>
-                                                </div>
-                                                <div class="cast-item">
-                                                    <div class="cast-thumb">
-                                                        <a href="#0">
-                                                            <img src="~/Frontend/Client/assets/images/cast/cast06.jpg" alt="cast">
-                                                        </a>
-                                                    </div>
-                                                    <div class="cast-content">
-                                                        <h6 class="cast-title"><a href="#0">howard bass</a></h6>
-                                                        <span class="cate">executive producer</span>
-                                                    </div>
-                                                </div>
-                                                <div class="cast-item">
-                                                    <div class="cast-thumb">
-                                                        <a href="#0">
-                                                            <img src="~/Frontend/Client/assets/images/cast/cast07.jpg" alt="cast">
-                                                        </a>
-                                                    </div>
-                                                    <div class="cast-content">
-                                                        <h6 class="cast-title"><a href="#0">naomi smith</a></h6>
-                                                        <span class="cate">producer</span>
-                                                    </div>
-                                                </div>
-                                                <div class="cast-item">
-                                                    <div class="cast-thumb">
-                                                        <a href="#0">
-                                                            <img src="~/Frontend/Client/assets/images/cast/cast08.jpg" alt="cast">
-                                                        </a>
-                                                    </div>
-                                                    <div class="cast-content">
-                                                        <h6 class="cast-title"><a href="#0">tom martinez</a></h6>
-                                                        <span class="cate">producer</span>
-                                                    </div>
-                                                </div>
+                                            <div class="cast-content">
+                                                <h6 class="cast-title"><a href="#0">pete warren</a></h6>
+                                                <span class="cate">actor</span>
                                             </div>
-                                        </div>-->
+                                        </div>
+                                        <div class="cast-item">
+                                            <div class="cast-thumb">
+                                                <a href="#0">
+                                                    <img src="~/Frontend/Client/assets/images/cast/cast06.jpg" alt="cast">
+                                                </a>
+                                            </div>
+                                            <div class="cast-content">
+                                                <h6 class="cast-title"><a href="#0">howard bass</a></h6>
+                                                <span class="cate">executive producer</span>
+                                            </div>
+                                        </div>
+                                        <div class="cast-item">
+                                            <div class="cast-thumb">
+                                                <a href="#0">
+                                                    <img src="~/Frontend/Client/assets/images/cast/cast07.jpg" alt="cast">
+                                                </a>
+                                            </div>
+                                            <div class="cast-content">
+                                                <h6 class="cast-title"><a href="#0">naomi smith</a></h6>
+                                                <span class="cate">producer</span>
+                                            </div>
+                                        </div>
+                                        <div class="cast-item">
+                                            <div class="cast-thumb">
+                                                <a href="#0">
+                                                    <img src="~/Frontend/Client/assets/images/cast/cast08.jpg" alt="cast">
+                                                </a>
+                                            </div>
+                                            <div class="cast-content">
+                                                <h6 class="cast-title"><a href="#0">tom martinez</a></h6>
+                                                <span class="cate">producer</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
                             </div>
                             <div class="tab-item">
                                 @foreach (var item in ViewBag.Rates)
@@ -356,7 +310,7 @@
                                 }
                                 <label for="rate">Đánh giá:</label>
                                 <input id="rate" type="number" min="0" max="5" step="1" value="5" style="width:50px; height:30px" /><span class="fa fa-star checked"></span>
-                                <br />                              
+                                <br />
                                 <textarea id="cmt" rows="5" cols="100"></textarea>
                                 <br />
                                 <button type="button" class="btn-primary" id="btnRate" data-id="@Model.id" title="Gửi" href="#">Gửi</button>

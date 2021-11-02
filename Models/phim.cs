@@ -18,6 +18,7 @@ namespace CinemaBooking.Models
         public phim()
         {
             this.list_phim_dienvien = new HashSet<list_phim_dienvien>();
+            this.list_phim_theloai = new HashSet<list_phim_theloai>();
             this.suat_chieu = new HashSet<suat_chieu>();
         }
     
@@ -36,15 +37,15 @@ namespace CinemaBooking.Models
         public Nullable<System.DateTime> create_at { get; set; }
         public string update_by { get; set; }
         public Nullable<System.DateTime> update_at { get; set; }
-        public Nullable<int> dien_vien_id { get; set; }
         public Nullable<int> dao_dien_id { get; set; }
-        public Nullable<int> the_loai_phim_id { get; set; }
+        public string anhbackground { get; set; }
     
         public virtual dao_dien dao_dien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<list_phim_dienvien> list_phim_dienvien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<list_phim_theloai> list_phim_theloai { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<suat_chieu> suat_chieu { get; set; }
-        public virtual the_loai_phim the_loai_phim { get; set; }
     }
 }

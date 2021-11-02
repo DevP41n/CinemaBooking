@@ -3,6 +3,8 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using PagedList;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace CinemaBooking.Controllers
 {
@@ -29,6 +31,30 @@ namespace CinemaBooking.Controllers
         public ActionResult DirectorDetail(string id)
         {
             return View(db.dao_dien.SingleOrDefault(s => s.slug.Equals(id)));
+        }
+        public JsonResult SearchActor()
+        {
+            List<dien_vien> actor = db.dien_vien.ToList();
+
+            string value = string.Empty;
+            value = JsonConvert.SerializeObject(actor, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            return Json(value, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult SearchDirector()
+        {
+            List<dao_dien> director = db.dao_dien.ToList();
+
+            string value = string.Empty;
+            value = JsonConvert.SerializeObject(director, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            return Json(value, JsonRequestBehavior.AllowGet);
         }
         public ActionResult AboutUs()
         {

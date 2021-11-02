@@ -201,6 +201,9 @@
     <Compile Include="Models\list_phim_dienvien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\list_phim_theloai.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\loai_ghe.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -536,31 +539,8 @@
     <Content Include="Frontend\login\style.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="images\banner\banner-ontop.png" />
-    <Content Include="images\banner\banner111.jpg" />
-    <Content Include="images\banner\benq.jpg" />
-    <Content Include="images\banner\BG-6.png" />
-    <Content Include="images\banner\hero%40mobile.jpg" />
-    <Content Include="images\banner\hyperx.jpg" />
+    <Content Include="images\banner\empty-cinema-768x293.jpg" />
     <Content Include="images\banner\lambor.jpg" />
-    <Content Include="images\banner\lenovo.jpg" />
-    <Content Include="images\banner\msiraider.jpg" />
-    <Content Include="images\banner\msisale.jpg" />
-    <Content Include="images\banner\razer.jpg" />
-    <Content Include="images\banner\social-preview.jpg" />
-    <Content Include="images\banner\steel.png" />
-    <Content Include="images\banner\topbanner.jpg" />
-    <Content Include="images\banner\tuf.jpg" />
-    <Content Include="images\banner\unnamed.jpg" />
-    <Content Include="images\banner\x1.jpg" />
-    <Content Include="images\banner\x2.jpg" />
-    <Content Include="images\banner\x3.jpg" />
-    <Content Include="images\banner\x4.jpg" />
-    <Content Include="images\banner\x5.jpg" />
-    <Content Include="images\banner\x6.jpg" />
-    <Content Include="images\banner\x7.jpg" />
-    <Content Include="images\banner\x8.jpg" />
-    <Content Include="images\banner\x9.jpg" />
     <Content Include="images\logo\HyperGear.png" />
     <Content Include="images\logo\iconvn.png" />
     <Content Include="images\logo\LOGO1.png" />
@@ -570,6 +550,7 @@
     <Content Include="images\logo\logo8.png" />
     <Content Include="images\logo\logohome.png" />
     <Content Include="images\logo\titleHyperGear.png" />
+    <Content Include="images\movies\banner\The-Conjuring-3.jpg" />
     <Content Include="images\news\admin068.jpg" />
     <Content Include="images\news\admin070.jpg" />
     <Content Include="images\news\admin077.jpg" />
@@ -736,6 +717,7 @@
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
     <Content Include="Scripts\i18n\az.js" />
@@ -3618,7 +3600,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="images\information\" />
-    <Folder Include="images\movies\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\src\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\test\" />
     <Folder Include="template\admin\assets\libs\chartist\scss\settings\" />

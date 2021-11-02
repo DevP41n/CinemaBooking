@@ -30,7 +30,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateMovie(phim Phim,list_phim_dienvien listdienvien,String[] dienvienarray)
+        public ActionResult CreateMovie(phim Phim,list_phim_dienvien listdienvien,list_phim_theloai listtheloai,String[] theloaiarray,String[] dienvienarray)
         {
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
@@ -59,7 +59,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     file.SaveAs(StrPath);
                 }
                 db.phims.Add(Phim);
-                TempData["Message"] = "Tạo thành công!";
                 db.SaveChanges();
                 foreach (string dienvienid in dienvienarray)
                 {
@@ -69,7 +68,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     db.list_phim_dienvien.Add(listdienvien);
                     db.SaveChanges();
                 }
-                
+                foreach (string theloaiid in theloaiarray)
+                {
+                    the_loai_phim selecttheloai = db.the_loai_phim.ToList().Find(p => p.id.ToString() == theloaiid);
+                    listtheloai.id_phim = Phim.id;
+                    listtheloai.id_theloai = selecttheloai.id;
+                    db.list_phim_theloai.Add(listtheloai);
+                    db.SaveChanges();
+                }
+                TempData["Message"] = "Tạo thành công!";
                 return RedirectToAction("ListMovie");
             }
             return View(Phim);
@@ -250,8 +257,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult DeleteCate(int id)
         {
             //Tìm kiếm id thể loại phim có tồn tại trong phim nào không
-            var del = from dele in db.phims
-                      where dele.the_loai_phim_id == id
+            var del = from dele in db.list_phim_theloai
+                      where dele.id_theloai == id
                       select dele;
             var coundel = del.Count(); //Đếm số lượng id thể loại phim có trong phim
 

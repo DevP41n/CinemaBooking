@@ -17,7 +17,7 @@ namespace CinemaBooking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public the_loai_phim()
         {
-            this.phims = new HashSet<phim>();
+            this.list_phim_theloai = new HashSet<list_phim_theloai>();
         }
     
         public int id { get; set; }
@@ -29,6 +29,6 @@ namespace CinemaBooking.Models
         public Nullable<System.DateTime> update_at { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<phim> phims { get; set; }
+        public virtual ICollection<list_phim_theloai> list_phim_theloai { get; set; }
     }
 }
