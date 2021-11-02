@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 <div class="main-content">
 
     <div class="page-content">
@@ -63,22 +63,25 @@
                                                     STT
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ten_phim)
+                                                    Tên phim
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.anh)
+                                                    Ảnh
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.the_loai_phim.ten_the_loai)
+                                                    Thể loại
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.thoi_luong)
+                                                    Thời lượng
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ngay_cong_chieu)
+                                                    Ngày công chiếu
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.status)
+                                                    Công chiếu
+                                                </th>
+                                                <th>
+                                                    Trạng thái
                                                 </th>
                                                 <th>
                                                     Công cụ
@@ -103,13 +106,26 @@
                                                     <img class="img-thumbnail" src="~/images/movies/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.the_loai_phim.ten_the_loai)
+                                                    @foreach (var tl in db.list_phim_theloai.Where(x => x.id_phim == item.id))
+                                                    {
+                                                        @Html.DisplayFor(modelItem => tl.the_loai_phim.ten_the_loai)
+                                                    }
+
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.thoi_luong)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.ngay_cong_chieu)
+                                                </td>
+                                                <td>
+                                                    <label class="switch">
+                                                        @if (item.loai_phim_chieu == 1)
+                                                        {<input class="ChangeRelease" data-id="@item.id" data-controller="Movie" type="checkbox" checked>}
+                                                        else
+                                                        {<input class="ChangeRelease" data-id="@item.id" data-controller="Movie" type="checkbox" unchecked>}
+                                                        <span class="slider round"></span>
+                                                    </label>
                                                 </td>
                                                 <td>
                                                     <label class="switch">
@@ -123,7 +139,7 @@
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
-                                                        <a  href="@Url.Action("EditMovie", "Movie", new { id = item.id })" class="text-white">
+                                                        <a href="@Url.Action("EditMovie", "Movie", new { id = item.id })" class="text-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                 <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z" />
@@ -159,22 +175,25 @@
                                                     STT
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ten_phim)
+                                                    Tên phim
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.anh)
+                                                    Ảnh
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.the_loai_phim.ten_the_loai)
+                                                    Thể loại
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.thoi_luong)
+                                                    Thời lượng
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.ngay_cong_chieu)
+                                                    Ngày công chiếu
                                                 </th>
                                                 <th>
-                                                    @Html.DisplayNameFor(model => model.status)
+                                                    Công chiếu
+                                                </th>
+                                                <th>
+                                                    Ẩn/hiện
                                                 </th>
                                                 <th>
                                                     Công cụ
@@ -199,7 +218,10 @@
                                                     <img class="img-thumbnail" src="~/images/movies/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.the_loai_phim.ten_the_loai)
+                                                    @foreach (var tl in db.list_phim_theloai.Where(x => x.id_phim == item.id))
+                                                    {
+                                                        @Html.DisplayFor(modelItem => tl.the_loai_phim.ten_the_loai)
+                                                    }
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.thoi_luong)
@@ -209,13 +231,21 @@
                                                 </td>
                                                 <td>
                                                     <label class="switch">
+                                                        @if (item.loai_phim_chieu == 1)
+                                                        {<input class="ChangeRelease" data-id="@item.id" data-controller="Movie" type="checkbox" checked>}
+                                                        else
+                                                        {<input class="ChangeRelease" data-id="@item.id" data-controller="Movie" type="checkbox" unchecked>}
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <label class="switch">
                                                         @if (item.status == 1)
                                                         {<input class="changeStatus" data-id="@item.id" data-controller="Movie" type="checkbox" checked>}
                                                         else
                                                         {<input class="changeStatus" data-id="@item.id" data-controller="Movie" type="checkbox" unchecked>}
                                                         <span class="slider round"></span>
                                                     </label>
-
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Khôi phục">

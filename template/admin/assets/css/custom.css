@@ -3,6 +3,31 @@
 }
 .marginadmin{
     margin-left: 40px !important;
-
-
+}
+.cast-item{
+    margin:0px 5px;
+    text-align:center;
+}
+.cast-thumb {
+    display: block;
+    height: 135px;
+    width: 120px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+    .cast-thumb img {
+        width: 100%;
+    }
+.cate-movie {
+    padding: 7px;
+    border: 1px solid #5958bc;
+    border-radius: 10px;
+    font-weight: 500;
+    color: #6067a2; 
+}
+.border-form-1 {
+    border: 1px solid #5958bc;
+    border-radius: 8px;
+    font-weight: 500;
 }

@@ -4,7 +4,7 @@
     ViewBag.Title = "EditMovie";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 <div class="main-content">
 
     <div class="page-content">
@@ -53,34 +53,81 @@
                                 @Html.HiddenFor(model => model.status)
                                 @Html.HiddenFor(model => model.create_at)
                                 @Html.HiddenFor(model => model.anh)
+                                @Html.HiddenFor(model => model.anhbackground)
+                                @Html.HiddenFor(model => model.loai_phim_chieu)
                                 @Html.HiddenFor(model => model.create_by)
-                                <div class="form-group row">
-                                    @Html.LabelFor(model => model.the_loai_phim_id, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownListFor(model => model.the_loai_phim_id, (SelectList)ViewBag.the_loai_phim, new { @class = "col-sm-2 col-form-label" })
-                                    </div>
-                                </div>
 
 
                                 <div class="form-group row">
                                     @Html.LabelFor(model => model.ten_phim, "Tên phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ten_phim, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.ten_phim, new { htmlAttributes = new { @class = "form-control border-form-1 " } })
                                         @Html.ValidationMessageFor(model => model.ten_phim, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
+                                <div class="form-group row">
+                                    @Html.Label("Thể loại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @foreach (var item in db.list_phim_theloai.Where(x => x.id_phim == Model.id))
+                                        {
+                                            <a class="cate-movie">@item.the_loai_phim.ten_the_loai</a>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.Label("Chọn lại thể loại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("theloaiarray", (MultiSelectList)ViewBag.the_loai_phim_id, new { multiple = "multiple" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.Label("Đạo diễn", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.dao_dien_id, (SelectList)ViewBag.dao_dien_id, new { @class = "col-sm-2 col-form-label" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.Label("Diễn viên", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10" style="display:flex;flex-wrap:wrap">
+                                        @foreach (var item in db.list_phim_dienvien.Where(x => x.id_phim == Model.id))
+                                        {
+                                            <div class="cast-item">
+                                                <div class="cast-thumb">
+                                                        <img src="~/images/information/@item.dien_vien.anh" alt="cast">
+                                                </div>
+                                                <div class="cast-content">
+                                                    <h6 class="cast-title"><a>@item.dien_vien.ho_ten</a></h6>
+                                                    @*<span class="cate">actor</span>
+                    <p>As Richie Tozier</p>*@
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.Label("Chọn loại diễn viên", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("dienvienarray", (MultiSelectList)ViewBag.dien_vien_id, new { multiple = "multiple" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.trailer, "Trailer", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.trailer, new { htmlAttributes = new { @class = "form-control border-form-1 " } })
+                                        @Html.ValidationMessageFor(model => model.trailer, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     @Html.LabelFor(model => model.ngay_cong_chieu, "Ngày công chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ngay_cong_chieu, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.ngay_cong_chieu, new { htmlAttributes = new { @class = "form-control border-form-1 " } })
                                         @Html.ValidationMessageFor(model => model.ngay_cong_chieu, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     @Html.LabelFor(model => model.thoi_luong, "Thời lượng (phút)", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.thoi_luong, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.thoi_luong, new { htmlAttributes = new { @class = "form-control border-form-1 " } })
                                         @Html.ValidationMessageFor(model => model.thoi_luong, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -93,11 +140,19 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    @Html.LabelFor(model => model.anh, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.LabelFor(model => model.anh, "Ảnh chính", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.anh, new { htmlAttributes = new { type = "file", @class = "form-control" } })
+                                        @Html.EditorFor(model => model.anh, new { htmlAttributes = new { type = "file", @class = "form-control " } })
                                         @Html.ValidationMessageFor(model => model.anh, "", new { @class = "text-danger" })
                                         <img class="img-thumbnail" src="~/images/movies/@Model.anh" alt="" width="100" height="100" />(Ảnh hiện tại)
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.anhbackground, "Ảnh nền", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.anhbackground, new { htmlAttributes = new { type = "file", @class = "form-control " } })
+                                        @Html.ValidationMessageFor(model => model.anhbackground, "", new { @class = "text-danger" })
+                                        <img class="img-thumbnail" src="~/images/movies/background/@Model.anhbackground" alt="" width="230" height="100" />(Ảnh hiện tại)
                                     </div>
                                 </div>
                                 <div class="float-lg-right">

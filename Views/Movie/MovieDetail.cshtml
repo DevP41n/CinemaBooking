@@ -6,13 +6,13 @@
 }
 @{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 <!-- ==========Banner-Section========== -->
-<section class="details-banner bg_img" data-background="../../images/movies/banner/The-Conjuring-3.jpg">
+<section class="details-banner bg_img" data-background="../../images/movies/background/@Model.anhbackground">
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-thumb">
                 <img src="~/images/movies/@Model.anh" alt="movie">
                 <a href="@Model.trailer" class="video-popup">
-                    <img src="~/Frontend/Client/assets/images/movie/video-button.png" alt="movie">
+                    <img src="~/Frontend/Client/assets/images/movie/video-button.png" alt="movie" style="background-color: #05020a45; border-radius: 50%; ">
                 </a>
             </div>
             <div class="details-banner-content offset-lg-3">
@@ -475,7 +475,7 @@
             </div>
         </div>
     </div>
-    </div>
+    
 </section>
 <!-- ==========Movie-Section========== -->
 <script>

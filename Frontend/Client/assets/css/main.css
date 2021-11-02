@@ -1908,15 +1908,15 @@ input[type="submit"] {
   border-radius: 5px;
 }
 
-.details-banner-wrapper .details-banner-thumb::after {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 18, 50, 0.4);
-}
+    .details-banner-wrapper .details-banner-thumb::after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgb(42 63 80 / 18%);
+    }
 
 @media (min-width: 992px) {
   .details-banner-wrapper .details-banner-thumb {

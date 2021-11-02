@@ -192,13 +192,14 @@
           $(this).removeClass('active');
       });
     $('.tab-slider').owlCarousel({
-      loop:true,
+        loop: false,
+        rewind: true,
       responsiveClass:true,
       nav:false,
       dots:false,
       margin: 30,
       autoplay:true,
-      autoplayTimeout:5000,
+      autoplayTimeout:3000,
       autoplayHoverPause:true,
       responsive:{
           0:{
@@ -219,7 +220,8 @@
       }
     })
     $('.sponsor-slider').owlCarousel({
-      loop: true,
+        loop: false,
+        rewind: true,
       responsiveClass: true,
       nav: false,
       dots: false,
