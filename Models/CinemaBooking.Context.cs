@@ -25,6 +25,7 @@ namespace CinemaBooking.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<content_rating> content_rating { get; set; }
         public virtual DbSet<dao_dien> dao_dien { get; set; }
         public virtual DbSet<dien_vien> dien_vien { get; set; }
         public virtual DbSet<ghe_ngoi> ghe_ngoi { get; set; }
@@ -32,19 +33,18 @@ namespace CinemaBooking.Models
         public virtual DbSet<khach_hang> khach_hang { get; set; }
         public virtual DbSet<lien_he> lien_he { get; set; }
         public virtual DbSet<list_phim_dienvien> list_phim_dienvien { get; set; }
+        public virtual DbSet<list_phim_theloai> list_phim_theloai { get; set; }
         public virtual DbSet<loai_ghe> loai_ghe { get; set; }
         public virtual DbSet<movie_rate> movie_rate { get; set; }
+        public virtual DbSet<order_details> order_details { get; set; }
+        public virtual DbSet<order> orders { get; set; }
+        public virtual DbSet<phim> phims { get; set; }
         public virtual DbSet<phong_chieu> phong_chieu { get; set; }
         public virtual DbSet<su_kien> su_kien { get; set; }
         public virtual DbSet<suat_chieu> suat_chieu { get; set; }
+        public virtual DbSet<the_loai_phim> the_loai_phim { get; set; }
         public virtual DbSet<thong_tin_cong_ty> thong_tin_cong_ty { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<ve_ban> ve_ban { get; set; }
-        public virtual DbSet<list_phim_theloai> list_phim_theloai { get; set; }
-        public virtual DbSet<phim> phims { get; set; }
-        public virtual DbSet<the_loai_phim> the_loai_phim { get; set; }
-        public virtual DbSet<order_details> order_details { get; set; }
-        public virtual DbSet<order> orders { get; set; }
-        public virtual DbSet<phim_daodien> phim_daodien { get; set; }
     }
 }

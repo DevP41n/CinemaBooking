@@ -25,6 +25,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList().OrderBy(n => n.id), "id", "ho_ten");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             return View();
         }
 
@@ -35,6 +36,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList().OrderBy(n => n.id), "id", "ho_ten");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
@@ -87,6 +89,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new MultiSelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList(), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList(), "id", "ho_ten");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             phim Phim = db.phims.Find(id);
             if (Phim == null)
             {
@@ -101,6 +104,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList(), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList(), "id", "ho_ten");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
@@ -332,6 +336,80 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 TempData["Warning"] = "Không thể xóa vì đang có phim tồn tại trong mục này!";
             }
             return RedirectToAction("ListCate");
+        }
+
+
+
+        //Đánh giá nội dung phim
+        public ActionResult ListContentRating()
+        {
+            return View(db.content_rating.OrderByDescending(m => m.ID));
+        }
+
+        //Thêm loại
+        public ActionResult CreateContentRating()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateContentRating(content_rating ctRating)
+        {
+            db.content_rating.Add(ctRating);
+            TempData["Message"] = "Tạo thành công!";
+            db.SaveChanges();
+            return RedirectToAction("ListContentRating");
+        }
+
+        //Sửa loại đánh giá nội dung
+        public ActionResult EditContentRating(int? id)
+        {
+            content_rating ctRating = db.content_rating.Find(id);
+            if (ctRating == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ctRating);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditContentRating(content_rating ctRating)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(ctRating).State = EntityState.Modified;
+                TempData["Message"] = "Cập nhật thành công!";
+                db.SaveChanges();
+                return RedirectToAction("ListContentRating");
+            }
+            else
+            {
+                TempData["Error"] = "Cập nhập không thành công!";
+            }
+            return View(ctRating);
+        }
+
+        //Xóa loại đánh giá nội dung
+        public ActionResult DeleteContentRating(int id)
+        {
+            var del = from dele in db.phims
+                      where dele.id_content_rating == id
+                      select dele;
+            var coundel = del.Count();
+
+            if (coundel == 0)
+            {
+                content_rating ctRating = db.content_rating.Find(id);
+                db.content_rating.Remove(ctRating);
+                TempData["Message"] = "Xóa thành công!";
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["Warning"] = "Không thể xóa vì vẫn có phim tồn tại loại này";
+            }
+            return RedirectToAction("ListContentRating");
         }
     }
 }

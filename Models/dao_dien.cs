@@ -18,7 +18,6 @@ namespace CinemaBooking.Models
         public dao_dien()
         {
             this.phims = new HashSet<phim>();
-            this.phim_daodien = new HashSet<phim_daodien>();
         }
     
         public int id { get; set; }
@@ -34,7 +33,5 @@ namespace CinemaBooking.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<phim> phims { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<phim_daodien> phim_daodien { get; set; }
     }
 }

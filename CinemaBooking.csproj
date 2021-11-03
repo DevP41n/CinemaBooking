@@ -179,6 +179,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\content_rating.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\dao_dien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -217,9 +220,6 @@
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\phim.cs">
-      <DependentUpon>CinemaBooking.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\phim_daodien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\phong_chieu.cs">
@@ -719,6 +719,9 @@
     <None Include="Areas\Admin\Views\Information\ListDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\EditDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\CreateDirector.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\ListContentRating.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\EditContentRating.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\CreateContentRating.cshtml" />
     <EntityDeploy Include="Models\CinemaBooking.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CinemaBooking.Designer.cs</LastGenOutput>
