@@ -1,7 +1,7 @@
-﻿@model CinemaBooking.Models.the_loai_phim
+﻿@model CinemaBooking.Models.content_rating
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Content Rating";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -29,11 +29,8 @@
                                 <i class="mdi mdi-settings mr-2"></i> Settings
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                                <a class="dropdown-item" href="@Url.Action("DeleteContentRating", "Movie", new { id = Model.ID })">Xóa</a>
                             </div>
                         </div>
                     </div>
@@ -41,7 +38,7 @@
             </div>
             <!-- end page title -->
 
-            @using (Html.BeginForm("EditCate", "Movie", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("EditContentRating", "Movie", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -57,15 +54,19 @@
                                 </p>
 
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.id)
-                                @Html.HiddenFor(model => model.create_at)
-                                @Html.HiddenFor(model => model.slug)
 
                                 <div class="form-group row">
-                                    @Html.LabelFor(model => model.ten_the_loai, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.ten_the_loai, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ten_the_loai, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.ten_rating, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.ten_rating, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ten_rating, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -82,7 +83,7 @@
                                 </div>
 
                                 <div class="form-group mb-0">
-                                    @Html.ActionLink("Back to List", "ListCate")
+                                    @Html.ActionLink("Back to List", "ListContentRating")
                                 </div>
                             </div>
 

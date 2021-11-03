@@ -92,3 +92,18 @@ $(document).ready(function () {
 
     });
 });
+//rating trong detail
+$(document).ready(function () {
+    var apikey = "ab687516"
+    var idmovie = document.getElementById("moviename").getAttribute("imdbid")
+    var url = "http://www.omdbapi.com/?apikey=" + apikey
+    $.ajax({
+        method: "GET",
+        url: url + "&i=" + idmovie,
+        success: function (data) {
+            console.log(data)
+            document.getElementById("imdb-rating").setAttribute('data-odometer-final', data.imdbRating);
+        }
+    })
+});
+

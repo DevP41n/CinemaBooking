@@ -1872,7 +1872,7 @@ input[type="submit"] {
     box-shadow: 0px 0px 20px 7px rgb(59 55 188 / 64%);
 }
 .details-banner {
-    padding-top: 235px;
+    padding-top: 300px;
     padding-bottom: 20px;
     position: relative;
 }
@@ -2064,7 +2064,6 @@ input[type="submit"] {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 18px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -2091,15 +2090,35 @@ input[type="submit"] {
 }
 
 .book-wrapper .left-side .item .item-header .counter-item.odometer::after {
-  content: "%";
 }
 
 .book-wrapper .left-side .item .item-header .title {
   margin: 0;
 }
-
+.imdb-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin: -.3em .6em 0 0;
+}
+.content-rating-tag {
+    align-items: center;
+    background-color: #363636;
+    border-radius: 4px;
+    color: #ffffff;
+    display: inline-flex;
+    font-size: 15px;
+    height: 30px;
+    justify-content: center;
+    line-height: 1.5;
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 700;
+}
 .book-wrapper .left-side .item .item-header .rated {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .book-wrapper .left-side .item .item-header .rated i {

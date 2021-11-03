@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="content_rating">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ten_rating" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="dao_dien">
           <Key>
             <PropertyRef Name="id" />
@@ -144,6 +151,8 @@
           <Property Name="update_at" Type="datetime" />
           <Property Name="dao_dien_id" Type="int" />
           <Property Name="anhbackground" Type="nvarchar(max)" />
+          <Property Name="idrating" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_content_rating" Type="int" />
         </EntityType>
         <EntityType Name="phong_chieu">
           <Key>
@@ -324,6 +333,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_phim_content_rating">
+          <End Role="content_rating" Type="Self.content_rating" Multiplicity="0..1" />
+          <End Role="phim" Type="Self.phim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="content_rating">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="phim">
+              <PropertyRef Name="id_content_rating" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_PhimPC">
           <End Role="phong_chieu" Type="Self.phong_chieu" Multiplicity="0..1" />
           <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
@@ -397,6 +418,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CinemaBookingModelStoreContainer">
+          <EntitySet Name="content_rating" EntityType="Self.content_rating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dao_dien" EntityType="Self.dao_dien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dien_vien" EntityType="Self.dien_vien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ghe_ngoi" EntityType="Self.ghe_ngoi" Schema="dbo" store:Type="Tables" />
@@ -442,6 +464,10 @@
           <AssociationSet Name="Fk_LoaiGhe" Association="Self.Fk_LoaiGhe">
             <End Role="loai_ghe" EntitySet="loai_ghe" />
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_phim_content_rating" Association="Self.FK_phim_content_rating">
+            <End Role="content_rating" EntitySet="content_rating" />
+            <End Role="phim" EntitySet="phim" />
           </AssociationSet>
           <AssociationSet Name="Fk_PhimPC" Association="Self.Fk_PhimPC">
             <End Role="phong_chieu" EntitySet="phong_chieu" />
@@ -829,8 +855,17 @@
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
           <EntitySet Name="list_phim_theloai" EntityType="CinemaBookingModel.list_phim_theloai" />
-          <EntitySet Name="phims" EntityType="CinemaBookingModel.phim" />
           <EntitySet Name="the_loai_phim" EntityType="CinemaBookingModel.the_loai_phim" />
+          <AssociationSet Name="FK_list_phim_theloai_the_loai_phim" Association="CinemaBookingModel.FK_list_phim_theloai_the_loai_phim">
+            <End Role="the_loai_phim" EntitySet="the_loai_phim" />
+            <End Role="list_phim_theloai" EntitySet="list_phim_theloai" />
+          </AssociationSet>
+          <EntitySet Name="content_rating" EntityType="CinemaBookingModel.content_rating" />
+          <EntitySet Name="phims" EntityType="CinemaBookingModel.phim" />
+          <AssociationSet Name="FK_phim_content_rating" Association="CinemaBookingModel.FK_phim_content_rating">
+            <End Role="content_rating" EntitySet="content_rating" />
+            <End Role="phim" EntitySet="phims" />
+          </AssociationSet>
           <AssociationSet Name="Fk_DaoDien" Association="CinemaBookingModel.Fk_DaoDien">
             <End Role="dao_dien" EntitySet="dao_dien" />
             <End Role="phim" EntitySet="phims" />
@@ -841,10 +876,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_list_phim_theloai_phim" Association="CinemaBookingModel.FK_list_phim_theloai_phim">
             <End Role="phim" EntitySet="phims" />
-            <End Role="list_phim_theloai" EntitySet="list_phim_theloai" />
-          </AssociationSet>
-          <AssociationSet Name="FK_list_phim_theloai_the_loai_phim" Association="CinemaBookingModel.FK_list_phim_theloai_the_loai_phim">
-            <End Role="the_loai_phim" EntitySet="the_loai_phim" />
             <End Role="list_phim_theloai" EntitySet="list_phim_theloai" />
           </AssociationSet>
           <AssociationSet Name="Fk_PhimSC" Association="CinemaBookingModel.Fk_PhimSC">
@@ -859,8 +890,41 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_phim" Type="Int32" />
           <Property Name="id_theloai" Type="Int32" />
-          <NavigationProperty Name="phim" Relationship="CinemaBookingModel.FK_list_phim_theloai_phim" FromRole="list_phim_theloai" ToRole="phim" />
           <NavigationProperty Name="the_loai_phim" Relationship="CinemaBookingModel.FK_list_phim_theloai_the_loai_phim" FromRole="list_phim_theloai" ToRole="the_loai_phim" />
+          <NavigationProperty Name="phim" Relationship="CinemaBookingModel.FK_list_phim_theloai_phim" FromRole="list_phim_theloai" ToRole="phim" />
+        </EntityType>
+        <EntityType Name="the_loai_phim">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten_the_loai" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="create_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="create_at" Type="DateTime" Precision="3" />
+          <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="update_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="list_phim_theloai" Relationship="CinemaBookingModel.FK_list_phim_theloai_the_loai_phim" FromRole="the_loai_phim" ToRole="list_phim_theloai" />
+        </EntityType>
+        <Association Name="FK_list_phim_theloai_the_loai_phim">
+          <End Type="CinemaBookingModel.the_loai_phim" Role="the_loai_phim" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.list_phim_theloai" Role="list_phim_theloai" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="the_loai_phim">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="list_phim_theloai">
+              <PropertyRef Name="id_theloai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="content_rating">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ten_rating" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="phims" Relationship="CinemaBookingModel.FK_phim_content_rating" FromRole="content_rating" ToRole="phim" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -883,24 +947,26 @@
           <Property Name="update_at" Type="DateTime" Precision="3" />
           <Property Name="dao_dien_id" Type="Int32" />
           <Property Name="anhbackground" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idrating" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_content_rating" Type="Int32" />
+          <NavigationProperty Name="content_rating" Relationship="CinemaBookingModel.FK_phim_content_rating" FromRole="phim" ToRole="content_rating" />
           <NavigationProperty Name="dao_dien" Relationship="CinemaBookingModel.Fk_DaoDien" FromRole="phim" ToRole="dao_dien" />
           <NavigationProperty Name="list_phim_dienvien" Relationship="CinemaBookingModel.FK_list_phim_dienvien_phim" FromRole="phim" ToRole="list_phim_dienvien" />
           <NavigationProperty Name="list_phim_theloai" Relationship="CinemaBookingModel.FK_list_phim_theloai_phim" FromRole="phim" ToRole="list_phim_theloai" />
           <NavigationProperty Name="suat_chieu" Relationship="CinemaBookingModel.Fk_PhimSC" FromRole="phim" ToRole="suat_chieu" />
         </EntityType>
-        <EntityType Name="the_loai_phim">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ten_the_loai" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="create_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="create_at" Type="DateTime" Precision="3" />
-          <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="update_at" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="list_phim_theloai" Relationship="CinemaBookingModel.FK_list_phim_theloai_the_loai_phim" FromRole="the_loai_phim" ToRole="list_phim_theloai" />
-        </EntityType>
+        <Association Name="FK_phim_content_rating">
+          <End Type="CinemaBookingModel.content_rating" Role="content_rating" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.phim" Role="phim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="content_rating">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="phim">
+              <PropertyRef Name="id_content_rating" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_DaoDien">
           <End Type="CinemaBookingModel.dao_dien" Role="dao_dien" Multiplicity="0..1" />
           <End Type="CinemaBookingModel.phim" Role="phim" Multiplicity="*" />
@@ -934,18 +1000,6 @@
             </Principal>
             <Dependent Role="list_phim_theloai">
               <PropertyRef Name="id_phim" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_list_phim_theloai_the_loai_phim">
-          <End Type="CinemaBookingModel.the_loai_phim" Role="the_loai_phim" Multiplicity="0..1" />
-          <End Type="CinemaBookingModel.list_phim_theloai" Role="list_phim_theloai" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="the_loai_phim">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="list_phim_theloai">
-              <PropertyRef Name="id_theloai" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1184,9 +1238,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="the_loai_phim">
+            <EntityTypeMapping TypeName="CinemaBookingModel.the_loai_phim">
+              <MappingFragment StoreEntitySet="the_loai_phim">
+                <ScalarProperty Name="update_at" ColumnName="update_at" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_at" ColumnName="create_at" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="ten_the_loai" ColumnName="ten_the_loai" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="content_rating">
+            <EntityTypeMapping TypeName="CinemaBookingModel.content_rating">
+              <MappingFragment StoreEntitySet="content_rating">
+                <ScalarProperty Name="ten_rating" ColumnName="ten_rating" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="phims">
             <EntityTypeMapping TypeName="CinemaBookingModel.phim">
               <MappingFragment StoreEntitySet="phim">
+                <ScalarProperty Name="id_content_rating" ColumnName="id_content_rating" />
+                <ScalarProperty Name="idrating" ColumnName="idrating" />
                 <ScalarProperty Name="anhbackground" ColumnName="anhbackground" />
                 <ScalarProperty Name="dao_dien_id" ColumnName="dao_dien_id" />
                 <ScalarProperty Name="update_at" ColumnName="update_at" />
@@ -1203,19 +1280,6 @@
                 <ScalarProperty Name="chi_tiet" ColumnName="chi_tiet" />
                 <ScalarProperty Name="gia" ColumnName="gia" />
                 <ScalarProperty Name="ten_phim" ColumnName="ten_phim" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="the_loai_phim">
-            <EntityTypeMapping TypeName="CinemaBookingModel.the_loai_phim">
-              <MappingFragment StoreEntitySet="the_loai_phim">
-                <ScalarProperty Name="update_at" ColumnName="update_at" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="create_at" ColumnName="create_at" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="slug" ColumnName="slug" />
-                <ScalarProperty Name="ten_the_loai" ColumnName="ten_the_loai" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -66,6 +66,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    @Html.LabelFor(model => model.idrating, "Id-rating(ex: tt1267101)", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.idrating, new { htmlAttributes = new { @class = "form-control border-form-1 " } })
+                                        @Html.ValidationMessageFor(model => model.idrating, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
                                     @Html.Label("Thể loại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
                                         @foreach (var item in db.list_phim_theloai.Where(x => x.id_phim == Model.id))
@@ -75,11 +83,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    @Html.Label("Chọn lại thể loại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.Label("Chọn lại thể loại? (tùy chọn)", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("theloaiarray", (MultiSelectList)ViewBag.the_loai_phim_id, new { multiple = "multiple" })
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    @Html.Label("Đánh giá nội dung", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.id_content_rating, (SelectList)ViewBag.content_rating, new { @class = "col-sm-2 col-form-label" })
+                                    </div>
+                                </div>
+
                                 <div class="form-group row">
                                     @Html.Label("Đạo diễn", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
@@ -93,19 +109,19 @@
                                         {
                                             <div class="cast-item">
                                                 <div class="cast-thumb">
-                                                        <img src="~/images/information/@item.dien_vien.anh" alt="cast">
+                                                    <img src="~/images/information/@item.dien_vien.anh" alt="cast">
                                                 </div>
                                                 <div class="cast-content">
                                                     <h6 class="cast-title"><a>@item.dien_vien.ho_ten</a></h6>
                                                     @*<span class="cate">actor</span>
-                    <p>As Richie Tozier</p>*@
+                            <p>As Richie Tozier</p>*@
                                                 </div>
                                             </div>
                                         }
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    @Html.Label("Chọn loại diễn viên", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.Label("Chọn loại diễn viên? (tùy chọn)", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("dienvienarray", (MultiSelectList)ViewBag.dien_vien_id, new { multiple = "multiple" })
                                     </div>

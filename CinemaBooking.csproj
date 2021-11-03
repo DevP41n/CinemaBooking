@@ -179,6 +179,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\content_rating.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\dao_dien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -716,6 +719,9 @@
     <Content Include="Models\CinemaBooking.edmx.diagram">
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Movie\ListContentRating.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\EditContentRating.cshtml" />
+    <Content Include="Areas\Admin\Views\Movie\CreateContentRating.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\i18n\af.js" />
