@@ -25,7 +25,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList().OrderBy(n => n.id), "id", "ho_ten");
-            ViewBag.content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             return View();
         }
 
@@ -36,7 +36,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList().OrderBy(n => n.id), "id", "ho_ten");
-            ViewBag.content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
@@ -89,7 +89,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new MultiSelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList(), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList(), "id", "ho_ten");
-            ViewBag.content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             phim Phim = db.phims.Find(id);
             if (Phim == null)
             {
@@ -104,7 +104,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList(), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList(), "id", "ho_ten");
-            ViewBag.content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
+            ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             if (ModelState.IsValid)
             {
                 Random rd = new Random();
