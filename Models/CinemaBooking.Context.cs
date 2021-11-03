@@ -44,5 +44,8 @@ namespace CinemaBooking.Models
         public virtual DbSet<the_loai_phim> the_loai_phim { get; set; }
         public virtual DbSet<content_rating> content_rating { get; set; }
         public virtual DbSet<phim> phims { get; set; }
+        public virtual DbSet<order_details> order_details { get; set; }
+        public virtual DbSet<order> orders { get; set; }
+        public virtual DbSet<phim_daodien> phim_daodien { get; set; }
     }
 }

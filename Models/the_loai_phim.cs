@@ -18,6 +18,7 @@ namespace CinemaBooking.Models
         public the_loai_phim()
         {
             this.list_phim_theloai = new HashSet<list_phim_theloai>();
+            this.phims = new HashSet<phim>();
         }
     
         public int id { get; set; }
@@ -30,5 +31,7 @@ namespace CinemaBooking.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<list_phim_theloai> list_phim_theloai { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<phim> phims { get; set; }
     }
 }

@@ -213,7 +213,16 @@
     <Compile Include="Models\movie_rate.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\order.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\order_details.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\phim.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\phim_daodien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\phong_chieu.cs">
@@ -250,6 +259,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Database\classKhachHang.txt" />
     <Content Include="Database\Database-Cinema-Booking.sql" />
     <Content Include="Database\dataCinema.sql" />
     <Content Include="favicon.ico" />

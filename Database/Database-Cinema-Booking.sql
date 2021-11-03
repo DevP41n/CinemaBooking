@@ -290,6 +290,7 @@ ALTER TABLE phong_chieu ADD ten_phong nvarchar(255);
 -- Thêm status cho bảng liên hệ
 ALTER TABLE lien_he ADD status int;
 
+
 -- Bảng danh sách giữa phim và diễn viên
 CREATE TABLE list_phim_dienvien(
 	ID bigint IDENTITY(1,1) NOT NULL,
@@ -326,4 +327,65 @@ CREATE TABLE movie_rate(
 	CONSTRAINT PK_MovieRate PRIMARY KEY(id),
 )
 GO
+
+
+-- Điều chỉnh database: Thêm bảng orders, orderdetails, ghế ngồi, chỉnh sửa quan hệ giữa 2 bảng phim và đạo diễn
+ALTER TABLE phim ADD anhbackground nvarchar(max);
+
+ALTER TABLE ghe_ngoi ADD gia decimal(18,0);
+
+ALTER TABLE ghe_ngoi ADD image nvarchar(max);
+
+ALTER TABLE phim
+DROP CONSTRAINT Fk_DienVien;
+
+ALTER TABLE phim
+DROP CONSTRAINT Fk_DaoDien;
+
+CREATE TABLE orders(
+	id int IDENTITY(1,1) NOT NULL,
+	id_khachhang int,
+	ten_khach_hang nvarchar(255),
+	ten_phim nvarchar(max),
+	id_phim int,
+	so_luong_ve int,
+	code_ticket nvarchar(255),
+	tong_tien decimal(18,0),
+	the_loai_phim nvarchar(255),
+	id_phong_chieu int,
+	ten_phong_chieu nvarchar(255),
+	
+	time datetime,
+	ngay_mua datetime,
+	status int,
+
+	CONSTRAINT PK_OrderID PRIMARY KEY(id),
+	constraint Fk_KhachHangOrder foreign key(id_khachhang) references khach_hang(id),
+	constraint Fk_PhimOrder foreign key(id_phim) references phim(id),
+	constraint Fk_PhongChieuOrder foreign key(id_phong_chieu) references phong_chieu(id),
+)
+
+CREATE TABLE order_details(
+	id int IDENTITY(1,1) NOT NULL,
+	ten_ghe nvarchar(255),
+	id_orders int,
+	id_ghe int,
+	gia_ve decimal(18,0),
+	gia_ghe_ngoi decimal(18,0),
+
+	CONSTRAINT PK_OrderDetailsID PRIMARY KEY(id),
+	constraint Fk_Oder foreign key(id_orders) references orders(id),
+	constraint Fk_Ghe foreign key(id_ghe) references ghe_ngoi(id),
+)
+
+
+
+CREATE TABLE phim_daodien(
+	id int IDENTITY(1,1) NOT NULL,
+	id_phim int,
+	id_dao_dien int,
+	constraint Fk_phimdaodien foreign key(id_phim) references phim(id),
+	constraint Fk_daodienphim foreign key(id_dao_dien) references dao_dien(id),
+	CONSTRAINT PK_Pdaodien PRIMARY KEY(id),
+)
 
