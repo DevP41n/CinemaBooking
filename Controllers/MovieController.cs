@@ -21,7 +21,7 @@ namespace CinemaBooking.Controllers
                 ViewBag.RatesCount = db.movie_rate.Where(m => m.movie_id == movie.id).Count();
                 return View(movie);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Index", "Home");
             }

@@ -12,29 +12,33 @@ namespace CinemaBooking.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ghe_ngoi
+    public partial class order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ghe_ngoi()
+        public order()
         {
-            this.ve_ban = new HashSet<ve_ban>();
             this.order_details = new HashSet<order_details>();
         }
     
         public int id { get; set; }
-        public Nullable<int> vi_tri_day { get; set; }
-        public Nullable<int> vi_tri_cot { get; set; }
-        public Nullable<bool> da_chon { get; set; }
-        public Nullable<int> phong_chieu_id { get; set; }
-        public Nullable<int> loai_ghe_id { get; set; }
-        public Nullable<decimal> gia { get; set; }
-        public string image { get; set; }
+        public Nullable<int> id_khachhang { get; set; }
+        public string ten_khach_hang { get; set; }
+        public string ten_phim { get; set; }
+        public Nullable<int> id_phim { get; set; }
+        public Nullable<int> so_luong_ve { get; set; }
+        public string code_ticket { get; set; }
+        public Nullable<decimal> tong_tien { get; set; }
+        public string the_loai_phim { get; set; }
+        public Nullable<int> id_phong_chieu { get; set; }
+        public string ten_phong_chieu { get; set; }
+        public Nullable<System.DateTime> time { get; set; }
+        public Nullable<System.DateTime> ngay_mua { get; set; }
+        public Nullable<int> status { get; set; }
     
-        public virtual phong_chieu phong_chieu { get; set; }
-        public virtual loai_ghe loai_ghe { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ve_ban> ve_ban { get; set; }
+        public virtual khach_hang khach_hang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_details> order_details { get; set; }
+        public virtual phim phim { get; set; }
+        public virtual phong_chieu phong_chieu { get; set; }
     }
 }

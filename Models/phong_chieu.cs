@@ -19,6 +19,7 @@ namespace CinemaBooking.Models
         {
             this.ghe_ngoi = new HashSet<ghe_ngoi>();
             this.suat_chieu = new HashSet<suat_chieu>();
+            this.orders = new HashSet<order>();
         }
     
         public int id { get; set; }
@@ -30,5 +31,7 @@ namespace CinemaBooking.Models
         public virtual ICollection<ghe_ngoi> ghe_ngoi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<suat_chieu> suat_chieu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
     }
 }

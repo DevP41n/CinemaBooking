@@ -1,11 +1,9 @@
 ﻿using CinemaBooking.Models;
 using Facebook;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Controllers
@@ -68,7 +66,7 @@ namespace CinemaBooking.Controllers
             {
                 var check = db.khach_hang.FirstOrDefault(s => s.email == _user.email || s.username == _user.username);
                 var checkuser = db.khach_hang.FirstOrDefault(s => s.username == _user.username);
-                if (check == null && checkuser ==null)
+                if (check == null && checkuser == null)
                 {
 
                     _user.password = MyString.ToMD5(_user.password);
@@ -81,10 +79,10 @@ namespace CinemaBooking.Controllers
                 }
                 else
                 {
-                    if(check!=null)
-                    ViewBag.error = "Email này đã đăng ký bằng email khác, vui lòng nhập email khác!";
+                    if (check != null)
+                        ViewBag.error = "Email này đã đăng ký bằng email khác, vui lòng nhập email khác!";
                     else if (checkuser != null)
-                    ViewBag.error = "Tài khoản này đã đăng ký bằng tài khoản khác, vui lòng nhập tài khoản khác!";
+                        ViewBag.error = "Tài khoản này đã đăng ký bằng tài khoản khác, vui lòng nhập tài khoản khác!";
                     return View();
                 }
 
@@ -221,13 +219,13 @@ namespace CinemaBooking.Controllers
                 user.sdt = "0123456789";
                 user.password = "@Cinema123";
                 user.confirmpassword = "@Cinema123";
-                /*var resultInsert = new khach_hang().InsertForFacebook(user);
+                var resultInsert = new khach_hang().InsertForFacebook(user);
                 if (resultInsert > 0)
                 {
                     Session["MaKH"] = resultInsert;
                     Session["TenCus"] = user.ho_ten;
                     Session["EmailCus"] = user.email;
-                }*/
+                }
                 TempData["Message"] = "Đăng nhập thành công";
             }
             return Redirect("/");
