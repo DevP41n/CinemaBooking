@@ -99,10 +99,7 @@ CREATE TABLE phim
 	create_at datetime,
 	update_by nvarchar(250),
 	update_at datetime,
-
-	dien_vien_id int,
 	dao_dien_id int,
-	the_loai_phim_id int,
 
 	CONSTRAINT PK_Phim PRIMARY KEY(id),
 	constraint Fk_DaoDien foreign key(dao_dien_id) references dao_dien(id),
@@ -327,7 +324,7 @@ CREATE TABLE movie_rate(
 GO
 
 
--- Điều chỉnh database: Thêm bảng orders, orderdetails, ghế ngồi, chỉnh sửa quan hệ giữa 2 bảng phim và đạo diễn
+-- Điều chỉnh database: Thêm bảng orders, orderdetails, ghế ngồi
 ALTER TABLE phim ADD anhbackground nvarchar(max);
 
 ALTER TABLE ghe_ngoi ADD gia decimal(18,0);
@@ -337,8 +334,6 @@ ALTER TABLE ghe_ngoi ADD image nvarchar(max);
 ALTER TABLE phim
 DROP CONSTRAINT Fk_DienVien;
 
-ALTER TABLE phim
-DROP CONSTRAINT Fk_DaoDien;
 
 CREATE TABLE orders(
 	id int IDENTITY(1,1) NOT NULL,
@@ -377,16 +372,6 @@ CREATE TABLE order_details(
 )
 
 
-
-CREATE TABLE phim_daodien(
-	id int IDENTITY(1,1) NOT NULL,
-	id_phim int,
-	id_dao_dien int,
-	constraint Fk_phimdaodien foreign key(id_phim) references phim(id),
-	constraint Fk_daodienphim foreign key(id_dao_dien) references dao_dien(id),
-	CONSTRAINT PK_Pdaodien PRIMARY KEY(id),
-)
-
 -- them bâng dánh giá nội dung
 -- Bảng đánh giá nội dung phim ( id : loại đánh giá, ten_rating; P, C13, C16, ...... )
 CREATE TABLE content_rating(
@@ -394,5 +379,8 @@ CREATE TABLE content_rating(
 	ten_rating nvarchar(50) NOT NULL,
 	CONSTRAINT PK_content_rating PRIMARY KEY(ID),
 )
-
+-- khóa ngoại cho phim và content rating
+ALTER TABLE [dbo].[phim]  WITH CHECK ADD  CONSTRAINT [FK_phim_content_rating] FOREIGN KEY([id_content_rating])
+REFERENCES [dbo].[content_rating] ([ID])
+GO
 

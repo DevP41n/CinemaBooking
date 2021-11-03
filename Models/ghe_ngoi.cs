@@ -17,8 +17,8 @@ namespace CinemaBooking.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ghe_ngoi()
         {
-            this.ve_ban = new HashSet<ve_ban>();
             this.order_details = new HashSet<order_details>();
+            this.ve_ban = new HashSet<ve_ban>();
         }
     
         public int id { get; set; }
@@ -30,11 +30,11 @@ namespace CinemaBooking.Models
         public Nullable<decimal> gia { get; set; }
         public string image { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order_details> order_details { get; set; }
         public virtual phong_chieu phong_chieu { get; set; }
         public virtual loai_ghe loai_ghe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ve_ban> ve_ban { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order_details> order_details { get; set; }
     }
 }
