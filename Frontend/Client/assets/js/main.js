@@ -175,9 +175,9 @@
       g.preventDefault();
     });
     //Odometer
-    $(".counter-item").each(function () {
+      $(".counter-item").each(function () {
       $(this).isInViewport(function (status) {
-        if (status === "entered") {
+          if (status === "entered") {
           for (var i = 0; i < document.querySelectorAll(".odometer").length; i++) {
             var el = document.querySelectorAll('.odometer')[i];
             el.innerHTML = el.getAttribute("data-odometer-final");

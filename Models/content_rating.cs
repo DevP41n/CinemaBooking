@@ -12,13 +12,18 @@ namespace CinemaBooking.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class list_phim_theloai
+    public partial class content_rating
     {
-        public int ID { get; set; }
-        public Nullable<int> id_phim { get; set; }
-        public Nullable<int> id_theloai { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public content_rating()
+        {
+            this.phims = new HashSet<phim>();
+        }
     
-        public virtual the_loai_phim the_loai_phim { get; set; }
-        public virtual phim phim { get; set; }
+        public int ID { get; set; }
+        public string ten_rating { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<phim> phims { get; set; }
     }
 }

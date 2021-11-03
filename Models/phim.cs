@@ -43,7 +43,10 @@ namespace CinemaBooking.Models
         public Nullable<int> dien_vien_id { get; set; }
         public Nullable<int> the_loai_phim_id { get; set; }
         public string anhbackground { get; set; }
+        public string idrating { get; set; }
+        public Nullable<int> id_content_rating { get; set; }
     
+        public virtual content_rating content_rating { get; set; }
         public virtual dao_dien dao_dien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<list_phim_dienvien> list_phim_dienvien { get; set; }

@@ -281,8 +281,9 @@
                                 <span>Quản lý phim</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListCate","Movie")">Danh sách thể loại</a></li>
                                 <li><a href="@Url.Action("ListMovie","Movie")">Danh sách phim</a></li>
+                                <li><a href="@Url.Action("ListCate","Movie")">Danh sách thể loại</a></li>
+                                <li><a href="@Url.Action("ListContentRating","Movie")">Danh sách đánh giá phim</a></li>
                             </ul>
                         </li>
                         <li>
@@ -382,6 +383,7 @@
                             </ul>
 
                         </li>
+
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -540,7 +542,11 @@
             $("#theloaiarray").select2();
         });
     </script>
-    
+    <script>
+        $(document).ready(function () {
+            $("#id_content_rating").select2();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 
 
