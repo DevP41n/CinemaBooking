@@ -91,7 +91,6 @@ CREATE TABLE phim
 	trailer varchar(max),
 	slug varchar(max),
 	anh varchar(max),
-	anhbackground varchar(max),
 	status int,
 	thoi_luong int,
 	ngay_cong_chieu datetime,
@@ -314,7 +313,6 @@ CREATE TABLE list_phim_theloai(
 )
 GO
 
-
 -- Thêm bảng movie rate
 CREATE TABLE movie_rate(
 	id int IDENTITY(1,1) NOT NULL,
@@ -388,4 +386,13 @@ CREATE TABLE phim_daodien(
 	constraint Fk_daodienphim foreign key(id_dao_dien) references dao_dien(id),
 	CONSTRAINT PK_Pdaodien PRIMARY KEY(id),
 )
+
+-- them bâng dánh giá nội dung
+-- Bảng đánh giá nội dung phim ( id : loại đánh giá, ten_rating; P, C13, C16, ...... )
+CREATE TABLE content_rating(
+	ID int NOT NULL, 
+	ten_rating nvarchar(50) NOT NULL,
+	CONSTRAINT PK_content_rating PRIMARY KEY(ID),
+)
+
 

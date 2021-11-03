@@ -407,6 +407,9 @@
             </Principal>
             <Dependent Role="phim">
               <PropertyRef Name="id_content_rating" />
+			</Dependent>
+		  </ReferentialConstraint>
+			</Association>
         <Association Name="Fk_Oder">
           <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
           <End Role="order_details" Type="Self.order_details" Multiplicity="*" />
@@ -601,6 +604,7 @@
           <AssociationSet Name="FK_phim_content_rating" Association="Self.FK_phim_content_rating">
             <End Role="content_rating" EntitySet="content_rating" />
             <End Role="phim" EntitySet="phim" />
+		  </AssociationSet>
           <AssociationSet Name="Fk_Oder" Association="Self.Fk_Oder">
             <End Role="orders" EntitySet="orders" />
             <End Role="order_details" EntitySet="order_details" />
@@ -646,7 +650,8 @@
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+	</edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CinemaBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
