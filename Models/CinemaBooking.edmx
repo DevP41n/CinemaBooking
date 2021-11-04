@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="content_rating">
           <Key>
             <PropertyRef Name="ID" />
@@ -47,13 +47,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="vi_tri_day" Type="int" />
-          <Property Name="vi_tri_cot" Type="int" />
           <Property Name="da_chon" Type="bit" />
           <Property Name="phong_chieu_id" Type="int" />
           <Property Name="loai_ghe_id" Type="int" />
           <Property Name="gia" Type="decimal" Precision="18" Scale="0" />
           <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="Row" Type="nvarchar" MaxLength="255" />
+          <Property Name="Col" Type="int" />
         </EntityType>
         <EntityType Name="gia_ve">
           <Key>
@@ -79,7 +79,6 @@
           <Property Name="cmnd" Type="varchar" MaxLength="9" />
           <Property Name="create_at" Type="datetime" />
           <Property Name="update_at" Type="datetime" />
-          <Property Name="confirmpassword" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="lien_he">
           <Key>
@@ -170,9 +169,9 @@
           <Property Name="ten_phim" Type="nvarchar(max)" Nullable="false" />
           <Property Name="gia" Type="decimal" Precision="18" Scale="0" />
           <Property Name="chi_tiet" Type="ntext" />
-          <Property Name="trailer" Type="nvarchar(max)" />
-          <Property Name="slug" Type="nvarchar(max)" />
-          <Property Name="anh" Type="nvarchar(max)" />
+          <Property Name="trailer" Type="varchar(max)" />
+          <Property Name="slug" Type="varchar(max)" />
+          <Property Name="anh" Type="varchar(max)" />
           <Property Name="status" Type="int" />
           <Property Name="thoi_luong" Type="int" />
           <Property Name="ngay_cong_chieu" Type="datetime" />
@@ -181,7 +180,9 @@
           <Property Name="create_at" Type="datetime" />
           <Property Name="update_by" Type="nvarchar" MaxLength="250" />
           <Property Name="update_at" Type="datetime" />
+          <Property Name="dien_vien_id" Type="int" />
           <Property Name="dao_dien_id" Type="int" />
+          <Property Name="the_loai_phim_id" Type="int" />
           <Property Name="anhbackground" Type="nvarchar(max)" />
           <Property Name="idrating" Type="nvarchar" MaxLength="50" />
           <Property Name="id_content_rating" Type="int" />
@@ -281,18 +282,6 @@
           <Property Name="ghe_id" Type="int" />
           <Property Name="users_id" Type="int" />
         </EntityType>
-        <Association Name="Fk_DaoDien">
-          <End Role="dao_dien" Type="Self.dao_dien" Multiplicity="0..1" />
-          <End Role="phim" Type="Self.phim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="dao_dien">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="phim">
-              <PropertyRef Name="dao_dien_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_Ghe">
           <End Role="ghe_ngoi" Type="Self.ghe_ngoi" Multiplicity="0..1" />
           <End Role="order_details" Type="Self.order_details" Multiplicity="*" />
@@ -461,6 +450,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Fk_TheLoai">
+          <End Role="the_loai_phim" Type="Self.the_loai_phim" Multiplicity="0..1" />
+          <End Role="phim" Type="Self.phim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="the_loai_phim">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phim">
+              <PropertyRef Name="the_loai_phim_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_VeGhe">
           <End Role="ghe_ngoi" Type="Self.ghe_ngoi" Multiplicity="0..1" />
           <End Role="ve_ban" Type="Self.ve_ban" Multiplicity="*" />
@@ -531,10 +532,6 @@
           <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ve_ban" EntityType="Self.ve_ban" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="Fk_DaoDien" Association="Self.Fk_DaoDien">
-            <End Role="dao_dien" EntitySet="dao_dien" />
-            <End Role="phim" EntitySet="phim" />
-          </AssociationSet>
           <AssociationSet Name="Fk_Ghe" Association="Self.Fk_Ghe">
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
             <End Role="order_details" EntitySet="order_details" />
@@ -591,6 +588,10 @@
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="orders" EntitySet="orders" />
           </AssociationSet>
+          <AssociationSet Name="Fk_TheLoai" Association="Self.Fk_TheLoai">
+            <End Role="the_loai_phim" EntitySet="the_loai_phim" />
+            <End Role="phim" EntitySet="phim" />
+          </AssociationSet>
           <AssociationSet Name="Fk_VeGhe" Association="Self.Fk_VeGhe">
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
             <End Role="ve_ban" EntitySet="ve_ban" />
@@ -608,8 +609,7 @@
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CinemaBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -658,8 +658,6 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="vi_tri_day" Type="Int32" />
-          <Property Name="vi_tri_cot" Type="Int32" />
           <Property Name="da_chon" Type="Boolean" />
           <Property Name="phong_chieu_id" Type="Int32" />
           <Property Name="loai_ghe_id" Type="Int32" />
@@ -669,6 +667,8 @@
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_GhePC" FromRole="ghe_ngoi" ToRole="phong_chieu" />
           <NavigationProperty Name="loai_ghe" Relationship="Self.Fk_LoaiGhe" FromRole="ghe_ngoi" ToRole="loai_ghe" />
           <NavigationProperty Name="ve_ban" Relationship="Self.Fk_VeGhe" FromRole="ghe_ngoi" ToRole="ve_ban" />
+          <Property Name="Row" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Col" Type="Int32" />
         </EntityType>
         <EntityType Name="gia_ve">
           <Key>
@@ -695,7 +695,6 @@
           <Property Name="cmnd" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="create_at" Type="DateTime" Precision="3" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
-          <Property Name="confirmpassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="orders" Relationship="Self.Fk_KhachHangOrder" FromRole="khach_hang" ToRole="orders" />
         </EntityType>
         <EntityType Name="lien_he">
@@ -798,9 +797,9 @@
           <Property Name="ten_phim" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="gia" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="chi_tiet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="trailer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="anh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="trailer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="anh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="Int32" />
           <Property Name="thoi_luong" Type="Int32" />
           <Property Name="ngay_cong_chieu" Type="DateTime" Precision="3" />
@@ -819,6 +818,9 @@
           <NavigationProperty Name="list_phim_theloai" Relationship="Self.FK_list_phim_theloai_phim" FromRole="phim" ToRole="list_phim_theloai" />
           <NavigationProperty Name="orders" Relationship="Self.Fk_PhimOrder" FromRole="phim" ToRole="orders" />
           <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_PhimSC" FromRole="phim" ToRole="suat_chieu" />
+          <Property Name="dien_vien_id" Type="Int32" />
+          <Property Name="the_loai_phim_id" Type="Int32" />
+          <NavigationProperty Name="the_loai_phim" Relationship="CinemaBookingModel.Fk_TheLoai" FromRole="phim" ToRole="the_loai_phim" />
         </EntityType>
         <EntityType Name="phong_chieu">
           <Key>
@@ -873,6 +875,7 @@
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="list_phim_theloai" Relationship="Self.FK_list_phim_theloai_the_loai_phim" FromRole="the_loai_phim" ToRole="list_phim_theloai" />
+          <NavigationProperty Name="phims" Relationship="CinemaBookingModel.Fk_TheLoai" FromRole="the_loai_phim" ToRole="phim" />
         </EntityType>
         <EntityType Name="thong_tin_cong_ty">
           <Key>
@@ -1253,7 +1256,23 @@
             <End Role="users" EntitySet="users" />
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
+          <AssociationSet Name="Fk_TheLoai" Association="CinemaBookingModel.Fk_TheLoai">
+            <End Role="the_loai_phim" EntitySet="the_loai_phim" />
+            <End Role="phim" EntitySet="phims" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="Fk_TheLoai">
+          <End Type="CinemaBookingModel.the_loai_phim" Role="the_loai_phim" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.phim" Role="phim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="the_loai_phim">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phim">
+              <PropertyRef Name="the_loai_phim_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1303,9 +1322,9 @@
           <EntitySetMapping Name="ghe_ngoi">
             <EntityTypeMapping TypeName="CinemaBookingModel.ghe_ngoi">
               <MappingFragment StoreEntitySet="ghe_ngoi">
+                <ScalarProperty Name="Col" ColumnName="Col" />
+                <ScalarProperty Name="Row" ColumnName="Row" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="vi_tri_day" ColumnName="vi_tri_day" />
-                <ScalarProperty Name="vi_tri_cot" ColumnName="vi_tri_cot" />
                 <ScalarProperty Name="da_chon" ColumnName="da_chon" />
                 <ScalarProperty Name="phong_chieu_id" ColumnName="phong_chieu_id" />
                 <ScalarProperty Name="loai_ghe_id" ColumnName="loai_ghe_id" />
@@ -1338,7 +1357,6 @@
                 <ScalarProperty Name="cmnd" ColumnName="cmnd" />
                 <ScalarProperty Name="create_at" ColumnName="create_at" />
                 <ScalarProperty Name="update_at" ColumnName="update_at" />
-                <ScalarProperty Name="confirmpassword" ColumnName="confirmpassword" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1433,6 +1451,8 @@
           <EntitySetMapping Name="phims">
             <EntityTypeMapping TypeName="CinemaBookingModel.phim">
               <MappingFragment StoreEntitySet="phim">
+                <ScalarProperty Name="the_loai_phim_id" ColumnName="the_loai_phim_id" />
+                <ScalarProperty Name="dien_vien_id" ColumnName="dien_vien_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ten_phim" ColumnName="ten_phim" />
                 <ScalarProperty Name="gia" ColumnName="gia" />

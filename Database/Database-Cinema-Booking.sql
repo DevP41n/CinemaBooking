@@ -379,8 +379,31 @@ CREATE TABLE content_rating(
 	ten_rating nvarchar(50) NOT NULL,
 	CONSTRAINT PK_content_rating PRIMARY KEY(ID),
 )
+
+alter table dbo.phim
+add idrating nvarchar(50) NULL
+
+
+alter table dbo.phim
+add id_content_rating int NULL
 -- khóa ngoại cho phim và content rating
 ALTER TABLE [dbo].[phim]  WITH CHECK ADD  CONSTRAINT [FK_phim_content_rating] FOREIGN KEY([id_content_rating])
 REFERENCES [dbo].[content_rating] ([ID])
 GO
 
+
+
+-- fix bảng ghế ngồi
+alter table ghe_ngoi
+drop column vi_tri_day;
+
+alter table ghe_ngoi
+drop column vi_tri_cot;
+
+alter table ghe_ngoi
+add Row nvarchar(255);
+
+alter table ghe_ngoi
+add Col int;
+
+drop table dbo.phim_daodien;

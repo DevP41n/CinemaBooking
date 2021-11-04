@@ -45,6 +45,7 @@
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_TheLoai" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

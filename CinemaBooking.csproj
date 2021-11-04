@@ -716,6 +716,7 @@
     <Content Include="Areas\Admin\Views\Information\ListActor.cshtml" />
     <Content Include="Areas\Admin\Views\Information\EditActor.cshtml" />
     <Content Include="Areas\Admin\Views\Information\CreateActor.cshtml" />
+    <Content Include="Areas\Admin\Views\CinemaRoom\SeatRoom.cshtml" />
     <None Include="Areas\Admin\Views\Information\ListDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\EditDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\CreateDirector.cshtml" />

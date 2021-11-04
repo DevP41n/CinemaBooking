@@ -22,13 +22,13 @@ namespace CinemaBooking.Models
         }
     
         public int id { get; set; }
-        public Nullable<int> vi_tri_day { get; set; }
-        public Nullable<int> vi_tri_cot { get; set; }
         public Nullable<bool> da_chon { get; set; }
         public Nullable<int> phong_chieu_id { get; set; }
         public Nullable<int> loai_ghe_id { get; set; }
         public Nullable<decimal> gia { get; set; }
         public string image { get; set; }
+        public string Row { get; set; }
+        public Nullable<int> Col { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_details> order_details { get; set; }

@@ -1,4 +1,5 @@
 ﻿using CinemaBooking.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -65,6 +66,49 @@ namespace CinemaBooking.Areas.Admin.Controllers
             return RedirectToAction("ListCinemaRoom");
         }
 
+        public ActionResult SeatRoom(int? id)
+        {
+            phong_chieu phongChieu = db.phong_chieu.Find(id);
+            ViewBag.pc = phongChieu;
+            var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
+            ViewBag.ghe = ghengoi;
+            return View(ghengoi);
+        }
+           
+        [HttpPost]
+        public ActionResult CreateSeat(string hang, int ghe, int id)
+        {
+            phong_chieu phongChieu = db.phong_chieu.Find(id);
+            var ghn = db.ghe_ngoi.Where(n=>n.Row==hang && n.phong_chieu_id ==id).Count();
+            ghe_ngoi ghengoi = new ghe_ngoi();
+            if (ghn!= 0)
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                try
+                {
+                    for (int i = 0; i < ghe; i++)
+                    {
+                        ghengoi.Row = hang;
+                        ghengoi.Col = i + 1;
+                        ghengoi.phong_chieu_id = id;
+                        db.ghe_ngoi.Add(ghengoi);
+                        db.SaveChanges();
+                    }
+                }catch(Exception)
+                {
+                    return Json(new { success = false });
+                }
+            }
+            return Json(new {success = true });
+        }
 
+        public ActionResult GetByRow(string Row, int? pcid)
+        {
+            var seat = db.ghe_ngoi.Where(x => x.Row == Row && x.phong_chieu_id == pcid).Count();
+            return Json(data: new {seat, Row }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
