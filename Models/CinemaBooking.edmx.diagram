@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="CinemaBookingModel.dien_vien" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.ghe_ngoi" Width="1.5" PointX="8.25" PointY="21.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.gia_ve" Width="1.5" PointX="5.25" PointY="25.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaBookingModel.khach_hang" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.lien_he" Width="1.5" PointX="8.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.list_phim_dienvien" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.list_phim_theloai" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
@@ -18,7 +17,6 @@
         <EntityTypeShape EntityType="CinemaBookingModel.movie_rate" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.order_details" Width="1.5" PointX="10.5" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.order" Width="1.5" PointX="8.25" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaBookingModel.phim" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.phong_chieu" Width="1.5" PointX="6" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.su_kien" Width="1.5" PointX="10.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.suat_chieu" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
@@ -26,25 +24,27 @@
         <EntityTypeShape EntityType="CinemaBookingModel.thong_tin_cong_ty" Width="1.5" PointX="12.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.user" Width="1.5" PointX="5.25" PointY="28.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.ve_ban" Width="1.5" PointX="7.5" PointY="13.625" IsExpanded="true" />
-        <AssociationConnector Association="CinemaBookingModel.FK_phim_content_rating" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_DaoDien" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.FK_list_phim_dienvien_dien_vien" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_Ghe" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_GhePC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_LoaiGhe" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeGhe" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeGia" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_KhachHangOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.FK_list_phim_dienvien_phim" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.FK_list_phim_theloai_phim" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.FK_list_phim_theloai_the_loai_phim" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_Oder" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_PhimOrder" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhongChieuOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_PhimSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CinemaBookingModel.khach_hang" Width="1.5" PointX="5.375" PointY="1" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_KhachHangOrder" />
+        <EntityTypeShape EntityType="CinemaBookingModel.phim" Width="1.5" PointX="3" PointY="7.875" />
+        <AssociationConnector Association="CinemaBookingModel.FK_phim_content_rating" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_DaoDien" />
+        <AssociationConnector Association="CinemaBookingModel.FK_list_phim_dienvien_phim" />
+        <AssociationConnector Association="CinemaBookingModel.FK_list_phim_theloai_phim" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_PhimOrder" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_PhimSC" />
         <AssociationConnector Association="CinemaBookingModel.Fk_TheLoai" />
       </Diagram>
     </edmx:Diagrams>

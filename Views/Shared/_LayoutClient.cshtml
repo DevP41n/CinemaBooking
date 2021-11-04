@@ -120,7 +120,7 @@
                     <div class="form-group large">
                         @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { style = "width: 100%;" }))
                         {
-                            <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm phim..." autocomplete="off">
+                            <input id="txtSearch"  name="name" class="autosuggest" type="text" placeholder="Tìm kiếm phim..." autocomplete="off">
                             <div class="tt-menu tt-open" style="position: absolute; top: 100%; left: 0px; z-index: 100; width: 100%; display: block; background-color: #ffffff00; border-radius: 10px; ">
                             </div>
                             <button type="submit"><i class="fas fa-search"></i></button>
@@ -245,71 +245,6 @@
     <script src="~/Content/Message.js"></script>
     <!--custom-->
     <script src="~/Scripts/custom.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-    $("#txtSearch").keyup(function () {
-        var searchField = $('#txtSearch').val();
-        var expression = RegExp(searchField, "i");
-
-        $('.tt-dataset').remove();
-        $.ajax({
-            url: '@Url.Action("SearchMovie", "Home")',
-            type: "GET",
-            success: function (response) {
-                var data = JSON.parse(response);
-                console.log(data);
-                data = data.slice(0, 6);
-                if (searchField != "") {
-                    var html_body = ` <div class="tt-dataset tt-dataset-states">
-
-                                </div>`
-                } $('.tt-menu').append(html_body);
-                $.each(data, function (key, item) {
-                    if (item.ten_phim.search(expression) != -1 && searchField != "") {
-                        var html_Search = ` <div class="man-section tt-suggestion tt-selectable">
-                                    <a href="/Movie/MovieDetail/${item.slug}" style="width: 100%;">
-                                  <div class="image-section">
-                                    <img src="/images/movies/${item.anh}">
-                                  </div>
-                                  <div class="description-section">
-                                    <h1 style="display: -webkit-box;
-                                                -webkit-line-clamp: 2;
-                                                -webkit-box-orient: vertical;
-                                                overflow: hidden;
-                                                text-overflow: ellipsis;">
-                                            ${item.ten_phim}</h1>
-                                    @*<p style="display: -webkit-box;
-                                                 -webkit-line-clamp: 3;
-                                                  -webkit-box-orient: vertical;
-                                                   overflow: hidden;
-                                                    text-overflow: ellipsis;">
-                                            ${item.chi_tiet}</p>*@
-                                    @*<span style="position: absolute;bottom: 0;">
-                                        <i class="fa fa-map-marker" aria-hidden="true">
-                                        </i>
-                                        Ha Noi
-                                    </span>*@
-                                    <div class="more-section">
-                                    </div>
-                                  </div>
-                                    <div style="clear:both;">
-                                    </div>
-                                    </a>
-                                  </div>`;
-                        $('.tt-dataset').append(html_Search);
-                    }
-                }
-                );
-            }
-        });
-
-
-    });
-});
-    </script>
-
 
 
 </body>

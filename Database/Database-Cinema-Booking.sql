@@ -407,3 +407,8 @@ alter table ghe_ngoi
 add Col int;
 
 drop table dbo.phim_daodien;
+-- thêm cột trong phim
+-- dùng để lấy API dữ liệu về phim
+alter table dbo.phim add idrating nvarchar(50) NULL 
+--Đẻ dánh giá nội dung có phù hợp với độ tuổi
+alter table dbo.phim add id_content_rating int NULL

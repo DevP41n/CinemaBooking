@@ -4,6 +4,7 @@
     ViewBag.Title = Model.ten_phim;
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
+
 @{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 <!-- ==========Banner-Section========== -->
 <section class="details-banner bg_img" data-background="../../images/movies/background/@Model.anhbackground">
@@ -60,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <span class="content-rating-tag" >@Model.content_rating.ten_rating</span>
+                <span class="content-rating-tag">@Model.content_rating.ten_rating</span>
                 <div class="item">
                     <div class="item-header">
                         <h5 class="title">4.5</h5>
@@ -75,18 +76,18 @@
                     <p>Users Rating</p>
                 </div>
                 @*<div class="item">
-            <div class="item-header">
-                <div class="rated rate-it">
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h5 class="title">0.0</h5>
-            </div>
-            <p><a href="#0">Rate It</a></p>
-        </div>*@
+                        <div class="item-header">
+                            <div class="rated rate-it">
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h5 class="title">0.0</h5>
+                        </div>
+                        <p><a href="#0">Rate It</a></p>
+                    </div>*@
             </div>
             <a href="@Url.Action("BookTicket", "Movie")" class="custom-button">Đặt vé</a>
         </div>
@@ -464,7 +465,7 @@
             </div>
         </div>
     </div>
-    
+
 </section>
 <!-- ==========Movie-Section========== -->
 <script>
@@ -472,7 +473,7 @@
         $('.menu li a.movieac').addClass('active');
     }
     window.onload = codeAddress;
-    
+
 </script>
 
 @section scripts{
@@ -499,6 +500,9 @@
                 });
             });
         });
-        
+    </script>
+
+     <script>
+            
     </script>
 }

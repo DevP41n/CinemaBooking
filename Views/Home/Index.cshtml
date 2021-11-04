@@ -353,7 +353,7 @@
                     <!-- slide cho ưu đãi-->
                     <div class="owl-carousel owl-theme tab-slider">
                         @{CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
-                        @foreach (var item in db.su_kien.SqlQuery("SELECT * FROM su_kien ORDER BY create_at DESC"))
+                        @foreach (var item in db.su_kien.OrderByDescending(x=>x.create_at))
                           {
                             <div class="item">
                                 <div class="event-grid">
