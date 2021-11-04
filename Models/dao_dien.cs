@@ -14,12 +14,6 @@ namespace CinemaBooking.Models
     
     public partial class dao_dien
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public dao_dien()
-        {
-            this.phims = new HashSet<phim>();
-        }
-    
         public int id { get; set; }
         public string ho_ten { get; set; }
         public Nullable<System.DateTime> ngay_sinh { get; set; }
@@ -30,8 +24,5 @@ namespace CinemaBooking.Models
         public string anh { get; set; }
         public string slug { get; set; }
         public string phim_da_tham_gia { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<phim> phims { get; set; }
     }
 }

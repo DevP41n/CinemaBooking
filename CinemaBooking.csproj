@@ -231,6 +231,9 @@
     <Compile Include="Models\su_kien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\the_loai_phim.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>

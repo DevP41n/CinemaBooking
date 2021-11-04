@@ -48,9 +48,9 @@ namespace CinemaBooking.Models
         public string cmnd { get; set; }
         public Nullable<System.DateTime> create_at { get; set; }
         public Nullable<System.DateTime> update_at { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
+        //Facebook
         public long InsertForFacebook(khach_hang KH)
         {
             var user = db.khach_hang.SingleOrDefault(x => x.email == KH.email);

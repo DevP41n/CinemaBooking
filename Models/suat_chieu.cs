@@ -27,9 +27,9 @@ namespace CinemaBooking.Models
         public Nullable<int> phim_id { get; set; }
         public Nullable<int> phong_chieu_id { get; set; }
     
+        public virtual phim phim { get; set; }
         public virtual phong_chieu phong_chieu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ve_ban> ve_ban { get; set; }
-        public virtual phim phim { get; set; }
     }
 }
