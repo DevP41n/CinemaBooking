@@ -1,6 +1,6 @@
 ﻿@model CinemaBooking.Models.su_kien
 @{
-    ViewBag.Title = "NewsDetail";
+    ViewBag.Title = @Model.tieu_de;
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
@@ -8,27 +8,13 @@
 <section class="blog-section padding-top padding-bottom">
     <div class="container">
         <div class="row justify-content-center mb-30-none">
-            <div class="col-lg-8 mb-50 mb-lg-0">
-                <article>
-                    <div class="post-item post-details">
+            <div class="col-lg-9 mb-50 mb-lg-0">
+
+                    <div class="post-item post-details" style="display:flex">
                         <div class="post-thumb">
-                            <img src="~/images/news/@Model.anh" alt="blog" width="750" height="360">
+                            <img src="~/images/news/@Model.anh" alt="blog">
                         </div>
                         <div class="post-content">
-                            @*<div class="post-meta text-center">
-                                <div class="item">
-                                    <a href="#0">
-                                        <i class="flaticon-conversation"></i>
-                                        <span>30</span>
-                                    </a>
-                                </div>
-                                <div class="item">
-                                    <a href="#0">
-                                        <i class="flaticon-share-1"></i>
-                                        <span>22</span>
-                                    </a>
-                                </div>
-                            </div>*@
                             <div class="content">
                                 <div class="entry-content p-0">
                                     <div class="left">
@@ -42,28 +28,19 @@
                                     <p>
                                         @Html.Raw(Model.noi_dung)
                                     </p>
-                                   @* <blockquote>
-                                        Modi perferendis ipsa, dolorum eaque accusantium! Velitlibero fugit dolores repellendus consequatur nisi, deserunt aperiam a ea ex hic, iusto atque, quas. Aliquam rerum dolores saepe sunt, assumenda voluptas.
-                                    </blockquote>*@ 
                                 </div>
                                 <div class="tags-area">
-                                    @*<div class="tags">
-                                        <span>
-                                            Liên quan :
-                                        </span>
-                                        <div class="tags-item">
-                                            <a href="#0"> Tickets </a>
-                                            <a href="#0"> Coming Soon </a>
-                                            <a href="#0"> Movies </a>
-                                        </div>
-                                    </div>*@
+
                                 </div>
                             </div>
                         </div>
+
                     </div>
-                    <div class="blog-comment">
-                        <h5 class="title">Bài viết khác :</h5>
-                        <ul class="comment-area">
+                    
+
+                    <a class="title">Bài viết khác :</a>
+                        <ul class="comment-area" style=" display: flex; flex-wrap: wrap; width: 100%;">
+                            
                             @{CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
                             @{ int qnt = 0;}
                             @foreach (var item in db.su_kien.SqlQuery("SELECT TOP 3 * FROM su_kien ORDER BY NEWID()"))
@@ -76,129 +53,25 @@
                                 <li>
                                     <div class="blog-thumb">
                                         <a href="@Url.Action("NewsDetail","News", new {id=item.id })">
-                                            <img src="~/images/news/@item.anh" alt="sukien" >
+                                            <img src="~/images/news/@item.anh" alt="sukien">
                                         </a>
                                     </div>
                                     <div class="blog-thumb-info">
                                         <span>@item.create_at</span>
-                                        <h6 class="title"><a href="@Url.Action("NewsDetail","News", new {id=item.id })" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                            @item.tieu_de</a></h6>
+                                        <h6 class="title">
+                                            <a href="@Url.Action("NewsDetail","News", new {id=item.id })" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                                @item.tieu_de
+                                            </a>
+                                        </h6>
                                     </div>
-                                    <div class="blog-content">
-                                        <p style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                            @item.noi_dung
-                                        </p>
+                                    <div class="blog-content" style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; ">
+                                        @Html.Raw(item.noi_dung)
                                     </div>
                                 </li>
                             }
 
                         </ul>
-                    </div>
-                </article>
-            </div>
-            <div class="col-lg-4 col-sm-10 col-md-8">
-                <aside>
-                    @*<div class="widget widget-search">
-                        <h5 class="title">search</h5>
-                        <form class="search-form">
-                            <input type="text" placeholder="Enter your Search Content" required>
-                            <button type="submit"><i class="flaticon-loupe"></i>Search</button>
-                        </form>
-                    </div>*@
-                    <div class="widget widget-post">
-                        <h5 class="title">cac phim dang chieu</h5>
-                        <div class="slider-nav">
-                            <span class="flaticon-angle-pointing-to-left widget-prev"></span>
-                            <span class="flaticon-right-arrow-angle widget-next active"></span>
-                        </div>
-                        <div class="widget-slider owl-carousel owl-theme">
-                            <div class="item">
-                                <div class="thumb">
-                                    <a href="#0">
-                                        <img src="/Frontend/Client/assets/images/blog/slider01.jpg" alt="anh phim">
-                                    </a>
-                                </div>
-                                <div class="content">
-                                    <h6 class="p-title">
-                                        <a href="#0">tieu de</a>
-                                    </h6>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <a href="#0">
-                                        <img src="/Frontend/Client/assets/images/blog/slider01.jpg" alt="anh phim">
-                                    </a>
-                                </div>
-                                <div class="content">
-                                    <h6 class="p-title">
-                                        <a href="#0">tieu de (tieng anh va tieng viet)</a>
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget widget-categories">
-                        <h5 class="title">categories</h5>
-                        <ul>
-                            <li>
-                                <a href="#0">
-                                    <span>Showtimes & Tickets</span><span>50</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <span>Latest Trailers</span><span>43</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <span>Coming Soon </span><span>34</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <span>In Theaters</span><span>63</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <span>Release Calendar  </span><span>11</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <span>Stars</span><span>30</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <span>Horror Movie </span><span>55</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    @*<div class="widget widget-tags">
-                        <h5 class="title">featured tags</h5>
-                        <ul>
-                            <li>
-                                <a href="#0">creative</a>
-                            </li>
-                            <li>
-                                <a href="#0">design</a>
-                            </li>
-                            <li>
-                                <a href="#0">skill</a>
-                            </li>
-                            <li>
-                                <a href="#0">template</a>
-                            </li>
-                            <li>
-                                <a href="#0" class="active">landing</a>
-                            </li>
-                        </ul>
-                    </div>*@
-                </aside>
+
             </div>
         </div>
     </div>

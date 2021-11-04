@@ -32,29 +32,42 @@ namespace CinemaBooking.Controllers
         {
             return View(db.dao_dien.SingleOrDefault(s => s.slug.Equals(id)));
         }
-        public JsonResult SearchActor()
+        public ActionResult SearchActor()
         {
-            List<dien_vien> actor = db.dien_vien.ToList();
-
+            var result = from a in db.dien_vien
+                         select new { a.ho_ten, a.anh, a.slug };
+            List<dien_vien> actor = result.AsEnumerable()
+                          .Select(o => new dien_vien
+                          {
+                              ho_ten = o.ho_ten,
+                              anh = o.anh,
+                              slug = o.slug
+                          }).ToList();
             string value = string.Empty;
             value = JsonConvert.SerializeObject(actor, Formatting.Indented, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-
-            return Json(value, JsonRequestBehavior.AllowGet);
+            return Content(value);
         }
-        public JsonResult SearchDirector()
+        public ActionResult SearchDirector()
         {
-            List<dao_dien> director = db.dao_dien.ToList();
-
+            var result = from a in db.dao_dien
+                         select new { a.ho_ten, a.anh, a.slug };
+            List<dao_dien> director = result.AsEnumerable()
+                          .Select(o => new dao_dien
+                          {
+                              ho_ten = o.ho_ten,
+                              anh = o.anh,
+                              slug = o.slug
+                          }).ToList();
             string value = string.Empty;
             value = JsonConvert.SerializeObject(director, Formatting.Indented, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
+            return Content(value);
 
-            return Json(value, JsonRequestBehavior.AllowGet);
         }
         public ActionResult AboutUs()
         {

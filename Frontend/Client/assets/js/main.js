@@ -199,7 +199,7 @@
       dots:false,
       margin: 30,
       autoplay:true,
-      autoplayTimeout:3000,
+      autoplayTimeout:5000,
       autoplayHoverPause:true,
       responsive:{
           0:{

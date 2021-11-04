@@ -29,30 +29,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-50 mb-lg-0">
-                <article>
+                <div class="row mb-10 justify-content-center">
                     @foreach (var item in Model)
                     {
-                        <div class="post-item">
-                                        <!--<div class="post-thumb">
-                                            <div class="owl-carousel owl-theme blog-slider">
-                                                <img src="~/images/news/@item.anh" alt="blog" width="750" height="360">
-                                                <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
-                                                <img src="/Frontend/Client/assets/images/blog/blog03.jpg" alt="blog">
-                                            </div>
-
-                                            <div class="blog-prev">
-                                            <i class="flaticon-double-right-arrows-angles"></i>
-                                              </div>
-                                                 <div class="blog-next">
-                                            <i class="flaticon-double-right-arrows-angles"></i>
-                                                </div>
-
-                                        </div>-->
-                                        <div class="post-thumb">
-                                            <a href="@Url.Action("NewsDetail","News", new {id=item.id })">
-                                                <img src="~/images/news/@item.anh" alt="blog" width="750" height="360">
-                                            </a>
-                                        </div>
+                        <!--<div class="post-item">
+                            <div class="post-thumb">
+                                <a href="@Url.Action("NewsDetail","News", new {id=item.id })">
+                                    <img src="~/images/news/@item.anh" alt="blog" width="750" height="360">
+                                </a>
+                            </div>
                             <div class="post-content">
                                 <div class="post-header">
                                     <h4 class="title">
@@ -60,10 +45,10 @@
                                             @item.tieu_de
                                         </a>
                                     </h4>
-                                    @*<div class="meta-post">
-                                <a href="#0" class="mr-4"><i class="flaticon-conversation"></i>20 Comments</a>
-                                <a href="#0"><i class="flaticon-view"></i>466 View</a>
-                            </div>*@
+                                    <div class="meta-post">
+                            <a href="#0" class="mr-4"><i class="flaticon-conversation"></i>20 Comments</a>
+                            <a href="#0"><i class="flaticon-view"></i>466 View</a>
+                        </div>
                                     <p>
                                         @Html.Raw(item.noi_dung)
                                     </p>
@@ -81,10 +66,26 @@
                                     <a href="@Url.Action("NewsDetail","News", new {id=item.id })" class="buttons">Đọc tiếp <i class="flaticon-right"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
+
+
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="movie-grid">
+                                <div class="movie-thumb c-thumb">
+                                    <a href="@Url.Action("NewsDetail","News", new {id=item.id })">
+                                        <img src="~/images/news/@item.anh" alt="blog">
+                                    </a>
+                                </div>
+                                    <div class="entry-content">
+                                        <a href="@Url.Action("NewsDetail","News", new {id=item.id })" class="buttons">Đọc tiếp <i class="flaticon-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+
                     }
-                    <!--Slider-->
-                </article>
+                </div>
+                        <!--Slider-->
                 
                 <div class="pagination-area text-center">
                     @Html.PagedListPager(Model, page => Url.Action("Index", "News", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)

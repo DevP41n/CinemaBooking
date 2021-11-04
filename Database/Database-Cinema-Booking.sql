@@ -383,4 +383,8 @@ CREATE TABLE content_rating(
 ALTER TABLE [dbo].[phim]  WITH CHECK ADD  CONSTRAINT [FK_phim_content_rating] FOREIGN KEY([id_content_rating])
 REFERENCES [dbo].[content_rating] ([ID])
 GO
-
+-- thêm cột trong phim
+-- dùng để lấy API dữ liệu về phim
+alter table dbo.phim add idrating nvarchar(50) NULL 
+--Đẻ dánh giá nội dung có phù hợp với độ tuổi
+alter table dbo.phim add id_content_rating int NULL

@@ -18,7 +18,7 @@ namespace CinemaBooking.Models
         public Nullable<int> id_phim { get; set; }
         public Nullable<int> id_theloai { get; set; }
     
-        public virtual phim phim { get; set; }
         public virtual the_loai_phim the_loai_phim { get; set; }
+        public virtual phim phim { get; set; }
     }
 }

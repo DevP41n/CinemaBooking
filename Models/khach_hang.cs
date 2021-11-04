@@ -17,8 +17,14 @@ namespace CinemaBooking.Models
 
     public partial class khach_hang
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public khach_hang()
+        {
+            this.orders = new HashSet<order>();
+        }
         CinemaBookingEntities db = new CinemaBookingEntities();
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+
         public int id { get; set; }
         [Display(Name = "Họ Tên")]
         public string ho_ten { get; set; }
@@ -43,7 +49,8 @@ namespace CinemaBooking.Models
         public Nullable<System.DateTime> create_at { get; set; }
         public Nullable<System.DateTime> update_at { get; set; }
 
-        //Facebook
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
         public long InsertForFacebook(khach_hang KH)
         {
             var user = db.khach_hang.SingleOrDefault(x => x.email == KH.email);
