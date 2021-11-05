@@ -180,9 +180,7 @@
           <Property Name="create_at" Type="datetime" />
           <Property Name="update_by" Type="nvarchar" MaxLength="250" />
           <Property Name="update_at" Type="datetime" />
-          <Property Name="dien_vien_id" Type="int" />
           <Property Name="dao_dien_id" Type="int" />
-          <Property Name="the_loai_phim_id" Type="int" />
           <Property Name="anhbackground" Type="nvarchar(max)" />
           <Property Name="idrating" Type="nvarchar" MaxLength="50" />
           <Property Name="id_content_rating" Type="int" />
@@ -292,6 +290,18 @@
           <Property Name="ghe_id" Type="int" />
           <Property Name="users_id" Type="int" />
         </EntityType>
+        <Association Name="Fk_DaoDien">
+          <End Role="dao_dien" Type="Self.dao_dien" Multiplicity="0..1" />
+          <End Role="phim" Type="Self.phim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dao_dien">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phim">
+              <PropertyRef Name="dao_dien_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_Ghe">
           <End Role="ghe_ngoi" Type="Self.ghe_ngoi" Multiplicity="0..1" />
           <End Role="order_details" Type="Self.order_details" Multiplicity="*" />
@@ -460,18 +470,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_TheLoai">
-          <End Role="the_loai_phim" Type="Self.the_loai_phim" Multiplicity="0..1" />
-          <End Role="phim" Type="Self.phim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="the_loai_phim">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="phim">
-              <PropertyRef Name="the_loai_phim_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_VeGhe">
           <End Role="ghe_ngoi" Type="Self.ghe_ngoi" Multiplicity="0..1" />
           <End Role="ve_ban" Type="Self.ve_ban" Multiplicity="*" />
@@ -543,6 +541,10 @@
           <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ve_ban" EntityType="Self.ve_ban" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Fk_DaoDien" Association="Self.Fk_DaoDien">
+            <End Role="dao_dien" EntitySet="dao_dien" />
+            <End Role="phim" EntitySet="phim" />
+          </AssociationSet>
           <AssociationSet Name="Fk_Ghe" Association="Self.Fk_Ghe">
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
             <End Role="order_details" EntitySet="order_details" />
@@ -599,10 +601,6 @@
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="orders" EntitySet="orders" />
           </AssociationSet>
-          <AssociationSet Name="Fk_TheLoai" Association="Self.Fk_TheLoai">
-            <End Role="the_loai_phim" EntitySet="the_loai_phim" />
-            <End Role="phim" EntitySet="phim" />
-          </AssociationSet>
           <AssociationSet Name="Fk_VeGhe" Association="Self.Fk_VeGhe">
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
             <End Role="ve_ban" EntitySet="ve_ban" />
@@ -647,6 +645,7 @@
           <Property Name="anh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="phim_da_tham_gia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="phims" Relationship="Self.Fk_DaoDien" FromRole="dao_dien" ToRole="phim" />
         </EntityType>
         <EntityType Name="dien_vien">
           <Key>
@@ -819,18 +818,16 @@
           <Property Name="create_at" Type="DateTime" Precision="3" />
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
-          <Property Name="dien_vien_id" Type="Int32" />
           <Property Name="dao_dien_id" Type="Int32" />
-          <Property Name="the_loai_phim_id" Type="Int32" />
           <Property Name="anhbackground" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="idrating" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="id_content_rating" Type="Int32" />
           <NavigationProperty Name="content_rating" Relationship="Self.FK_phim_content_rating" FromRole="phim" ToRole="content_rating" />
+          <NavigationProperty Name="dao_dien" Relationship="Self.Fk_DaoDien" FromRole="phim" ToRole="dao_dien" />
           <NavigationProperty Name="list_phim_dienvien" Relationship="Self.FK_list_phim_dienvien_phim" FromRole="phim" ToRole="list_phim_dienvien" />
           <NavigationProperty Name="list_phim_theloai" Relationship="Self.FK_list_phim_theloai_phim" FromRole="phim" ToRole="list_phim_theloai" />
           <NavigationProperty Name="orders" Relationship="Self.Fk_PhimOrder" FromRole="phim" ToRole="orders" />
           <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_PhimSC" FromRole="phim" ToRole="suat_chieu" />
-          <NavigationProperty Name="the_loai_phim" Relationship="Self.Fk_TheLoai" FromRole="phim" ToRole="the_loai_phim" />
         </EntityType>
         <EntityType Name="phong_chieu">
           <Key>
@@ -895,7 +892,6 @@
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="list_phim_theloai" Relationship="Self.FK_list_phim_theloai_the_loai_phim" FromRole="the_loai_phim" ToRole="list_phim_theloai" />
-          <NavigationProperty Name="phims" Relationship="Self.Fk_TheLoai" FromRole="the_loai_phim" ToRole="phim" />
         </EntityType>
         <EntityType Name="thong_tin_cong_ty">
           <Key>
@@ -959,6 +955,18 @@
             </Principal>
             <Dependent Role="phim">
               <PropertyRef Name="id_content_rating" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_DaoDien">
+          <End Role="dao_dien" Type="Self.dao_dien" Multiplicity="0..1" />
+          <End Role="phim" Type="Self.phim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dao_dien">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phim">
+              <PropertyRef Name="dao_dien_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1130,18 +1138,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Fk_TheLoai">
-          <End Role="the_loai_phim" Type="Self.the_loai_phim" Multiplicity="0..1" />
-          <End Role="phim" Type="Self.phim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="the_loai_phim">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="phim">
-              <PropertyRef Name="the_loai_phim_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_PhimPC">
           <End Role="phong_chieu" Type="Self.phong_chieu" Multiplicity="0..1" />
           <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
@@ -1205,6 +1201,10 @@
             <End Role="content_rating" EntitySet="content_rating" />
             <End Role="phim" EntitySet="phims" />
           </AssociationSet>
+          <AssociationSet Name="Fk_DaoDien" Association="Self.Fk_DaoDien">
+            <End Role="dao_dien" EntitySet="dao_dien" />
+            <End Role="phim" EntitySet="phims" />
+          </AssociationSet>
           <AssociationSet Name="FK_list_phim_dienvien_dien_vien" Association="Self.FK_list_phim_dienvien_dien_vien">
             <End Role="dien_vien" EntitySet="dien_vien" />
             <End Role="list_phim_dienvien" EntitySet="list_phim_dienvien" />
@@ -1260,10 +1260,6 @@
           <AssociationSet Name="Fk_PhimSC" Association="Self.Fk_PhimSC">
             <End Role="phim" EntitySet="phims" />
             <End Role="suat_chieu" EntitySet="suat_chieu" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_TheLoai" Association="Self.Fk_TheLoai">
-            <End Role="the_loai_phim" EntitySet="the_loai_phim" />
-            <End Role="phim" EntitySet="phims" />
           </AssociationSet>
           <AssociationSet Name="Fk_PhimPC" Association="Self.Fk_PhimPC">
             <End Role="phong_chieu" EntitySet="phong_chieu" />
@@ -1471,9 +1467,7 @@
                 <ScalarProperty Name="create_at" ColumnName="create_at" />
                 <ScalarProperty Name="update_by" ColumnName="update_by" />
                 <ScalarProperty Name="update_at" ColumnName="update_at" />
-                <ScalarProperty Name="dien_vien_id" ColumnName="dien_vien_id" />
                 <ScalarProperty Name="dao_dien_id" ColumnName="dao_dien_id" />
-                <ScalarProperty Name="the_loai_phim_id" ColumnName="the_loai_phim_id" />
                 <ScalarProperty Name="anhbackground" ColumnName="anhbackground" />
                 <ScalarProperty Name="idrating" ColumnName="idrating" />
                 <ScalarProperty Name="id_content_rating" ColumnName="id_content_rating" />

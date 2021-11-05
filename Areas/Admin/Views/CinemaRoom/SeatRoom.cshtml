@@ -4,6 +4,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+
+
 <div class="main-content">
 
     <div class="page-content">
@@ -102,17 +104,18 @@
 
                                 if (item.Col == 1)
                                 {
-                                    <div class="col-lg-12" style="margin-bottom:5px;">
-                                        @foreach (var it in Model.Where(m => m.Row == item.Row))
-                                        {
-                                            <button class="btn mg-5-2" style="width:50px;height:35px;background-color: #0391D1;color: white; font-size:13px">@it.Row@it.Col</button>
-                                        }
-                                    </div>
-
-                                    <button class="btn mg-5-2" style="width:50px;height:35px;background-color: #ff0000;color: white; font-size:13px" data-id="@ViewBag.pc.id" data-seat="@item.Row" id="btnEdit">Edit</button>
+                            <div class="col-lg-10" style="margin-bottom:5px;">
+                                @foreach (var it in Model.Where(m => m.Row == item.Row))
+                                {
+                                    <button class="btn mg-5-2" style="width:50px;height:35px;background-color: #0391D1;color: white; font-size:13px;">@it.Row@it.Col</button>
                                 }
-                            }
-                        </div>
+                                </div>
+                                <div class="col-lg-2" style="margin-bottom:5px;">
+                                    <button class="btn mg-5-2 " style="width:50px;height:35px;background-color: #ff0000;color: white; font-size:13px;margin-right:200px" data-id="@ViewBag.pc.id" data-seat="@item.Row" id="btnEdit">Edit</button>
+                                </div>
+                                }
+                                }
+                            </div>
                             <div class="form-group mb-4">
 
                             </div>
