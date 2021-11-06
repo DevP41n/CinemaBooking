@@ -74,14 +74,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.ghe = ghengoi;
             return View(ghengoi);
         }
-           
+
         [HttpPost]
         public ActionResult CreateSeat(string hang, int ghe, int id)
         {
             phong_chieu phongChieu = db.phong_chieu.Find(id);
-            var ghn = db.ghe_ngoi.Where(n=>n.Row==hang && n.phong_chieu_id ==id).Count();
+            var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id).Count();
             ghe_ngoi ghengoi = new ghe_ngoi();
-            if (ghn!= 0)
+            if (ghn != 0)
             {
                 return Json(new { success = false });
             }
@@ -97,18 +97,80 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         db.ghe_ngoi.Add(ghengoi);
                         db.SaveChanges();
                     }
-                }catch(Exception)
+                }
+                catch (Exception)
                 {
                     return Json(new { success = false });
                 }
             }
-            return Json(new {success = true });
+            return Json(new { success = true });
         }
 
         public ActionResult GetByRow(string Row, int? pcid)
         {
             var seat = db.ghe_ngoi.Where(x => x.Row == Row && x.phong_chieu_id == pcid).Count();
-            return Json(data: new {seat, Row }, JsonRequestBehavior.AllowGet);
+            return Json(data: new { seat, Row }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult EditSeat(string hang, int ghe, int id)
+        {
+            var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id).ToList();
+            var tong = ghn.Count();
+            ghe_ngoi ghengoi = new ghe_ngoi();
+            try
+            {
+                if (tong < ghe)
+                {
+                    for (int i = tong; i <ghe; i++)
+                    {
+                        ghengoi.Row = hang;
+                        ghengoi.Col = i + 1;
+                        ghengoi.phong_chieu_id = id;
+                        db.ghe_ngoi.Add(ghengoi);
+                        db.SaveChanges();
+                    }
+                }
+                else if(tong > ghe)
+                {
+                    foreach(var item in ghn)
+                    {
+                        if(item.Col>ghe)
+                        {
+                            ghe_ngoi seat = db.ghe_ngoi.Find(item.id);
+                            db.ghe_ngoi.Remove(seat);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+            }
+            return Json(new { success = true });
+        }
+
+
+        [HttpPost]
+        public JsonResult DeleteSeat(string hang, int id)
+        {
+            var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id).ToList();
+            ghe_ngoi ghengoi = new ghe_ngoi();
+            try
+            {
+                foreach(var item in ghn)
+                {
+                    ghe_ngoi seat = db.ghe_ngoi.Find(item.id);
+                    db.ghe_ngoi.Remove(seat);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false });
+            }
+            return Json(new { success = true });
         }
     }
 }

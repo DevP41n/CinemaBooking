@@ -4,6 +4,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+
+
 <div class="main-content">
 
     <div class="page-content">
@@ -96,23 +98,35 @@
                                     <button class="btn mg-5-2" style="width:50px;height:35px;background-color: #0391D1;color: white;">F1</button>
                                 </div>*@
 
-                        <div class="row text-center mg-5-2">
-                            @foreach (var item in ViewBag.ghe)
-                            {
+                            <div class="row text-center mg-5-2">
+                                <div class="col-lg-10" style="margin-bottom:5px;">
 
-                                if (item.Col == 1)
+                                    <button class="btn mg-5-2" style="width:500px;height:25px;background-color: #808080;color: #000000; font-size:13px;">Màn hình</button>
+                                    <br> </br>
+                                </div>
+
+                                @foreach (var item in ViewBag.ghe)
                                 {
-                                    <div class="col-lg-12" style="margin-bottom:5px;">
-                                        @foreach (var it in Model.Where(m => m.Row == item.Row))
-                                        {
-                                            <button class="btn mg-5-2" style="width:50px;height:35px;background-color: #0391D1;color: white; font-size:13px">@it.Row@it.Col</button>
-                                        }
-                                    </div>
 
-                                    <button class="btn mg-5-2" style="width:50px;height:35px;background-color: #ff0000;color: white; font-size:13px" data-id="@ViewBag.pc.id" data-seat="@item.Row" id="btnEdit">Edit</button>
+                                    if (item.Col == 1)
+                                    {
+                                        <div class="col-lg-10" style="margin-bottom:5px;">
+                                            @foreach (var it in Model.Where(m => m.Row == item.Row))
+                                            {
+                                                <button class="btn mg-5-2" style="width:50px;height:35px;background-color: #0391D1;color: white; font-size:13px;">@it.Row@it.Col</button>
+                                            }
+                                        </div>
+                                        <div class="col-lg-offset-0" style="margin-bottom:5px;">
+                                            <button class="btn mg-5-2 " style="width:50px;height:35px;background-color: #0391D1;color: white; font-size:13px;float:left" data-id="@ViewBag.pc.id" data-seat="@item.Row" id="btnEdit">Edit</button>
+
+                                        </div>
+                                        <div class="col-lg-1" style="margin-bottom:5px;">
+
+                                            <button class="btn mg-5-2 btnDeleteSeat" style="width:70px;height:35px;background-color: #ff0000;color: white; font-size:13px;float:left" data-rid="@ViewBag.pc.id" data-rseat="@item.Row" id="btnDelete">Delete</button>
+                                        </div>
+                                    }
                                 }
-                            }
-                        </div>
+                            </div>
                             <div class="form-group mb-4">
 
                             </div>
@@ -122,7 +136,7 @@
                             </div>
                         </div>
 
-                        <!-- Modal -->
+                        <!-- Modal C-->
                         <div class="modal fade" id="CreateSeat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -148,6 +162,36 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-primary" data-id="@ViewBag.pc.id" id="btnSave">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal E-->
+                        <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Thêm hàng ghế</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Tên hàng</label>
+                                                @*<input type="hidden" id="exampleid" value="0" />*@
+                                                <input type="email" class="form-control" id="ehangghe" placeholder="Nhập tên hàng ghế" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Số ghế</label>
+                                                <input type="text" class="form-control" id="esoghe" placeholder="Nhập số ghế">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" data-id="@ViewBag.pc.id" id="btnEditSeat">Save changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -190,23 +234,61 @@
             });
         });
 
-        
+
         function Getdatabyrow(Row, pcid) {
             $.ajax({
                 url: '/CinemaRoom/GetByRow',
                 type: 'Get',
                 data: {
-                    Row : Row,
-                    pcid : pcid,
+                    Row: Row,
+                    pcid: pcid,
                 },
                 success: function (res) {
                     if (res.seat != null && res.Row != null) {
-                        $('#hangghe').val(res.Row);
-                        $('#soghe').val(res.seat);
-                        $('#CreateSeat').modal('show');
+                        $('#ehangghe').val(res.Row);
+                        $('#esoghe').val(res.seat);
+                        $('#Edit').modal('show');
                     }
                 }
             });
         }
+
+        $('#btnEditSeat').click(function () {
+            var hang = $('#ehangghe').val();
+            var ghe = $('#esoghe').val();
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/CinemaRoom/EditSeat',
+                type: 'POST',
+                data: { hang, ghe, id },
+                success: function (res) {
+                    if (res.success) {
+                        window.location.reload();
+                    }
+                    else {
+                        alert('Hàng này đã có rồi!');
+                    }
+
+                }
+            });
+        });
+
+
+        $('.btnDeleteSeat').click(function () {
+            var pcid = $(this).data('rid');
+            var Row = $(this).data('rseat');
+            $.ajax({
+                url: '/CinemaRoom/DeleteSeat',
+                type: 'POST',
+                data: {
+                    hang: Row,
+                    id: pcid,
+                },
+                success: function (res) {
+                    if (res.success)
+                        window.location.reload();
+                }
+            });
+        });
     </script>
 }

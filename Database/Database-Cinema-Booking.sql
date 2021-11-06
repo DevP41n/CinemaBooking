@@ -407,3 +407,15 @@ add Col int;
 alter table dbo.phim add idrating nvarchar(50) NULL 
 --Đẻ dánh giá nội dung có phù hợp với độ tuổi
 alter table dbo.phim add id_content_rating int NULL
+
+
+alter table phim
+add constraint Fk_DaoDien foreign key(dao_dien_id) references dao_dien(id)
+
+alter table phim
+drop constraint Fk_TheLoai 
+
+alter table phim
+drop column dien_vien_id;
+alter table phim
+drop column the_loai_phim_id;
