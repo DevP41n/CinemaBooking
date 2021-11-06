@@ -12,27 +12,26 @@
             <div class="row justify-content-between">
                 <div class="col-md-7 col-lg-6 col-xl-5">
                     <div class="section-header-3 left-style">
-                        <span class="cate">contact us</span>
-                        <h2 class="title">get in touch</h2>
-                        <p>We’d love to talk about how we can work together. Send us a message below and we’ll respond as soon as possible.</p>
+                        <span class="cate">Liên lạc với chúng tôi</span>
+                        <p>Chúng tôi rất trân trọng khi nhận được sự phản hồi của bạn.</p>
                     </div>
                     <form class="contact-form" id="contact_form_submit" action="/Information/Contact" method="post">
                         @Html.AntiForgeryToken()
                         <div class="form-group">
-                            <label for="ho_ten">Name <span>*</span></label>
-                            <input type="text" placeholder="Enter Your Full Name" name="ho_ten" id="ho_ten" required>
+                            <label for="ho_ten">Tên <span>*</span></label>
+                            <input type="text" placeholder="Nhập tên của bạn" name="ho_ten" id="ho_ten" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email <span>*</span></label>
-                            <input type="text" placeholder="Enter Your Email" name="email" id="email" required>
+                            <label for="email">Địa chỉ email <span>*</span></label>
+                            <input type="text" placeholder="Nhập email của bạn" name="email" id="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="tieu_de">Subject <span>*</span></label>
-                            <input type="text" placeholder="Enter Your Subject" name="tieu_de" id="tieu_de" required>
+                            <label for="tieu_de">Chủ đề <span>*</span></label>
+                            <input type="text" placeholder="Nhập tiêu đề bạn muốn gửi" name="tieu_de" id="tieu_de" required>
                         </div>
                         <div class="form-group">
-                            <label for="noi_dung">Message <span>*</span></label>
-                            <textarea name="noi_dung" id="noi_dung" placeholder="Enter Your Message" required></textarea>
+                            <label for="noi_dung">Tin nhắn <span>*</span></label>
+                            <textarea name="noi_dung" id="noi_dung" placeholder="Nhập tin nhắn của bạn" required></textarea>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Gửi">
@@ -47,8 +46,8 @@
                                     <img src="/Frontend/Client/assets/images/contact/contact01.png" alt="contact">
                                 </div>
                                 <div class="info-content">
-                                    <h6 class="title">phone number</h6>
-                                    <a href="Tel:82828282034">+1234 56789</a>
+                                    <h6 class="title">Hotline</h6>
+                                    <a>1600 6666</a>
                                 </div>
                             </div>
                             <div class="info-item">
@@ -57,7 +56,7 @@
                                 </div>
                                 <div class="info-content">
                                     <h6 class="title">Email</h6>
-                                    <a href="Mailto:info@gmail.com">info@Boleto.com</a>
+                                    <a href="Mailto:info@gmail.com">info@cinema.com</a>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +68,7 @@
 </section>
 <!-- ==========Contact-Section========== -->
 <!-- ==========Contact-Counter-Section========== -->
-<section class="contact-counter padding-top padding-bottom">
+@*<section class="contact-counter padding-top padding-bottom">
     <div class="container">
         <div class="row justify-content-center mb-30-none">
             <div class="col-sm-6 col-md-3">
@@ -130,7 +129,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- ==========Contact-Counter-Section========== -->
 <script>
     function codeAddress() {

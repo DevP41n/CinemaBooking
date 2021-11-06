@@ -967,18 +967,19 @@ input[type="submit"] {
 }
 
 *::-webkit-scrollbar-track {
-  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
-          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
-  background-color: #F5F5F5;
+    -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+    background-color: #000000;
 }
 
 *::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
   background-color: #F5F5F5;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #000000;
+    background-color: #F5F5F5;
+    border-radius: 10px;
 }
 
 .mt-10 {
@@ -1872,7 +1873,7 @@ input[type="submit"] {
     box-shadow: 0px 0px 20px 7px rgb(59 55 188 / 64%);
 }
 .details-banner {
-    padding-top: 300px;
+    padding-top: 500px;
     padding-bottom: 20px;
     position: relative;
 }
@@ -4111,7 +4112,7 @@ input[type="submit"] {
 
 @media (min-width: 576px) {
   .movie-details .item .header {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 }
 
@@ -4162,7 +4163,6 @@ input[type="submit"] {
     .cast-item .cast-thumb a {
         display: block;
         height: 135px;
-        width: 120px;
         position: relative;
         overflow: hidden;
         border-radius: 50%;
@@ -9345,5 +9345,22 @@ aside {
 .image-scale-06:hover {
     transition: all ease 0.3s;
     transform: scale(1.06);
+}
+.director-moviedetail {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-bottom: 7px;
+    border-bottom: 1px dashed #11326f;
+    margin-bottom: 20px;
+}
+.header-director-moviedetail {
+    text-transform: uppercase;
+    margin-bottom: 7    px;
+    text-align: center;
+    margin-top: unset;
 }
 /*# sourceMappingURL=main.css.map */

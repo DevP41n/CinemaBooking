@@ -331,9 +331,6 @@ ALTER TABLE ghe_ngoi ADD gia decimal(18,0);
 
 ALTER TABLE ghe_ngoi ADD image nvarchar(max);
 
-ALTER TABLE phim
-DROP CONSTRAINT Fk_DienVien;
-
 
 CREATE TABLE orders(
 	id int IDENTITY(1,1) NOT NULL,
@@ -396,7 +393,6 @@ GO
 -- fix bảng ghế ngồi
 alter table ghe_ngoi
 drop column vi_tri_day;
-
 alter table ghe_ngoi
 drop column vi_tri_cot;
 
@@ -406,7 +402,6 @@ add Row nvarchar(255);
 alter table ghe_ngoi
 add Col int;
 
-drop table dbo.phim_daodien;
 -- thêm cột trong phim
 -- dùng để lấy API dữ liệu về phim
 alter table dbo.phim add idrating nvarchar(50) NULL 

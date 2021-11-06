@@ -38,7 +38,7 @@ namespace CinemaBooking.Models
         public virtual khach_hang khach_hang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_details> order_details { get; set; }
-        public virtual phim phim { get; set; }
         public virtual phong_chieu phong_chieu { get; set; }
+        public virtual phim phim { get; set; }
     }
 }

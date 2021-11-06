@@ -76,11 +76,8 @@
                                         <img src="~/images/news/@item.anh" alt="blog">
                                     </a>
                                 </div>
-                                    <div class="entry-content">
-                                        <a href="@Url.Action("NewsDetail","News", new {id=item.id })" class="buttons">Đọc tiếp <i class="flaticon-right"></i></a>
-                                    </div>
-                                </div>
                             </div>
+                        </div>
 
 
                     }
@@ -91,7 +88,7 @@
                     @Html.PagedListPager(Model, page => Url.Action("Index", "News", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
                 </div>
             </div>
-            <div class="col-lg-4 col-sm-10 col-md-8">
+            <div @*class="col-lg-4 col-sm-10 col-md-8"*@>
                 <aside>
                     @*<div class="widget widget-search">
                             <h5 class="title">search</h5>
@@ -100,7 +97,7 @@
                                 <button type="submit"><i class="flaticon-loupe"></i>Search</button>
                             </form>
                         </div>*@
-                    <div class="widget widget-post">
+                   @* <div class="widget widget-post">
                         <h5 class="title">latest post</h5>
                         <div class="slider-nav">
                             <span class="flaticon-angle-pointing-to-left widget-prev"></span>
@@ -140,7 +137,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                    @* <div class="widget widget-categories">
                         <h5 class="title">categories</h5>
                         <ul>
