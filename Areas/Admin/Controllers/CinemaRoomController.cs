@@ -23,8 +23,22 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateCinemaRoom(phong_chieu phongChieu)
         {
+            string[] room = new string[5] { "A", "B", "C", "D", "E" };
+            ghe_ngoi ghe = new ghe_ngoi();
             db.phong_chieu.Add(phongChieu);
             db.SaveChanges();
+            var id = phongChieu.id;
+            for (int i =0; i<5;i++)
+            {
+                for (int j = 0; j<10;j++)
+                {
+                    ghe.Row = room[i];
+                    ghe.Col = j + 1;
+                    ghe.phong_chieu_id = id;
+                    db.ghe_ngoi.Add(ghe);
+                    db.SaveChanges();
+                }
+            }
             TempData["Message"] = "Tạo thành công!";
             return RedirectToAction("ListCinemaRoom");
         }
