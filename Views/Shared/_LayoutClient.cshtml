@@ -25,7 +25,7 @@
     <title>@ViewBag.Title</title>
     <!--custom-->
 
-
+    <link href="~/Frontend/Client/assets/css/rating.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -120,7 +120,7 @@
                     <div class="form-group large">
                         @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { style = "width: 100%;" }))
                         {
-                            <input id="txtSearch"  name="name" class="autosuggest" type="text" placeholder="Tìm kiếm phim..." autocomplete="off">
+                            <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm phim..." autocomplete="off">
                             <div class="tt-menu tt-open" style="position: absolute; top: 100%; left: 0px; z-index: 100; width: 100%; display: block; background-color: #ffffff00; border-radius: 10px; ">
                             </div>
                             <button type="submit"><i class="fas fa-search"></i></button>
@@ -245,6 +245,7 @@
     <script src="~/Content/Message.js"></script>
     <!--custom-->
     <script src="~/Scripts/custom.js"></script>
+
 
 
 </body>

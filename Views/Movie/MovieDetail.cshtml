@@ -66,28 +66,28 @@
                     <div class="item-header">
                         <h5 class="title">4.5</h5>
                         <div class="rated">
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
-                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-star" style="color: #ffc107 "></i>
+                            <i class="fas fa-star" style="color: #ffc107 "></i>
+                            <i class="fas fa-star" style="color: #ffc107 "></i>
+                            <i class="fas fa-star" style="color: #ffc107 "></i>
+                            <i class="fas fa-star-half" style="color: #ffc107 "></i>
                         </div>
                     </div>
-                    <p>Users Rating</p>
+                    <p>Đánh giá của người xem</p>
                 </div>
                 @*<div class="item">
-                <div class="item-header">
-                    <div class="rated rate-it">
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h5 class="title">0.0</h5>
-                </div>
-                <p><a href="#0">Rate It</a></p>
-            </div>*@
+                        <div class="item-header">
+                            <div class="rated rate-it">
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h5 class="title">0.0</h5>
+                        </div>
+                        <p><a href="#0">Rate It</a></p>
+                    </div>*@
             </div>
             @if (Model.loai_phim_chieu == 1)
             {
@@ -104,7 +104,7 @@
         <div class="row justify-content-center flex-wrap-reverse mb--50">
             <div class="col-lg-3 col-sm-10 col-md-6 mb-50">
                 <div class="widget-1 widget-tags">
-                   
+
                 </div>
             </div>
             <div class="col-lg-9 mb-50">
@@ -159,9 +159,9 @@
                                     @Html.Raw(Model.chi_tiet)
                                 </div>
                                 <div style="display: flex; flex-wrap: wrap;">
-                                    <div class="item col-xl-2 col-lg-3 col-md-3 col-sm-4" >
+                                    <div class="item col-xl-2 col-lg-3 col-md-3 col-sm-4">
                                         <div class="director-moviedetail">
-                                            <h5 class="header-director-moviedetail" >Đạo diễn</h5>
+                                            <h5 class="header-director-moviedetail">Đạo diễn</h5>
                                         </div>
                                         <div class="" style="width: 150px;">
                                             <div class="cast-item">
@@ -184,7 +184,7 @@
                                                 <div class="cast-next"><i class="flaticon-double-right-arrows-angles"></i></div>
                                             </div>
                                         </div>
-                                        <div class="casting-slider owl-carousel" >
+                                        <div class="casting-slider owl-carousel">
                                             @{CinemaBooking.Models.CinemaBookingEntities x = new CinemaBooking.Models.CinemaBookingEntities();}
                                             @foreach (var ad in x.list_phim_dienvien.Where(a => a.id_phim == Model.id))
                                             {
@@ -197,7 +197,7 @@
                                                     </div>
                                                     <div class="cast-content">
                                                         <h6 class="cast-title"><a href="@Url.Action("ActorDetail","Information", new { id= ad.dien_vien.slug })">@ad.dien_vien.ho_ten</a></h6>
-                                                         @*<p>As Richie Tozier</p>*@
+                                                        @*<p>As Richie Tozier</p>*@
                                                     </div>
                                                 </div>
                                             }
@@ -228,11 +228,11 @@
                                                 {
                                                     if (i <= item.rate)
                                                     {
-                                                        <i class="flaticon-favorite-heart-button"></i>
+                                                        <i class="fas fa-star" style="color: #ffc107"></i>
                                                     }
                                                     else
                                                     {
-                                                        <i class="flaticon-favorite-heart-button" style="color:#646464"></i>
+                                                        <i class="fas fa-star" style="color:#646464"></i>
                                                     }
                                                 }
 
@@ -256,9 +256,23 @@
                                     </div>
                                 }
                                 <label for="rate">Đánh giá:</label>
-                                <input id="rate" type="number" min="0" max="5" step="1" value="5" style="width:50px; height:30px" /><span class="fa fa-star checked"></span>
+                                @*<input id="rate" type="number" min="0" max="5" step="1" value="5" style="width:50px; height:30px" /><span class="fa fa-star checked"></span>*@
+
+                                <div class="rate">
+                                    <input type="radio" id="star5" name="rate" value="5" class="ratingss" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" class="ratingss"/>
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" class="ratingss"/>
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" class="ratingss"/>
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" class="ratingss"/>
+                                    <label for="star1" title="text">1 star</label>
+                                </div>
+
                                 <br />
-                                <textarea id="cmt" rows="5" cols="100"></textarea>
+                                <textarea id="cmt" rows="5" cols="100" placeholder="Nhập bình luận ..."></textarea>
                                 <br />
                                 <button type="button" class="btn-primary" id="btnRate" data-id="@Model.id" title="Gửi" href="#">Gửi</button>
                             </div>
@@ -281,31 +295,35 @@
 
 @section scripts{
     <script>
+
         $(document).ready(function () {
-            $('#btnRate').click(function () {
-                var star = $('#rate').val();
-                var cmt = $('#cmt').val();
-                var movieID = $(this).data('id');
-                var movieRate = {
-                    rate: star,
-                    comment: cmt,
-                    movie_id: movieID
-                };
-                $.ajax({
-                    url: '/Movie/AddRate',
-                    type: 'POST',
-                    data: movieRate,
-                    success: function (res) {
-                        if (res.success) {
-                            window.location.reload();
+            $('body').on('click', '.ratingss', function () {
+                var star = $(this).val();
+                $('#btnRate').click(function () {
+                    var cmt = $('#cmt').val();
+                    var movieID = $(this).data('id');
+                    var movieRate = {
+                        rate: star,
+                        comment: cmt,
+                        movie_id: movieID
+                    };
+                    $.ajax({
+                        url: '/Movie/AddRate',
+                        type: 'POST',
+                        data: movieRate,
+                        success: function (res) {
+                            if (res.success) {
+                                window.location.reload();
+                            }
                         }
-                    }
+                    });
                 });
             });
         });
+
     </script>
 
-     <script>
-            
+    <script>
+
     </script>
 }
