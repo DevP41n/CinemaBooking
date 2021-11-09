@@ -441,3 +441,11 @@ add constraint FK_suatchieuorder foreign key(suatchieu_id) references suat_chieu
 
 alter table suat_chieu
 alter column ngay_chieu date;
+
+-- đổi kiễu dữ liệu của trailer ảnh và slug
+alter table phim
+alter column trailer nvarchar(MAX) 
+alter table phim
+alter column slug nvarchar(MAX) 
+alter table phim
+alter column anh nvarchar(MAX) 
