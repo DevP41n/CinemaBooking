@@ -108,7 +108,7 @@
                                                 <td>
                                                     @foreach (var tl in db.list_phim_theloai.Where(x => x.id_phim == item.id))
                                                     {
-                                                        @Html.DisplayFor(modelItem => tl.the_loai_phim.ten_the_loai)
+                                                    <ul>@Html.DisplayFor(modelItem => tl.the_loai_phim.ten_the_loai) </ul>   
                                                     }
 
                                                 </td>

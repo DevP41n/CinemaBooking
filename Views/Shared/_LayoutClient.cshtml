@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="~/Frontend/Client/assets/css/nice-select.css">
     <link rel="stylesheet" href="~/Frontend/Client/assets/css/jquery.animatedheadline.css">
     <link rel="stylesheet" href="~/Frontend/Client/assets/css/main.css">
+    <link rel="stylesheet" href="~/Frontend/Client/assets/css/ionicons.min.css" />
     <!--toastr-->
     <link href="~/Content/toastr.css" rel="stylesheet" />
     <link href="~/Content/toastr.min.css" rel="stylesheet" />
@@ -120,7 +121,7 @@
                     <div class="form-group large">
                         @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { style = "width: 100%;" }))
                         {
-                            <input id="txtSearch"  name="name" class="autosuggest" type="text" placeholder="Tìm kiếm phim..." autocomplete="off">
+                            <input id="txtSearch" name="name" class="autosuggest" type="text" placeholder="Tìm kiếm phim..." autocomplete="off">
                             <div class="tt-menu tt-open" style="position: absolute; top: 100%; left: 0px; z-index: 100; width: 100%; display: block; background-color: #ffffff00; border-radius: 10px; ">
                             </div>
                             <button type="submit"><i class="fas fa-search"></i></button>
@@ -232,19 +233,27 @@
     <script src="~/Frontend/Client/assets/js/heandline.js"></script>
     <script src="~/Frontend/Client/assets/js/isotope.pkgd.min.js"></script>
     <script src="~/Frontend/Client/assets/js/magnific-popup.min.js"></script>
-    <script src="~/Frontend/Client/assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Frontend/Client/assets/js/owl.carousel.min.js"></script>
     <script src="~/Frontend/Client/assets/js/wow.min.js"></script>
     <script src="~/Frontend/Client/assets/js/countdown.min.js"></script>
     <script src="~/Frontend/Client/assets/js/odometer.min.js"></script>
     <script src="~/Frontend/Client/assets/js/viewport.jquery.js"></script>
     <script src="~/Frontend/Client/assets/js/nice-select.js"></script>
     <script src="~/Frontend/Client/assets/js/main.js"></script>
+
     <!--toastr-->
     <script src="~/Scripts/toastr.js"></script>
     <script src="~/Scripts/toastr.min.js"></script>
     <script src="~/Content/Message.js"></script>
     <!--custom-->
-    <script src="~/Scripts/custom.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.counterup.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.waypoints.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/popper.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/slick.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/asyncloader.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/custom.js"></script>
 
 
 </body>

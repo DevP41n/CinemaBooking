@@ -60,6 +60,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     string StrPath = Path.Combine(path, filename);
                     file.SaveAs(StrPath);
                 }
+                var file1 = Request.Files["anhbackground"];
+                if (file1 != null && file1.ContentLength > 0)
+                {
+                    String filename = strSlug + file1.FileName.Substring(file1.FileName.LastIndexOf("."));
+                    Phim.anhbackground = filename;
+                    String StrPath = Path.Combine(Server.MapPath("~/images/movies/background/"));
+                    file1.SaveAs(Path.Combine(StrPath, filename));
+                }
                 db.phims.Add(Phim);
                 db.SaveChanges();
                 foreach (string dienvienid in dienvienarray)
@@ -87,7 +95,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult EditMovie(int? id)
         {
             ViewBag.the_loai_phim_id = new MultiSelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
-            ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList(), "id", "ho_ten");
+            ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList(), "id", "ho_ten");
             ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             phim Phim = db.phims.Find(id);
@@ -102,7 +110,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult EditMovie(phim Phim, list_phim_dienvien listdienvien, list_phim_theloai listtheloai, String[] theloaiarray, String[] dienvienarray)
         {
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
-            ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList(), "id", "ho_ten");
+            ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList(), "id", "ho_ten");
             ViewBag.id_content_rating = new SelectList(db.content_rating.ToList().OrderBy(n => n.ID), "ID", "ten_rating");
             if (ModelState.IsValid)

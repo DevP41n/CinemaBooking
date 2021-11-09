@@ -255,8 +255,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\ionicons.min.css" />
+    <Content Include="Content\magnific-popup.min.css" />
     <Content Include="Content\Message.js" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\slick.min.css" />
+    <Content Include="Content\swiper-bundle.min.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Database\classKhachHang.txt" />
@@ -269,6 +273,10 @@
     <Content Include="Frontend\Client\assets\css\bootstrap.min.css" />
     <Content Include="Frontend\Client\assets\css\flaticon.css" />
     <Content Include="Frontend\Client\assets\css\Flaticon.svg" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\flaticon.css" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\flaticon.html" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.svg" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.svg" />
     <Content Include="Frontend\Client\assets\css\img\check.png" />
     <Content Include="Frontend\Client\assets\css\img\check02.png" />
     <Content Include="Frontend\Client\assets\css\img\movie-seat.png" />
@@ -281,6 +289,7 @@
     <Content Include="Frontend\Client\assets\css\img\times.png" />
     <Content Include="Frontend\Client\assets\css\img\wreath-01.png" />
     <Content Include="Frontend\Client\assets\css\img\wreath-02.png" />
+    <Content Include="Frontend\Client\assets\css\ionicons.min.css" />
     <Content Include="Frontend\Client\assets\css\jquery.animatedheadline.css" />
     <Content Include="Frontend\Client\assets\css\magnific-popup.css" />
     <Content Include="Frontend\Client\assets\css\main.css" />
@@ -441,6 +450,7 @@
     <Content Include="Frontend\Client\assets\images\tour\icon01.png" />
     <Content Include="Frontend\Client\assets\images\tour\icon02.png" />
     <Content Include="Frontend\Client\assets\images\tour\tour.png" />
+    <Content Include="Scripts\asyncloader.min.js" />
     <Content Include="Frontend\Client\assets\js\bootstrap.min.js" />
     <Content Include="Frontend\Client\assets\js\contact.js" />
     <Content Include="Frontend\Client\assets\js\countdown.min.js" />
@@ -733,6 +743,14 @@
     <Content Include="Models\CinemaBooking.edmx.diagram">
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Content>
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.eot" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.ttf" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.woff" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.woff2" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.eot" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.ttf" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.woff" />
+    <Content Include="Frontend\Client\assets\css\flaticon1\fonts\_flaticon.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\i18n\af.js" />
@@ -799,13 +817,19 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.counterup.min.js" />
+    <Content Include="Scripts\jquery.magnific-popup.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.waypoints.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\slick.min.js" />
+    <Content Include="Scripts\swiper-bundle.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="template\admin\assets\css\app-dark.css" />

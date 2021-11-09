@@ -15,7 +15,7 @@ namespace CinemaBooking.Controllers
         public ActionResult Index(string title, int? page)
         {
             ViewBag.titleDisplay = title;
-            int pageSize = 2;
+            int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(db.su_kien.OrderByDescending(s => s.create_at).ToPagedList(pageNumber, pageSize));
         }

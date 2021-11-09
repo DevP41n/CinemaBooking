@@ -4,111 +4,24 @@
     ViewBag.Title = "Sắp chiếu";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
-
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 <!-- ==========Movie-Section========== -->
 <section class="movie-section padding-top padding-bottom">
     <div class="container">
         <div class="row flex-wrap-reverse justify-content-center">
-            <div class="col-sm-10 col-md-8 col-lg-3">
-                @*<div class="widget-1 widget-banner">
-                        <div class="widget-1-body">
-                            <a href="#0">
-                                <img src="/Frontend/Client/assets/images/sidebar/banner/banner01.jpg" alt="banner">
-                            </a>
-                        </div>
-                    </div>*@
-                <div class="widget-1 widget-check">
-                    <div class="widget-header">
-                        <h5 class="m-title">Filter By</h5> <a href="#0" class="clear-check">Clear All</a>
-                    </div>
+            <div class="col-sm-8 col-md-6 col-lg-2">
+                <div class="widget-1 widget-check" style="margin-top:50px">
                     <div class="widget-1-body">
-                        <h6 class="subtitle">Language</h6>
+                        <h6 class="subtitle">Thể loại   </h6>
                         <div class="check-area">
-                            <div class="form-group">
-                                <input type="checkbox" name="lang" id="lang1"><label for="lang1">Tamil</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="lang" id="lang2"><label for="lang2">Telegu</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="lang" id="lang3"><label for="lang3">Hindi</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="lang" id="lang4"><label for="lang4">English</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="lang" id="lang5"><label for="lang5">Multiple Language</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="lang" id="lang6"><label for="lang6">Gujrati</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="lang" id="lang7"><label for="lang7">Bangla</label>
-                            </div>
+                            @foreach (var itemtheloai in db.the_loai_phim)
+                            {
+                                <div class="form-group">
+                                    <input type="checkbox" name="@itemtheloai.id" id="@itemtheloai.id"><label for="@itemtheloai.id">@itemtheloai.ten_the_loai</label>
+                                </div>
+                            }
+
                         </div>
-                    </div>
-                </div>
-                <div class="widget-1 widget-check">
-                    <div class="widget-1-body">
-                        <h6 class="subtitle">experience</h6>
-                        <div class="check-area">
-                            <div class="form-group">
-                                <input type="checkbox" name="mode" id="mode1"><label for="mode1">2d</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="mode" id="mode2"><label for="mode2">3d</label>
-                            </div>
-                        </div>
-                        <div class="add-check-area">
-                            <a href="#0">view more <i class="plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget-1 widget-check">
-                    <div class="widget-1-body">
-                        <h6 class="subtitle">genre</h6>
-                        <div class="check-area">
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre1"><label for="genre1">thriller</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre2"><label for="genre2">horror</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre3"><label for="genre3">drama</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre4"><label for="genre4">romance</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre5"><label for="genre5">action</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre6"><label for="genre6">comedy</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre7"><label for="genre7">romantic</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre8"><label for="genre8">animation</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre9"><label for="genre9">sci-fi</label>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="genre" id="genre10"><label for="genre10">adventure</label>
-                            </div>
-                        </div>
-                        <div class="add-check-area">
-                            <a href="#0">view more <i class="plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget-1 widget-banner">
-                    <div class="widget-1-body">
-                        <a href="#0">
-                            <img src="/Frontend/Client/assets/images/sidebar/banner/banner02.jpg" alt="banner">
-                        </a>
                     </div>
                 </div>
             </div>
@@ -117,27 +30,7 @@
                     <div class="filter-area">
                         <div class="filter-main">
                             <div class="left">
-                                <div class="item">
-                                    <span class="show">Show :</span>
-                                    <select class="select-bar">
-                                        <option value="12">12</option>
-                                        <option value="15">15</option>
-                                        <option value="18">18</option>
-                                        <option value="21">21</option>
-                                        <option value="24">24</option>
-                                        <option value="27">27</option>
-                                        <option value="30">30</option>
-                                    </select>
-                                </div>
-                                <div class="item">
-                                    <span class="show">Sort By :</span>
-                                    <select class="select-bar">
-                                        <option value="showing">now showing</option>
-                                        <option value="exclusive">exclusive</option>
-                                        <option value="trending">trending</option>
-                                        <option value="most-view">most view</option>
-                                    </select>
-                                </div>
+                              
                             </div>
                             <ul class="grid-button tab-menu">
                                 <li class="active">
@@ -158,25 +51,16 @@
                                         <div class="movie-grid">
                                             <div class="movie-thumb c-thumb">
                                                 <a href="@Url.Action("MovieDetail", "Movie", new { id = item.slug })">
-                                                    <img src="~/images/movies/@item.anh" alt="movie">
+                                                    <img src="~/images/movies/@item.anh" alt="movie" style="height:483px">
                                                 </a>
                                             </div>
                                             <div class="movie-content bg-one">
                                                 <h5 class="title m-0">
-                                                    <a href="@Url.Action("MovieDetail", "Movie", new { id = item.slug })">@item.ten_phim</a>
+                                                    <a href="@Url.Action("MovieDetail", "Movie", new { id = item.slug })" class="overflow-text-2" style=" height: 63px;">@item.ten_phim</a>
                                                 </h5>
                                                 <ul class="movie-rating-percent">
-                                                    <li>
-                                                        <div class="thumb">
-                                                            <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
-                                                        </div>
-                                                        <span class="content">88%</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="thumb">
-                                                            <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
-                                                        </div>
-                                                        <span class="content">88%</span>
+                                                    <li style=" margin-left: auto;">
+                                                        <span class="content">@Html.FormatValue(item.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -192,38 +76,28 @@
                                     <div class="movie-list">
                                         <div class="movie-thumb c-thumb">
                                             <a href="@Url.Action("MovieDetail", "Movie", new { id = mov.slug })" class="w-100 bg_img h-100" data-background="/Frontend/Client/assets/images/movie/movie01.jpg">
-                                                <img class="d-sm-none" src="~/images/movies/@mov.anh" alt="movie">
+                                                <img src="~/images/movies/@mov.anh" alt="movie" style="height: 370px;" class="image-scale-06">
                                             </a>
                                         </div>
                                         <div class="movie-content bg-one">
                                             <h5 class="title">
                                                 <a href="@Url.Action("MovieDetail", "Movie", new { id = mov.slug })">@mov.ten_phim</a>
                                             </h5>
-                                            <p class="duration">2hrs 50 min</p>
+                                            <p class="duration">@mov.thoi_luong phút</p>
                                             @*<p class="duration">@mov.thoi_luong</p>*@
                                             <div class="movie-tags">
-                                                <a href="#0">action</a>
-                                                <a href="#0">adventure</a>
-                                                <a href="#0">fantasy</a>
+                                                @foreach (var theloai in db.list_phim_theloai.Where(t => t.id_phim == mov.id))
+                                                {
+                                                    <a href="#0" class="type-movie-grid">@theloai.the_loai_phim.ten_the_loai</a>
+
+                                                }
                                             </div>
                                             <div class="release">
-                                                <span>Release Date : </span> <a href="#0"> November 8 , 2020</a>
-                                                @*<span>Ngày công chiếu : </span> <a href="#0"> @mov.ngay_cong_chieu</a>*@
+                                                <span>Ngày công chiếu : </span> <a> @Html.FormatValue(mov.ngay_cong_chieu, "{0:dd/MM/yyy}")</a>
                                             </div>
-                                            <ul class="movie-rating-percent">
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                                <li>
-                                                    <div class="thumb">
-                                                        <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
-                                                    </div>
-                                                    <span class="content">88%</span>
-                                                </li>
-                                            </ul>
+                                            <div style="padding-top: 5px; padding-bottom: 5px; height: 128px; ">
+                                                <a class="overflow-text-4">@Html.Raw(mov.chi_tiet)</a>
+                                            </div>
                                             <div class="book-area">
                                                 <div class="book-ticket">
                                                     <div class="react-item">
@@ -242,9 +116,9 @@
                                                         </a>
                                                     </div>
                                                     <div class="react-item">
-                                                        <a href="#0" class="popup-video">
-                                                            <div class="thumb">
-                                                                <img src="/Frontend/Client/assets/images/icons/play-button.png" alt="icons">
+                                                        <a href="@mov.trailer" class="video-popup">
+                                                            <div class="thumb thumb-movie-popup">
+                                                                <img src="~/Frontend/Client/assets/images/icons/play-button.png" alt="icons">
                                                             </div>
                                                             <span>watch trailer</span>
                                                         </a>

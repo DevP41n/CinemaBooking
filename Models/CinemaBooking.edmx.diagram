@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="86f8c0a464b543aebd17a72b2e717b9e" Name="Diagram1">
+      <Diagram DiagramId="cf2713c86a764c3da46b79957f08be93" Name="Diagram1">
         <EntityTypeShape EntityType="CinemaBookingModel.content_rating" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.dao_dien" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.dien_vien" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
@@ -43,11 +43,9 @@
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimOrder" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhongChieuOrder" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimSC" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_TheLoai" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_TheLoai" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_PhimOrder" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_PhimSC" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

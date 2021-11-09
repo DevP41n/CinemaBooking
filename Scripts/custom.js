@@ -147,5 +147,119 @@ $(document).ready(function () {
           }                    
         })
     });
-});
+}); 
+(function (jQuery) {
+    "use strict";
+    /*==============================================
+    Register Venoor Js Dependancies
+    ===============================================*/
+    var registerDependencies = function () {
+        var PluginJsConfig = {
+            "js_dependencies": {
+                "asyncloader": "/Scripts/asyncloader.min.js",
+                "jquery.magnific-popup": "/Scripts/jquery.magnific-popup.min.js",
+                "owl.carousel": "/Frontend/Client/assets/js/owl.carousel.min.js?ver=1.0",
+            }
+        };
+        if (null != PluginJsConfig && null != PluginJsConfig.js_dependencies) {
+            var js_dependencies = PluginJsConfig.js_dependencies;
+            for (var dependency in js_dependencies) {
+                asyncloader.register(js_dependencies[dependency], dependency);
+            }
+        }
 
+    },
+        /*==============================================
+        Owl Carousel Slider
+        ===============================================*/
+        owl_carousel = function () {
+            jQuery('.owl-carousel').each(function () {
+                var app_slider = jQuery(this);
+                var rtl = false;
+                var prev = 'ion-ios-arrow-back';
+                var next = 'ion-ios-arrow-forward';
+                var prev_text = 'Prev';
+                var next_text = 'Next';
+                if (jQuery('body').hasClass('pt-is-rtl')) {
+                    rtl = true;
+                    prev = 'ion-ios-arrow-forward';
+                    next = 'ion-ios-arrow-back';
+                }
+                if (app_slider.data('prev_text') && app_slider.data('prev_text') != '') {
+                    prev_text = app_slider.data('prev_text');
+                }
+                if (app_slider.data('next_text') && app_slider.data('next_text') != '') {
+                    next_text = app_slider.data('next_text');
+                }
+                app_slider.owlCarousel({
+                    rtl: rtl,
+                    items: app_slider.data("desk_num"),
+                    loop: app_slider.data("loop"),
+                    margin: app_slider.data("margin"),
+                    nav: app_slider.data("nav"),
+                    dots: app_slider.data("dots"),
+                    loop: app_slider.data("loop"),
+                    autoplay: app_slider.data("autoplay"),
+                    autoplayHoverPause: false,
+                    autoplayTimeout: 5000,
+                    navText: ["<i class='" + prev + "'></i>", "<i class='" + next + "'></i>"],
+                    responsiveClass: true,
+                    responsive: {
+                        // breakpoint from 0 up
+                        0: {
+                            items: app_slider.data("mob_sm"),
+                            nav: true,
+                            dots: false
+                        },
+                        // breakpoint from 480 up
+                        480: {
+                            items: app_slider.data("mob_num"),
+                            nav: true,
+                            dots: false
+                        },
+                        // breakpoint from 786 up
+                        786: {
+                            items: app_slider.data("tab_num")
+                        },
+                        // breakpoint from 1023 up
+                        1023: {
+                            items: app_slider.data("lap_num")
+                        },
+                        1199: {
+                            items: app_slider.data("desk_num")
+                        }
+                    }
+                });
+            });
+        },
+        /*==============================================
+        Video Popup
+        ===============================================*/
+        pop_video = function () {
+            jQuery('.popup-youtube, .popup-vimeo, .popup-gmaps, .button-play').magnificPopup({
+                type: 'iframe',
+                mainClass: 'mfp-fade',
+                preloader: true,
+            });
+        }
+       
+
+    jQuery(document).ready(function () {
+
+        registerDependencies();
+
+        jQuery('.dropdown-menu').addClass('mCustomScrollbar');
+        if (jQuery('.owl-carousel').length > 0) {
+            asyncloader.require(['owl.carousel'], function () {
+                owl_carousel();
+            });
+        }
+        if (jQuery('.popup-youtube, .popup-vimeo, .popup-gmaps, .button-play').length > 0) {
+            asyncloader.require(['jquery.magnific-popup'], function () {
+                pop_video();
+            });
+        }
+        jQuery('p:empty').remove();
+
+    });
+})(jQuery); 

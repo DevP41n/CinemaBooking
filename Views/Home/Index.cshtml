@@ -3,26 +3,79 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
-
+@{ int count = 1;int count2 =1; CinemaBooking.Models.CinemaBookingEntities dbmovie = new CinemaBooking.Models.CinemaBookingEntities();}
 <!-- ==========Banner-Section========== -->
-<!-- banner: slide 1 bộ phim ( tên phim, tình trạng, mô tả, trailer, đặt vé  ) Chưa xong-->
-<section class="banner-section">
-    <div class="banner-bg bg_img bg-fixed" data-background="~/Frontend/Client/assets/images/banner/banner01.jpg"></div>
-    <div class="container">
-        <div class="banner-content">
-            <h1 class="title  cd-headline clip">
-                <span class="d-block">book your</span> tickets for
-                <span class="color-theme cd-words-wrapper p-0 m-0">
-                    <b class="is-visible">Movie</b>
-                    <b>Event</b>
-                    <b>Sport</b>
-                </span>
-            </h1>
-            <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p>
+<!-- owl-carousel Banner Start -->
+<section class="pt-0 pb-0">
+    <div class="container-fluid px-0">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <div class="gen-banner-movies">
+                    <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true"
+                         data-desk_num="1" data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1"
+                         data-autoplay="true" data-loop="true" data-margin="30">
+                        @foreach (var banner in dbmovie.phims.Where(x => x.status == 1 && x.loai_phim_chieu == 1).OrderByDescending(x => x.ngay_cong_chieu))
+                        {
+                            @*if(b == 2){
+                                break;
+                            }*@
+                        <div class="item" style="background: url('../../images/movies/background/@banner.anhbackground')">
+                            <div class="gen-movie-contain h-100">
+                                <div class="container h-100">
+                                    <div class="row align-items-center h-100">
+                                        <div class="col-xl-6">
+                                            <div class="gen-tag-line"><span></span></div>
+                                            <div class="gen-movie-info">
+                                                <h3>@banner.ten_phim</h3>
+                                            </div>
+                                            <div class="gen-movie-meta-holder">
+                                                <ul>
+                                                    <li class="gen-sen-rating">
+                                                        <span class="content-rating-tag" style="cursor: help;">@banner.content_rating.ten_rating</span>
+                                                    </li>
+                                                    <li>@banner.thoi_luong phút</li>
+                                                    <li>
+                                                        @Html.FormatValue(banner.ngay_cong_chieu, "{0:dd/MM/yyyy}")
+                                                    </li>
+                                                    <li>
+                                                        @foreach (var theloai in dbmovie.list_phim_theloai.Where(t => t.id_phim == banner.id))
+                                                        {
+                                                            <a href="#0" style=" border-radius: 6px; margin-right:3px"><span>@theloai.the_loai_phim.ten_the_loai</span></a>
+                                                        }
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gen-movie-action"  style="padding-top: 5px; padding-bottom: 5px; height: 128px; transition-delay: .7s;">
+                                                <a class="overflow-text-4">@Html.Raw(banner.chi_tiet)</a>
+                                            </div>
+                                            <div class="gen-movie-action" style="margin-top:10px">
+                                                <div class="gen-btn-container button-1">
+                                                    <a href="@Url.Action("MovieDetail","Movie", new {id=banner.slug })" class="gen-button" style="border-radius: 40px;">
+                                                        <span class="text">Chi tiết</span>
+                                                    </a>
+                                                </div>
+                                                <div class="gen-btn-container button-2">
+                                                    <a href="@banner.trailer"
+                                                       class="gen-button popup-youtube popup-vimeo popup-gmaps gen-button-link">
+                                                        <i aria-hidden="true" class="ion ion-play"></i> <span class="text">Trailer</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-<!-- ==========Banner-Section========== -->
+<!-- owl-carousel Banner End -->
 <!-- ==========Movie-Section========== -->
 <section class="movie-section padding-top padding-bottom">
     <div class="container">
@@ -46,9 +99,7 @@
             <div class="tab-area mb-30-none">
                 <div class="tab-item active">
                     <div class="owl-carousel owl-theme tab-slider">
-                        @{ 
-                            int count = 1;
-                            CinemaBooking.Models.CinemaBookingEntities dbmovie = new CinemaBooking.Models.CinemaBookingEntities();}
+
                         @foreach (var movie in dbmovie.phims.Where(m => m.status == 1 && m.loai_phim_chieu == 1).OrderByDescending(x => x.ngay_cong_chieu))
                         {
                             if (count >= 10)
@@ -74,19 +125,19 @@
                                         </h5>
                                         <ul class="movie-rating-percent">
                                             @*<li>
-                                                <div class="thumb">
-                                                    <img src="~/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="~/Frontend/Client/assets/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>*@
+                                                    <div class="thumb">
+                                                        <img src="~/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">88%</span>
+                                                </li>
+                                                <li>
+                                                    <div class="thumb">
+                                                        <img src="~/Frontend/Client/assets/images/movie/cake.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">88%</span>
+                                                </li>*@
                                             <li style=" margin-left: auto;">
-                                                <span class="content">@Html.FormatValue(movie.ngay_cong_chieu,"{0:dd/MM/yyyy}")</span>
+                                                <span class="content">@Html.FormatValue(movie.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -99,17 +150,17 @@
                 </div>
                 <div class="tab-item">
                     <div class="owl-carousel owl-theme tab-slider">
-                        @foreach (var moviesoon in dbmovie.phims.Where(m => m.status == 1 && m.loai_phim_chieu == 2).OrderByDescending(x=>x.ngay_cong_chieu))
+                        @foreach (var moviesoon in dbmovie.phims.Where(m => m.status == 1 && m.loai_phim_chieu == 2).OrderByDescending(x => x.ngay_cong_chieu))
                         {
-                            if (count >= 10)
+                            if (count2 >= 10)
                             {
-                                count = 1;
+                                count2 = 1;
                                 break;
 
                             }
                             else
                             {
-                                count++;
+                                count2++;
                             }
 
                             <div class="item">
@@ -124,7 +175,7 @@
                                             <a href="@Url.Action("MovieDetail","Movie", new { id=moviesoon.slug })" class="title-movie-home overflow-text-2">@moviesoon.ten_phim</a>
                                         </h5>
                                         <ul class="movie-rating-percent">
-                                            <li>
+                                            <li style=" margin-left: auto;">
                                                 <span class="content">@Html.FormatValue(moviesoon.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                             </li>
                                         </ul>
@@ -154,8 +205,8 @@
                         Ưu đãi
                     </li>
                     @*<li>
-                        Điện ảnh
-                    </li>*@
+                            Điện ảnh
+                        </li>*@
                 </ul>
             </div>
             <div class="tab-area mb-30-none">
@@ -163,35 +214,7 @@
                     <!-- slide cho ưu đãi-->
                     <div class="owl-carousel owl-theme tab-slider">
                         @{CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
-                        @foreach (var item in db.su_kien.OrderByDescending(x=>x.create_at))
-                          {
-                            <div class="item">
-                                <div class="event-grid">
-                                    <div class="movie-thumb c-thumb">
-                                        <a href="@Url.Action("NewsDetail","News", new {id = item.id })">
-                                            <img src="~/images/news/@item.anh" alt="event"  height="260" style=" object-fit: cover; ">
-                                        </a>
-                                        @*<div class="event-date">
-                                            <h6 class="date-title">28</h6>
-                                            <span>Dec</span>
-                                        </div>*@
-                                    </div>
-                                    <div class="movie-content bg-one">
-                                        <h5 class="title m-0">
-                                            <a href="@Url.Action("NewsDetail","News", new {id = item.id })">@item.tieu_de</a>
-                                        </h5>
-                                        <div class="movie-rating-percent" >
-                                            <span style="margin-left: auto;">@Html.FormatValue(item.create_at, "{0:dd/MM/yyyy}")</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                         }
-                    </div>
-                </div>
-                <div class="tab-item">
-                    <div class="owl-carousel owl-theme tab-slider">
-                    @*    @foreach (var item in db.su_kien.SqlQuery("SELECT * FROM su_kien ORDER BY create_at DESC"))
+                        @foreach (var item in db.su_kien.OrderByDescending(x => x.create_at))
                         {
                             <div class="item">
                                 <div class="event-grid">
@@ -199,18 +222,46 @@
                                         <a href="@Url.Action("NewsDetail","News", new {id = item.id })">
                                             <img src="~/images/news/@item.anh" alt="event" height="260" style=" object-fit: cover; ">
                                         </a>
+                                        @*<div class="event-date">
+                                                <h6 class="date-title">28</h6>
+                                                <span>Dec</span>
+                                            </div>*@
                                     </div>
                                     <div class="movie-content bg-one">
                                         <h5 class="title m-0">
-                                            <a href="@Url.Action("NewsDetail","News", new {id = item.id })">@item.tieu_de</a>
+                                            <a href="@Url.Action("NewsDetail","News", new {id = item.id })" class="title-movie-home overflow-text-2">@item.tieu_de</a>
                                         </h5>
                                         <div class="movie-rating-percent">
-                                            <span>@item.create_at</span>
+                                            <span style="margin-left: auto;">@Html.FormatValue(item.create_at, "{0:dd/MM/yyyy}")</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        }*@
+                        }
+                    </div>
+                </div>
+                <div class="tab-item">
+                    <div class="owl-carousel owl-theme tab-slider">
+                        @*    @foreach (var item in db.su_kien.SqlQuery("SELECT * FROM su_kien ORDER BY create_at DESC"))
+                            {
+                                <div class="item">
+                                    <div class="event-grid">
+                                        <div class="movie-thumb c-thumb">
+                                            <a href="@Url.Action("NewsDetail","News", new {id = item.id })">
+                                                <img src="~/images/news/@item.anh" alt="event" height="260" style=" object-fit: cover; ">
+                                            </a>
+                                        </div>
+                                        <div class="movie-content bg-one">
+                                            <h5 class="title m-0">
+                                                <a href="@Url.Action("NewsDetail","News", new {id = item.id })">@item.tieu_de</a>
+                                            </h5>
+                                            <div class="movie-rating-percent">
+                                                <span>@item.create_at</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }*@
                     </div>
                 </div>
             </div>

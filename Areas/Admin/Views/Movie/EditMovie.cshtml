@@ -97,13 +97,32 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    @Html.Label("Đạo diễn", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.Label("Đạo diễn hiện tại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10" style="display:flex;flex-wrap:wrap">
+                                        @foreach (var item in db.dao_dien.Where(x => x.id == Model.dao_dien_id))
+                                        {
+                                            <div class="cast-item">
+                                                <div class="cast-thumb">
+                                                    <img src="~/images/information/@item.anh" alt="Direc">
+                                                </div>
+                                                <div class="cast-content">
+                                                    <h6 class="cast-title"><a>@item.ho_ten</a></h6>
+                                                    @*<span class="cate">actor</span>
+                            <p>As Richie Tozier</p>*@
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.Label("Chọn lại đạo diễn? (tùy chọn)", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10">
                                         @Html.DropDownListFor(model => model.dao_dien_id, (SelectList)ViewBag.dao_dien_id, new { @class = "col-sm-2 col-form-label" })
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    @Html.Label("Diễn viên", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.Label("Diễn viên hiện tại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-md-10" style="display:flex;flex-wrap:wrap">
                                         @foreach (var item in db.list_phim_dienvien.Where(x => x.id_phim == Model.id))
                                         {
