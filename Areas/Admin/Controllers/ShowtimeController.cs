@@ -1,5 +1,7 @@
 ﻿using CinemaBooking.Models;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -29,14 +31,18 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
+            suatchieu_timeframe sctime = new suatchieu_timeframe();
+            db.suat_chieu.Add(suatChieu);
+            db.SaveChanges();
             if (ModelState.IsValid)
             {
                 foreach (var timeidd in timeeframe)
                 {
                     int timeee = Convert.ToInt32(timeidd);
-                    TimeFrame time = db.TimeFrames.Find(timeee);
-                    suatChieu.gio_bat_dau = time.Time;
-                    db.suat_chieu.Add(suatChieu);
+                    //TimeFrame time = db.TimeFrames.Find(timeee);
+                    sctime.id_Timeframe = timeee;
+                    sctime.id_Suatchieu = suatChieu.id;
+                    db.suatchieu_timeframe.Add(sctime);
                     db.SaveChanges();
                 }
                 TempData["Message"] = "Tạo thành công!";
@@ -83,6 +89,21 @@ namespace CinemaBooking.Areas.Admin.Controllers
             TempData["Message"] = "Xóa thành công!";
             db.SaveChanges();
             return RedirectToAction("ListShowTime");
+        }
+
+        public ActionResult ShowDataTime(int? idsuatchieu)
+        {
+            var list = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == idsuatchieu).ToList();
+            List<int> id = new List<int>();
+            List<String> Times = new List<String>();
+            foreach (var item in list)
+            {
+                id.Add(item.id);
+                var contime = Convert.ToString(item.TimeFrame.Time);
+                Times.Add(contime);
+            }
+            var count = list.Count();
+            return Json(data: new { id, Times, count }, JsonRequestBehavior.AllowGet);
         }
         //Time Frame
         /// ---------------------------

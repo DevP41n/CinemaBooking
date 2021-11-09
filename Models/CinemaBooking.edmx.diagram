@@ -7,7 +7,7 @@
       <Diagram DiagramId="34299f40dfb84a6a9aefa0465ebca297" Name="Diagram1">
         <EntityTypeShape EntityType="CinemaBookingModel.content_rating" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.dao_dien" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaBookingModel.dien_vien" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaBookingModel.dien_vien" Width="1.5" PointX="1.5" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.ghe_ngoi" Width="1.5" PointX="8.25" PointY="20.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.gia_ve" Width="1.5" PointX="5.25" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.khach_hang" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
@@ -45,9 +45,11 @@
         <AssociationConnector Association="CinemaBookingModel.FK_suatchieuorder" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" ManuallyRouted="false" />
-        <AssociationConnector Association="CinemaBookingModel.FK_timesuatchieu" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CinemaBookingModel.suatchieu_timeframe" Width="1.5" PointX="1" PointY="16.875" />
+        <AssociationConnector Association="CinemaBookingModel.FK_Suatchieu_frame" />
+        <AssociationConnector Association="CinemaBookingModel.FK_frame_suatchieu" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

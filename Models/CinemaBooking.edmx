@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="content_rating">
           <Key>
             <PropertyRef Name="ID" />
@@ -216,11 +216,17 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="gio_bat_dau" Type="time" Precision="7" />
-          <Property Name="gio_ket_thuc" Type="time" Precision="7" />
           <Property Name="ngay_chieu" Type="date" />
           <Property Name="phim_id" Type="int" />
           <Property Name="phong_chieu_id" Type="int" />
-          <Property Name="Timeid" Type="int" />
+        </EntityType>
+        <EntityType Name="suatchieu_timeframe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Suatchieu" Type="int" />
+          <Property Name="id_Timeframe" Type="int" />
         </EntityType>
         <EntityType Name="the_loai_phim">
           <Key>
@@ -298,6 +304,18 @@
             </Principal>
             <Dependent Role="phim">
               <PropertyRef Name="dao_dien_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_frame_suatchieu">
+          <End Role="TimeFrame" Type="Self.TimeFrame" Multiplicity="0..1" />
+          <End Role="suatchieu_timeframe" Type="Self.suatchieu_timeframe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeFrame">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suatchieu_timeframe">
+              <PropertyRef Name="id_Timeframe" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,6 +487,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Suatchieu_frame">
+          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
+          <End Role="suatchieu_timeframe" Type="Self.suatchieu_timeframe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suat_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suatchieu_timeframe">
+              <PropertyRef Name="id_Suatchieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_suatchieuorder">
           <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
           <End Role="orders" Type="Self.orders" Multiplicity="*" />
@@ -478,18 +508,6 @@
             </Principal>
             <Dependent Role="orders">
               <PropertyRef Name="suatchieu_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_timesuatchieu">
-          <End Role="TimeFrame" Type="Self.TimeFrame" Multiplicity="0..1" />
-          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TimeFrame">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="suat_chieu">
-              <PropertyRef Name="Timeid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -559,6 +577,7 @@
           <EntitySet Name="phong_chieu" EntityType="Self.phong_chieu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="su_kien" EntityType="Self.su_kien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="suat_chieu" EntityType="Self.suat_chieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="suatchieu_timeframe" EntityType="Self.suatchieu_timeframe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="the_loai_phim" EntityType="Self.the_loai_phim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeFrame" EntityType="Self.TimeFrame" Schema="dbo" store:Type="Tables" />
@@ -567,6 +586,10 @@
           <AssociationSet Name="Fk_DaoDien" Association="Self.Fk_DaoDien">
             <End Role="dao_dien" EntitySet="dao_dien" />
             <End Role="phim" EntitySet="phim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_frame_suatchieu" Association="Self.FK_frame_suatchieu">
+            <End Role="TimeFrame" EntitySet="TimeFrame" />
+            <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
           </AssociationSet>
           <AssociationSet Name="Fk_Ghe" Association="Self.Fk_Ghe">
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
@@ -624,13 +647,13 @@
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="orders" EntitySet="orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_Suatchieu_frame" Association="Self.FK_Suatchieu_frame">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
+          </AssociationSet>
           <AssociationSet Name="FK_suatchieuorder" Association="Self.FK_suatchieuorder">
             <End Role="suat_chieu" EntitySet="suat_chieu" />
             <End Role="orders" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_timesuatchieu" Association="Self.FK_timesuatchieu">
-            <End Role="TimeFrame" EntitySet="TimeFrame" />
-            <End Role="suat_chieu" EntitySet="suat_chieu" />
           </AssociationSet>
           <AssociationSet Name="Fk_VeGhe" Association="Self.Fk_VeGhe">
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
@@ -649,8 +672,7 @@
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CinemaBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -895,16 +917,14 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="gio_bat_dau" Type="Time" Precision="7" />
-          <Property Name="gio_ket_thuc" Type="Time" Precision="7" />
           <Property Name="ngay_chieu" Type="DateTime" Precision="0" />
           <Property Name="phim_id" Type="Int32" />
           <Property Name="phong_chieu_id" Type="Int32" />
-          <Property Name="Timeid" Type="Int32" />
           <NavigationProperty Name="orders" Relationship="Self.FK_suatchieuorder" FromRole="suat_chieu" ToRole="orders" />
           <NavigationProperty Name="phim" Relationship="Self.Fk_PhimSC" FromRole="suat_chieu" ToRole="phim" />
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhimPC" FromRole="suat_chieu" ToRole="phong_chieu" />
-          <NavigationProperty Name="TimeFrame" Relationship="Self.FK_timesuatchieu" FromRole="suat_chieu" ToRole="TimeFrame" />
           <NavigationProperty Name="ve_ban" Relationship="Self.Fk_VeSC" FromRole="suat_chieu" ToRole="ve_ban" />
+          <NavigationProperty Name="suatchieu_timeframe" Relationship="CinemaBookingModel.FK_Suatchieu_frame" FromRole="suat_chieu" ToRole="suatchieu_timeframe" />
         </EntityType>
         <EntityType Name="the_loai_phim">
           <Key>
@@ -939,7 +959,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Time" Type="Time" Precision="7" />
-          <NavigationProperty Name="suat_chieu" Relationship="Self.FK_timesuatchieu" FromRole="TimeFrame" ToRole="suat_chieu" />
+          <NavigationProperty Name="suatchieu_timeframe" Relationship="CinemaBookingModel.FK_frame_suatchieu" FromRole="TimeFrame" ToRole="suatchieu_timeframe" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -1196,18 +1216,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_timesuatchieu">
-          <End Role="TimeFrame" Type="Self.TimeFrame" Multiplicity="0..1" />
-          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TimeFrame">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="suat_chieu">
-              <PropertyRef Name="Timeid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="Fk_VeSC">
           <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
           <End Role="ve_ban" Type="Self.ve_ban" Multiplicity="*" />
@@ -1327,10 +1335,6 @@
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="suat_chieu" EntitySet="suat_chieu" />
           </AssociationSet>
-          <AssociationSet Name="FK_timesuatchieu" Association="Self.FK_timesuatchieu">
-            <End Role="TimeFrame" EntitySet="TimeFrames" />
-            <End Role="suat_chieu" EntitySet="suat_chieu" />
-          </AssociationSet>
           <AssociationSet Name="Fk_VeSC" Association="Self.Fk_VeSC">
             <End Role="suat_chieu" EntitySet="suat_chieu" />
             <End Role="ve_ban" EntitySet="ve_ban" />
@@ -1339,7 +1343,50 @@
             <End Role="users" EntitySet="users" />
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
+          <EntitySet Name="suatchieu_timeframe" EntityType="CinemaBookingModel.suatchieu_timeframe" />
+          <AssociationSet Name="FK_Suatchieu_frame" Association="CinemaBookingModel.FK_Suatchieu_frame">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_frame_suatchieu" Association="CinemaBookingModel.FK_frame_suatchieu">
+            <End Role="TimeFrame" EntitySet="TimeFrames" />
+            <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="suatchieu_timeframe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Suatchieu" Type="Int32" />
+          <Property Name="id_Timeframe" Type="Int32" />
+          <NavigationProperty Name="suat_chieu" Relationship="CinemaBookingModel.FK_Suatchieu_frame" FromRole="suatchieu_timeframe" ToRole="suat_chieu" />
+          <NavigationProperty Name="TimeFrame" Relationship="CinemaBookingModel.FK_frame_suatchieu" FromRole="suatchieu_timeframe" ToRole="TimeFrame" />
+        </EntityType>
+        <Association Name="FK_Suatchieu_frame">
+          <End Type="CinemaBookingModel.suat_chieu" Role="suat_chieu" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.suatchieu_timeframe" Role="suatchieu_timeframe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suat_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suatchieu_timeframe">
+              <PropertyRef Name="id_Suatchieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_frame_suatchieu">
+          <End Type="CinemaBookingModel.TimeFrame" Role="TimeFrame" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.suatchieu_timeframe" Role="suatchieu_timeframe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeFrame">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suatchieu_timeframe">
+              <PropertyRef Name="id_Timeframe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1572,11 +1619,9 @@
               <MappingFragment StoreEntitySet="suat_chieu">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="gio_bat_dau" ColumnName="gio_bat_dau" />
-                <ScalarProperty Name="gio_ket_thuc" ColumnName="gio_ket_thuc" />
                 <ScalarProperty Name="ngay_chieu" ColumnName="ngay_chieu" />
                 <ScalarProperty Name="phim_id" ColumnName="phim_id" />
                 <ScalarProperty Name="phong_chieu_id" ColumnName="phong_chieu_id" />
-                <ScalarProperty Name="Timeid" ColumnName="Timeid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1649,6 +1694,15 @@
                 <ScalarProperty Name="gia_ve_id" ColumnName="gia_ve_id" />
                 <ScalarProperty Name="ghe_id" ColumnName="ghe_id" />
                 <ScalarProperty Name="users_id" ColumnName="users_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suatchieu_timeframe">
+            <EntityTypeMapping TypeName="CinemaBookingModel.suatchieu_timeframe">
+              <MappingFragment StoreEntitySet="suatchieu_timeframe">
+                <ScalarProperty Name="id_Timeframe" ColumnName="id_Timeframe" />
+                <ScalarProperty Name="id_Suatchieu" ColumnName="id_Suatchieu" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
