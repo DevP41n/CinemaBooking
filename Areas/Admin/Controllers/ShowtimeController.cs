@@ -1,4 +1,5 @@
 ﻿using CinemaBooking.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -16,21 +17,29 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult CreateShowTime()
         {
+            ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
 
             return View();
         }
         [HttpPost]
-        public ActionResult CreateShowTime(suat_chieu suatChieu)
+        public ActionResult CreateShowTime(suat_chieu suatChieu, String[] timeeframe)
         {
+            ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
             if (ModelState.IsValid)
             {
-                db.suat_chieu.Add(suatChieu);
+                foreach (var timeidd in timeeframe)
+                {
+                    int timeee = Convert.ToInt32(timeidd);
+                    TimeFrame time = db.TimeFrames.Find(timeee);
+                    suatChieu.gio_bat_dau = time.Time;
+                    db.suat_chieu.Add(suatChieu);
+                    db.SaveChanges();
+                }
                 TempData["Message"] = "Tạo thành công!";
-                db.SaveChanges();
                 return RedirectToAction("ListShowTime");
             }
             return View(suatChieu);
@@ -75,6 +84,65 @@ namespace CinemaBooking.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("ListShowTime");
         }
+        //Time Frame
+        /// ---------------------------
+        ///
+        public ActionResult ListShowTimeFrame()
+        {
+            return View(db.TimeFrames.ToList());
+        }
 
+        public ActionResult CreateShowTimeFrame()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateShowTimeFrame(TimeFrame timeFrame)
+        {
+            if (ModelState.IsValid)
+            {
+                db.TimeFrames.Add(timeFrame);
+                TempData["Message"] = "Tạo thành công!";
+                db.SaveChanges();
+                return RedirectToAction("ListShowTimeFrame");
+            }
+            return View(timeFrame);
+        }
+
+        public ActionResult EditShowTimeFrame(int? id)
+        {
+            TimeFrame timeFrame = db.TimeFrames.Find(id);
+            if (timeFrame == null)
+            {
+                return HttpNotFound();
+            }
+            return View(timeFrame);
+        }
+        [HttpPost, ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditShowTimeFrame(TimeFrame timeFrame)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(timeFrame).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["Message"] = "Cập nhật thành công!";
+                return RedirectToAction("ListShowTimeFrame");
+            }
+            else
+            {
+                TempData["Error"] = "Cập nhật không thành công!";
+            }
+            return View(timeFrame);
+        }
+
+        public ActionResult DeleteConfirmedFrame(int? id)
+        {
+            TimeFrame timeFrame = db.TimeFrames.Find(id);
+            db.TimeFrames.Remove(timeFrame);
+            TempData["Message"] = "Xóa thành công!";
+            db.SaveChanges();
+            return RedirectToAction("ListShowTimeFrame");
+        }
     }
 }

@@ -238,6 +238,9 @@
     <Compile Include="Models\thong_tin_cong_ty.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TimeFrame.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\user.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -710,6 +713,12 @@
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.ttf" />
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.woff" />
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\_flaticon.scss" />
+    <Content Include="Areas\Admin\Views\Showtime\CreateShowTime.cshtml" />
+    <Content Include="Areas\Admin\Views\Showtime\EditShowTime.cshtml" />
+    <Content Include="Areas\Admin\Views\Showtime\ListShowTime.cshtml" />
+    <Content Include="Areas\Admin\Views\Showtime\ListShowTimeFrame.cshtml" />
+    <Content Include="Areas\Admin\Views\Showtime\CreateShowTimeFrame.cshtml" />
+    <Content Include="Areas\Admin\Views\Showtime\EditShowTimeFrame.cshtml" />
     <EntityDeploy Include="Models\CinemaBooking.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CinemaBooking.Designer.cs</LastGenOutput>

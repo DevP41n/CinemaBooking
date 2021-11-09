@@ -160,6 +160,7 @@
           <Property Name="time" Type="datetime" />
           <Property Name="ngay_mua" Type="datetime" />
           <Property Name="status" Type="int" />
+          <Property Name="suatchieu_id" Type="int" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -169,9 +170,9 @@
           <Property Name="ten_phim" Type="nvarchar(max)" Nullable="false" />
           <Property Name="gia" Type="decimal" Precision="18" Scale="0" />
           <Property Name="chi_tiet" Type="ntext" />
-          <Property Name="trailer" Type="nvarchar(max)" />
-          <Property Name="slug" Type="nvarchar(max)" />
-          <Property Name="anh" Type="nvarchar(max)" />
+          <Property Name="trailer" Type="varchar(max)" />
+          <Property Name="slug" Type="varchar(max)" />
+          <Property Name="anh" Type="varchar(max)" />
           <Property Name="status" Type="int" />
           <Property Name="thoi_luong" Type="int" />
           <Property Name="ngay_cong_chieu" Type="datetime" />
@@ -216,9 +217,10 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="gio_bat_dau" Type="time" Precision="7" />
           <Property Name="gio_ket_thuc" Type="time" Precision="7" />
-          <Property Name="ngay_chieu" Type="datetime" />
+          <Property Name="ngay_chieu" Type="date" />
           <Property Name="phim_id" Type="int" />
           <Property Name="phong_chieu_id" Type="int" />
+          <Property Name="Timeid" Type="int" />
         </EntityType>
         <EntityType Name="the_loai_phim">
           <Key>
@@ -245,6 +247,13 @@
           <Property Name="create_at" Type="datetime" />
           <Property Name="update_by" Type="nvarchar" MaxLength="250" />
           <Property Name="update_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TimeFrame">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="users">
           <Key>
@@ -460,6 +469,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_suatchieuorder">
+          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suat_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="suatchieu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_timesuatchieu">
+          <End Role="TimeFrame" Type="Self.TimeFrame" Multiplicity="0..1" />
+          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeFrame">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suat_chieu">
+              <PropertyRef Name="Timeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_VeGhe">
           <End Role="ghe_ngoi" Type="Self.ghe_ngoi" Multiplicity="0..1" />
           <End Role="ve_ban" Type="Self.ve_ban" Multiplicity="*" />
@@ -528,6 +561,7 @@
           <EntitySet Name="suat_chieu" EntityType="Self.suat_chieu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="the_loai_phim" EntityType="Self.the_loai_phim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeFrame" EntityType="Self.TimeFrame" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ve_ban" EntityType="Self.ve_ban" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="Fk_DaoDien" Association="Self.Fk_DaoDien">
@@ -589,6 +623,14 @@
           <AssociationSet Name="Fk_PhongChieuOrder" Association="Self.Fk_PhongChieuOrder">
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_suatchieuorder" Association="Self.FK_suatchieuorder">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_timesuatchieu" Association="Self.FK_timesuatchieu">
+            <End Role="TimeFrame" EntitySet="TimeFrame" />
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
           </AssociationSet>
           <AssociationSet Name="Fk_VeGhe" Association="Self.Fk_VeGhe">
             <End Role="ghe_ngoi" EntitySet="ghe_ngoi" />
@@ -783,10 +825,12 @@
           <Property Name="time" Type="DateTime" Precision="3" />
           <Property Name="ngay_mua" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Int32" />
+          <Property Name="suatchieu_id" Type="Int32" />
           <NavigationProperty Name="khach_hang" Relationship="Self.Fk_KhachHangOrder" FromRole="orders" ToRole="khach_hang" />
           <NavigationProperty Name="order_details" Relationship="Self.Fk_Oder" FromRole="orders" ToRole="order_details" />
           <NavigationProperty Name="phim" Relationship="Self.Fk_PhimOrder" FromRole="orders" ToRole="phim" />
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhongChieuOrder" FromRole="orders" ToRole="phong_chieu" />
+          <NavigationProperty Name="suat_chieu" Relationship="Self.FK_suatchieuorder" FromRole="orders" ToRole="suat_chieu" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -796,9 +840,9 @@
           <Property Name="ten_phim" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="gia" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="chi_tiet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="trailer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="anh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="trailer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="anh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="Int32" />
           <Property Name="thoi_luong" Type="Int32" />
           <Property Name="ngay_cong_chieu" Type="DateTime" Precision="3" />
@@ -852,11 +896,14 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="gio_bat_dau" Type="Time" Precision="7" />
           <Property Name="gio_ket_thuc" Type="Time" Precision="7" />
-          <Property Name="ngay_chieu" Type="DateTime" Precision="3" />
+          <Property Name="ngay_chieu" Type="DateTime" Precision="0" />
           <Property Name="phim_id" Type="Int32" />
           <Property Name="phong_chieu_id" Type="Int32" />
+          <Property Name="Timeid" Type="Int32" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_suatchieuorder" FromRole="suat_chieu" ToRole="orders" />
           <NavigationProperty Name="phim" Relationship="Self.Fk_PhimSC" FromRole="suat_chieu" ToRole="phim" />
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhimPC" FromRole="suat_chieu" ToRole="phong_chieu" />
+          <NavigationProperty Name="TimeFrame" Relationship="Self.FK_timesuatchieu" FromRole="suat_chieu" ToRole="TimeFrame" />
           <NavigationProperty Name="ve_ban" Relationship="Self.Fk_VeSC" FromRole="suat_chieu" ToRole="ve_ban" />
         </EntityType>
         <EntityType Name="the_loai_phim">
@@ -885,6 +932,14 @@
           <Property Name="create_at" Type="DateTime" Precision="3" />
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TimeFrame">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="Time" Precision="7" />
+          <NavigationProperty Name="suat_chieu" Relationship="Self.FK_timesuatchieu" FromRole="TimeFrame" ToRole="suat_chieu" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -1105,6 +1160,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_suatchieuorder">
+          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suat_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="suatchieu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Fk_PhimSC">
           <End Role="phim" Type="Self.phim" Multiplicity="0..1" />
           <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
@@ -1126,6 +1193,18 @@
             </Principal>
             <Dependent Role="suat_chieu">
               <PropertyRef Name="phong_chieu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_timesuatchieu">
+          <End Role="TimeFrame" Type="Self.TimeFrame" Multiplicity="0..1" />
+          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeFrame">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suat_chieu">
+              <PropertyRef Name="Timeid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1173,6 +1252,7 @@
           <EntitySet Name="suat_chieu" EntityType="Self.suat_chieu" />
           <EntitySet Name="the_loai_phim" EntityType="Self.the_loai_phim" />
           <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" />
+          <EntitySet Name="TimeFrames" EntityType="Self.TimeFrame" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="ve_ban" EntityType="Self.ve_ban" />
           <AssociationSet Name="FK_phim_content_rating" Association="Self.FK_phim_content_rating">
@@ -1235,12 +1315,20 @@
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="orders" EntitySet="orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_suatchieuorder" Association="Self.FK_suatchieuorder">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
           <AssociationSet Name="Fk_PhimSC" Association="Self.Fk_PhimSC">
             <End Role="phim" EntitySet="phims" />
             <End Role="suat_chieu" EntitySet="suat_chieu" />
           </AssociationSet>
           <AssociationSet Name="Fk_PhimPC" Association="Self.Fk_PhimPC">
             <End Role="phong_chieu" EntitySet="phong_chieu" />
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_timesuatchieu" Association="Self.FK_timesuatchieu">
+            <End Role="TimeFrame" EntitySet="TimeFrames" />
             <End Role="suat_chieu" EntitySet="suat_chieu" />
           </AssociationSet>
           <AssociationSet Name="Fk_VeSC" Association="Self.Fk_VeSC">
@@ -1424,6 +1512,7 @@
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="ngay_mua" ColumnName="ngay_mua" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="suatchieu_id" ColumnName="suatchieu_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1487,6 +1576,7 @@
                 <ScalarProperty Name="ngay_chieu" ColumnName="ngay_chieu" />
                 <ScalarProperty Name="phim_id" ColumnName="phim_id" />
                 <ScalarProperty Name="phong_chieu_id" ColumnName="phong_chieu_id" />
+                <ScalarProperty Name="Timeid" ColumnName="Timeid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1515,6 +1605,14 @@
                 <ScalarProperty Name="create_at" ColumnName="create_at" />
                 <ScalarProperty Name="update_by" ColumnName="update_by" />
                 <ScalarProperty Name="update_at" ColumnName="update_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeFrames">
+            <EntityTypeMapping TypeName="CinemaBookingModel.TimeFrame">
+              <MappingFragment StoreEntitySet="TimeFrame">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

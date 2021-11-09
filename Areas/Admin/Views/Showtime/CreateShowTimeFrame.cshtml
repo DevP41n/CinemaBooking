@@ -1,7 +1,7 @@
-﻿@model CinemaBooking.Models.suat_chieu
+﻿@model CinemaBooking.Models.TimeFrame
 
 @{
-    ViewBag.Title = "CreateShowTime";
+    ViewBag.Title = "CreateShowTimeFrame";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -38,7 +38,7 @@
             </div>
             <!-- end page title -->
 
-            @using (Html.BeginForm("CreateShowTime", "Showtime", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("CreateShowTimeFrame", "Showtime", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -50,32 +50,10 @@
 
 
                                 <div class="form-group row">
-                                    @Html.Label("Giờ chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <label>Giờ bắt đầu</label>
                                     <div class="col-md-10">
-                                        @Html.DropDownList("timeeframe", (MultiSelectList)ViewBag.Timeid, new { multiple = "multiple" })
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group row">
-                                    <label class = "col-sm-2 col-form-label">Ngày chiếu</label>
-                                    <div class="col-md-2">
-                                        @Html.EditorFor(model => model.ngay_chieu, new { htmlAttributes = new { type = "date", @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ngay_chieu, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    @Html.LabelFor(model => model.phim_id, "Phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("phim_id", "<--- Phim --->")
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    @Html.LabelFor(model => model.phong_chieu, "Phòng chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("phong_chieu_id", "<--- Phòng chiếu --->")
+                                        @Html.EditorFor(model => model.Time, new { htmlAttributes = new { type = "time", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -83,7 +61,7 @@
                                     <div class="form-group mb-0">
                                         <div>
                                             <input type="submit" value="Create" class="btn btn-primary waves-effect waves-light mr-1" />
-                                            <a href="@Url.Action("ListShowTime","Showtime")" class="btn btn-primary waves-effect waves-light mr-1">
+                                            <a href="@Url.Action("ListShowTimeFrame","Showtime")" class="btn btn-primary waves-effect waves-light mr-1">
                                                 Cancel
                                             </a>
                                         </div>

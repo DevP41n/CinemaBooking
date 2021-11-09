@@ -11,24 +11,32 @@ namespace CinemaBooking.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class suat_chieu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public suat_chieu()
         {
+            this.orders = new HashSet<order>();
             this.ve_ban = new HashSet<ve_ban>();
         }
     
         public int id { get; set; }
         public Nullable<System.TimeSpan> gio_bat_dau { get; set; }
         public Nullable<System.TimeSpan> gio_ket_thuc { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ngay_chieu { get; set; }
         public Nullable<int> phim_id { get; set; }
         public Nullable<int> phong_chieu_id { get; set; }
+        public Nullable<int> Timeid { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
         public virtual phim phim { get; set; }
         public virtual phong_chieu phong_chieu { get; set; }
+        public virtual TimeFrame TimeFrame { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ve_ban> ve_ban { get; set; }
     }

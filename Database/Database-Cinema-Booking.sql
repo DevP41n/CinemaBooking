@@ -419,3 +419,25 @@ alter table phim
 drop column dien_vien_id;
 alter table phim
 drop column the_loai_phim_id;
+
+
+-- fix time
+Create table TimeFrame
+(
+	id INT identity(1,1) NOT NULL,
+	Time time(7),
+	CONSTRAINT PK_TimeFrame PRIMARY KEY(id),
+)
+
+alter table suat_chieu
+add Timeid int NULL
+alter table suat_chieu
+add constraint FK_timesuatchieu foreign key(Timeid) references TimeFrame(id)
+
+alter table orders
+add suatchieu_id int null
+alter table orders
+add constraint FK_suatchieuorder foreign key(suatchieu_id) references suat_chieu(id)
+
+alter table suat_chieu
+alter column ngay_chieu date;
