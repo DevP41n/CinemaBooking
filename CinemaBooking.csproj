@@ -154,6 +154,7 @@
     <Compile Include="Areas\Admin\Controllers\InformationController.cs" />
     <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShowtimeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
@@ -297,6 +298,7 @@
     <Content Include="Frontend\Client\assets\css\odometer.css" />
     <Content Include="Frontend\Client\assets\css\owl.carousel.min.css" />
     <Content Include="Frontend\Client\assets\css\owl.theme.default.min.css" />
+    <Content Include="Frontend\Client\assets\css\rating.css" />
     <Content Include="Frontend\Client\assets\images\404.png" />
     <Content Include="Frontend\Client\assets\images\about\about-counter01.png" />
     <Content Include="Frontend\Client\assets\images\about\about-counter02.png" />
