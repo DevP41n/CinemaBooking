@@ -232,9 +232,6 @@
     <Compile Include="Models\su_kien.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>CinemaBooking.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\the_loai_phim.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -452,6 +449,16 @@
     <Content Include="Frontend\Client\assets\images\tour\icon01.png" />
     <Content Include="Frontend\Client\assets\images\tour\icon02.png" />
     <Content Include="Frontend\Client\assets\images\tour\tour.png" />
+    <Content Include="Models\CinemaBooking.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+      <LastGenOutput>CinemaBooking.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CinemaBooking.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+      <LastGenOutput>CinemaBooking.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\asyncloader.min.js" />
     <Content Include="Frontend\Client\assets\js\bootstrap.min.js" />
     <Content Include="Frontend\Client\assets\js\contact.js" />
@@ -575,50 +582,7 @@
     <Content Include="images\logo\logo8.png" />
     <Content Include="images\logo\logohome.png" />
     <Content Include="images\logo\titleHyperGear.png" />
-    <Content Include="images\movies\banner\The-Conjuring-3.jpg" />
-    <Content Include="images\news\admin068.jpg" />
-    <Content Include="images\news\admin070.jpg" />
-    <Content Include="images\news\admin077.jpg" />
-    <Content Include="images\news\admin310.jpg" />
-    <Content Include="images\product\ban-phim-asus-rog-claymore-ii260.jpg" />
-    <Content Include="images\product\ban-phim-logitech-g913-tkl-lightspeed-wireless900.jpg" />
-    <Content Include="images\product\bàn-phím-logitech-g-pro-kda350.jpg" />
-    <Content Include="images\product\bàn-phím-razer-blackwidow-v3-mini-hyperspeed730.jpg" />
-    <Content Include="images\product\ghe-akracing-core-series-lx---red6337.jpg" />
-    <Content Include="images\product\ghe-choi-game-asus-rog-chariot-rgb70.jpg" />
-    <Content Include="images\product\ghe-choi-game-e-dra-ares-egc207-white560.jpg" />
-    <Content Include="images\product\ghe-corsair-t3-rush-charcoal270.jpg" />
-    <Content Include="images\product\laptop-asus-rog-strix-scar-15-g533qr-hq098t760.png" />
-    <Content Include="images\product\laptop-gaming-msi-pulse-gl76-11uek-048vn720.png" />
-    <Content Include="images\product\laptop-gigabyte-aero-15-oled-yd-73s1624gh630.jpg" />
-    <Content Include="images\product\laptop-msi-stealth-15m-a11sdk-061vn840.jpg" />
-    <Content Include="images\product\man-hinh-acer-predator-xb273u-gs-27--ips-2k-165hz-0.5ms-gsync160.jpg" />
-    <Content Include="images\product\man-hinh-aorus-fv43u-43--va-qled-4k-144hz830.jpg" />
-    <Content Include="images\product\man-hinh-asus-rog-swift-pg65uq-65--va-4k-144hz-g-sync380.jpg" />
-    <Content Include="images\product\man-hinh-asus250.jpg" />
-    <Content Include="images\product\man-hinh-asus870.jpg" />
-    <Content Include="images\product\man-hinh-benq-zowie-xl2740-27--240hz420.jpg" />
-    <Content Include="images\product\man-hinh-benq-zowie-xl2740-27--240hz750.jpg" />
-    <Content Include="images\product\man-hinh-rog290.jpg" />
-    <Content Include="images\product\man-hinh140.jpg" />
-    <Content Include="images\product\man-hinh260.jpg" />
-    <Content Include="images\product\man-hinh570.jpg" />
-    <Content Include="images\product\tai-nghe-hyperx-cloud-orbit-s460.jpg" />
-    <Content Include="images\product\tai-nghe-hyperx-fight540.jpg" />
-    <Content Include="images\product\tai-nghe-logitech-g-pro-x160.jpg" />
-    <Content Include="images\product\tai-nghe-razer-blackshark-v2-pro10.jpg" />
-    <Content Include="images\product\test720.jpg" />
     <Content Include="images\slider\lambor.png" />
-    <Content Include="Models\CinemaBooking.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CinemaBooking.edmx</DependentUpon>
-      <LastGenOutput>CinemaBooking.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\CinemaBooking.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CinemaBooking.edmx</DependentUpon>
-      <LastGenOutput>CinemaBooking.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Frontend\Client\assets\css\Flaticon-1.eot" />
@@ -738,13 +702,6 @@
     <Content Include="Areas\Admin\Views\Movie\ListContentRating.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\EditContentRating.cshtml" />
     <Content Include="Areas\Admin\Views\Movie\CreateContentRating.cshtml" />
-    <EntityDeploy Include="Models\CinemaBooking.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CinemaBooking.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\CinemaBooking.edmx.diagram">
-      <DependentUpon>CinemaBooking.edmx</DependentUpon>
-    </Content>
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.eot" />
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.ttf" />
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\Flaticon.woff" />
@@ -753,6 +710,13 @@
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.ttf" />
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\ionicons.woff" />
     <Content Include="Frontend\Client\assets\css\flaticon1\fonts\_flaticon.scss" />
+    <EntityDeploy Include="Models\CinemaBooking.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CinemaBooking.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CinemaBooking.edmx.diagram">
+      <DependentUpon>CinemaBooking.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\i18n\af.js" />
@@ -3644,6 +3608,8 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="images\information\" />
     <Folder Include="images\movies\background\" />
+    <Folder Include="images\news\" />
+    <Folder Include="images\product\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\src\" />
     <Folder Include="template\admin\assets\libs\bootstrap-filestyle2\test\" />
     <Folder Include="template\admin\assets\libs\chartist\scss\settings\" />

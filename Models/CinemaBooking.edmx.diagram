@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cf2713c86a764c3da46b79957f08be93" Name="Diagram1">
+      <Diagram DiagramId="e5e0520b0cb24a5596795d99c69aac5a" Name="Diagram1">
         <EntityTypeShape EntityType="CinemaBookingModel.content_rating" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.dao_dien" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.dien_vien" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
@@ -45,7 +45,6 @@
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CinemaBookingModel.sysdiagram" Width="1.5" PointX="13.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

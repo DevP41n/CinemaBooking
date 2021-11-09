@@ -46,6 +46,5 @@ namespace CinemaBooking.Models
         public virtual DbSet<thong_tin_cong_ty> thong_tin_cong_ty { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<ve_ban> ve_ban { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-    }
+   }
 }
