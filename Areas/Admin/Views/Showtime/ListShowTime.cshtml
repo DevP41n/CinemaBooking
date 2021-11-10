@@ -58,11 +58,14 @@
                                         <th>
                                             Ngày Chiếu
                                         </th>
-                                        <th>
-                                            Khung giờ
-                                        </th>
+                                        @*<th>
+                                                Khung giờ
+                                            </th>*@
                                         <th>
                                             Rạp
+                                        </th>
+                                        <th style="width: 50px;">
+                                            Danh Sách
                                         </th>
                                         <th>
                                             Công cụ
@@ -84,14 +87,31 @@
                                             <td>
                                                 @Html.FormatValue(@item.ngay_chieu, "{0:MM/dd/yyyy}")
                                             </td>
-                                            <td>
-                                                @foreach (var i in db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id))
-                                                {
-                                                    <a class="btn btn-primary">@i.TimeFrame.Time</a>
-                                                }
-                                            </td>
+                                            @*<td>
+                                                    @foreach (var i in db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id))
+                                                    {
+                                                        <a class="btn btn-primary">@i.TimeFrame.Time</a>
+                                                    }
+                                                </td>*@
                                             <td>
                                                 @item.phong_chieu.ten_phong
+                                            </td>
+                                            <td>
+                                                @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
+                                                <button type="button" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
+                                                        <a class="text-white ListTime" data-id="@item.id">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" data-id="@item.id" class="icon icon-tabler icon-tabler-clipboard-list ListTime" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                                                <rect x="9" y="3" width="6" height="4" rx="2" />
+                                                                <line x1="9" y1="12" x2="9.01" y2="12" />
+                                                                <line x1="13" y1="12" x2="15" y2="12" />
+                                                                <line x1="9" y1="16" x2="9.01" y2="16" />
+                                                                <line x1="13" y1="16" x2="15" y2="16" />
+                                                            </svg>
+                                                        </a>
+                                                    </button>
+                                            </td>
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
                                                     <a href="@Url.Action("EditShowTime", "Showtime", new { id = item.id })" class="text-white">
@@ -105,20 +125,20 @@
                                                 </button>
 
                                                 @*<button type="button" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
-                                                    <a class="text-white ListTime">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-                                                            <rect x="9" y="3" width="6" height="4" rx="2" />
-                                                            <line x1="9" y1="12" x2="9.01" y2="12" />
-                                                            <line x1="13" y1="12" x2="15" y2="12" />
-                                                            <line x1="9" y1="16" x2="9.01" y2="16" />
-                                                            <line x1="13" y1="16" x2="15" y2="16" />
-                                                        </svg>
-                                                    </a>
-                                                </button>*@
+                                                        <a class="text-white ListTime">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                                                <rect x="9" y="3" width="6" height="4" rx="2" />
+                                                                <line x1="9" y1="12" x2="9.01" y2="12" />
+                                                                <line x1="13" y1="12" x2="15" y2="12" />
+                                                                <line x1="9" y1="16" x2="9.01" y2="16" />
+                                                                <line x1="13" y1="16" x2="15" y2="16" />
+                                                            </svg>
+                                                        </a>
+                                                    </button>*@
 
-                                            <a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>
+
 
                                                 <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa">
                                                     <a href="@Url.Action("DeleteConfirmed", "Showtime", new { id = item.id })" class="text-white">
@@ -155,21 +175,19 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Danh sách khung giờ</h5>               
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Danh sách khung giờ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="cl">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered">
-                    <a class="btn btn-success pull-right" data-target="#CreateSeat" data-toggle="modal" style="float:left;margin-bottom:10px">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <rect x="4" y="4" width="16" height="16" rx="2" />
-                            <line x1="9" y1="12" x2="15" y2="12" />
-                            <line x1="12" y1="9" x2="12" y2="15" />
-                        </svg> Thêm khung giờ mới
-                    </a>
+                <table class="table table-bordered" >
+                    @*<a class="btn btn-success pull-right" data-target="#CreateSeat" data-toggle="modal" style="float:left;margin-bottom:10px">
+                         Thêm khung giờ mới
+                    </a>*@
+                    <div id="createaatime">
+
+                    </div>
                     <thead>
                         <tr>
                             <th scope="col">STT</th>
@@ -178,52 +196,181 @@
                         </tr>
                     </thead>
                     <tbody id="showtime">
-
                     </tbody>
-
                 </table>
             </div>
             <div class="modal-footer">
                 @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-id="" id="btnEditSeat">Save changes</button>*@
+                    <button type="button" class="btn btn-primary" data-id="" id="btnEditSeat">Save changes</button>*@
             </div>
         </div>
     </div>
+</div>
+
+<!--Create Time-->
+<div class="modal fade" id="CreateTimeFr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Thêm hàng ghế</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="idsc" value="0" />
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Khung giờ</label>
+                        <div id="listtime">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-id="" id="CreateTime">Save changes</button>
+            </div>
+        </div>
     </div>
-    <!------------------------------------------------>
-    @section Scripts{
-        <script>
-            $(document).ready(function () {
-                $('body').on('click', '.ListTime', function () {
-                    var idsuatchieu = $(this).data('id');
-                    LoadTime(idsuatchieu);
-                });
-                function LoadTime(idsuatchieu) {
-                    $.ajax({
-                        url: '/Showtime/ShowDataTime/',
-                        type: 'GET',
-                        data: {
-                            idsuatchieu: idsuatchieu,
-                        },
-                        success: function (res) {
-                            if (res.count != null) {
-                                var itemid = res.id;
-                                var itemtime = res.Times;
-                                var html = "";
-                                for (let i = 0; i < res.count; i++) {
-                                    html += "<tr>";
-                                    html += "<td>" + (i + 1) + "</td>";
-                                    html += "<td>" + itemtime[i] + "</td>";
-                                    html += "<td><a href='#' class='btn btn-warning' data-id='" + itemid[i] + "'>Sửa</a> | <a href='#' class='btn btn-danger'  data-id='" + itemid[i] +"'>Xóa</a></td>";
-                                    html += "</tr>";
-                                }
-                                $('#showtime').html(html);
-                                $('#EditTime').modal('show');
-                            }
-                        }
-                    })
-                }
+</div>
+<!------------------------------------------------>
+<!------------------------------------------------>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //List time
+            $('body').on('click', '.ListTime', function () {
+                var idsuatchieu = $(this).data('id');
+                LoadTime(idsuatchieu);
+            });
+            //Show data create
+            $('body').on('click', '.CreateFr', function () {
+                $('#EditTime').modal('hide');
+                var id = $(this).data('id');
+                ShowCreateTimeFr(id);
+            });
+           //btn Xóa
+            $('body').on('click', '.deletet', function () {
+                var id = $(this).data('id');
+                var idsc = $(this).data('idsc');
+                DeleteTime(id, idsc);
+                sleep(600);
+                LoadTime(idsc);
+            });
+            //btn thêm timeframe cho suat chieu
+            $('body').on('click', '#CreateTime', function () {
+                var id = $('#idsc').val();
+                var idtime = $('#timeframe').val();
+                CreateTimeFr(id, idtime);
+                sleep(600);
+                LoadTime(id);
             });
 
-        </script>
-    }
+            function LoadTime(idsuatchieu) {
+                $.ajax({
+                    url: '/Showtime/ShowDataTime/',
+                    type: 'GET',
+                    data: {
+                        idsuatchieu: idsuatchieu,
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var itemid = res.id;
+                            var itemtime = res.Times;
+                            var html = "";
+                            var create = "";
+                            create += "<a class='btn btn-success pull-right CreateFr' data-target='#CreateTimeFr' data-toggle='modal' style='float: left; margin-bottom: 10px' data-id='" + res.idsuatchieu + "'>";
+                            create += "<svg xmlns='http://www.w3.org/2000/svg' data-id='" + res.idsuatchieu + "' data-target='#CreateTimeFr' data-toggle='modal' class='icon icon-tabler icon-tabler-square-plus CreateFr' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='#ffffff' fill='none' stroke-linecap='round' stroke-linejoin='round'>";
+                            create += "<path stroke='none' d='M0 0h24v24H0z' fill='none' />"
+                            create += "<rect x='4' y='4' width='16' height='16' rx='2' />";
+                            create += "<line x1='9' y1='12' x2='15' y2='12' />";
+                            create += "<line x1='12' y1='9' x2='12' y2='15' />";
+                            create += "</svg>"
+                            create += "Thêm khung giờ mới";
+                            create += "</a >";
+                            html += "";
+                            for (let i = 0; i < res.count; i++) {
+                                html += "<tr>";
+                                html += "<td>" + (i + 1) + "</td>";
+                                html += "<td>" + itemtime[i] + "</td>";
+                                html += "<td><a href='#' class='btn btn-danger deletet'  data-id='" + itemid[i] + "' data-idsc='" + res.idsuatchieu + "'>Xóa</a></td>";
+                                html += "</tr>";
+                            }
+                            $('#createaatime').html(create);
+                            $('#showtime').html(html);
+                            $('#EditTime').modal('show');
+                        }
+                    }
+                })
+            }
+
+            function DeleteTime(id) {
+                $.ajax({
+                    url: '/Showtime/DeleteTime/',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                    },
+                    success: function (res) {
+                        //if (res.success)
+                        //    window.location.reload();
+
+                    }
+                });
+            }
+
+            function ShowCreateTimeFr(id) {
+                $.ajax({
+                    url: '/Showtime/ShowCreateTimeFr/',
+                    type: 'GET',
+                    data: {
+                        id: id,
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            $('#idsc').val(res.id);
+                            var id = res.idtimes;
+                            var time = res.times;
+                            var html = "";
+                            html += "<select name='timeframe' id='timeframe'>";
+                            for (let i = 0; i < res.count; i++) {
+                                html += "<option value='" + id[i] + "'>" + time[i] + "</option>";
+                            }
+                            html += "</select>";
+                            $("#listtime").html(html);
+                            $('#CreateTimeFr').modal('show');
+                        }
+                    }
+                });
+            }
+
+
+            function CreateTimeFr(id, idtime) {
+                $.ajax({
+                    url: '/Showtime/CreateTimeFr/',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        idtime: idtime,
+                    },
+                    success: function (res) {
+                        $('#CreateTimeFr').modal('hide');
+                    }
+                });
+            }
+
+            //Wait for element
+            function sleep(milliseconds) {
+                const date = Date.now();
+                let currentDate = null;
+                do {
+                    currentDate = Date.now();
+                } while (currentDate - date < milliseconds);
+            }
+
+        });
+
+    </script>
+}

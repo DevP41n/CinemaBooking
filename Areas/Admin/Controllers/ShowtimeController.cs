@@ -84,6 +84,13 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult DeleteConfirmed(int? id)
         {
+            var timesc = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id).ToList();
+            foreach(var item in timesc)
+            {
+                suatchieu_timeframe sctime = db.suatchieu_timeframe.Find(item.id);
+                db.suatchieu_timeframe.Remove(sctime);
+                db.SaveChanges();
+            }
             suat_chieu suatChieu = db.suat_chieu.Find(id);
             db.suat_chieu.Remove(suatChieu);
             TempData["Message"] = "Xóa thành công!";
@@ -103,7 +110,56 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 Times.Add(contime);
             }
             var count = list.Count();
-            return Json(data: new { id, Times, count }, JsonRequestBehavior.AllowGet);
+            return Json(data: new { id, Times, count, idsuatchieu }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTime(int? id)
+        {
+            suatchieu_timeframe sctime = db.suatchieu_timeframe.Find(id);
+            db.suatchieu_timeframe.Remove(sctime);
+            db.SaveChanges();
+            return Json(new { success = true} );
+        }
+
+
+        [HttpGet]
+        public ActionResult ShowCreateTimeFr(int? id)
+        {
+            var time = db.suatchieu_timeframe.Where(x=>x.id_Suatchieu == id);
+            var timeframe = db.TimeFrames.ToList();
+            List<int> idtimes = new List<int>();
+            List<String> times = new List<String>();
+            foreach (var item in timeframe)
+            {
+                var dem = 0;
+                foreach(var i in time)
+                {
+                    if(item.id == i.id_Timeframe)
+                    {
+                        dem++;
+                    }
+                }
+                if(dem ==0)
+                {
+                    idtimes.Add(item.id);
+                    var g = Convert.ToString(item.Time);
+                    times.Add(g);
+                }
+            }
+            var count = idtimes.Count();
+            return Json(data: new { idtimes, times, count, id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CreateTimeFr(int? id, int? idtime)
+        {
+            suatchieu_timeframe time = new suatchieu_timeframe();
+            time.id_Suatchieu = id;
+            time.id_Timeframe = idtime;
+            db.suatchieu_timeframe.Add(time);
+            db.SaveChanges();
+            return Json(new { success = true });
         }
         //Time Frame
         /// ---------------------------
