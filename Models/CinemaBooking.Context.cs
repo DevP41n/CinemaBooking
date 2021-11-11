@@ -38,7 +38,6 @@ namespace CinemaBooking.Models
         public virtual DbSet<movie_rate> movie_rate { get; set; }
         public virtual DbSet<order_details> order_details { get; set; }
         public virtual DbSet<order> orders { get; set; }
-        public virtual DbSet<phim> phims { get; set; }
         public virtual DbSet<phong_chieu> phong_chieu { get; set; }
         public virtual DbSet<su_kien> su_kien { get; set; }
         public virtual DbSet<suat_chieu> suat_chieu { get; set; }
@@ -47,5 +46,6 @@ namespace CinemaBooking.Models
         public virtual DbSet<TimeFrame> TimeFrames { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<ve_ban> ve_ban { get; set; }
+        public virtual DbSet<phim> phims { get; set; }
     }
 }

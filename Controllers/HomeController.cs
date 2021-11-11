@@ -17,24 +17,6 @@ namespace CinemaBooking.Controllers
         {
             return View();
         }
-        public ActionResult SearchActor()
-        {
-            var result = from a in db.dien_vien
-                         select new { a.ho_ten, a.anh, a.slug };
-            List<dien_vien> actor = result.AsEnumerable()
-                          .Select(o => new dien_vien
-                          {
-                              ho_ten = o.ho_ten,
-                              anh = o.anh,
-                              slug = o.slug
-                          }).ToList();
-            string value = string.Empty;
-            value = JsonConvert.SerializeObject(actor, Formatting.Indented, new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-            return Content(value);
-        }
         public ActionResult SearchMovie()
         {
             var result = from a in db.phims

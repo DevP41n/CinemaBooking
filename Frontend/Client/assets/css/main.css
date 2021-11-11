@@ -2083,7 +2083,7 @@ input[type="submit"] {
 }
 
 .book-wrapper .left-side .item {
-  margin: 10px 15px;
+  margin: 4px 15px;
   text-align: center;
 }
 
@@ -2135,16 +2135,16 @@ input[type="submit"] {
 }
 .content-rating-tag {
     align-items: center;
-    background-color: #ff1f1fb0;
+    background-color: #ff1717ad;
     border-radius: 4px;
     color: #ffffff;
     display: inline-flex;
     font-size: 15px;
-    height: 30px;
+    height: 28px;
     justify-content: center;
     line-height: 1.5;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
     white-space: nowrap;
     font-weight: 700;
 }

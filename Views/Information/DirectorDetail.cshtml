@@ -50,7 +50,7 @@
                     {
                         <div class="thumb-list-movie" style="padding: 15px; flex: none; width: 25%; ">
                             <a href="@Url.Action("MovieDetail", "Movie", new { id = item.slug })">
-                                <img src="~/images/movies/@item.anh" alt="@item.ten_phim" style="height: auto; max-width: 100%;">
+                                <img src="~/images/movies/@item.anh" alt="@item.ten_phim" style="height: 300px; max-width: 100%;">
                             </a>
                             <dl class="overflow-text-2" style="height: 52px; margin-bottom: 0px">
                                 <dt>@item.ten_phim</dt>
@@ -64,90 +64,6 @@
     </div>
 </section>
 <!-- ==========Speaker-Single========== -->
-<!-- ==========Speaker-Section========== -->
-<section class="speaker-section padding-bottom padding-top">
-    <div class="container">
-        <div class="section-header-3">
-            <span class="cate">listen to the</span>
-            <h2 class="title">event speakers</h2>
-            <p>
-                World is committed to making participation in the event a harassment free experience for
-                everyone, regardless of level of experience, gender, gender identity and expression
-            </p>
-        </div>
-        <div class="speaker--slider">
-            <div class="speaker-slider owl-carousel owl-theme">
-                <div class="speaker-item">
-                    <div class="speaker-thumb">
-                        <a href="#0">
-                            <img src="/Frontend/Client/assets/images/speaker/speaker01.jpg" alt="speaker">
-                        </a>
-                    </div>
-                    <div class="speaker-content">
-                        <h5 class="title">
-                            <a href="#0">
-                                Gerard Bryan
-                            </a>
-                        </h5>
-                        <span>lead speaker</span>
-                    </div>
-                </div>
-                <div class="speaker-item">
-                    <div class="speaker-thumb">
-                        <a href="#0">
-                            <img src="/Frontend/Client/assets/images/speaker/speaker02.jpg" alt="speaker">
-                        </a>
-                    </div>
-                    <div class="speaker-content">
-                        <h5 class="title">
-                            <a href="#0">
-                                Raihan Rafuj
-                            </a>
-                        </h5>
-                        <span>lead speaker</span>
-                    </div>
-                </div>
-                <div class="speaker-item">
-                    <div class="speaker-thumb">
-                        <a href="#0">
-                            <img src="/Frontend/Client/assets/images/speaker/speaker03.jpg" alt="speaker">
-                        </a>
-                    </div>
-                    <div class="speaker-content">
-                        <h5 class="title">
-                            <a href="#0">
-                                Bela Bose
-                            </a>
-                        </h5>
-                        <span>lead speaker</span>
-                    </div>
-                </div>
-                <div class="speaker-item">
-                    <div class="speaker-thumb">
-                        <a href="#0">
-                            <img src="/Frontend/Client/assets/images/speaker/speaker04.jpg" alt="speaker">
-                        </a>
-                    </div>
-                    <div class="speaker-content">
-                        <h5 class="title">
-                            <a href="#0">
-                                Grass Hopper
-                            </a>
-                        </h5>
-                        <span>lead speaker</span>
-                    </div>
-                </div>
-            </div>
-            <div class="speaker-prev">
-                <i class="flaticon-double-right-arrows-angles"></i>
-            </div>
-            <div class="speaker-next">
-                <i class="flaticon-double-right-arrows-angles"></i>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ==========Speaker-Section========== -->
 <script>
     function codeAddress() {
         $('.menu li a.informationac').addClass('active');

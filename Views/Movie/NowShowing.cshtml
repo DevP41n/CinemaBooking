@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 @{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
+
 <!-- ==========Movie-Section========== -->
 <section class="movie-section padding-top padding-bottom">
     <div class="container">
@@ -18,10 +19,9 @@
                             @foreach (var itemtheloai in db.the_loai_phim)
                             {
                                 <div class="form-group">
-                                    <input type="checkbox" name="@itemtheloai.id" id="@itemtheloai.id"><label for="@itemtheloai.id">@itemtheloai.ten_the_loai</label>
+                                    <input type="checkbox" name="theloai" id="@itemtheloai.id" value="@itemtheloai.id"><label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "NowShowing", "Movie", new { page = 1, category = @itemtheloai.id }, new { @style = "color:white;" })</label>
                                 </div>
                             }
-
                         </div>
                     </div>
                 </div>
@@ -32,26 +32,26 @@
                         <div class="filter-main">
                             <div class="left">
                                 @*<div class="item">
-                            <span class="show">Show :</span>
-                            <select class="select-bar">
-                                <option value="12">12</option>
-                                <option value="15">15</option>
-                                <option value="18">18</option>
-                                <option value="21">21</option>
-                                <option value="24">24</option>
-                                <option value="27">27</option>
-                                <option value="30">30</option>
-                            </select>
-                        </div>
-                        <div class="item">
-                            <span class="show">Sort By :</span>
-                            <select class="select-bar">
-                                <option value="showing">now showing</option>
-                                <option value="exclusive">exclusive</option>
-                                <option value="trending">trending</option>
-                                <option value="most-view">most view</option>
-                            </select>
-                        </div>*@
+                                        <span class="show">Show :</span>
+                                        <select class="select-bar">
+                                            <option value="12">12</option>
+                                            <option value="15">15</option>
+                                            <option value="18">18</option>
+                                            <option value="21">21</option>
+                                            <option value="24">24</option>
+                                            <option value="27">27</option>
+                                            <option value="30">30</option>
+                                        </select>
+                                    </div>
+                                    <div class="item">
+                                        <span class="show">Sort By :</span>
+                                        <select class="select-bar">
+                                            <option value="showing">now showing</option>
+                                            <option value="exclusive">exclusive</option>
+                                            <option value="trending">trending</option>
+                                            <option value="most-view">most view</option>
+                                        </select>
+                                    </div>*@
                             </div>
                             <ul class="grid-button tab-menu">
                                 <li class="active">
@@ -82,17 +82,17 @@
 
                                                 <ul class="movie-rating-percent">
                                                     @* <li>
-                                                <div class="thumb">
-                                                    <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>
-                                            <li>
-                                                <div class="thumb">
-                                                    <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
-                                                </div>
-                                                <span class="content">88%</span>
-                                            </li>*@
+                                                            <div class="thumb">
+                                                                <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
+                                                            </div>
+                                                            <span class="content">88%</span>
+                                                        </li>
+                                                        <li>
+                                                            <div class="thumb">
+                                                                <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
+                                                            </div>
+                                                            <span class="content">88%</span>
+                                                        </li>*@
                                                     <li style=" margin-left: auto;">
                                                         <span class="content">@Html.FormatValue(item.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                                     </li>
@@ -122,7 +122,7 @@
                                             <div class="movie-tags">
                                                 @foreach (var theloai in db.list_phim_theloai.Where(t => t.id_phim == mov.id))
                                                 {
-                                                    <a href="#0" class="type-movie-grid">@theloai.the_loai_phim.ten_the_loai</a>
+                                                    <a href="@Url.Action("NowShowing","Movie",new { page = 1, category = theloai.id_theloai })" class="type-movie-grid">@theloai.the_loai_phim.ten_the_loai</a>
 
                                                 }
                                             </div>
@@ -130,19 +130,19 @@
                                                 <span>Ngày công chiếu : </span> <a> @Html.FormatValue(mov.ngay_cong_chieu, "{0:dd/MM/yyy}")</a>
                                             </div>
                                             @*                                            <ul class="movie-rating-percent">
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span>
-                                        </li>
-                                    </ul>*@
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
+                                                        </div>
+                                                        <span class="content">88%</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
+                                                        </div>
+                                                        <span class="content">88%</span>
+                                                    </li>
+                                                </ul>*@
                                             <div style="padding-top: 5px; padding-bottom: 5px; height: 128px; ">
                                                 <a class="overflow-text-4">@Html.Raw(mov.chi_tiet)</a>
                                             </div>
@@ -181,17 +181,38 @@
                     </div>
                 </div>
                 <div class="pagination-area text-center">
-                    @Html.PagedListPager(Model, page => Url.Action("NowShowing", "Movie", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                    @Html.PagedListPager(Model, page => Url.Action("NowShowing", "Movie", new { page, category = ViewBag.category }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- ==========Movie-Section========== -->
+<!-- ==========Movie-Section==========
+    $(document).ready(function () {
+    $('input[name="theloai"]').click(function () {
+        var category = $('input[name="theloai"]:checked').val();
+
+        console.log(this.value);
+        setTimeout(() => {
+            $('input[name="theloai"]:checked').each(function () {
+            $('input[name="theloai"]').prop('checked', false);
+            });
+        }, 3000);
+    });
+});
+    -->
 <script>
     function codeAddress() {
         $('.menu li a.movieac').addClass('active');
         document.getElementById("nowshowing").innerHTML = "Đang chiếu";
+        setTimeout(() => {
+        $('input[name="theloai"]').each(function () {
+            if (this.value == @ViewBag.category) {
+                $(this).prop('checked', true);
+            }
+        })
+        }, 300);
+        
     }
     window.onload = codeAddress;
 </script>

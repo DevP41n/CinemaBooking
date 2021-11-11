@@ -444,8 +444,15 @@ alter column ngay_chieu date;
 
 -- đổi kiễu dữ liệu của trailer ảnh và slug
 alter table phim
-alter column trailer nvarchar(MAX) 
+alter column trailer nvarchar(MAX); 
 alter table phim
-alter column slug nvarchar(MAX) 
+alter column slug nvarchar(MAX); 
 alter table phim
-alter column anh nvarchar(MAX) 
+alter column anh nvarchar(MAX); 
+
+-- 11/11 thêm cột :
+alter table dbo.content_rating
+add mo_ta nvarchar(100) null;
+
+alter table dbo.phim
+add ngon_ngu nvarchar(Max) null;

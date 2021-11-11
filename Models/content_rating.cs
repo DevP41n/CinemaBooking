@@ -22,6 +22,7 @@ namespace CinemaBooking.Models
     
         public int ID { get; set; }
         public string ten_rating { get; set; }
+        public string mo_ta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<phim> phims { get; set; }

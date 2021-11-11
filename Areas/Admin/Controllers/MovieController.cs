@@ -68,8 +68,18 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     String StrPath = Path.Combine(Server.MapPath("~/images/movies/background/"));
                     file1.SaveAs(Path.Combine(StrPath, filename));
                 }
+                string theloai = "";
+                foreach (string theloaiid in theloaiarray)
+                {
+                    the_loai_phim selecttheloai = db.the_loai_phim.ToList().Find(p => p.id.ToString() == theloaiid);
+                    theloai += selecttheloai.id;
+                }
+                int theloailist = Int32.Parse(theloai);
+                Phim.theloaichinh = theloailist;
                 db.phims.Add(Phim);
                 db.SaveChanges();
+                TempData["Message"] = "Tạo thành công!";
+
                 foreach (string dienvienid in dienvienarray)
                 {
                     dien_vien selectdienvien = db.dien_vien.ToList().Find(p => p.id.ToString() == dienvienid);
@@ -78,6 +88,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     db.list_phim_dienvien.Add(listdienvien);
                     db.SaveChanges();
                 }
+                
                 foreach (string theloaiid in theloaiarray)
                 {
                     the_loai_phim selecttheloai = db.the_loai_phim.ToList().Find(p => p.id.ToString() == theloaiid);
@@ -86,7 +97,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     db.list_phim_theloai.Add(listtheloai);
                     db.SaveChanges();
                 }
-                TempData["Message"] = "Tạo thành công!";
                 return RedirectToAction("ListMovie");
             }
             return View(Phim);
@@ -139,9 +149,21 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     String StrPath = Path.Combine(Server.MapPath("~/images/movies/background/"));
                     file1.SaveAs(Path.Combine(StrPath, filename));
                 }
+                if (theloaiarray != null)
+                {
+                    string theloai = "";
+                    foreach (string theloaiid in theloaiarray)
+                    {
+                        the_loai_phim selecttheloai = db.the_loai_phim.ToList().Find(p => p.id.ToString() == theloaiid);
+                        theloai += selecttheloai.id;
+                    }
+                    int theloailist = Int32.Parse(theloai);
+                    Phim.theloaichinh = theloailist;
+                }
                 db.Entry(Phim).State = EntityState.Modified;
                 TempData["Message"] = "Cập nhật thành công!";
                 db.SaveChanges();
+
                 //Edit dien vien
                 if (dienvienarray != null)
                 {
@@ -258,6 +280,18 @@ namespace CinemaBooking.Areas.Admin.Controllers
             //{
             //    return RedirectToAction("Login", "Auth");
             //}
+            var list = db.list_phim_theloai.Where(x => x.id_phim == id).ToList() ;
+            foreach (list_phim_theloai item in list)
+            {
+                db.list_phim_theloai.Remove(item);
+                db.SaveChanges();
+            }
+            var list1 = db.list_phim_dienvien.Where(x => x.id_phim == id).ToList();
+            foreach (list_phim_dienvien item1 in list1)
+            {
+                db.list_phim_dienvien.Remove(item1);
+                db.SaveChanges();
+            }
             phim Phim = db.phims.Find(id);
             db.phims.Remove(Phim);
             TempData["Message"] = "Xóa thành công!";

@@ -42,6 +42,8 @@ namespace CinemaBooking.Models
         public string anhbackground { get; set; }
         public string idrating { get; set; }
         public Nullable<int> id_content_rating { get; set; }
+        public string ngon_ngu { get; set; }
+        public Nullable<int> theloaichinh { get; set; }
     
         public virtual content_rating content_rating { get; set; }
         public virtual dao_dien dao_dien { get; set; }

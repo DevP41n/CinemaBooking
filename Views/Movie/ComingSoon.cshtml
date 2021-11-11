@@ -16,9 +16,9 @@
                         <div class="check-area">
                             @foreach (var itemtheloai in db.the_loai_phim)
                             {
-                                <div class="form-group">
-                                    <input type="checkbox" name="@itemtheloai.id" id="@itemtheloai.id"><label for="@itemtheloai.id">@itemtheloai.ten_the_loai</label>
-                                </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="theloai" id="@itemtheloai.id" value="@itemtheloai.id"><label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "ComingSoon", "Movie", new { page = 1, category = @itemtheloai.id }, new { @style = "color:white;" })</label>
+                            </div>
                             }
 
                         </div>
@@ -88,7 +88,7 @@
                                             <div class="movie-tags">
                                                 @foreach (var theloai in db.list_phim_theloai.Where(t => t.id_phim == mov.id))
                                                 {
-                                                    <a href="#0" class="type-movie-grid">@theloai.the_loai_phim.ten_the_loai</a>
+                                                    <a href="@Url.Action("ComingSoon","Movie",new { page = 1, category = theloai.id_theloai })" class="type-movie-grid">@theloai.the_loai_phim.ten_the_loai</a>
 
                                                 }
                                             </div>
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     <div class="pagination-area text-center">
-                        @Html.PagedListPager(Model, page => Url.Action("ComingSoon", "Movie", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                        @Html.PagedListPager(Model, page => Url.Action("ComingSoon", "Movie", new { page, category = ViewBag.category }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
                     </div>
                 </div>
             </div>
@@ -144,6 +144,13 @@
     function codeAddress() {
         $('.menu li a.movieac').addClass('active');
         document.getElementById("nowshowing").innerHTML = "Sắp chiếu";
+        setTimeout(() => {
+        $('input[name="theloai"]').each(function () {
+            if (this.value == @ViewBag.category) {
+                $(this).prop('checked', true);
+            }
+        })
+        }, 300);
     }
     window.onload = codeAddress;
 </script>
