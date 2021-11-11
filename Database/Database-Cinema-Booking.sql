@@ -456,7 +456,6 @@ add mo_ta nvarchar(100) null;
 
 alter table dbo.phim
 add ngon_ngu nvarchar(Max) null;
-alter column anh nvarchar(MAX) 
 
 
 ----------Fix
