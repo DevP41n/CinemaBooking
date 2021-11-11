@@ -456,3 +456,25 @@ add mo_ta nvarchar(100) null;
 
 alter table dbo.phim
 add ngon_ngu nvarchar(Max) null;
+alter column anh nvarchar(MAX) 
+
+
+----------Fix
+alter table suat_chieu
+drop constraint FK_timesuatchieu
+
+alter table suat_chieu
+drop column gio_ket_thuc
+
+alter table suat_chieu
+drop column Timeid
+
+Create table suatchieu_timeframe
+(
+	id INT identity(1,1) NOT NULL,
+	id_Suatchieu int NULL,
+	id_Timeframe int NULL,
+	CONSTRAINT PK_suat_time PRIMARY KEY(id),
+	constraint FK_Suatchieu_frame foreign key (id_Suatchieu) references suat_chieu(id),
+	constraint FK_frame_suatchieu foreign key (id_Timeframe) references TimeFrame(id),
+)

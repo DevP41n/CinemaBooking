@@ -226,6 +226,9 @@
     <Compile Include="Models\phong_chieu.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\suatchieu_timeframe.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\suat_chieu.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -267,6 +270,7 @@
     <Content Include="Database\classKhachHang.txt" />
     <Content Include="Database\Database-Cinema-Booking.sql" />
     <Content Include="Database\dataCinema.sql" />
+    <Content Include="Database\Suat_chieu.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Frontend\Client\assets\css\all.min.css" />

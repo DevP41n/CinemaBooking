@@ -12,18 +12,13 @@ namespace CinemaBooking.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TimeFrame
+    public partial class suatchieu_timeframe
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TimeFrame()
-        {
-            this.suatchieu_timeframe = new HashSet<suatchieu_timeframe>();
-        }
-    
         public int id { get; set; }
-        public Nullable<System.TimeSpan> Time { get; set; }
+        public Nullable<int> id_Suatchieu { get; set; }
+        public Nullable<int> id_Timeframe { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<suatchieu_timeframe> suatchieu_timeframe { get; set; }
+        public virtual suat_chieu suat_chieu { get; set; }
+        public virtual TimeFrame TimeFrame { get; set; }
     }
 }
