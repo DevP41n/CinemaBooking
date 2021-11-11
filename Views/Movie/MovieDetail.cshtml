@@ -91,7 +91,7 @@
             </div>
             @if (Model.loai_phim_chieu == 1)
             {
-                <a href="@Url.Action("BookTicket", "Movie")" class="custom-button">Đặt vé</a>
+                <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id })" class="custom-button">Đặt vé</a>
             }
 
         </div>

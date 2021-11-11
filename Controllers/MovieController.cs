@@ -1,6 +1,7 @@
 ﻿using CinemaBooking.Models;
 using PagedList;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -41,14 +42,40 @@ namespace CinemaBooking.Controllers
             return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
         }
         //Đặt vé
-        public ActionResult BookTicket()
+        public ActionResult BookTicket(int? id)
         {
+            ViewBag.date = db.suat_chieu.Where(n => n.phim_id == id);
+
             return View();
         }
-        //Chọn ghế
-        public ActionResult BookSeat()
+
+        public ActionResult ShowTime(int? idsuatchieu)
         {
-            return View();
+            var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == idsuatchieu);
+
+            List<String> times = new List<String>();
+            List<int> idtimes = new List<int>();
+            foreach (var time in suatChieuTime)
+            {
+                times.Add((time.TimeFrame.Time).ToString());
+                idtimes.Add(time.TimeFrame.id);
+            }
+
+            var Count = times.Count();
+
+            return Json(data: new { times, idtimes, Count, idsuatchieu }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //Chọn ghế
+        public ActionResult BookSeat(int id, int idtime)
+        {
+            var idpc = db.suat_chieu.Find(id);
+            phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
+            ViewBag.pc = phongChieu;
+            var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
+            ViewBag.ghe = ghengoi;
+            return View(ghengoi);
         }
         //Thanh toán
         public ActionResult CheckOut()
