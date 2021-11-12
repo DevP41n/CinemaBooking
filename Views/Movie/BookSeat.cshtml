@@ -26,9 +26,8 @@
     <div class="container">
         <div class="page-title-area">
             <div class="item md-order-1">
-                <a href="movie-ticket-plan.html" class="custom-button back-button">
-                    <i class="flaticon-double-right-arrows-angles"></i>Trở về
-                </a>
+                <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" value="Trở về">
+                
             </div>
             <div class="item date-item">
                 <span class="date">MON, SEP 09 2020</span>
@@ -315,8 +314,13 @@
                 var imgid = "." + "ghe-" + tenghe;
                 $(imgid).attr("src", "/Frontend/Client/assets/images/movie/seat01-free.png");
                 var id = "#" + tenghe;
-                $(id).removeClass('Act').addClass('UnAct');
 
+
+                $(id).removeClass('Act').addClass('UnAct');
+                var tien = $('#giatien').val();
+                var dongia = "75000";
+                var tongtien = parseInt(tien) - parseInt(dongia);
+                $('#giatien').val(tongtien);
             });
         });
 
