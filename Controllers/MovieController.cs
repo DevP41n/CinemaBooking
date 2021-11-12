@@ -28,22 +28,22 @@ namespace CinemaBooking.Controllers
             }
         }
         //Phim đang chiếu
-        public ActionResult NowShowing(int? page,int? category)
+        public ActionResult NowShowing(int? page, int? category)
         {
             int pageNumber = (page ?? 1);
             int pageSize = 6;
-            if(category != null)
+            if (category != null)
             {
                 ViewBag.category = category;
                 string category1 = category.ToString();
-                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderByDescending(s => s.ngay_cong_chieu).Where(x=>x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
+                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderByDescending(s => s.ngay_cong_chieu).Where(x => x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
             }
             else
             {
                 return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
             }
-            
-            
+
+
         }
         //Phim sắp chiếu
         public ActionResult ComingSoon(int? page, int? category)
@@ -91,11 +91,25 @@ namespace CinemaBooking.Controllers
         //Chọn ghế
         public ActionResult BookSeat(int id, int idtime)
         {
+
             var idpc = db.suat_chieu.Find(id);
             phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
             ViewBag.pc = phongChieu;
-            var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
+            var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).ToList();
             ViewBag.ghe = ghengoi;
+
+            var order = db.orders.Where(n => n.id_phong_chieu == phongChieu.id);
+            List<int> idghedd = new List<int>();
+            foreach (var item in order)
+            {
+                var idghe = db.order_details.Where(n => n.id_orders == item.id);
+                foreach (var i in idghe)
+                {
+                    idghedd.Add((int)i.id_ghe);
+                }
+            }
+
+            ViewBag.idghedat = idghedd;
             return View(ghengoi);
         }
         //Thanh toán

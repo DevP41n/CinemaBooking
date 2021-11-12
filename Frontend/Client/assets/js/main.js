@@ -348,28 +348,30 @@
           }
       }
     });
-    var book = 0;
-    $(".seat-free img").on('click', function(e) {
-      if(book == 0) {
-        $(this).attr("src","./assets/images/movie/seat01-free.png");
-        book = 1;
-      }
-      else if(book == 1) {
-        $(this).attr("src","./assets/images/movie/seat01-booked.png");
-        book = 0;
-      }
-    });
-    var bookTwo = 1;  
-    $(".seat-free-two img").on('click', function(e) {
-      if(bookTwo == 0) {
-        $(this).attr("src","./assets/images/movie/seat02-free.png");
-        bookTwo = 1;
-      }
-      else if(bookTwo == 1) {
-        $(this).attr("src","./assets/images/movie/seat02-booked.png");
-        bookTwo = 0;
-      }
-    });
+    //var book = 0;
+    //$(".seat-free img").on('click', function(e) {
+    //  if(book == 0) {
+    //      $(this).attr("src","/Frontend/Client/assets/images/movie/seat01-free.png");
+    //    book = 1;
+    //  }
+    //  else if(book == 1) {
+    //      $(this).attr("src","/Frontend/Client/assets/images/movie/seat01-booked.png");
+    //    book = 0;
+    //  }
+    //});
+    var bookTwo = 0;  
+      //$(".seat-free-two img").on('click', function(e) {
+      //if(bookTwo == 0) {
+      //    $(this).attr("src","/Frontend/Client/assets/images/movie/seat01-free.png");
+      //   bookTwo = 1;
+      //}
+      //else if(bookTwo == 1) {
+      //    $(this).attr("src","/Frontend/Client/assets/images/movie/seat01-booked.png");
+      //   bookTwo = 0;
+      //}
+      //});
+
+      
     // shop cart + - start here
     var CartPlusMinus = $('.cart-plus-minus');
     CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
