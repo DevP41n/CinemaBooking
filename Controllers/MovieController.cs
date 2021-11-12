@@ -93,12 +93,13 @@ namespace CinemaBooking.Controllers
         {
 
             var idpc = db.suat_chieu.Find(id);
+            ViewBag.tenphim = db.phims.Find(idpc.phim_id);
             phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
             ViewBag.pc = phongChieu;
             var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).ToList();
             ViewBag.ghe = ghengoi;
 
-            var order = db.orders.Where(n => n.id_phong_chieu == phongChieu.id);
+            var order = db.orders.Where(n => n.id_phong_chieu == phongChieu.id && n.status == idtime);
             List<int> idghedd = new List<int>();
             foreach (var item in order)
             {
