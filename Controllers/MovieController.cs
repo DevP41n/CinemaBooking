@@ -20,6 +20,27 @@ namespace CinemaBooking.Controllers
                             .Where(m => m.slug == id && m.status == 1).First();
                 ViewBag.Rates = db.movie_rate.Where(m => m.movie_id == movie.id);
                 ViewBag.RatesCount = db.movie_rate.Where(m => m.movie_id == movie.id).Count();
+                double? dem = 0;
+                double? tong = 0 ;
+                int count = 0;
+                foreach(var item in db.movie_rate.Where(x=>x.movie_id == movie.id))
+                {
+                    dem += item.rate;
+                    count++;
+                }
+                
+                if(dem == 0)
+                {
+                    tong = 0;
+                    ViewBag.RatesTong = tong;
+                }
+                else
+                {
+                    tong = dem / count;
+                    tong = Math.Round((double)tong, 1);
+                    ViewBag.RatesTong = tong;
+                }
+                
                 return View(movie);
             }
             catch (Exception)

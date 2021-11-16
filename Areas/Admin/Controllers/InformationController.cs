@@ -164,18 +164,44 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // POST: Admin/Information/Delete
         public ActionResult DeleteActorConfirmed(int id)
         {
-            dien_vien dienvien = db.dien_vien.Find(id);
-            db.dien_vien.Remove(dienvien);
-            TempData["Message"] = "Xóa thành công!";
-            db.SaveChanges();
+            var del = from dele in db.list_phim_dienvien
+                      where dele.id_dienvien == id
+                      select dele;
+            var coundel = del.Count(); //Đếm số lượng 
+
+
+            if (coundel == 0) //Nếu không thì tiến hành xóa
+            {
+                dien_vien dienvien = db.dien_vien.Find(id);
+                db.dien_vien.Remove(dienvien);
+                TempData["Message"] = "Xóa thành công!";
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["Warning"] = "Không thể xóa vì đang có phim tồn tại trong mục này!";
+            }
             return RedirectToAction("ListActor");
         }
         public ActionResult DeleteDirectorConfirmed(int id)
         {
-            dao_dien daodien= db.dao_dien.Find(id);
-            db.dao_dien.Remove(daodien);
-            TempData["Message"] = "Xóa thành công!";
-            db.SaveChanges();
+            var del = from dele in db.phims
+                      where dele.dao_dien_id == id
+                      select dele;
+            var coundel = del.Count(); //Đếm số lượng 
+
+
+            if (coundel == 0) //Nếu không thì tiến hành xóa
+            {
+                dao_dien daodien = db.dao_dien.Find(id);
+                db.dao_dien.Remove(daodien);
+                TempData["Message"] = "Xóa thành công!";
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["Warning"] = "Không thể xóa vì đang có phim tồn tại trong mục này!";
+            }
             return RedirectToAction("ListDirector");
         }
     }
