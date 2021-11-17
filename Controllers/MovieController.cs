@@ -86,7 +86,7 @@ namespace CinemaBooking.Controllers
         //Đặt vé
         public ActionResult BookTicket(int? id)
         {
-            if (Session["TenCus"] != null)
+            if (Session["TenCus"] == null)
             {
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User");
@@ -118,7 +118,7 @@ namespace CinemaBooking.Controllers
         //Chọn ghế
         public ActionResult BookSeat(int id, int idtime)
         {
-            if (Session["TenCus"] != null)
+            if (Session["TenCus"] == null)
             {
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User");
@@ -149,7 +149,7 @@ namespace CinemaBooking.Controllers
         //Thanh toán
         public ActionResult CheckOut(int? id, int? idtime, string idg)
         {
-            if (Session["TenCus"] != null)
+            if (Session["TenCus"] == null)
             {
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User");

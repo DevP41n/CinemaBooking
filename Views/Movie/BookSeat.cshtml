@@ -285,7 +285,12 @@
                 // them ten ghe
                 $('#tenghe').val($('#tenghe').val() + tenghe + " ");
                 //them id ghe
-                $('#idgheinput').val($('#idgheinput').val() + idghe + ",");
+                if ($('#idgheinput').val() == "") {
+                    $('#idgheinput').val($('#idgheinput').val() + idghe);
+                }
+                else {
+                    $('#idgheinput').val($('#idgheinput').val() + "," + idghe);
+                }              
                 var id = "#" + tenghe;
                 var imgid = "." + "ghe-" + tenghe;
                 $(imgid).attr("src", "/Frontend/Client/assets/images/movie/seat01-booked.png");
@@ -314,7 +319,19 @@
                 //    ghedadat += data[j] + ",";
                 //}
                 // sửa id ghế
-                let idghedadat = dataidghe.replace(idghen + ",", '');
+                var check = ",";
+                if (dataidghe.indexOf(check) != -1) {
+                    if (dataidghe.indexOf("," + idghen) != -1) {
+                        var idghedadat = dataidghe.replace("," + idghen, '');
+                    }
+                    else {
+                        var idghedadat = dataidghe.replace(idghen + ",", '');
+                    }
+                }
+                else {
+                   var idghedadat = dataidghe.replace(idghen, '');
+                }
+
                 // sửa tên ghế
                 let ghedadat = dataval.replace(tenghe + " ", '');
                 $('#tenghe').val(ghedadat);
