@@ -154,6 +154,7 @@
     <Compile Include="Areas\Admin\Controllers\InformationController.cs" />
     <Compile Include="Areas\Admin\Controllers\MovieController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShowtimeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -730,6 +731,7 @@
     <Content Include="Models\CinemaBooking.edmx.diagram">
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Orders\ListOrders.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\i18n\af.js" />

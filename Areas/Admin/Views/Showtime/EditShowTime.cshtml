@@ -59,10 +59,7 @@
                                 </p>
 
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.id)
-                                @Html.HiddenFor(model => model.ngay_chieu)
-
-
+                                @Html.HiddenFor(model => model.id)                              
                                 <div class="form-group row">
                                     @Html.LabelFor(model => model.ngay_chieu, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-sm-10">
