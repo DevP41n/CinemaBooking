@@ -303,7 +303,21 @@
                             if (res.success) {
                                 window.location.reload();
                             }
-                        }
+                            if (res.success == false) {
+                                var a = "Bạn chưa đăng nhập, Vui lòng đăng nhập để đánh giá!";
+                                toastr.warning(a);
+                            }
+                            if (res.check) {
+                                var text = "Bạn chưa từng xem phim này nên chưa được đánh giá!"
+                                toastr.warning(text);
+                            }
+                        },
+                        //check: function (res) {
+                        //    if (res.check) {
+                        //        var text = "Bạn chưa từng xem phim này nên chưa được đánh giá!"
+                        //        toastr.warning(text);
+                        //    }
+                        //}
                     });
                 });
             });

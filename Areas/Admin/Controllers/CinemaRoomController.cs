@@ -25,6 +25,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
         {
             string[] room = new string[5] { "A", "B", "C", "D", "E" };
             ghe_ngoi ghe = new ghe_ngoi();
+            phongChieu.so_luong_cot = 10;
+            phongChieu.so_luong_day = 5;
             db.phong_chieu.Add(phongChieu);
             db.SaveChanges();
             var id = phongChieu.id;
@@ -101,6 +103,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             else
             {
+                var checkghe = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
+                var pc = db.phong_chieu.Find(id);
+                pc.so_luong_cot = checkghe.Count() + ghe;
+                db.Entry(pc).State = EntityState.Modified;
+                db.SaveChanges();
                 try
                 {
                     for (int i = 0; i < ghe; i++)
@@ -132,10 +139,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
             var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id).ToList();
             var tong = ghn.Count();
             ghe_ngoi ghengoi = new ghe_ngoi();
+            var checkghe = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
+            var checkpc = db.phong_chieu.Find(id);          
             try
             {
                 if (tong < ghe)
                 {
+                    checkpc.so_luong_cot = checkghe.Count() + (ghe - tong);
+                    db.Entry(checkpc).State = EntityState.Modified;
+                    db.SaveChanges();
                     for (int i = tong; i <ghe; i++)
                     {
                         ghengoi.Row = hang;
@@ -147,7 +159,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 }
                 else if(tong > ghe)
                 {
-                    foreach(var item in ghn)
+                    checkpc.so_luong_cot = checkghe.Count() - (tong-ghe);
+                    db.Entry(checkpc).State = EntityState.Modified;
+                    foreach (var item in ghn)
                     {
                         if(item.Col>ghe)
                         {
@@ -171,6 +185,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
         {
             var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id).ToList();
             ghe_ngoi ghengoi = new ghe_ngoi();
+            var checkghe = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
+            var checkpc = db.phong_chieu.Find(id);
             try
             {
                 foreach(var item in ghn)
@@ -179,6 +195,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     db.ghe_ngoi.Remove(seat);
                     db.SaveChanges();
                 }
+                checkpc.so_luong_cot = checkghe.Count() - ghn.Count();
+                db.Entry(checkpc).State = EntityState.Modified;
+                db.SaveChanges();
             }
             catch (Exception)
             {

@@ -1,7 +1,16 @@
-﻿
+﻿@model CinemaBooking.Models.suat_chieu
 @{
     ViewBag.Title = "CheckOut";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
+
+@{
+    var kh = @ViewBag.kh;
+    var time = @ViewBag.time;
+    var ghengoi = @ViewBag.idghengoi;
+    var sl = @ViewBag.soluongh;
 }
 
 <!-- ==========Banner-Section========== -->
@@ -63,46 +72,46 @@
                     <h5 class="title">Share your Contact  Details </h5>
                     <form class="checkout-contact-form">
                         <div class="form-group">
-                            <input type="text" placeholder="Full Name">
+                            <input type="text" placeholder="Tên" value="@kh.ho_ten" readonly>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Enter your Mail">
+                            <input type="text" placeholder="Mail" value="@kh.email" readonly>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Enter your Phone Number ">
+                            <input type="text" placeholder="sdt" readonly value="@kh.sdt">
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Continue" class="custom-button">
                         </div>
                     </form>
                 </div>
-                <div class="checkout-widget checkout-contact">
-                    <h5 class="title">Promo Code </h5>
-                    <form class="checkout-contact-form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Please enter promo code">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Verify" class="custom-button">
-                        </div>
-                    </form>
-                </div>
+                @*<div class="checkout-widget checkout-contact">
+                        <h5 class="title">Promo Code </h5>
+                        <form class="checkout-contact-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="Please enter promo code">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Verify" class="custom-button">
+                            </div>
+                        </form>
+                    </div>*@
                 <div class="checkout-widget checkout-card mb-0">
                     <h5 class="title">Payment Option </h5>
                     <ul class="payment-option">
+                        @*<li class="active">
+                                <a href="#0">
+                                    <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
+                                    <span>Credit Card</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#0">
+                                    <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
+                                    <span>Debit Card</span>
+                                </a>
+                            </li>*@
                         <li class="active">
-                            <a href="#0">
-                                <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
-                                <span>Credit Card</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#0">
-                                <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
-                                <span>Debit Card</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="#0">
                                 <img src="/Frontend/Client/assets/images/payment/paypal.png" alt="payment">
                                 <span>paypal</span>
@@ -151,39 +160,110 @@
                     <h4 class="title">booking summery</h4>
                     <ul>
                         <li>
-                            <h6 class="subtitle">Venus</h6>
+                            <h6 class="subtitle">@Model.phim.ten_phim</h6>
                             <span class="info">English-2d</span>
                         </li>
                         <li>
-                            <h6 class="subtitle"><span>City Walk</span><span>02</span></h6>
-                            <div class="info"><span>10 SEP TUE, 11:00 PM</span> <span>Tickets</span></div>
+                            <h6 class="subtitle"><span>@Model.phong_chieu.ten_phong</span><span>@*02*@</span></h6>
+                            <div class="info"><span>@Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}"), @time.Time</span> <span>Tickets</span></div>
                         </li>
                         <li>
-                            <h6 class="subtitle mb-0"><span>Tickets  Price</span><span>$150</span></h6>
+                            <h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 ₫</span></h6>
                         </li>
                     </ul>
                     <ul class="side-shape">
                         <li>
-                            <h6 class="subtitle"><span>combos</span><span>$57</span></h6>
-                            <span class="info"><span>2 Nachos Combo</span></span>
+                            <h6 class="subtitle"><span>Số lượng</span><span></span></h6>
+                            <span class="info"><span>@sl vé</span></span>
                         </li>
                         <li>
-                            <h6 class="subtitle"><span>food & bevarage</span></h6>
+                            <h6 class="subtitle">
+                                <span>
+                                    @{ var dem = 0;}
+                                    @foreach (var item in ghengoi)
+                                    {
+                                        dem++;
+                                        var phay = ", ";
+                                        var id = Convert.ToInt32(item);
+                                        var seat = db.ghe_ngoi.Find(id);
+                                        if (dem == sl)
+                                        {
+                                            @seat.Row@seat.Col
+                                        }
+                                        else
+                                        {
+                                            @seat.Row@seat.Col@phay
+                                        }
+
+                                    }
+                                </span>
+                            </h6>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span class="info"><span>price</span><span>$207</span></span>
+                            <span class="info"><span>price</span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></span>
                             <span class="info"><span>vat</span><span>$15</span></span>
                         </li>
                     </ul>
                 </div>
                 <div class="proceed-area  text-center">
-                    <h6 class="subtitle"><span>Amount Payable</span><span>$222</span></h6>
-                    <a href="#0" class="custom-button back-button">proceed</a>
+                    <h6 class="subtitle"><span>Amount Payable</span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
+                    <a href="#0" class="custom-button back-button" id="confirm">proceed</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<form style="display: none" action="/Movie/withpay" method="POST" id="hiddenformwithpay">
+    @{ var tinh = 0;
+        }
+    <input type="text" value="@foreach (var item in ghengoi)
+                                    {
+                                        tinh++;
+                                        var ph = ",";
+                                        if (tinh == sl)
+                                        {
+                                            @item
+                                        }
+                                        else
+                                        {
+                                            @item@ph
+                                        }
+
+                                    }" id="idghe" name="idghe" />
+    <input type="text" value="@time.id" id="idtime" name="idtime"/>
+    <input type="text" value="@Model.id" id="idsuatc" name="idsuatc"/>
+</form>
+
+@*<form style="display: none" action="/Movie/CreatePay" method="POST" id="hiddenformCreate">
+    @{ var t = 0;
+    }
+    <input type="text" value="@foreach (var it in ghengoi)
+                                    {
+                                        t++;
+                                        var p = ",";
+                                        if (t == sl)
+                                        {
+                                            @it
+                                        }
+                                        else
+                                        {
+                                            @it@p
+                                        }
+
+                                    }" id="idghee" />
+    <input type="text" value="@time.id" id="idtimee" />
+    <input type="text" value="@Model.id" id="idsuatch" />
+</form>*@
 <!-- ==========Movie-Section========== -->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '#confirm', function () {
+                document.getElementById('hiddenformwithpay').submit();
+                //document.getElementById('hiddenformCreate').submit();
+            });
+        });
+    </script>
+}

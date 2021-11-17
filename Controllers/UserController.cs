@@ -1,6 +1,7 @@
 ﻿using CinemaBooking.Models;
 using Facebook;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
@@ -158,6 +159,33 @@ namespace CinemaBooking.Controllers
             string url = "/ProfileAccount/" + kh.id;
             return RedirectToAction(url);
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            TempData["Message"] = "Đã đăng xuất!";
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult TransHistory(int? id)
+        {
+            var idkh = Convert.ToInt32(Session["MaKH"]);
+            if (idkh != id)
+            {
+                TempData["Warning"] = "Không đúng tài khoản của bạn!";
+                return RedirectToAction("Index", "Home");
+            }
+            var orders = db.orders.Where(n => n.id_khachhang == idkh);
+            List<order_details> list = new List<order_details>();
+            foreach (var item in orders)
+            {
+                var details = db.order_details.Find(item.id);
+                list.Add(details);
+            }
+            ViewBag.details = list;
+
+            return View(orders);
+        }
+
         //Facebook
         private Uri RedirectUri
         {

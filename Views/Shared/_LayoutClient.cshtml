@@ -130,18 +130,50 @@
                     </div>
                 </div>
 
-                <ul class="right-header">
-                    <li class="header-button pr-0">
+
+                <ul class="menu right-header">
+                    <li>
                         @if (Session["TenCus"] != null)
                         {
-                            <a href="@Url.Action("ProfileAccount", "User", new { id = @Convert.ToInt32(Session["MaKH"]) })">Tài Khoản</a>
+                            <i class="fas fa-user"></i>
+                            <a>@Session["TenCus"].ToString()</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="@Url.Action("ProfileAccount", "User", new { id = @Convert.ToInt32(Session["MaKH"]) })">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("ChangePass", "User", new { id = Convert.ToInt32(Session["MaKH"]) })">Đổi mật khẩu</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("TransHistory", "User", new { id = Convert.ToInt32(Session["MaKH"]) })">Lịch sử giao dịch</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Logout", "User")">Đăng xuất</a>
+                                </li>
+                            </ul>
                         }
                         else
                         {
                             <a href="@Url.Action("SignIn", "User")">Đăng nhập</a>
+
                         }
+
+
                     </li>
                 </ul>
+
+                @*<ul class="right-header">
+                        <li class="header-button pr-0">
+                            @if (Session["TenCus"] != null)
+                            {
+                                <a href="@Url.Action("ProfileAccount", "User", new { id = @Convert.ToInt32(Session["MaKH"]) })">Tài Khoản</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("SignIn", "User")">Đăng nhập</a>
+                            }
+                        </li>
+                    </ul>*@
                 <div class="header-bar d-lg-none">
                     <span></span>
                     <span></span>
