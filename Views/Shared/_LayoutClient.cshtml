@@ -286,6 +286,17 @@
     <script type="text/javascript" src="~/Scripts/slick.min.js"></script>
     <script type="text/javascript" src="~/Scripts/asyncloader.min.js"></script>
     <script type="text/javascript" src="~/Scripts/custom.js"></script>
+    <script>
+        $('input[name="theloai"]:checked').onlick(function () {
+            console.log('here')
+    $.ajax({
+      @*url:"@Html.Raw(Url.Action("GetData"))",
+      data: {Name: $(this).val()},
+      success: updatemap*@
+
+    });
+  });
+    </script>
 
 
 

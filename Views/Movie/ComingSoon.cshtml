@@ -16,9 +16,21 @@
                         <div class="check-area">
                             @foreach (var itemtheloai in db.the_loai_phim)
                             {
-                            <div class="form-group">
-                                <input type="checkbox" name="theloai" id="@itemtheloai.id" value="@itemtheloai.id"><label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "ComingSoon", "Movie", new { page = 1, category = @itemtheloai.id }, new { @style = "color:white;" })</label>
-                            </div>
+
+                                <div class="form-group">
+                                    <input type="checkbox" name="theloai" id="@itemtheloai.id" value="@itemtheloai.id">
+                                    @if (ViewBag.category == @itemtheloai.id)
+                                    {
+                                        <label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "ComingSoon", "Movie", new { page = 1}, new { @style = "color:white;" })</label>
+
+                                    }
+                                    else
+                                    {
+                                        <label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "ComingSoon", "Movie", new { page = 1, category = @itemtheloai.id }, new { @style = "color:white;" })</label>
+
+                                    }
+                               
+                                </div>
                             }
 
                         </div>

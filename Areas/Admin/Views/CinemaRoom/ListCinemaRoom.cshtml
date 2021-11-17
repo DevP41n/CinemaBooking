@@ -76,7 +76,7 @@
                                                 @Html.DisplayFor(modelItem => item.ten_phong)
                                             </td>
                                             <td>
-                                                @(@item.so_luong_cot*@item.so_luong_day)
+                                                @item.so_luong_cot
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
@@ -90,7 +90,7 @@
                                                     </a>
                                                 </button>
 
-                                                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
+                                                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Danh sách ghế">
                                                     <a href="@Url.Action("SeatRoom", "CinemaRoom", new { id = item.id })" class="text-white">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
