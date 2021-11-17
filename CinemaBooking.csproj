@@ -61,6 +61,9 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -160,11 +163,13 @@
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Library\MyString.cs" />
+    <Compile Include="Library\PaypalConfiguration.cs" />
     <Compile Include="Models\CinemaBooking.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -271,6 +276,7 @@
     <Content Include="Database\Database-Cinema-Booking.sql" />
     <Content Include="Database\dataCinema.sql" />
     <Content Include="Database\Suat_chieu.txt" />
+    <Content Include="Database\Account Paypal.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Frontend\Client\assets\css\all.min.css" />
@@ -3685,6 +3691,7 @@
     <Folder Include="template\admin\assets\libs\pdfmake\src\" />
     <Folder Include="template\admin\assets\libs\raphael\dev\test\" />
     <Folder Include="template\web\sass\components\Mixins\" />
+    <Folder Include="Views\Payment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

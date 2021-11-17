@@ -150,7 +150,7 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat3.Row@seat3.Col" data-dat="" id="@seat3.Row@seat3.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col">
                                                                     <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat3.Row@seat3.Col">
                                                                     <span class="sit-num">@seat3.Row@seat3.Col</span>
                                                                 </li>
@@ -188,7 +188,7 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat7.Row@seat7.Col" id="@seat7.Row@seat7.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat7.Row@seat7.Col" id="@seat7.Row@seat7.Col" data-idghe="@seat7.id">
                                                                     <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat7.Row@seat7.Col">
                                                                     <span class="sit-num">@seat7.Row@seat7.Col</span>
                                                                 </li>
@@ -225,7 +225,7 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat10.Row@seat10.Col" data-dat="" id="@seat10.Row@seat10.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat10.Row@seat10.Col" data-idghe="@seat10.id" id="@seat10.Row@seat10.Col">
                                                                     <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat10.Row@seat10.Col">
                                                                     <span class="sit-num">@seat10.Row@seat10.Col</span>
                                                                 </li>
@@ -256,8 +256,9 @@
                 <div class="book-item">
                     <span>Ghế đã chọn:</span>
                     <input type="text" style="width:500px" readonly class="title" id="tenghe" />
-
-
+                    <input type="hidden" style="width:500px" readonly class="title" id="idgheinput" />
+                    <input type="hidden" style="width:500px" readonly class="title" id="idtime" value="@ViewBag.idtime"/>
+                    <input type="hidden" style="width:500px" readonly class="title" id="idsc" value="@ViewBag.idsc"/>
                 </div>
                 <div class="book-item">
                     <span>Tổng giá</span>
@@ -265,7 +266,7 @@
                     VNĐ
                 </div>
                 <div class="book-item">
-                    <a href="@Url.Action("CheckOut","Movie")" class="custom-button">Tiếp</a>
+                    <a @*href="@Url.Action("CheckOut","Movie", new { id = @ViewBag.idtime, idtime = @ViewBag.idsc})"*@ class="custom-button" id="checkout">Tiếp</a>
                 </div>
             </div>
         </div>
@@ -280,22 +281,26 @@
         $(document).ready(function () {
             $('body').on('click', '.UnAct', function () {
                 var tenghe = $(this).data('ten');
-                $('#tenghe').val($('#tenghe').val() + tenghe + ",");
+                var idghe = $(this).data('idghe');
+                // them ten ghe
+                $('#tenghe').val($('#tenghe').val() + tenghe + " ");
+                //them id ghe
+                $('#idgheinput').val($('#idgheinput').val() + idghe + ",");
                 var id = "#" + tenghe;
                 var imgid = "." + "ghe-" + tenghe;
                 $(imgid).attr("src", "/Frontend/Client/assets/images/movie/seat01-booked.png");
-
                 var tien = $('#giatien').val();
                 var dongia = "75000";
                 var tongtien = parseInt(tien) + parseInt(dongia);
                 $('#giatien').val(tongtien);
                 $(id).removeClass('UnAct').addClass('Act');
-
             });
 
             $('body').on('click', '.Act', function () {
                 var tenghe = $(this).data('ten');
+                var idghen = $(this).data('idghe');
                 dataval = $('#tenghe').val();
+                dataidghe = $('#idgheinput').val();
                 //var data = dataval.split(',');
                 //var ghedadat;
                 //for (let i = 0; i < data.length; i++) {
@@ -304,13 +309,16 @@
                 //    }
 
                 //}
-                debugger;
+                //debugger;
                 //for (let j = 0; j < length.data; j++) {
                 //    ghedadat += data[j] + ",";
                 //}
-
-                let ghedadat = dataval.replace(tenghe + ",", '');
+                // sửa id ghế
+                let idghedadat = dataidghe.replace(idghen + ",", '');
+                // sửa tên ghế
+                let ghedadat = dataval.replace(tenghe + " ", '');
                 $('#tenghe').val(ghedadat);
+                $('#idgheinput').val(idghedadat);
                 var imgid = "." + "ghe-" + tenghe;
                 $(imgid).attr("src", "/Frontend/Client/assets/images/movie/seat01-free.png");
                 var id = "#" + tenghe;
@@ -321,6 +329,13 @@
                 var dongia = "75000";
                 var tongtien = parseInt(tien) - parseInt(dongia);
                 $('#giatien').val(tongtien);
+            });
+
+            $('body').on('click', '#checkout', function () {
+                var idg = $('#idgheinput').val();
+                var idtime = $('#idtime').val();
+                var idsc = $('#idsc').val();
+                window.location.href = '/Movie/CheckOut/' + idsc + '?idtime=' + idtime + '&idg=' + idg;
             });
         });
 

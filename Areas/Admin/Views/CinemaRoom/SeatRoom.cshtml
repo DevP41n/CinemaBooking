@@ -62,11 +62,11 @@
                                 </div>
 
                                 <div class="col-lg-8">
-                                    <label>Số lượng cột</label>
+                                    <label>Số lượng ghế</label>
                                     <input class="form-control text-box single-line" type="text" id="fname" name="fname" value="@ViewBag.pc.so_luong_cot" readonly>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            @*<div class="form-group row">
                                 <div class="col-lg-2">
                                 </div>
 
@@ -74,7 +74,7 @@
                                     <label>số lượng dãy</label>
                                     <input class="form-control text-box single-line" type="text" id="fname" name="fname" value="@ViewBag.pc.so_luong_day" readonly>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="form-group mb-4">
 
                             </div>
@@ -132,7 +132,7 @@
                             </div>
 
                             <div class="form-group mb-0">
-                                @Html.ActionLink("Back to List", "ListCinema")
+                                @Html.ActionLink("Back to List", "ListCinemaRoom")
                             </div>
                         </div>
 
@@ -266,7 +266,7 @@
                         window.location.reload();
                     }
                     else {
-                        alert('Hàng này đã có rồi!');
+                        toastr.warning('Hàng này đã có rồi!');
                     }
 
                 }

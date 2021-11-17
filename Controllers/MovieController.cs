@@ -65,6 +65,12 @@ namespace CinemaBooking.Controllers
         //Đặt vé
         public ActionResult BookTicket(int? id)
         {
+            if (Session["TenCus"] != null)
+            {
+                TempData["Warning"] = "Vui lòng đăng nhập";
+                return RedirectToAction("SignIn", "User");
+            }
+
             ViewBag.date = db.suat_chieu.Where(n => n.phim_id == id);
 
             return View();
@@ -91,6 +97,11 @@ namespace CinemaBooking.Controllers
         //Chọn ghế
         public ActionResult BookSeat(int id, int idtime)
         {
+            if (Session["TenCus"] != null)
+            {
+                TempData["Warning"] = "Vui lòng đăng nhập";
+                return RedirectToAction("SignIn", "User");
+            }
 
             var idpc = db.suat_chieu.Find(id);
             ViewBag.tenphim = db.phims.Find(idpc.phim_id);
@@ -98,7 +109,8 @@ namespace CinemaBooking.Controllers
             ViewBag.pc = phongChieu;
             var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).ToList();
             ViewBag.ghe = ghengoi;
-
+            ViewBag.idtime = idtime;
+            ViewBag.idsc = id;
             var order = db.orders.Where(n => n.id_phong_chieu == phongChieu.id && n.status == idtime);
             List<int> idghedd = new List<int>();
             foreach (var item in order)
@@ -114,18 +126,71 @@ namespace CinemaBooking.Controllers
             return View(ghengoi);
         }
         //Thanh toán
-        public ActionResult CheckOut()
+        public ActionResult CheckOut(int? id, int? idtime, string idg)
         {
-            return View();
+            if (Session["TenCus"] != null)
+            {
+                TempData["Warning"] = "Vui lòng đăng nhập";
+                return RedirectToAction("SignIn", "User");
+            }
+            var sc = db.suat_chieu.Find(id);            
+            var mkh = Convert.ToInt32(Session["MaKH"]);
+            var kh = db.khach_hang.Find(mkh);
+            ViewBag.time = db.TimeFrames.Find(idtime);
+            ViewBag.kh = kh;
+            List<String> idghe = new List<String>();
+            string[] listid = idg.Split(',');
+            for (int i =0; i < listid.Length;i++)
+            {
+                if (listid[i] != "")
+                {
+                    idghe.Add(listid[i]);
+                }
+            }
+            ViewBag.idghengoi = idghe;
+            ViewBag.soluongh = idghe.Count();
+            return View(sc);
+        }
+
+        [HttpPost]
+        public ActionResult withpay (FormCollection f)
+        {
+            TempData["idghe"] = Request.Form["idghe"];
+            TempData["idsuatc"] = Request.Form["idsuatc"];
+            TempData["idtime"] = Request.Form["idtime"];
+            TempData["idkh"] = int.Parse(Session["MaKH"].ToString());
+            return RedirectToAction("PaymentWithPaypal", "Payment");
         }
 
         [HttpPost]
         public ActionResult AddRate(movie_rate movieRate)
         {
+            //if (Session["TenCus"] != null)
+            //{
+            //    return Json(new { success = false });
+            //}
+            if(Session["MaKH"]!= null)
+            {
 
-            //if (Session["MaKH"] == null)
-            //    return Json(new { result = 0 });
+            }
+            else
+            {
+                return Json(new { success = false });
+            }
             int uID = int.Parse(Session["MaKH"].ToString());
+            var listorder = db.orders.Where(x => x.id_khachhang == uID);
+            int demorder = 0;
+            foreach (var item in listorder)
+            {
+                if (item.id_phim == movieRate.movie_id)
+                {
+                    demorder++;
+                }
+            }
+            if (demorder == 0)
+            {
+                return Json(new { check = true });
+            }
             movieRate.ten_khachhang = Session["TenCus"].ToString();
             movieRate.khachhang_id = uID;
             movieRate.created_at = DateTime.Now;
