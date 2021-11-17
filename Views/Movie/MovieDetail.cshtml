@@ -52,13 +52,16 @@
         <div class="book-wrapper offset-lg-3">
             <div class="left-side" style=" align-items: flex-start; flex-direction: column;">
                 <div class="item">
-                    <i class="fas fa-calendar-alt" style="font-weight: 300; font-size: 21px; color: #7e70cd; "> </i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #00cdff; font-style: italic; "> Khởi chiếu: </a><span> @Html.FormatValue(@Model.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
+                    <i class="fas fa-calendar-alt" style="font-weight: 300; font-size: 21px; color: #7e70cd; "> </i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #f6c6ff; font-style: italic; "> Khởi chiếu: </a>
+                    <span> @Html.FormatValue(@Model.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                 </div>
                 <div class="item">
-                    <i class="far fa-clock" style="font-weight: 600; font-size: 21px; color: #acb3d5; "> </i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #00cdff; font-style: italic; "> Thời lượng: </a><span> @Model.thoi_luong phút</span>
+                    <i class="far fa-clock" style="font-weight: 600; font-size: 21px; color: #acb3d5; "> </i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #f6c6ff; font-style: italic; "> Thời lượng: </a>
+                    <span> @Model.thoi_luong phút</span>
                 </div>
                 <div class="item">
-                    <i class="fa fa-language" style="font-size: 25px; color: #cf84dd; "></i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; font-size: 17px; color: #00cdff; font-style: italic; "> Ngôn ngữ: </a><span> @Model.ngon_ngu</span>
+                    <i class="fa fa-language" style="font-size: 25px; color: #cf84dd; "></i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; font-size: 17px; color: #f6c6ff; font-style: italic; "> Ngôn ngữ: </a>
+                    <span> @Model.ngon_ngu</span>
                 </div>
                 <div class="item"><span class="content-rating-tag" style="cursor: help;" title="@Model.content_rating.mo_ta">@Model.content_rating.ten_rating</span><a style="margin-left:5px"> @Model.content_rating.mo_ta</a></div>
                 @*<div class="item">
@@ -82,7 +85,7 @@
                 else
                 {
             <div class="item">
-                <i class="fa fa-comments" style="font-size: 25px; color: #cf84dd; "></i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #00cdff; font-style: italic; "> 
+                <i class="fa fa-comments" style="font-size: 25px; color: #cf84dd; "></i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #5cd4f1; font-style: italic; "> 
                 Đánh giá của người xem: </a>
                 <div class="item-header">
                     <h5 class="title"><i class="fas fa-star" style="color: #ffc107; font-size: 23px; "></i> @ViewBag.RatesTong /5 </h5>
@@ -105,7 +108,7 @@
             }*@
             @if (Model.loai_phim_chieu == 1)
             {
-                <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id })" class="button-ticket">
+                <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id })" class="button-ticket" style=" margin-right: 20px;">
                     <span class="button-ticket-span">Mua vé</span>
                 </a>
             }
