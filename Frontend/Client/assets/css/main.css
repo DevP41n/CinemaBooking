@@ -9780,5 +9780,71 @@ aside {
         top: 26%;
     }
 }
+.button-ticket {
+    background: #b42929;
+    height: 48px;
+    position: relative;
+    width: 108px;
+}
+    .button-ticket:before {
+        background: #42121c;
+        border-radius: 50%;
+        box-shadow: 111px 0 0 0 #47121b, 0px 63px 0 0 #3d121e, 110px 63px 0 0 #47121b, 0 20px 0 -12px #3d121e, 0 31px 0 -12px #3d121e, 0 42px 0 -12px #3d121e, 109px 20px 0 -12px #47111b, 109px 31px 0 -12px #47121b, 109px 42px 0 -12px #47121b;
+        content: "";
+        display: block;
+        height: 29px;
+        left: -17px;
+        position: absolute;
+        top: -22px;
+        width: 33px;
+    }
+    .button-ticket .button-ticket-span {
+        border-radius: 20px;
+        border: 3px solid #aaa;
+        color: #fff;
+        display: inline-block;
+        font-size: 15px;
+        width: fit-content;
+        left: 50%;
+        line-height: 1.5;
+        padding: 3px 12px;
+        position: absolute;
+        font-weight: 600;
+        text-transform: uppercase;
+        top: 50%;
+        -webkit-transform: translateY(-50%) translateX(-50%);
+        -moz-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+    }
+        .button-ticket:hover{
+            transform:scale(1.1);
+        }
+
+        .button-ticket .button-ticket-span:before,
+        .button-ticket .button-ticket-span:after {
+            background: #333;
+            color: #aaa;
+            display: inline-block;
+            font-size: 16px;
+            left: 50%;
+            padding: 0 10px;
+            position: absolute;
+        }
+
+        .button-ticket .button-ticket-span:before {
+            content: "";
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            top: 0;
+        }
+
+        .button-ticket .button-ticket-span:after {
+            bottom: 0;
+            content: "";
+            -webkit-transform: translateX(-50%) translateY(50%);
+            -moz-transform: translateX(-50%) translateY(50%);
+            transform: translateX(-50%) translateY(50%);
+        }
 
 /*# sourceMappingURL=main.css.map */

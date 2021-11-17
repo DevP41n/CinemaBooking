@@ -457,6 +457,9 @@ add mo_ta nvarchar(100) null;
 alter table dbo.phim
 add ngon_ngu nvarchar(Max) null;
 
+alter table dbo.phim
+add theloaichinh int null;
+
 
 ----------Fix
 alter table suat_chieu
