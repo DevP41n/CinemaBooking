@@ -5,7 +5,6 @@ using PayPal.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Controllers
@@ -47,11 +46,11 @@ namespace CinemaBooking.Controllers
             double count = idghengoi.Count();
             string ghe = "Vé ";
             var dem = 0;
-            foreach(var j in idghengoi)
+            foreach (var j in idghengoi)
             {
                 dem++;
                 var tengh = db.ghe_ngoi.Find(Convert.ToInt32(j));
-                if(dem == count)
+                if (dem == count)
                 {
                     ghe += tengh.Row + tengh.Col;
                 }
@@ -60,14 +59,16 @@ namespace CinemaBooking.Controllers
                     ghe += tengh.Row + tengh.Col + ", ";
                 }
             }
-        
+
             double tygia = 23300;
-            double thanhtien = Math.Round((75000*count) / tygia, 2);
+            double thanhtien = Math.Round((75000 * count) / tygia, 2);
+            string tien = thanhtien.ToString().Replace(",", ".");
+
             ItemLIst.items.Add(new PayPal.Api.Item()
             {
-                name = ghe + " "  + sc.phim.ten_phim + " " + time.Time,
+                name = ghe + " " + sc.phim.ten_phim + " " + time.Time,
                 currency = "USD",
-                price = thanhtien.ToString(),
+                price = tien,
                 quantity = "1",
                 sku = "sku"
             });
@@ -87,13 +88,13 @@ namespace CinemaBooking.Controllers
             {
                 tax = "0",
                 shipping = "0",
-                subtotal = thanhtien.ToString()
+                subtotal = tien
             };
             //Final amount with details  
             var amount = new Amount()
             {
                 currency = "USD",
-                total = thanhtien.ToString(), // Total must be equal to sum of tax, shipping and subtotal.  
+                total = tien, // Total must be equal to sum of tax, shipping and subtotal.  
                 details = details
             };
             var transactionList = new List<Transaction>();
@@ -134,18 +135,18 @@ namespace CinemaBooking.Controllers
                 }
             }
             int dem = 0;
-            foreach(var item in idghengoi)
+            foreach (var item in idghengoi)
             {
-                foreach(var i in checkorder)
+                foreach (var i in checkorder)
                 {
                     var checkdetails = db.order_details.Where(x => x.id_ghe == item && x.id_orders == i.id);
-                    if(checkdetails.Count() != 0)
+                    if (checkdetails.Count() != 0)
                     {
                         dem++;
                     }
                 }
             }
-            if(dem>0)
+            if (dem > 0)
             {
                 TempData["Error"] = "Ghế đã có người vừa đặt, Vui lòng chọn ghế khác!";
                 return RedirectToAction("Index", "Home");
@@ -195,7 +196,7 @@ namespace CinemaBooking.Controllers
 
                 }
             }
-            catch (PayPalException)
+            catch (PayPalException ex)
             {
                 TempData["Error"] = "Lỗi thanh toán!";
                 return RedirectToAction("Index", "Home");
@@ -221,7 +222,7 @@ namespace CinemaBooking.Controllers
             //add order details
             int idorder = addorder.id;
             order_details addorderdetails = new order_details();
-            foreach(var gheid in idghengoi)
+            foreach (var gheid in idghengoi)
             {
                 addorderdetails.id_ghe = gheid;
                 addorderdetails.id_orders = idorder;
