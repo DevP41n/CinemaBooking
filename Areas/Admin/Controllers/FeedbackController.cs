@@ -74,7 +74,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
             return RedirectToAction("Listfeedback");
 
         }
+        public ActionResult Undo(int id)
+        {
+            lien_he fb = db.lien_he.Find(id);
+            fb.status = 1;
+            db.Entry(fb).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Listfeedback");
 
+        }
         public ActionResult DeleteConfirm(int id)
         {
             lien_he fb = db.lien_he.Find(id);

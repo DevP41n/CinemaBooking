@@ -16,14 +16,14 @@
                     <div class="page-title-box">
                         <h4 class="font-size-18">Email Read</h4>
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Veltrix</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
-                            <li class="breadcrumb-item active">Email Read</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Phản hồi</a></li>
+                            <li class="breadcrumb-item active">Chi tiết</li>
                         </ol>
                     </div>
                 </div>
 
-                <div class="col-sm-6">
+               @* <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
             <!-- end page title -->
 
@@ -70,8 +70,8 @@
                             <div class="card-body">
 
                                 <div class="media mb-4">
-                                    <img class="d-flex mr-3 rounded-circle avatar-sm" src="/template/admin/assets/images/users/user-1.jpg" alt="Generic placeholder image">
-                                    <div class="media-body">
+                                    @* <img class="d-flex mr-3 rounded-circle avatar-sm" src="/template/admin/assets/images/users/user-1.jpg" alt="Generic placeholder image">
+                                    *@ <div class="media-body">
                                         <h4 class="font-size-15 m-0">@Model.ho_ten</h4>
                                         <small class="text-muted">@Model.email</small>
                                     </div>
@@ -103,7 +103,7 @@
                                         </div>
                                         <hr />
                                     }
-                                    <a href="@Url.Action("ListFeedback","Feedback")" class="btn btn-info waves-effect waves-light mr-1"><i class="fas fa-undo-alt"></i></a>
+                                    <a href="@Url.Action("Undo","Feedback",new{id = Model.id})" class="btn btn-info waves-effect waves-light mr-1"><i class="fas fa-undo-alt"></i></a>
                                     <a href="@Url.Action("DeleteConfirm","Feedback", new{id = Model.id})" class="btn btn-danger waves-effect waves-light mr-1"><i class="far fa-trash-alt"></i></a>
                                 }
                             </div>

@@ -14,16 +14,16 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Form Elements</h4>
+                        <h4 class="font-size-18">Data Table</h4>
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Veltrix</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                            <li class="breadcrumb-item active">Form Elements</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Phim</a></li>
+                            <li class="breadcrumb-item active">Thể loại</li>
                         </ol>
                     </div>
                 </div>
 
-                <div class="col-sm-6">
+               @* <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
             <!-- end page title -->
 
@@ -50,15 +50,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-
-                                <h4 class="card-title">Textual inputs</h4>
-                                <p class="card-title-desc">
-                                    Here are examples of <code class="highlighter-rouge">.form-control</code> applied to each
-                                    textual HTML5 <code class="highlighter-rouge">&lt;input&gt;</code> <code class="highlighter-rouge">type</code>.
-                                </p>
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group row row">
-                                    @Html.LabelFor(model => model.ten_the_loai, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.LabelFor(model => model.ten_the_loai,"Tên thể loại", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-sm-10">
                                         @Html.EditorFor(model => model.ten_the_loai, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.ten_the_loai, "", new { @class = "text-danger" })
@@ -78,7 +72,7 @@
                                 </div>
 
                                 <div class="form-group mb-0">
-                                    @Html.ActionLink("Back to List", "ListCate")
+                                    @Html.ActionLink("Trở về", "ListCate")
                                 </div>
                             </div>
 
