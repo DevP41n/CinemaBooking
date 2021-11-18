@@ -196,7 +196,7 @@ namespace CinemaBooking.Controllers
 
                 }
             }
-            catch (PayPalException ex)
+            catch (PayPalException)
             {
                 TempData["Error"] = "Lỗi thanh toán!";
                 return RedirectToAction("Index", "Home");
