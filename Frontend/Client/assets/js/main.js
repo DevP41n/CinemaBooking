@@ -83,16 +83,16 @@
     //Menu Dropdown Icon Adding
       $("ul>li>.submenu").parent("li").addClass("menu-item-has-children");
     // drop down menu width overflow problem fix
-    $('ul').parent('li').hover(function () {
+    /*$('ul').parent('li').hover(function () {
       var menu = $(this).find("ul");
       var menupos = $(menu).offset();
       if (menupos.left + menu.width() > $(window).width()) {
-        var newpos = -$(menu).width();
+        var newpos = $(menu).width();
         menu.css({
           left: newpos
         });
       }
-    });
+    });*/
 /*      $('.menu li a').click(function () {
           //Removes the active class from any <li> elements
           $('a.active').removeClass('active');

@@ -35,9 +35,9 @@ namespace CinemaBooking.Controllers
             });
             return Content(value);
         }
-        [HttpPost]
         public ActionResult Search(string name)
         {
+            ViewBag.tukhoa = name;
             return View(db.phims.Where(p => p.ten_phim.Contains(name)).OrderByDescending(x => x.ten_phim));
         }
     }
