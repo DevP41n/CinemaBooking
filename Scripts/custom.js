@@ -10,7 +10,7 @@
 
                 $('.tt-dataset').remove();
                 var data = JSON.parse(response);
-                data = data.slice(0, 6);
+                data = data.slice(0, 7);
                 if (searchField != "") {
                     var html_body = ` <div class="tt-dataset tt-dataset-states"></div>`
                 } $('.tt-menu').append(html_body);
@@ -132,7 +132,6 @@ $(document).ready(function () {
         });
 
 });
-//rating trong detail
 $(document).ready(function () {
     $(".counter-item").show(function () {
       var apikey = "ab687516"
@@ -150,9 +149,6 @@ $(document).ready(function () {
 }); 
 (function (jQuery) {
     "use strict";
-    /*==============================================
-    Register Venoor Js Dependancies
-    ===============================================*/
     var registerDependencies = function () {
         var PluginJsConfig = {
             "js_dependencies": {

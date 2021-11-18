@@ -9,7 +9,7 @@
 <section class="movie-section padding-top padding-bottom">
     <div class="container">
         <div class="col-lg-12 mb-50 mb-lg-0">
-            <div class="filter-area tt-menu-actor tt-open-actor" style=" left: 0px; z-index: 100; width: 100%; display: block; background-color: #ffffff00; border-radius: 10px;">
+            <div class="filter-area tt-menu-actor tt-open-actor" style="left: 0px; z-index: 100; width: 100%; display: block; background-color: #ffffff00; border-radius: 10px; border: 1px solid rgb(244 210 198 / 57%); ">
                 <input id="SearchActor" name="nameActor" class="autosuggest" type="text" placeholder="Tìm kiếm diễn viên..." autocomplete="off" >
             </div>
             <div class="filter-tab tab">
@@ -22,7 +22,7 @@
                                     <div class="speaker-item">
                                         <div class="speaker-thumb">
                                             <a href="@Url.Action("ActorDetail","Information", new { id=item.slug })">
-                                                <img src="~/images/information/@item.anh" alt="speaker" style="height: 300px; width: fit-content;">
+                                                <img src="~/images/information/@item.anh" alt="speaker" style="height: 300px; width: fit-content; border-radius: 17px;">
                                             </a>
                                         </div>
                                         <div class="speaker-content">
@@ -50,6 +50,7 @@
 <script type="text/javascript">
     function codeAddress() {
         $('.menu li a.informationac').addClass('active');
+        document.getElementById("taskbar-info").innerHTML = "Diễn viên";
     }
     window.onload = codeAddress;
 </script>

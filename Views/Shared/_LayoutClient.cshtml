@@ -60,7 +60,7 @@
                         <a href="/" class="homepageac">Trang chủ</a>
                     </li>
                     <li>
-                        <a id="nowshowing" href="#0" class="movieac">Phim</a>
+                        <a id="taskbar-movie" href="#0" class="movieac">Phim</a>
                         <ul class="submenu">
                             <li>
                                 <a href="@Url.Action("NowShowing", "Movie")">Đang chiếu</a>
@@ -82,7 +82,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#0" class="informationac">Thông tin</a>
+                        <a id="taskbar-info" href="#0" class="informationac">Thông tin</a>
                         <ul class="submenu">
                             <li>
                                 <a href="@Url.Action("Actor", "Information")">Diễn viên</a>
@@ -280,23 +280,9 @@
     <!--custom-->
     <script type="text/javascript" src="~/Scripts/jquery.counterup.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.magnific-popup.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.waypoints.min.js"></script>
     <script type="text/javascript" src="~/Scripts/popper.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/swiper-bundle.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/slick.min.js"></script>
     <script type="text/javascript" src="~/Scripts/asyncloader.min.js"></script>
     <script type="text/javascript" src="~/Scripts/custom.js"></script>
-    <script>
-        $('input[name="theloai"]:checked').onlick(function () {
-            console.log('here')
-    $.ajax({
-      @*url:"@Html.Raw(Url.Action("GetData"))",
-      data: {Name: $(this).val()},
-      success: updatemap*@
-
-    });
-  });
-    </script>
 
 
 
