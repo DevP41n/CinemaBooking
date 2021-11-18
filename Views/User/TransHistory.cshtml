@@ -1,0 +1,229 @@
+﻿@model IEnumerable<CinemaBooking.Models.order>
+
+@{
+    ViewBag.Title = "TransHistory";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();
+    var id = Convert.ToInt32(Session["MaKH"].ToString());
+}
+<!-- ==========Banner-Section========== -->
+<section class="main-page-header speaker-banner bg_img" data-background="./assets/images/banner/banner07.jpg" style="padding: 130px 0 10px;">
+    <div class="container">
+        <div class="speaker-banner-content">
+            <h2 class="title">ĐỔI MẬT KHẨU</h2>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/Home/Index">
+                        Trang chủ
+                    </a>
+                </li>
+                <li>
+                    Đổi mật khẩu
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Contact-Section========== -->
+<section class="contact-section padding-top" style="padding-top:50px;">
+    <div class="contact-container">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-7 col-lg-6 col-xl-12">
+                    <section class="movie-details-section padding-bottom">
+                        <div class="container">
+                            <div class="row justify-content-center flex-wrap-reverse mb--50">
+                                <div class="col-lg-0 col-sm-10 col-md-6 mb-50">
+                                    <div class="widget-1 widget-tags">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 mb-50">
+                                    <div class="movie-details">
+                                        <div class="tab summery-review">
+                                            <ul class="tab-menu">
+                                                <li class="active">
+                                                    Quản lý tài khoản
+                                                </li>
+                                                <li>
+                                                    Lịch sử giao dịch
+                                                </li>
+                                            </ul>
+                                            <div class="tab-area">
+                                                <div class="tab-item active">
+                                                    <div class="item">
+                                                        <div class="col-lg-12">
+                                                            @{var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();}
+
+                                                            <form class="contact-form" id="info" style="float:left; width:500px" action="/User/ProfileAccount/" method="post">
+                                                                <span class="title">Thông tin tài khoản<br /><br /></span>
+                                                                @Html.AntiForgeryToken()
+                                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                                                <input type="hidden" id="id" name="id" value="@kh.id">
+                                                                <input type="hidden" id="password" name="password" value="@kh.password">
+                                                                <input type="hidden" id="confirmpassword" name="confirmpassword" value="@kh.confirmpassword">
+                                                                <div class="form-group">
+                                                                    <label for="name">Tài khoản <span>*</span></label>
+                                                                    <input type="text" id="username" name="username" value="@kh.username" style="background:#0a1e5e;" readonly>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="email">Họ Tên <span></span></label>
+                                                                    <input type="text" id="ho_ten" name="ho_ten" value="@kh.ho_ten" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="email">Email <span></span></label>
+                                                                    <input type="email" id="email" name="email" value="@kh.email" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="email">Số điện thoại <span></span></label>
+                                                                    <input type="text" id="sđt" name="sdt" value="@kh.sdt" required>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="email">Địa chỉ <span></span></label>
+                                                                    <input type="text" id="dia_chi" name="dia_chi" value="@kh.dia_chi" autocomplete="off" required>
+                                                                </div>
+                                                                <div class="form-group" id="saveinfo">
+                                                                    <input type="submit" value="Lưu thông tin">
+                                                                </div>
+                                                            </form>
+
+                                                            <form class="contact-form" id="password" style="float:right" action="/User/ChangePass/" method="post">
+                                                                @Html.AntiForgeryToken()
+                                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                                <span class="title" style="font:bold">ĐỔI MẬT KHẨU<br /><br /></span>
+                                                                <input type="hidden" id="id" name="id" value="@kh.id">
+                                                                <input type="hidden" id="email" name="email" value="@kh.email">
+                                                                <input type="hidden" id="ho_ten" name="ho_ten" value="@kh.ho_ten">
+                                                                <input type="hidden" id="dia_chi" name="dia_chi" value="@kh.dia_chi">
+                                                                <input type="hidden" id="ngay_sinh" name="ngay_sinh" value="@kh.ngay_sinh">
+                                                                <input type="hidden" id="username" name="username" value="@kh.username">
+                                                                <input type="hidden" id="sdt" name="sdt" value="@kh.sdt">
+                                                                <input type="hidden" id="password" name="password" value="@kh.password">
+                                                                <input type="hidden" id="cmnd" name="cmnd" value="@kh.cmnd">
+                                                                <div class="form-group">
+                                                                    <label for="name">Mật khẩu cũ <span>*</span></label>
+                                                                    <input type="password" id="mkcu" name="mkcu">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="name">Mật khẩu mới <span>*</span></label>
+                                                                    <input type="password" id="mkmoi" name="mkmoi">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="name">Xác nhận mật khẩu mới <span>*</span></label>
+                                                                    <input type="password" id="xnmk" name="xnmk">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <input type="submit" id="savepassword" value="Lưu mật khẩu">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-item">
+                                                    <style>
+                                                        table {
+                                                            font-family: arial, sans-serif;
+                                                            border-collapse: collapse;
+                                                            width: 100%;
+                                                        }
+
+                                                        td, th {
+                                                            text-align: left;
+                                                            border: 0.5px solid #12387e;
+                                                            padding: 8px;
+                                                        }
+                                                    </style>
+                                                    <div class="checkout-widget checkout-contact" style="padding-bottom:60px">
+                                                        <span style="float:left; font-weight:bold; font-size:30px">LỊCH SỬ GIAO DỊCH</span>
+                                                        <h5 class="title"> </h5>
+                                                        <table>
+                                                            <tr>
+                                                                <th>Ngày mua</th>
+                                                                <th>Phim</th>
+                                                                <th>Số lượng vé</th>
+                                                                <th>Phòng chiếu</th>
+                                                                <th>Suất chiếu</th>
+                                                                <th>Tiền đã thanh toán</th>
+                                                            </tr>
+                                                            <caption class="title"></caption>
+                                                            @{ double tongtien = 0;}
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.ngay_mua</td>
+                                                                    <td>@item.phim.ten_phim</td>
+                                                                    <td>
+                                                                        @item.so_luong_ve vé:
+                                                                        @{var ghe = db.order_details.Where(n => n.id_orders == item.id).ToList();
+                                                                            var count = ghe.Count;
+                                                                            var dem = 1;
+                                                                            string dau = ", ";}
+                                                                        @foreach (var idghe in ghe)
+                                                                        {
+                                                                            var tenghe = db.ghe_ngoi.Find(idghe.id_ghe);
+
+                                                                            if (dem == count)
+                                                                            {
+                                                                                @tenghe.Row@tenghe.Col
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @tenghe.Row@tenghe.Col@dau
+                                                                            }
+                                                                            dem++;
+                                                                        }
+                                                                    </td>
+                                                                    <td>@item.phong_chieu.ten_phong</td>
+                                                                    @{ var time = db.TimeFrames.Find(item.status); }
+                                                                    <td>@time.Time</td>
+                                                                    <td>
+                                                                        @Html.Raw(String.Format("{0:0,0} VNĐ", item.tong_tien))
+                                                                    </td>
+                                                                    @{tongtien = tongtien + (Double)item.tong_tien;}
+                                                                </tr>
+                                                            }
+                                                        </table>
+
+                                                        <span style="float:right; font-weight:bold; font-size:20px">Tổng tiền: @Html.Raw(String.Format("{0:0,0} VNĐ", tongtien))</span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '#saveinfo', function () {
+                document.getElementById('info').submit();
+                //document.getElementById('hiddenformCreate').submit();
+            });
+        });
+        $(document).ready(function () {
+            $('body').on('click', '#savepassword', function () {
+                document.getElementById('password').submit();
+                //document.getElementById('hiddenformCreate').submit();
+            });
+        });
+    </script>
+}

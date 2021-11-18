@@ -1,7 +1,6 @@
 ﻿using CinemaBooking.Models;
 using Facebook;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
@@ -98,17 +97,17 @@ namespace CinemaBooking.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult ProfileAccount(int? id)
-        {
-            var mak = Convert.ToInt32(Session["MaKH"]);
-            if (mak != id)
-            {
-                TempData["Warning"] = "Không đúng tài khoản của bạn!";
-                return RedirectToAction("Index", "Home");
-            }
-            var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();
-            return View(kh);
-        }
+        //public ActionResult ProfileAccount(int? id)
+        //{
+        //    var mak = Convert.ToInt32(Session["MaKH"]);
+        //    if (mak != id)
+        //    {
+        //        TempData["Warning"] = "Không đúng tài khoản của bạn!";
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();
+        //    return View(kh);
+        //}
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult ProfileAccount(khach_hang kh)
@@ -117,20 +116,20 @@ namespace CinemaBooking.Controllers
             db.Entry(kh).State = EntityState.Modified;
             db.SaveChanges();
             TempData["Message"] = "Cập nhật thành công!";
-            string url = "/ProfileAccount/" + kh.id;
+            string url = "/TransHistory/" + kh.id;
             return RedirectToAction(url);
         }
-        public ActionResult ChangePass(int? id)
-        {
-            var mak = Convert.ToInt32(Session["MaKH"]);
-            if (mak != id)
-            {
-                TempData["Warning"] = "Không đúng tài khoản của bạn!";
-                return RedirectToAction("Index", "Home");
-            }
-            var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();
-            return View(kh);
-        }
+        //public ActionResult ChangePass(int? id)
+        //{
+        //    var mak = Convert.ToInt32(Session["MaKH"]);
+        //    if (mak != id)
+        //    {
+        //        TempData["Warning"] = "Không đúng tài khoản của bạn!";
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();
+        //    return View(kh);
+        //}
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult ChangePass(khach_hang kh, FormCollection f)
@@ -140,13 +139,13 @@ namespace CinemaBooking.Controllers
             if (kh.password != mkcuu)
             {
                 TempData["Warning"] = "Sai mật khẩu cũ!";
-                string urla = "/ChangePass/" + kh.id;
+                string urla = "/TransHistory/" + kh.id;
                 return RedirectToAction(urla);
             }
             if (Request.Form["mkmoi"] != Request.Form["xnmk"])
             {
                 TempData["Warning"] = "Mật khẩu không khớp!";
-                string urlaz = "/ChangePass/" + kh.id;
+                string urlaz = "/TransHistory/" + kh.id;
                 return RedirectToAction(urlaz);
             }
             var matkhau = Request.Form["mkmoi"];
@@ -156,7 +155,7 @@ namespace CinemaBooking.Controllers
             db.Entry(kh).State = EntityState.Modified;
             db.SaveChanges();
             TempData["Message"] = "Đổi mật khẩu thành công!";
-            string url = "/ProfileAccount/" + kh.id;
+            string url = "/TransHistory/" + kh.id;
             return RedirectToAction(url);
         }
         public ActionResult Logout()
@@ -174,15 +173,7 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Không đúng tài khoản của bạn!";
                 return RedirectToAction("Index", "Home");
             }
-            var orders = db.orders.Where(n => n.id_khachhang == idkh);
-            List<order_details> list = new List<order_details>();
-            foreach (var item in orders)
-            {
-                var details = db.order_details.Find(item.id);
-                list.Add(details);
-            }
-            ViewBag.details = list;
-
+            var orders = db.orders.Where(n => n.id_khachhang == idkh).ToList();
             return View(orders);
         }
 

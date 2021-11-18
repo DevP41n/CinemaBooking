@@ -3617,9 +3617,8 @@
     <Content Include="template\login\webfonts\fa-solid-900.woff" />
     <Content Include="template\login\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
-    <Content Include="Views\User\ProfileAccount.cshtml" />
-    <Content Include="Views\User\ChangePass.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\User\TransHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
