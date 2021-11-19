@@ -15,18 +15,18 @@
 
 <!-- ==========Banner-Section========== -->
 @*<section class="details-banner hero-area bg_img seat-plan-banner" data-background="/Frontend/Client/assets/images/banner/banner04.jpg">
-    <div class="container">
-        <div class="details-banner-wrapper">
-            <div class="details-banner-content style-two">
-                <h3 class="title">Venus</h3>
-                <div class="tags">
-                    <a href="#0">City Walk</a>
-                    <a href="#0">English - 2D</a>
+        <div class="container">
+            <div class="details-banner-wrapper">
+                <div class="details-banner-content style-two">
+                    <h3 class="title">Venus</h3>
+                    <div class="tags">
+                        <a href="#0">City Walk</a>
+                        <a href="#0">English - 2D</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>*@
+    </section>*@
 <!-- ==========Banner-Section========== -->
 <!-- ==========Page-Title========== -->
 <section class="page-title bg-one" style="margin-top:60px">
@@ -35,19 +35,19 @@
             <div class="item md-order-1">
                 <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" value="Trở về">
             </div>
-           @* <div class="item date-item">
-                <span class="date">MON, SEP 09 2020</span>
-                <select class="select-bar">
-                    <option value="sc1">09:40</option>
-                    <option value="sc2">13:45</option>
-                    <option value="sc3">15:45</option>
-                    <option value="sc4">19:50</option>
-                </select>
-            </div>
-            <div class="item">
-                <h5 class="title">05:00</h5>
-                <p>Mins Left</p>
-            </div>*@
+            @* <div class="item date-item">
+                    <span class="date">MON, SEP 09 2020</span>
+                    <select class="select-bar">
+                        <option value="sc1">09:40</option>
+                        <option value="sc2">13:45</option>
+                        <option value="sc3">15:45</option>
+                        <option value="sc4">19:50</option>
+                    </select>
+                </div>
+                <div class="item">
+                    <h5 class="title">05:00</h5>
+                    <p>Mins Left</p>
+                </div>*@
         </div>
     </div>
 </section>
@@ -57,15 +57,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                @*<div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
+                <!--<div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
                     <div class="title-area">
                         <h5 class="title">Already a Boleto  Member?</h5>
                         <p>Sign in to earn points and make booking easier!</p>
                     </div>
-                    @*<a href="#0" class="sign-in-area">
-                        <i class="fas fa-user"></i><span>Sign in</span>
-                    </a>*@
-                </div>
+                    <a href="#0" class="sign-in-area">-->
+                @*<i class="fas fa-user"></i><span>Sign in</span>*@
+                <!--</a>
+                </div>-->
                 <div class="checkout-widget checkout-contact">
                     <h5 class="title">Thông tin tài khoản thanh toán</h5>
                     <form class="checkout-contact-form">
@@ -78,9 +78,9 @@
                         <div class="form-group">
                             <input type="text" placeholder="sdt" readonly value="@kh.sdt">
                         </div>
-@*                        <div class="form-group">
-                            <input type="submit" value="Continue" class="custom-button">
-                        </div>*@
+                        @*                        <div class="form-group">
+                                <input type="submit" value="Continue" class="custom-button">
+                            </div>*@
                     </form>
                 </div>
                 @*<div class="checkout-widget checkout-contact">
@@ -94,22 +94,22 @@
                             </div>
                         </form>
                     </div>*@
-                
+
                 <div class="checkout-widget checkout-card mb-0">
                     <h5 class="title">Phương thức thanh toán</h5>
                     <ul class="payment-option">
                         @*<li class="active">
-                                <a href="#0">
-                                    <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
-                                    <span>Credit Card</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#0">
-                                    <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
-                                    <span>Debit Card</span>
-                                </a>
-                            </li>*@
+                            <a href="#0">
+                                <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
+                                <span>Credit Card</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#0">
+                                <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
+                                <span>Debit Card</span>
+                            </a>
+                        </li>*@
                         <li class="active">
                             <a href="#0">
                                 <img src="/Frontend/Client/assets/images/payment/paypal.png" alt="payment">
@@ -148,10 +148,10 @@
                         <div class="form-group">
                             <input type="submit" class="custom-button" value="make payment">
                         </div>
-                    </form>
+                    </form>*@
                     <p class="notice">
                         By Clicking "Make Payment" you agree to the <a href="#0">terms and conditions</a>
-                    </p>*@
+                    </p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -179,7 +179,7 @@
                         <li>
                             <h6 class="subtitle">
                                 <span>
-                                    Vị trí: 
+                                    Vị trí:
                                     @{ var dem = 0;}
                                     @foreach (var item in ghengoi)
                                     {
@@ -218,7 +218,7 @@
 </div>
 <form style="display: none" action="/Movie/withpay" method="POST" id="hiddenformwithpay">
     @{ var tinh = 0;
-        }
+    }
     <input type="text" value="@foreach (var item in ghengoi)
                                     {
                                         tinh++;
@@ -233,30 +233,30 @@
                                         }
 
                                     }" id="idghe" name="idghe" />
-    <input type="text" value="@time.id" id="idtime" name="idtime"/>
-    <input type="text" value="@Model.id" id="idsuatc" name="idsuatc"/>
+    <input type="text" value="@time.id" id="idtime" name="idtime" />
+    <input type="text" value="@Model.id" id="idsuatc" name="idsuatc" />
 </form>
 
 @*<form style="display: none" action="/Movie/CreatePay" method="POST" id="hiddenformCreate">
-    @{ var t = 0;
-    }
-    <input type="text" value="@foreach (var it in ghengoi)
-                                    {
-                                        t++;
-                                        var p = ",";
-                                        if (t == sl)
+        @{ var t = 0;
+        }
+        <input type="text" value="@foreach (var it in ghengoi)
                                         {
-                                            @it
-                                        }
-                                        else
-                                        {
-                                            @it@p
-                                        }
+                                            t++;
+                                            var p = ",";
+                                            if (t == sl)
+                                            {
+                                                @it
+                                            }
+                                            else
+                                            {
+                                                @it@p
+                                            }
 
-                                    }" id="idghee" />
-    <input type="text" value="@time.id" id="idtimee" />
-    <input type="text" value="@Model.id" id="idsuatch" />
-</form>*@
+                                        }" id="idghee" />
+        <input type="text" value="@time.id" id="idtimee" />
+        <input type="text" value="@Model.id" id="idsuatch" />
+    </form>*@
 <!-- ==========Movie-Section========== -->
 @section Scripts{
     <script>
