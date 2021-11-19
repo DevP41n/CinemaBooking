@@ -14,7 +14,7 @@
 }
 
 <!-- ==========Banner-Section========== -->
-<section class="details-banner hero-area bg_img seat-plan-banner" data-background="/Frontend/Client/assets/images/banner/banner04.jpg">
+@*<section class="details-banner hero-area bg_img seat-plan-banner" data-background="/Frontend/Client/assets/images/banner/banner04.jpg">
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two">
@@ -26,18 +26,16 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- ==========Banner-Section========== -->
 <!-- ==========Page-Title========== -->
-<section class="page-title bg-one">
+<section class="page-title bg-one" style="margin-top:60px">
     <div class="container">
         <div class="page-title-area">
             <div class="item md-order-1">
-                <a href="movie-ticket-plan.html" class="custom-button back-button">
-                    <i class="flaticon-double-right-arrows-angles"></i>Trở về
-                </a>
+                <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" value="Trở về">
             </div>
-            <div class="item date-item">
+           @* <div class="item date-item">
                 <span class="date">MON, SEP 09 2020</span>
                 <select class="select-bar">
                     <option value="sc1">09:40</option>
@@ -49,7 +47,7 @@
             <div class="item">
                 <h5 class="title">05:00</h5>
                 <p>Mins Left</p>
-            </div>
+            </div>*@
         </div>
     </div>
 </section>
@@ -59,7 +57,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
+                @*<div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
                     <div class="title-area">
                         <h5 class="title">Already a Boleto  Member?</h5>
                         <p>Sign in to earn points and make booking easier!</p>
@@ -69,7 +67,7 @@
                     </a>*@
                 </div>
                 <div class="checkout-widget checkout-contact">
-                    <h5 class="title">Share your Contact  Details </h5>
+                    <h5 class="title">Thông tin tài khoản thanh toán</h5>
                     <form class="checkout-contact-form">
                         <div class="form-group">
                             <input type="text" placeholder="Tên" value="@kh.ho_ten" readonly>
@@ -80,9 +78,9 @@
                         <div class="form-group">
                             <input type="text" placeholder="sdt" readonly value="@kh.sdt">
                         </div>
-                        <div class="form-group">
+@*                        <div class="form-group">
                             <input type="submit" value="Continue" class="custom-button">
-                        </div>
+                        </div>*@
                     </form>
                 </div>
                 @*<div class="checkout-widget checkout-contact">
@@ -96,8 +94,9 @@
                             </div>
                         </form>
                     </div>*@
+                
                 <div class="checkout-widget checkout-card mb-0">
-                    <h5 class="title">Payment Option </h5>
+                    <h5 class="title">Phương thức thanh toán</h5>
                     <ul class="payment-option">
                         @*<li class="active">
                                 <a href="#0">
@@ -157,15 +156,16 @@
             </div>
             <div class="col-lg-4">
                 <div class="booking-summery bg-one">
-                    <h4 class="title">booking summery</h4>
+                    <h4 class="title">Hóa đơn</h4>
                     <ul>
                         <li>
                             <h6 class="subtitle">@Model.phim.ten_phim</h6>
-                            <span class="info">English-2d</span>
+                            <span class="info">@Model.phim.ngon_ngu</span>
+                            <span class="info">@Model.phim.thoi_luong phút</span>
                         </li>
                         <li>
-                            <h6 class="subtitle"><span>@Model.phong_chieu.ten_phong</span><span>@*02*@</span></h6>
-                            <div class="info"><span>@Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}"), @time.Time</span> <span>Tickets</span></div>
+                            <h6 class="subtitle"><span>Phòng chiếu: @Model.phong_chieu.ten_phong</span><span>@*02*@</span></h6>
+                            <div class="info"><span>@Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}"),@time.Time </span>@* <span>Tickets</span>*@</div>
                         </li>
                         <li>
                             <h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 ₫</span></h6>
@@ -179,6 +179,7 @@
                         <li>
                             <h6 class="subtitle">
                                 <span>
+                                    Vị trí: 
                                     @{ var dem = 0;}
                                     @foreach (var item in ghengoi)
                                     {
@@ -208,7 +209,7 @@
                     </ul>
                 </div>
                 <div class="proceed-area  text-center">
-                    <h6 class="subtitle"><span>Amount Payable</span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
+                    <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
                     <a href="#0" class="custom-button back-button" id="confirm">Thanh toán</a>
                 </div>
             </div>

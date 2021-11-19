@@ -21,6 +21,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Tạo phim mới
         public ActionResult CreateUser()
         {
+            List<SelectListItem> gender = new List<SelectListItem>() {
+            new SelectListItem {
+                Text = "Nam", Value = "true"
+            },
+            new SelectListItem {
+                Text = "Nữ", Value = "false"
+            },
+            };
+            ViewBag.gender = gender;
             List<SelectListItem> roleUser = new List<SelectListItem>() {
             new SelectListItem {
                 Text = "Admin", Value = "1"
@@ -37,6 +46,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateUser(user uSer)
         {
+            List<SelectListItem> gender = new List<SelectListItem>() {
+            new SelectListItem {
+                Text = "Nam", Value = "true"
+            },
+            new SelectListItem {
+                Text = "Nữ", Value = "false"
+            },
+            };
+            ViewBag.gender = gender;
             List<SelectListItem> roleUser = new List<SelectListItem>() {
             new SelectListItem {
                 Text = "Admin", Value = "1"

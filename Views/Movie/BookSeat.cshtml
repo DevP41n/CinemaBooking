@@ -4,17 +4,18 @@
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
-@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
+@{ int idsc = ViewBag.idsc;
+    CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 
 <!-- ==========Banner-Section========== -->
-<section class="details-banner hero-area bg_img seat-plan-banner" data-background="/Frontend/Client/assets/images/banner/banner04.jpg">
+<section class="details-banner hero-area bg_img seat-plan-banner" data-background="../../images/movies/background/@ViewBag.tenphim.anhbackground">
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two">
                 <h3 class="title">@ViewBag.tenphim.ten_phim</h3>
                 <div class="tags">
-                    <a href="#0">City Walk</a>
-                    <a href="#0">English - 2D</a>
+                    <a>@ViewBag.tenphim.thoi_luong phút</a>
+                    <a>@ViewBag.tenphim.ngon_ngu</a>
                 </div>
             </div>
         </div>
@@ -27,21 +28,27 @@
         <div class="page-title-area">
             <div class="item md-order-1">
                 <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" value="Trở về">
-                
+
             </div>
+
             <div class="item date-item">
-                <span class="date">MON, SEP 09 2020</span>
-                <select class="select-bar">
-                    <option value="sc1">09:40</option>
-                    <option value="sc2">13:45</option>
-                    <option value="sc3">15:45</option>
-                    <option value="sc4">19:50</option>
-                </select>
+                <div class="tags">
+                    <a class="bookseat-taskbar">Giờ chiếu: @ViewBag.giochieu</a>
+                    <a class="bookseat-taskbar">|</a>
+                    <a class="bookseat-taskbar">Ngày @Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</a>
+                </div>
+@*<span class="date">@Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</span>*@
+                @*<select class="select-bar">
+            <option value="sc1">09:40</option>
+            <option value="sc2">13:45</option>
+            <option value="sc3">15:45</option>
+            <option value="sc4">19:50</option>
+        </select>*@
             </div>
-            <div class="item">
-                <h5 class="title">05:00</h5>
-                <p>Mins Left</p>
-            </div>
+        <div class="item">
+            @*<h5 class="title">05:00</h5>
+            <p>Mins Left</p>*@
+        </div>
         </div>
     </div>
 </section>
@@ -58,66 +65,65 @@
             <div class="screen-wrapper">
                 <ul class="seat-area">
                     @*<li class="seat-line">
-                            <span>G</span>
-                            <ul class="seat--area">
-                                <li class="front-seat">
-                                    <ul>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="front-seat">
-                                    <ul>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="front-seat">
-                                    <ul>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                        <li class="single-seat">
-                                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <span>G</span>
-                        </li>*@
-
+            <span>G</span>
+            <ul class="seat--area">
+                <li class="front-seat">
+                    <ul>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                    </ul>
+                </li>
+                <li class="front-seat">
+                    <ul>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                    </ul>
+                </li>
+                <li class="front-seat">
+                    <ul>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <span>G</span>
+        </li>*@
 
                     @{ var count = 0; }
                     @foreach (var item in ViewBag.ghe)
@@ -249,7 +255,8 @@
                             </li>
                         }
                     }
-            </div>
+            </ul>
+                    </div>
         </div>
         <div class="proceed-book bg_img" data-background="/Frontend/Client/assets/images/movie/movie-bg-proceed.jpg">
             <div class="proceed-to-book">
