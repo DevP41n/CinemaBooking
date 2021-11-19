@@ -123,8 +123,16 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User");
             }
-
+            
             var idpc = db.suat_chieu.Find(id);
+            ViewBag.ngaychieu = idpc.ngay_chieu;
+
+            var time = db.suatchieu_timeframe.Where(x=>x.id_Suatchieu==id && x.id_Timeframe == idtime).FirstOrDefault();
+            string time1 = time.TimeFrame.Time.ToString();
+            string[] time2 = time1.Split(':');
+            string timef = time2[0] + ':' + time2[1];
+            ViewBag.giochieu = timef;
+
             ViewBag.tenphim = db.phims.Find(idpc.phim_id);
             phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
             ViewBag.pc = phongChieu;
@@ -133,6 +141,7 @@ namespace CinemaBooking.Controllers
             ViewBag.idtime = idtime;
             ViewBag.idsc = id;
             var order = db.orders.Where(n => n.id_phong_chieu == phongChieu.id && n.status == idtime);
+            
             List<int> idghedd = new List<int>();
             foreach (var item in order)
             {

@@ -94,8 +94,9 @@
                             </div>
                         </form>
                     </div>*@
+                
                 <div class="checkout-widget checkout-card mb-0">
-                    <h5 class="title">Payment Option </h5>
+                    <h5 class="title">Phương thức thanh toán</h5>
                     <ul class="payment-option">
                         @*<li class="active">
                                 <a href="#0">
@@ -155,12 +156,12 @@
             </div>
             <div class="col-lg-4">
                 <div class="booking-summery bg-one">
-                    <h4 class="title">booking summery</h4>
+                    <h4 class="title">Hóa đơn</h4>
                     <ul>
                         <li>
                             <h6 class="subtitle">@Model.phim.ten_phim</h6>
                             <span class="info">@Model.phim.ngon_ngu</span>
-                            <span class="info">@Model.phim.thoi_luong</span>
+                            <span class="info">@Model.phim.thoi_luong phút</span>
                         </li>
                         <li>
                             <h6 class="subtitle"><span>Phòng chiếu: @Model.phong_chieu.ten_phong</span><span>@*02*@</span></h6>
@@ -178,6 +179,7 @@
                         <li>
                             <h6 class="subtitle">
                                 <span>
+                                    Vị trí: 
                                     @{ var dem = 0;}
                                     @foreach (var item in ghengoi)
                                     {
@@ -201,13 +203,13 @@
                     </ul>
                     <ul>
                         <li>
-                            <span class="info"><span>Giá: </span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))đ</span></span>
+                            <span class="info"><span>Giá: </span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></span>
                             <span class="info"><span>Thuế: </span><span>0%</span></span>
                         </li>
                     </ul>
                 </div>
                 <div class="proceed-area  text-center">
-                    <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))đ</span></h6>
+                    <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
                     <a href="#0" class="custom-button back-button" id="confirm">Thanh toán</a>
                 </div>
             </div>

@@ -9920,4 +9920,9 @@ aside {
     border: 1px solid rgb(244 210 198 / 57%);
     margin-bottom: 20px;
 }
+.bookseat-taskbar {
+    font-size: larger;
+    font-weight: 600;
+    font-style: italic;
+}
 /*# sourceMappingURL=main.css.map */
