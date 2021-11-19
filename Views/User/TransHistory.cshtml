@@ -46,15 +46,15 @@
                                     <div class="movie-details">
                                         <div class="tab summery-review">
                                             <ul class="tab-menu">
-                                                <li class="active">
+                                                <li>
                                                     Quản lý tài khoản
                                                 </li>
-                                                <li>
+                                                <li class="active">
                                                     Lịch sử giao dịch
                                                 </li>
                                             </ul>
                                             <div class="tab-area">
-                                                <div class="tab-item active">
+                                                <div class="tab-item ">
                                                     <div class="item">
                                                         <div class="col-lg-12">
                                                             @{var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();}
@@ -129,7 +129,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="tab-item">
+                                                <div class="tab-item active">
                                                     <style>
                                                         table {
                                                             font-family: arial, sans-serif;

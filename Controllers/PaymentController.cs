@@ -4,6 +4,7 @@ using PayPal;
 using PayPal.Api;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -230,9 +231,55 @@ namespace CinemaBooking.Controllers
                 db.order_details.Add(addorderdetails);
                 db.SaveChanges();
             }
-            TempData["Message"] = "Thanh toán thành công!";
-            return RedirectToAction("Index", "Home");
-        }
+            //send
+            var kh = db.khach_hang.Find(Convert.ToInt32(TempData["idkh"]));
+            var timechieu = db.TimeFrames.Find(idtimechieu);
+            var orderformail = db.orders.Find(idorder);
+            var phimfind = db.phims.Find(orderformail.id_phim);
+            var pcfind = db.phong_chieu.Find(orderformail.id_phong_chieu);
+            string phim = phimfind.ten_phim;
+            string phongchieu = pcfind.ten_phong;
+            string ghee = "Vé ";
+            var demm = 0;
+            foreach (var j in idghengoi)
+            {
+                demm++;
+                var tenghh = db.ghe_ngoi.Find(Convert.ToInt32(j));
+                if (demm == idghengoi.Count())
+                {
+                    ghee += tenghh.Row + tenghh.Col;
+                }
+                else
+                {
+                    ghee += tenghh.Row + tenghh.Col + ", ";
+                }
+            }
+            try
+            {
+                string mail = System.IO.File.ReadAllText(Server.MapPath("~/Library/ReplyMail.html"));
+                string dt = DateTime.Now.ToString();
+                mail = mail.Replace("{{Name}}", kh.ho_ten.ToString());
+                mail = mail.Replace("{{Phone}}", kh.sdt.ToString());
+                mail = mail.Replace("{{Email}}", kh.email.ToString());
+                mail = mail.Replace("{{Phim}}", phim);
+                mail = mail.Replace("{{Suatchieu}}", timechieu.Time.ToString());
+                mail = mail.Replace("{{Rap}}", phongchieu);
+                mail = mail.Replace("{{Ve}}", ghee);
+                mail = mail.Replace("{{Amount}}", String.Format("{0:0,0}", orderformail.tong_tien));
+                mail = mail.Replace("{{date}}", dt);
+                var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
+                Random rd = new Random();
+                var numrd = rd.Next(1, 1000000).ToString();
+                new SendMail().SendMailTo(kh.email.ToString(), "Xác nhận thanh toán [CINEMA" + numrd + "]", mail);
+                TempData["Message"] = "Thanh toán thành công!";
+                return RedirectToAction("TransHistory", "User", new { id = kh.id});
+            }
+            catch (Exception)
+            {
 
+                TempData["Message"] = "Thanh toán thành công!";
+                return RedirectToAction("TransHistory", "User", new { id = kh.id });
+            }
+        }
     }
 }

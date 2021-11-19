@@ -64,9 +64,9 @@
                         <h5 class="title">Already a Boleto  Member?</h5>
                         <p>Sign in to earn points and make booking easier!</p>
                     </div>
-                    <a href="#0" class="sign-in-area">
+                    @*<a href="#0" class="sign-in-area">
                         <i class="fas fa-user"></i><span>Sign in</span>
-                    </a>
+                    </a>*@
                 </div>
                 <div class="checkout-widget checkout-contact">
                     <h5 class="title">Share your Contact  Details </h5>
@@ -118,7 +118,7 @@
                             </a>
                         </li>
                     </ul>
-                    <h6 class="subtitle">Enter Your Card Details </h6>
+                    @*<h6 class="subtitle">Enter Your Card Details </h6>
                     <form class="payment-card-form">
                         <div class="form-group w-100">
                             <label for="card1">Card Details</label>
@@ -152,7 +152,7 @@
                     </form>
                     <p class="notice">
                         By Clicking "Make Payment" you agree to the <a href="#0">terms and conditions</a>
-                    </p>
+                    </p>*@
                 </div>
             </div>
             <div class="col-lg-4">
@@ -202,14 +202,14 @@
                     </ul>
                     <ul>
                         <li>
-                            <span class="info"><span>price</span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></span>
-                            <span class="info"><span>vat</span><span>$15</span></span>
+                            <span class="info"><span>Tổng tiền</span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></span>
+                            @*<span class="info"><span>vat</span><span>$15</span></span>*@
                         </li>
                     </ul>
                 </div>
                 <div class="proceed-area  text-center">
                     <h6 class="subtitle"><span>Amount Payable</span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
-                    <a href="#0" class="custom-button back-button" id="confirm">proceed</a>
+                    <a href="#0" class="custom-button back-button" id="confirm">Thanh toán</a>
                 </div>
             </div>
         </div>

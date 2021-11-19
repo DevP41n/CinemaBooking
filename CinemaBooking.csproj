@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Library\MyString.cs" />
     <Compile Include="Library\PaypalConfiguration.cs" />
+    <Compile Include="Library\SendMail.cs" />
     <Compile Include="Models\CinemaBooking.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -463,6 +464,7 @@
     <Content Include="Frontend\Client\assets\images\tour\icon01.png" />
     <Content Include="Frontend\Client\assets\images\tour\icon02.png" />
     <Content Include="Frontend\Client\assets\images\tour\tour.png" />
+    <Content Include="Library\ReplyMail.html" />
     <Content Include="Models\CinemaBooking.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CinemaBooking.edmx</DependentUpon>

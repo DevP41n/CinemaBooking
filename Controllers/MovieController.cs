@@ -99,7 +99,7 @@ namespace CinemaBooking.Controllers
 
         public ActionResult ShowTime(int? idsuatchieu)
         {
-            var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == idsuatchieu);
+            var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == idsuatchieu).OrderBy(x=>x.id_Timeframe).ToList();
 
             List<String> times = new List<String>();
             List<int> idtimes = new List<int>();
@@ -132,7 +132,7 @@ namespace CinemaBooking.Controllers
             ViewBag.ghe = ghengoi;
             ViewBag.idtime = idtime;
             ViewBag.idsc = id;
-            var order = db.orders.Where(n => n.id_phong_chieu == phongChieu.id && n.status == idtime);
+            var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.status == idtime);
             List<int> idghedd = new List<int>();
             foreach (var item in order)
             {

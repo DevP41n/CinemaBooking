@@ -99,7 +99,7 @@
                 <select class="select-bar showdate" id="showdate">
                     @foreach (var date in ViewBag.date)
                     {
-                        <option value="@date.id">@Html.FormatValue(@date.ngay_chieu, "{0:MM/dd/yyyy}")</option>
+                        <option value="@date.id">@Html.FormatValue(@date.ngay_chieu, "{0:dd/MM/yyyy}")</option>
 
                     }
                 </select>
@@ -196,9 +196,10 @@
 
             //Click vào suất chiếu
             $('body').on('click', '.item', function () {
+                var idsc = $('#showdate').val();
                 var idtime = $(this).data('id');
                 var htmls = "";
-                htmls += "<a href='/Movie/BookSeat?id=" + idsuatchieu + "&idtime=" + idtime + "' class='custom-button seatPlanButton'>";
+                htmls += "<a href='/Movie/BookSeat?id=" + idsc + "&idtime=" + idtime + "' class='custom-button seatPlanButton'>";
                 htmls += "Chọn ghế";
                 htmls += "<i class='fas fa-angle-right'></i></a>";
                 $('#Seat').html(htmls);
