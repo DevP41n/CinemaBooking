@@ -113,10 +113,10 @@
 
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.thoi_luong)
+                                                    @Html.DisplayFor(modelItem => item.thoi_luong) Phút
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ngay_cong_chieu)
+                                                    @Html.FormatValue(item.ngay_cong_chieu, "{0:MM/dd/yyyy}")
                                                 </td>
                                                 <td>
                                                     <label class="switch">

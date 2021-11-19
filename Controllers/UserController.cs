@@ -173,7 +173,7 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Không đúng tài khoản của bạn!";
                 return RedirectToAction("Index", "Home");
             }
-            var orders = db.orders.Where(n => n.id_khachhang == idkh).ToList();
+            var orders = db.orders.Where(n => n.id_khachhang == idkh).OrderByDescending(n=>n.id).ToList();
             return View(orders);
         }
 

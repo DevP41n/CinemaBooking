@@ -397,9 +397,22 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateContentRating(content_rating ctRating)
         {
-            db.content_rating.Add(ctRating);
-            TempData["Message"] = "Tạo thành công!";
-            db.SaveChanges();
+
+            var del = from dele in db.content_rating
+                      where dele.ID == ctRating.ID
+                      select dele;
+            var coundel = del.Count();
+
+            if (coundel == 0)
+            {
+                db.content_rating.Add(ctRating);
+                TempData["Message"] = "Tạo thành công!";
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["Warning"] = "Không thể tạo vì loại id này đã tồn tại";
+            }
             return RedirectToAction("ListContentRating");
         }
 

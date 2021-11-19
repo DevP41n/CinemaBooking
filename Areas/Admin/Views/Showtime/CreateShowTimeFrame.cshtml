@@ -11,15 +11,12 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Tin tức</h4>
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                            <li class="breadcrumb-item active">Tạo mới</li>
-                        </ol>
+                        <h4 class="font-size-18">Tạo giờ chiếu</h4>
+
                     </div>
                 </div>
 
-                <div class="col-sm-6">
+               @* <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
             <!-- end page title -->
 
@@ -52,7 +49,7 @@
                                 <div class="form-group row">
                                     <label>Giờ bắt đầu</label>
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Time, new { htmlAttributes = new { type = "time", @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Time,"Thời gian", new { htmlAttributes = new { type = "time", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
