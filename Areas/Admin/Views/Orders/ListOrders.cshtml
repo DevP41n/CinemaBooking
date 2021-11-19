@@ -13,23 +13,15 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Phim</h4>
+                        <h4 class="font-size-18">Vé đặt</h4>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                            <li class="breadcrumb-item active">User</li>
+                            <li class="breadcrumb-item active">Vé đặt</li>
                         </ol>
                     </div>
                 </div>
 
-                <div class="col-sm-6">
-                    <div class="float-right d-none d-md-block">
-                        <div class="dropdown">
-                            <a class="btn btn-primary dropdown-toggle waves-effect waves-light" href="@Url.Action("CreateUser","User")">
-                                <i class="fas fa-upload"></i> Thêm user mới
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <!-- end page title -->
             <div class="row">
@@ -62,18 +54,16 @@
                                                 <th>
                                                     Số lượng vé
                                                 </th>
-                                                <th>
-                                                    Phim
-                                                </th>
-                                                <th>
-                                                    Phòng chiếu
-                                                </th>
+                                             
                                                 <th>
                                                     Thời gian
                                                 </th>
 
                                                 <th>
                                                     Tổng tiền
+                                                </th>
+                                                <th>
+                                                    Công cụ
                                                 </th>
 
 
@@ -100,24 +90,19 @@
                                                         @item.so_luong_ve
                                                     </td>
 
-                                                    <td>
-                                                        @item.phim.ten_phim
-                                                    </td>
-                                                    <td>
-                                                        @item.phong_chieu.ten_phong
-                                                    </td>
+                                                  
                                                     @{var it = db.TimeFrames.Find(item.status);}
                                                     <td>
-                                                        @Html.FormatValue(@item.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - (@it.Time)
+                                                        @Html.FormatValue(@item.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @(it.Time)
                                                     </td>
                                                     <td>
-                                                        @item.tong_tien
+                                                        @Html.Raw(String.Format("{0:0,0} đ", @item.tong_tien))
                                                     </td>
 
                                                     <td>
-                                                        <button type="button" class="btn btn-primary Order" data-toggle="modal"  data-id="@item.id">
+                                                        <a type="button" class="btn btn-primary"  href="@Url.Action("OrdDetail","Orders",new { id = item.id })">
                                                             Xem chi tiết
-                                                        </button>
+                                                        </a>
                                                     </td>
                                                 </tr>
 
@@ -144,75 +129,6 @@
 </div>
 <!-- end main content-->
 <!-- Modal -->
-<div class="modal fade" id="Ord" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Tên ghế</th>
-                            <th scope="col">Giá vé</th>
-                        </tr>
-                    </thead>
-                    <tbody id="showod">
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $('body').on('click', '.Order', function () {
-                var ido = $(this).data('id');
-                LoadDetails(ido);
-            });
-            function LoadDetails(idorder) {
-                $.ajax({
-                    url: '/Orders/OrderDetail',
-                    type: 'GET',
-                    data: {
-                        idorder: idorder,
-                    },
-                    success: function (res) {
-                        if (res.Count != null) {
-                            var od = res.top;
-                            var tie = res.tien;
-                            var html = "";
-
-                            for (let i = 0; i < res.Count; i++) {
-                                html += "<tr>";
-                                html += "<th scope='row'>";
-                                html += i + 1;
-                                html += "</th>";
-                                html += "<td>" + od[i] + "</td>";
-                                html += "<td>" + tie[i] + "</td>";
-                                html += "</tr>"
-                            }
-                            $('#showod').html(html);
-                            $('#Ord').modal('show');
-                        }
-                    }
-                });
-            }
 
 
 
-        });
-    </script>
-}

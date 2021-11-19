@@ -738,6 +738,7 @@
       <DependentUpon>CinemaBooking.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Views\Orders\ListOrders.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\OrdDetail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\i18n\af.js" />

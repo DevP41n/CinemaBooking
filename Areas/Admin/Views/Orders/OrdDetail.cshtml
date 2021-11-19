@@ -1,0 +1,180 @@
+﻿@model CinemaBooking.Models.order
+
+@{
+    ViewBag.Title = "OrdDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>OrdDetail</h2>
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">Phim</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active">User</li>
+                        </ol>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- end page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="invoice-masthead">
+                                        <div class="invoice-text">
+                                            <h3 class="h1 text-uppercase text-thin mar-no text-primary">HÓA ĐƠN</h3>
+                                        </div>
+
+                                    </div>
+                                    <hr class="new-section-sm bord-no">
+                                    <div class="invoice-bill row" style="font-size:16px">
+                                        <div class="col-sm-4 text-xs-center" style="border-right: solid 1px pink; float:right">
+                                            <table class="invoice-details" style="min-width: 350px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold">Họ Tên:</td>
+                                                        <td class="text-center text-info text-bold">@Model.khach_hang.ho_ten</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold">Email:</td>
+                                                        <td class="text-center">@Model.khach_hang.email</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold">  Số điện thoại:</td>
+                                                        <td class="text-center">@Model.khach_hang.sdt</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-4 text-xs-center" style="border-right: solid 1px pink;">
+                                            <table class="invoice-details" style="min-width: 350px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold">  Tên Phim:</td>
+                                                        <td class="text-center text-info text-bold">@Model.phim.ten_phim</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold"> Phòng:</td>
+                                                        <td class="text-center">@Model.phong_chieu.ten_phong</td>
+                                                    </tr>
+                                                    @{ var gio = db.TimeFrames.Find(Model.status);}
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold"> Lịch chiếu:</td>
+                                                        <td class="text-center">@Html.FormatValue(@Model.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @gio.Time</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-4 text-xs-center">
+                                            <table class="invoice-details" style="min-width: 350px;">
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold">Thời gian tạo: </td>
+                                                        <td class="text-center"> @Model.ngay_mua</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <hr class="new-section-sm bord-no">
+
+                                    <div class="row">
+                                        <div class="col-lg-12 table-responsive">
+                                            <table class="table table-bordered invoice-summary" style="font-size:16px">
+                                                <thead>
+                                                    <tr class="bg-trans-dark">
+                                                        <th class="min-col text-center text-uppercase" style="font-weight: bold; background: #cbcbcb; height:60px;">Tên ghế</th>
+                                                        <th class="min-col text-center text-uppercase" style="font-weight: bold; background: #cbcbcb; height: 60px; ">Giá</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in ViewBag.detail)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@item.ghe_ngoi.Row@item.ghe_ngoi.Col</td>
+                                                            <td class="text-center">@Html.Raw(String.Format("{0:0,0} đ", 75000))</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        @*<div class="col-lg-6 table-responsive">
+                <table class="table table-bordered invoice-summary">
+                    <thead>
+                        <tr class="bg-trans-dark">
+                            <th class="min-col text-center text-uppercase">Tên Topping</th>
+                            <th class="min-col text-center text-uppercase">Giá</th>
+                            <th class="min-col text-center text-uppercase">Tổng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td class="text-center">ToppingName</td>
+                            <td class="text-center">Quantity</td>
+                            <td class="text-center">Total</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>*@
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <table class="table invoice-total">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="float:left;">
+                                                        <div class="text-left no-print">
+                                                            <a href="javascript:window.print()" class="btn btn-default"><i class="demo-pli-printer icon-lg"></i></a>
+                                                            <a href="#" onclick="history.go(-1)" class="btn btn-primary">Quay lại</a>
+                                                        </div>
+                                                    </td>
+                                                    <td style="float:right; font-size:20px"><strong>Tổng tiền: @Html.Raw(String.Format("{0:0,0} đ", @Model.tong_tien))</strong></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                   
+
+                                    <hr class="new-section-sm bord-no">
+
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+
+
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+
+
+
+
+</div>

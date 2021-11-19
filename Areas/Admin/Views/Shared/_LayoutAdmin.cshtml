@@ -43,7 +43,7 @@
     <!--custom-->
     <link href="~/template/admin/custom/tableorder.css" rel="stylesheet" />
     <link href="~/template/admin/assets/css/custom.css" rel="stylesheet" />
-    
+
 </head>
 <body data-sidebar="dark">
 
@@ -385,6 +385,15 @@
                                 <li><a href="@Url.Action("ListDirector","Information")">Đạo diễn</a></li>
                             </ul>
 
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>Danh sách vé đặt</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="@Url.Action("ListOrders","Orders")">Danh sách</a></li>
+                            </ul>
                         </li>
 
                     </ul>
