@@ -54,6 +54,9 @@
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>packages\log4net.2.0.13\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -165,11 +168,17 @@
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PaymentMoMoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Library\MoMoSecurity.cs" />
+    <Compile Include="Library\momo\MomoExtend.cs" />
+    <Compile Include="Library\momo\MoMoSecurity.cs" />
+    <Compile Include="Library\momo\PaymentRequest.cs" />
     <Compile Include="Library\MyString.cs" />
+    <Compile Include="Library\PaymentRequest.cs" />
     <Compile Include="Library\PaypalConfiguration.cs" />
     <Compile Include="Library\SendMail.cs" />
     <Compile Include="Models\CinemaBooking.Context.cs">
@@ -465,6 +474,7 @@
     <Content Include="Frontend\Client\assets\images\tour\icon01.png" />
     <Content Include="Frontend\Client\assets\images\tour\icon02.png" />
     <Content Include="Frontend\Client\assets\images\tour\tour.png" />
+    <Content Include="Library\MailFeedback.html" />
     <Content Include="Library\ReplyMail.html" />
     <Content Include="Models\CinemaBooking.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -3623,6 +3633,7 @@
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\User\TransHistory.cshtml" />
+    <Content Include="Views\PaymentMoMo\ReturnUrl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

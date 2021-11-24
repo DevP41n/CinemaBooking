@@ -1,5 +1,7 @@
-﻿using CinemaBooking.Models;
+﻿using CinemaBooking.Library;
+using CinemaBooking.Models;
 using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -9,6 +11,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
     public class FeedbackController : Controller
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
+
         // GET: Admin/Feedback
         public ActionResult ListFeedback()
         {
@@ -40,29 +43,40 @@ namespace CinemaBooking.Areas.Admin.Controllers
         }
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Reply(lien_he lienHe)
+        public ActionResult Reply(lien_he lienHe, FormCollection f)
         {
-            if (ModelState.IsValid)
-            {
-                lienHe.update_at = DateTime.Now;
-                lienHe.status = 2;
-                db.Entry(lienHe).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+
             db.Configuration.ValidateOnSaveEnabled = false;
             ////Send Mail
-            //string mail = System.IO.File.ReadAllText(Server.MapPath("~/template/mail/MailReply.html"));
-            //string dt = DateTime.Now.ToString();
-            //mail = mail.Replace("{{Name}}", fb.Reply);
+            try
+            {
 
-            ////mail = mail.Replace("{{Phone}}", Request.Form["sdt"]);
-            //mail = mail.Replace("{{Email}}", Request.Form["email"]);
-            ////mail = mail.Replace("{{Address}}", Request.Form["dc"]);
-            //Random rd = new Random();
-            //var numrd = rd.Next(1, 1000000).ToString();
-            //new SendMailOrder().SendMailTo(fb.Email, "Đơn hàng mới từ HYPER GEAR [HYPER" + numrd + "]", mail);
-            //save
-            return RedirectToAction("ListFeedback");
+                var tieu_de = Request.Form["tieu_de"];
+                string mail = System.IO.File.ReadAllText(Server.MapPath("~/Library/MailFeedback.html"));
+                mail = mail.Replace("{{Name}}", lienHe.ho_ten.ToString());
+                mail = mail.Replace("{{Email}}", lienHe.email.ToString());
+                mail = mail.Replace("{{Tieude}}", tieu_de.ToString());
+                mail = mail.Replace("{{Noidung}}", lienHe.noi_dung.ToString());
+                mail = mail.Replace("{{Reply}}", lienHe.tra_loi.ToString());
+                var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
+                Random rd = new Random();
+                var numrd = rd.Next(1, 1000000).ToString();
+                new SendMail().SendMailTo(lienHe.email.ToString(), "Trả lời khách hàng", mail);
+                if (ModelState.IsValid)
+                {
+                    lienHe.update_at = DateTime.Now;
+                    lienHe.status = 2;
+                    db.Entry(lienHe).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                TempData["Message"] = "Gửi email thành công!";
+                return RedirectToAction("ListFeedback");
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Gửi email không thành công!";
+                return RedirectToAction("ListFeedback");
+            }
         }
 
         public ActionResult Delete(int id)
