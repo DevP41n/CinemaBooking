@@ -474,6 +474,7 @@
     <Content Include="Frontend\Client\assets\images\tour\icon01.png" />
     <Content Include="Frontend\Client\assets\images\tour\icon02.png" />
     <Content Include="Frontend\Client\assets\images\tour\tour.png" />
+    <Content Include="Library\Forgot.html" />
     <Content Include="Library\MailFeedback.html" />
     <Content Include="Library\ReplyMail.html" />
     <Content Include="Models\CinemaBooking.Context.tt">

@@ -26,7 +26,7 @@
                     <div class="form-group checkgroup">
                         <input type="checkbox" id="bal2" required checked>
                         <label for="bal2">Ghi nhớ đăng nhập</label>
-                        <a href="#0" class="forget-pass">Quên mật khẩu</a>
+                        <a href="#" data-target="#Forgot" data-toggle="modal" class="forget-pass">Quên mật khẩu?</a>
                     </div>
                     <div class="form-group text-center">
                         <input type="submit" value="log in">
@@ -58,3 +58,54 @@
     </div>
 </section>
 <!-- ==========Sign-In-Section========== -->
+<div class="modal fade" id="Forgot" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="modal-title" id="exampleModalCenterTitle" style="color:black;font-weight:bold;">QUÊN MẬT KHẨU</a>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1" style="color:black">Email</label>
+                        <input type="text" class="form-control" id="forgotemail" placeholder="Nhập Email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnForgot">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#btnForgot').click(function () {
+                var email = $('#forgotemail').val();
+                $.ajax({
+                    url: '/User/Forgot/',
+                    type: 'POST',
+                    data: {
+                        email: email
+                    },
+                    success: function (res) {
+                        if (res.success == false) {
+                            toastr.warning("Email không tồn tại!");
+                        }
+                        else {
+                            toastr.success("Đã lấy lại mật khẩu. Vui lòng kiểm tra Email!");
+                            $('#Forgot').modal('hide');
+                        }
+                    }
+                    
+                });
+            });
+        });
+    </script>
+}

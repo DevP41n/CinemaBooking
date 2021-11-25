@@ -1,4 +1,5 @@
-﻿using CinemaBooking.Models;
+﻿using CinemaBooking.Library;
+using CinemaBooking.Models;
 using Facebook;
 using System;
 using System.Configuration;
@@ -249,6 +250,53 @@ namespace CinemaBooking.Controllers
             }
             return Redirect("/");
         }
+        [HttpPost]
+        public ActionResult Forgot(string email)
+        {
+            khach_hang KH = db.khach_hang.Where(x => x.email == email).FirstOrDefault();
+            if(KH == null)
+            {
+                return Json(new { success = false});
 
+            }
+            var rsinsert = new khach_hang().InsertForgot(KH);
+            if( rsinsert > 0)
+            {
+                var id = rsinsert;
+                khach_hang khachhang = db.khach_hang.Find(id);
+                Random rd = new Random();
+                var numr = rd.Next(1, 100000).ToString();
+                var numrd = rd.Next(1, 100000).ToString();
+                string[] myIntArray = new string[10];
+                string randomStr = "";
+                for (int x = 0; x < 5; x++)
+                {
+                    myIntArray[x] = Convert.ToChar(Convert.ToInt32(rd.Next(65, 87))).ToString();
+                    randomStr += (myIntArray[x].ToString());
+                }
+                string mk = "@Cinema" + numrd + randomStr + numr;
+                khachhang.password = MyString.ToMD5(mk);
+                khachhang.confirmpassword = khachhang.password;
+                try
+                {
+                    string mail = System.IO.File.ReadAllText(Server.MapPath("~/Library/Forgot.html"));
+                    string dt = DateTime.Now.ToString();
+                    mail = mail.Replace("{{Name}}", khachhang.ho_ten);
+                    mail = mail.Replace("{{Email}}", khachhang.email);
+                    mail = mail.Replace("{{Pass}}", mk);
+                    mail = mail.Replace("{{date}}", dt);
+                    var num = rd.Next(1, 1000000).ToString();
+                    new SendMail().SendMailTo(khachhang.email.ToString(), "Xác nhận mật khẩu [CINEMA]", mail);
+                }
+                catch(Exception)
+                {
+                    return Json(new { success = false });
+                }
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.Entry(khachhang).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new { success = true });
+        }
     }
 }
