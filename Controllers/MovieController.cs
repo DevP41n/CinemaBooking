@@ -21,15 +21,15 @@ namespace CinemaBooking.Controllers
                 ViewBag.Rates = db.movie_rate.Where(m => m.movie_id == movie.id);
                 ViewBag.RatesCount = db.movie_rate.Where(m => m.movie_id == movie.id).Count();
                 double? dem = 0;
-                double? tong = 0 ;
+                double? tong = 0;
                 int count = 0;
-                foreach(var item in db.movie_rate.Where(x=>x.movie_id == movie.id))
+                foreach (var item in db.movie_rate.Where(x => x.movie_id == movie.id))
                 {
                     dem += item.rate;
                     count++;
                 }
-                
-                if(dem == 0)
+
+                if (dem == 0)
                 {
                     tong = 0;
                     ViewBag.RatesTong = tong;
@@ -40,7 +40,7 @@ namespace CinemaBooking.Controllers
                     tong = Math.Round((double)tong, 1);
                     ViewBag.RatesTong = tong;
                 }
-                
+
                 return View(movie);
             }
             catch (Exception)
@@ -97,37 +97,53 @@ namespace CinemaBooking.Controllers
             return View();
         }
 
-        public ActionResult ShowTime(int? idsuatchieu)
+        public ActionResult ShowTime(string ngay)
         {
-            var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == idsuatchieu).OrderBy(x=>x.id_Timeframe).ToList();
-
+            var ng = Convert.ToDateTime(ngay);
+            var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng).ToList();
             List<String> times = new List<String>();
-            List<int> idtimes = new List<int>();
-            foreach (var time in suatChieuTime)
+            List<String> idtimes = new List<String>();
+            List<String> idsc = new List<String>();
+            string nhay = "-";
+            times.Add(nhay);
+            idtimes.Add(nhay);
+            idsc.Add(nhay);
+            foreach (var item in suatchieu)
             {
-                times.Add((time.TimeFrame.Time).ToString());
-                idtimes.Add(time.TimeFrame.id);
-            }
+                var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.id_Timeframe).ToList();
 
+
+                foreach (var time in suatChieuTime)
+                {
+                    times.Add((time.TimeFrame.Time).ToString());
+                    idtimes.Add(time.TimeFrame.id.ToString());
+                    idsc.Add(item.id.ToString());
+                }
+                times.Add(nhay);
+                idtimes.Add(nhay);
+                idsc.Add(nhay);
+            }
             var Count = times.Count();
 
-            return Json(data: new { times, idtimes, Count, idsuatchieu }, JsonRequestBehavior.AllowGet);
+            return Json(data: new { times, idtimes, Count, idsc }, JsonRequestBehavior.AllowGet);
         }
 
 
         //Chọn ghế
-        public ActionResult BookSeat(int id, int idtime)
+        public ActionResult BookSeat(string idd, string idtimee)
         {
             if (Session["TenCus"] == null)
             {
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User");
             }
-            
+
+            var id = Convert.ToInt32(idd);
+            var idtime = Convert.ToInt32(idtimee);
             var idpc = db.suat_chieu.Find(id);
             ViewBag.ngaychieu = idpc.ngay_chieu;
 
-            var time = db.suatchieu_timeframe.Where(x=>x.id_Suatchieu==id && x.id_Timeframe == idtime).FirstOrDefault();
+            var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
             string time1 = time.TimeFrame.Time.ToString();
             string[] time2 = time1.Split(':');
             string timef = time2[0] + ':' + time2[1];
@@ -162,14 +178,14 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User");
             }
-            var sc = db.suat_chieu.Find(id);            
+            var sc = db.suat_chieu.Find(id);
             var mkh = Convert.ToInt32(Session["MaKH"]);
             var kh = db.khach_hang.Find(mkh);
             ViewBag.time = db.TimeFrames.Find(idtime);
             ViewBag.kh = kh;
             List<String> idghe = new List<String>();
             string[] listid = idg.Split(',');
-            for (int i =0; i < listid.Length;i++)
+            for (int i = 0; i < listid.Length; i++)
             {
                 if (listid[i] != "")
                 {
@@ -182,7 +198,7 @@ namespace CinemaBooking.Controllers
         }
 
         [HttpPost]
-        public ActionResult withpay (FormCollection f)
+        public ActionResult withpay(FormCollection f)
         {
             TempData["idghe"] = Request.Form["idghe"];
             TempData["idsuatc"] = Request.Form["idsuatc"];
@@ -198,7 +214,7 @@ namespace CinemaBooking.Controllers
             //{
             //    return Json(new { success = false });
             //}
-            if(Session["MaKH"]!= null)
+            if (Session["MaKH"] != null)
             {
 
             }
