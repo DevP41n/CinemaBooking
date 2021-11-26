@@ -92,15 +92,24 @@ namespace CinemaBooking.Controllers
                 return RedirectToAction("SignIn", "User");
             }
 
-            ViewBag.date = db.suat_chieu.Where(n => n.phim_id == id);
+            var ngay = db.suat_chieu.Where(n => n.phim_id == id).ToList();
+            List<DateTime?> ng = new List<DateTime?>();
+            ViewBag.idphim = id;
 
+
+            foreach (var item in ngay)
+            {
+                ng.Add(item.ngay_chieu);
+            }
+            ViewBag.date = ng.Distinct();
             return View();
         }
 
-        public ActionResult ShowTime(string ngay)
+        public ActionResult ShowTime(string ngay, string idphim)
         {
             var ng = Convert.ToDateTime(ngay);
-            var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng).ToList();
+            int idfilm = Convert.ToInt32(idphim);
+            var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
             List<String> times = new List<String>();
             List<String> idtimes = new List<String>();
             List<String> idsc = new List<String>();
