@@ -266,11 +266,11 @@
                 <div id="sidebar-menu">
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="menu-title">Main</li>
+                        @*<li class="menu-title">Main</li>*@
 
                         <li>
                             <a href="@Url.Action("Dashboard","Admin")" class="waves-effect">
-                                <i class="ti-home"></i><span class="badge badge-pill badge-primary float-right">2</span>
+                                <i class="ti-home"></i>@*<span class="badge badge-pill badge-primary float-right">2</span>*@
                                 <span>Dashboard</span>
                             </a>
                         </li>
@@ -305,7 +305,8 @@
                                 <span>Người dùng</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListUser","User")">Danh sách người dùng</a></li>
+                                <li><a href="@Url.Action("ListUser","User")">Danh sách nhân viên</a></li>
+                                <li><a href="@Url.Action("ListKH","User")">Danh sách người dùng</a></li>
                             </ul>
                         </li>
                         <li>

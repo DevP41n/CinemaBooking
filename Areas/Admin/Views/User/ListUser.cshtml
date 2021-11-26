@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CinemaBooking.Models.user>
 
 @{
-    ViewBag.Title = "User";
+    ViewBag.Title = "Nhân viên";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -14,7 +14,7 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Danh sách người dung</h4>
+                        <h4 class="font-size-18">Danh sách nhân viên</h4>
                     </div>
                 </div>
 
@@ -22,7 +22,7 @@
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
                             <a class="btn btn-primary dropdown-toggle waves-effect waves-light" href="@Url.Action("CreateUser","User")">
-                                <i class="fas fa-upload"></i> Thêm user mới
+                                <i class="fas fa-upload"></i> Thêm nhân viên mới
                             </a>
                         </div>
                     </div>

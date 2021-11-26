@@ -71,7 +71,7 @@ namespace CinemaBooking.Controllers
                 {
 
                     _user.password = MyString.ToMD5(_user.password);
-                    _user.ngay_sinh = DateTime.Now;
+                    _user.create_at = DateTime.Now;
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.khach_hang.Add(_user);
                     TempData["Message"] = "Bạn đã tạo tài khoản thành công!";

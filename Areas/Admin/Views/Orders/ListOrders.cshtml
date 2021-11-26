@@ -52,9 +52,12 @@
                                                     Khách hàng
                                                 </th>
                                                 <th>
+                                                    Điện thoại
+                                                </th>
+                                                <th>
                                                     Số lượng vé
                                                 </th>
-                                             
+
                                                 <th>
                                                     Thời gian
                                                 </th>
@@ -74,37 +77,40 @@
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        @(rownumber++)
-                                                    </td>
+                                            <tr>
+                                                <td>
+                                                    @(rownumber++)
+                                                </td>
 
-                                                    <td>
-                                                        @item.ngay_mua
-                                                    </td>
+                                                <td>
+                                                    @item.ngay_mua
+                                                </td>
 
-                                                    <td>
-                                                        @item.khach_hang.ho_ten
-                                                    </td>
-                                                    <td>
-                                                        @item.so_luong_ve
-                                                    </td>
+                                                <td>
+                                                    @item.khach_hang.ho_ten
+                                                </td>
+                                                <td>
+                                                    @item.khach_hang.sdt
+                                                </td>
+                                                <td>
+                                                    @item.so_luong_ve
+                                                </td>
 
-                                                  
-                                                    @{var it = db.TimeFrames.Find(item.status);}
-                                                    <td>
-                                                        @Html.FormatValue(@item.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @(it.Time)
-                                                    </td>
-                                                    <td>
-                                                        @Html.Raw(String.Format("{0:0,0} đ", @item.tong_tien))
-                                                    </td>
 
-                                                    <td>
-                                                        <a type="button" class="btn btn-primary"  href="@Url.Action("OrdDetail","Orders",new { id = item.id })">
-                                                            Xem chi tiết
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @{var it = db.TimeFrames.Find(item.status);}
+                                                <td>
+                                                    @Html.FormatValue(@item.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @(it.Time)
+                                                </td>
+                                                <td>
+                                                    @Html.Raw(String.Format("{0:0,0} đ", @item.tong_tien))
+                                                </td>
+
+                                                <td>
+                                                    <a type="button" class="btn btn-primary" href="@Url.Action("OrdDetail","Orders",new { id = item.id })">
+                                                        Xem chi tiết
+                                                    </a>
+                                                </td>
+                                            </tr>
 
                                             }
                                         </tbody>

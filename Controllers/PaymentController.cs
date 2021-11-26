@@ -210,7 +210,9 @@ namespace CinemaBooking.Controllers
             order addorder = new order();
             addorder.id_khachhang = Convert.ToInt32(TempData["idkh"].ToString());
             addorder.id_phim = sc.phim_id;
+            addorder.ten_phim = sc.phim.ten_phim;
             addorder.id_phong_chieu = sc.phong_chieu_id;
+            addorder.ten_phong_chieu = sc.phong_chieu.ten_phong;
             addorder.suatchieu_id = idsuatchieu;
             addorder.ngay_mua = DateTime.Now;
             addorder.status = idtimechieu;

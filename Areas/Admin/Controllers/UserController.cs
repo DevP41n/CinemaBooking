@@ -12,13 +12,16 @@ namespace CinemaBooking.Areas.Admin.Controllers
     {
         // GET: Admin/User
         private CinemaBookingEntities db = new CinemaBookingEntities();
-        // GET: Admin/Movie
-        //list phim
+        //list nhan vien
         public ActionResult ListUser()
         {
             return View(db.users.OrderByDescending(m => m.id).ToList());
         }
-        //Tạo phim mới
+        public ActionResult ListKH()
+        {
+            return View(db.khach_hang.OrderByDescending(m => m.create_at).ToList());
+        }
+        //Tạo nhan vien
         public ActionResult CreateUser()
         {
             List<SelectListItem> gender = new List<SelectListItem>() {
@@ -89,7 +92,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             return View(uSer);
         }
-        //Edit phim mới
+
         public ActionResult EditUser(int? id)
         {
             List<SelectListItem> roleUser = new List<SelectListItem>() {
@@ -136,7 +139,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
             return View(uSer);
         }
 
-        // POST: Admin/Product/Delete/5
         public ActionResult DeleteConfirmed(int id)
         {
             //if (Session["HoTen"] == null)

@@ -10,7 +10,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // GET: Admin/Orders
         public ActionResult ListOrders()
         {
-            return View(db.orders.OrderByDescending(n => n.id).ToList());
+            return View(db.orders.OrderByDescending(n => n.ngay_mua).ToList());
         }
 
         public ActionResult OrdDetail(int? id)
