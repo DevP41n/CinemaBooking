@@ -6,8 +6,6 @@ namespace CinemaBooking.Library
 {
     public class MoMoSecurity
     {
-        private static log4net.ILog Log { get; set; } = log4net.LogManager.GetLogger(typeof(MoMoSecurity));
-
         private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public MoMoSecurity()

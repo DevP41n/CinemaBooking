@@ -216,6 +216,14 @@ namespace CinemaBooking.Controllers
             return RedirectToAction("PaymentWithPaypal", "Payment");
         }
 
+        public ActionResult MomoPay(FormCollection f)
+        {
+            TempData["idghe"] = Request.Form["idghe"];
+            TempData["idsuatc"] = Request.Form["idsuatc"];
+            TempData["idtime"] = Request.Form["idtime"];
+            TempData["idkh"] = int.Parse(Session["MaKH"].ToString());
+            return RedirectToAction("Momo", "PaymentMomo");
+        }
         [HttpPost]
         public ActionResult AddRate(movie_rate movieRate)
         {

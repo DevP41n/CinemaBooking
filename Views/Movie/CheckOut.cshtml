@@ -13,6 +13,7 @@
     var sl = @ViewBag.soluongh;
 }
 
+
 <!-- ==========Banner-Section========== -->
 @*<section class="details-banner hero-area bg_img seat-plan-banner" data-background="/Frontend/Client/assets/images/banner/banner04.jpg">
         <div class="container">
@@ -51,6 +52,8 @@
         </div>
     </div>
 </section>
+
+
 <!-- ==========Page-Title========== -->
 <!-- ==========Movie-Section========== -->
 <div class="movie-facility padding-bottom padding-top">
@@ -58,14 +61,14 @@
         <div class="row">
             <div class="col-lg-8">
                 <!--<div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
-                    <div class="title-area">
-                        <h5 class="title">Already a Boleto  Member?</h5>
-                        <p>Sign in to earn points and make booking easier!</p>
-                    </div>
-                    <a href="#0" class="sign-in-area">-->
+            <div class="title-area">
+                <h5 class="title">Already a Boleto  Member?</h5>
+                <p>Sign in to earn points and make booking easier!</p>
+            </div>
+            <a href="#0" class="sign-in-area">-->
                 @*<i class="fas fa-user"></i><span>Sign in</span>*@
                 <!--</a>
-                </div>-->
+            </div>-->
                 <div class="checkout-widget checkout-contact">
                     <h5 class="title">Thông tin tài khoản thanh toán</h5>
                     <form class="checkout-contact-form">
@@ -79,21 +82,21 @@
                             <input type="text" placeholder="sdt" readonly value="@kh.sdt">
                         </div>
                         @*                        <div class="form-group">
-                                <input type="submit" value="Continue" class="custom-button">
-                            </div>*@
+                            <input type="submit" value="Continue" class="custom-button">
+                        </div>*@
                     </form>
                 </div>
                 @*<div class="checkout-widget checkout-contact">
-                        <h5 class="title">Promo Code </h5>
-                        <form class="checkout-contact-form">
-                            <div class="form-group">
-                                <input type="text" placeholder="Please enter promo code">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Verify" class="custom-button">
-                            </div>
-                        </form>
-                    </div>*@
+                    <h5 class="title">Promo Code </h5>
+                    <form class="checkout-contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Please enter promo code">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Verify" class="custom-button">
+                        </div>
+                    </form>
+                </div>*@
 
                 <div class="checkout-widget checkout-card mb-0">
                     <h5 class="title">Phương thức thanh toán</h5>
@@ -110,10 +113,24 @@
                                 <span>Debit Card</span>
                             </a>
                         </li>*@
-                        <li class="active">
-                            <a href="#0">
+                        <li class="active" id="paypal">
+                            <a href="#0" style="width:120px">
                                 <img src="/Frontend/Client/assets/images/payment/paypal.png" alt="payment">
                                 <span>paypal</span>
+                            </a>
+                        </li>
+
+                        <li class="" id="momo">
+                            <a href="#0" style="width:120px">
+                                <img src="/Frontend/Client/assets/images/payment/momo.png" alt="payment">
+                                <span style="display:none">momo</span>
+                            </a>
+                        </li>
+
+                        <li class="" id="taiquay">
+                            <a href="#0" style="width:120px">
+
+                                <span style="font-weight:bold">Thanh toán tại quầy</span>
                             </a>
                         </li>
                     </ul>
@@ -237,6 +254,27 @@
     <input type="text" value="@Model.id" id="idsuatc" name="idsuatc" />
 </form>
 
+<form style="display: none" action="/Movie/MomoPay" method="POST" id="Momo">
+    @{ var t = 0;
+    }
+    <input type="text" value="@foreach (var item in ghengoi)
+                                    {
+                                        t++;
+                                        var ph = ",";
+                                        if (t == sl)
+                                        {
+                                            @item
+                                        }
+                                        else
+                                        {
+                                            @item@ph
+                                        }
+
+                                    }" id="idghe" name="idghe" />
+    <input type="text" value="@time.id" id="idtime" name="idtime" />
+    <input type="text" value="@Model.id" id="idsuatc" name="idsuatc" />
+</form>
+
 @*<form style="display: none" action="/Movie/CreatePay" method="POST" id="hiddenformCreate">
         @{ var t = 0;
         }
@@ -262,9 +300,29 @@
     <script>
         $(document).ready(function () {
             $('body').on('click', '#confirm', function () {
-                document.getElementById('hiddenformwithpay').submit();
+                var pttt = $('.active a span').text();
+                if (pttt == "paypal")
+                    document.getElementById('hiddenformwithpay').submit();
+                else if (pttt == "momo")
+                    document.getElementById('Momo').submit();
+
+
                 //document.getElementById('hiddenformCreate').submit();
             });
+
+
+            $("#paypal").click(function () {
+                $("li").removeClass("active");
+                var element = document.getElementById("paypal");
+                element.classList.add("active");
+            });
+
+            $("#momo").click(function () {
+                $("li").removeClass("active");
+                var element = document.getElementById("momo");
+                element.classList.add("active");
+            });
+
         });
     </script>
 }

@@ -424,6 +424,9 @@
     <Content Include="Frontend\Client\assets\images\movie\venus.jpg" />
     <Content Include="Frontend\Client\assets\images\movie\video-button.png" />
     <Content Include="Frontend\Client\assets\images\payment\card.png" />
+    <Content Include="Frontend\Client\assets\images\payment\gifpaypal.gif" />
+    <Content Include="Frontend\Client\assets\images\payment\momo.png" />
+    <Content Include="Frontend\Client\assets\images\payment\paypal-logo.png" />
     <Content Include="Frontend\Client\assets\images\payment\paypal.png" />
     <Content Include="Frontend\Client\assets\images\philosophy\icon1.png" />
     <Content Include="Frontend\Client\assets\images\philosophy\icon2.png" />
