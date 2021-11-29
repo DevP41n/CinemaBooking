@@ -125,7 +125,7 @@ namespace CinemaBooking.Controllers
             string idtime = TempData["idtime"].ToString();
             int idsuatchieu = Convert.ToInt32(idsc);
             int idtimechieu = Convert.ToInt32(idtime);
-            var checkorder = db.orders.Where(x => x.suatchieu_id == idsuatchieu && x.status == idtimechieu).ToList();
+            var checkorder = db.orders.Where(x => x.suatchieu_id == idsuatchieu && x.idtime == idtimechieu).ToList();
             List<int> idghengoi = new List<int>();
             string[] listid = idghe.Split(',');
             for (int i = 0; i < listid.Length; i++)
@@ -215,7 +215,8 @@ namespace CinemaBooking.Controllers
             addorder.ten_phong_chieu = sc.phong_chieu.ten_phong;
             addorder.suatchieu_id = idsuatchieu;
             addorder.ngay_mua = DateTime.Now;
-            addorder.status = idtimechieu;
+            addorder.idtime = idtimechieu;
+            addorder.status = 1;
             addorder.tong_tien = idghengoi.Count() * 75000;
             addorder.so_luong_ve = idghengoi.Count();
             //addorder.code_ticket = "";

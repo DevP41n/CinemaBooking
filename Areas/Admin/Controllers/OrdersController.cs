@@ -1,4 +1,5 @@
 ﻿using CinemaBooking.Models;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -15,10 +16,24 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult OrdDetail(int? id)
         {
-            var order = db.orders.Find(id);
-            ViewBag.detail = db.order_details.Where(n => n.id_orders == id);
-
-            return View(order);
+            if(id == null)
+            {
+                return RedirectToAction("ListOrders");
+            }
+            try
+            {
+                var order = db.orders.Find(id);
+                if (order == null)
+                {
+                    return RedirectToAction("ListOrders");
+                }
+                ViewBag.detail = db.order_details.Where(n => n.id_orders == id);
+                return View(order);
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("ListOrders");
+            }
         }
 
 

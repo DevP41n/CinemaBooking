@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="CinemaBookingModel.suat_chieu" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.suatchieu_timeframe" Width="1.5" PointX="7.5" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.the_loai_phim" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CinemaBookingModel.thong_tin_cong_ty" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.TimeFrame" Width="1.5" PointX="5.25" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.user" Width="1.5" PointX="8.25" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.ve_ban" Width="1.5" PointX="10.5" PointY="12.625" IsExpanded="true" />
@@ -50,6 +49,8 @@
         <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.FK_frame_suatchieu" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CinemaBookingModel.rap_chieu" Width="1.5" PointX="3.75" PointY="19.125" />
+        <AssociationConnector Association="CinemaBookingModel.FK_RCphongchieu" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

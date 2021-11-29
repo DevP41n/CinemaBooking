@@ -31,10 +31,10 @@ namespace CinemaBooking.Models
         public string the_loai_phim { get; set; }
         public Nullable<int> id_phong_chieu { get; set; }
         public string ten_phong_chieu { get; set; }
-        public Nullable<System.DateTime> time { get; set; }
         public Nullable<System.DateTime> ngay_mua { get; set; }
         public Nullable<int> status { get; set; }
         public Nullable<int> suatchieu_id { get; set; }
+        public Nullable<int> idtime { get; set; }
     
         public virtual khach_hang khach_hang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

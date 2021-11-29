@@ -480,3 +480,28 @@ Create table suatchieu_timeframe
 	constraint FK_Suatchieu_frame foreign key (id_Suatchieu) references suat_chieu(id),
 	constraint FK_frame_suatchieu foreign key (id_Timeframe) references TimeFrame(id),
 )
+
+--Thêm Datbase
+EXEC sp_rename 'thong_tin_cong_ty', 'rap_chieu'
+
+
+alter table phong_chieu
+add id_rapchieu int NULL
+
+alter table phong_chieu
+add constraint FK_RCphongchieu foreign key(id_rapchieu) references rap_chieu(id)
+
+alter table rap_chieu
+drop column phong_chieu
+
+
+alter table orders
+drop column time;
+
+alter table orders
+add idtime int Null; 
+
+
+alter table users
+add sex int Null; 
+

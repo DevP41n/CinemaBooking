@@ -37,6 +37,7 @@ namespace CinemaBooking.Models
         [System.ComponentModel.DataAnnotations.Compare("password")]
         public string confirmpassword { get; set; }
         [Display(Name = "Số điện thoại")]
+        [Required]
         public string sdt { get; set; }
         [Required]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}")]

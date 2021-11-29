@@ -26,6 +26,7 @@ namespace CinemaBooking.Models
         public Nullable<int> so_luong_day { get; set; }
         public Nullable<int> so_luong_cot { get; set; }
         public string ten_phong { get; set; }
+        public Nullable<int> id_rapchieu { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ghe_ngoi> ghe_ngoi { get; set; }
@@ -33,5 +34,6 @@ namespace CinemaBooking.Models
         public virtual ICollection<order> orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<suat_chieu> suat_chieu { get; set; }
+        public virtual rap_chieu rap_chieu { get; set; }
     }
 }

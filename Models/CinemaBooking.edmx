@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CinemaBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="content_rating">
           <Key>
             <PropertyRef Name="ID" />
@@ -158,10 +158,10 @@
           <Property Name="the_loai_phim" Type="nvarchar" MaxLength="255" />
           <Property Name="id_phong_chieu" Type="int" />
           <Property Name="ten_phong_chieu" Type="nvarchar" MaxLength="255" />
-          <Property Name="time" Type="datetime" />
           <Property Name="ngay_mua" Type="datetime" />
           <Property Name="status" Type="int" />
           <Property Name="suatchieu_id" Type="int" />
+          <Property Name="idtime" Type="int" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -197,6 +197,20 @@
           <Property Name="so_luong_day" Type="int" />
           <Property Name="so_luong_cot" Type="int" />
           <Property Name="ten_phong" Type="nvarchar" MaxLength="255" />
+          <Property Name="id_rapchieu" Type="int" />
+        </EntityType>
+        <EntityType Name="rap_chieu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten_rap" Type="nvarchar" MaxLength="250" />
+          <Property Name="dia_chi" Type="nvarchar" MaxLength="250" />
+          <Property Name="status" Type="int" />
+          <Property Name="create_by" Type="nvarchar" MaxLength="250" />
+          <Property Name="create_at" Type="datetime" />
+          <Property Name="update_by" Type="nvarchar" MaxLength="250" />
+          <Property Name="update_at" Type="datetime" />
         </EntityType>
         <EntityType Name="su_kien">
           <Key>
@@ -243,20 +257,6 @@
           <Property Name="update_by" Type="nvarchar" MaxLength="250" />
           <Property Name="update_at" Type="datetime" />
         </EntityType>
-        <EntityType Name="thong_tin_cong_ty">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ten_rap" Type="nvarchar" MaxLength="250" />
-          <Property Name="dia_chi" Type="nvarchar" MaxLength="250" />
-          <Property Name="phong_chieu" Type="int" />
-          <Property Name="status" Type="int" />
-          <Property Name="create_by" Type="nvarchar" MaxLength="250" />
-          <Property Name="create_at" Type="datetime" />
-          <Property Name="update_by" Type="nvarchar" MaxLength="250" />
-          <Property Name="update_at" Type="datetime" />
-        </EntityType>
         <EntityType Name="TimeFrame">
           <Key>
             <PropertyRef Name="id" />
@@ -285,6 +285,7 @@
           <Property Name="create_at" Type="datetime" />
           <Property Name="update_by" Type="nvarchar" MaxLength="250" />
           <Property Name="update_at" Type="datetime" />
+          <Property Name="sex" Type="int" />
         </EntityType>
         <EntityType Name="ve_ban">
           <Key>
@@ -490,6 +491,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RCphongchieu">
+          <End Role="rap_chieu" Type="Self.rap_chieu" Multiplicity="0..1" />
+          <End Role="phong_chieu" Type="Self.phong_chieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rap_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phong_chieu">
+              <PropertyRef Name="id_rapchieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Suatchieu_frame">
           <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
           <End Role="suatchieu_timeframe" Type="Self.suatchieu_timeframe" Multiplicity="*" />
@@ -578,11 +591,11 @@
           <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phim" EntityType="Self.phim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phong_chieu" EntityType="Self.phong_chieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rap_chieu" EntityType="Self.rap_chieu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="su_kien" EntityType="Self.su_kien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="suat_chieu" EntityType="Self.suat_chieu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="suatchieu_timeframe" EntityType="Self.suatchieu_timeframe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="the_loai_phim" EntityType="Self.the_loai_phim" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeFrame" EntityType="Self.TimeFrame" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ve_ban" EntityType="Self.ve_ban" Schema="dbo" store:Type="Tables" />
@@ -650,6 +663,10 @@
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="orders" EntitySet="orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_RCphongchieu" Association="Self.FK_RCphongchieu">
+            <End Role="rap_chieu" EntitySet="rap_chieu" />
+            <End Role="phong_chieu" EntitySet="phong_chieu" />
+          </AssociationSet>
           <AssociationSet Name="FK_Suatchieu_frame" Association="Self.FK_Suatchieu_frame">
             <End Role="suat_chieu" EntitySet="suat_chieu" />
             <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
@@ -675,8 +692,7 @@
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CinemaBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -849,7 +865,6 @@
           <Property Name="the_loai_phim" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="id_phong_chieu" Type="Int32" />
           <Property Name="ten_phong_chieu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="time" Type="DateTime" Precision="3" />
           <Property Name="ngay_mua" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Int32" />
           <Property Name="suatchieu_id" Type="Int32" />
@@ -858,6 +873,7 @@
           <NavigationProperty Name="phim" Relationship="Self.Fk_PhimOrder" FromRole="orders" ToRole="phim" />
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhongChieuOrder" FromRole="orders" ToRole="phong_chieu" />
           <NavigationProperty Name="suat_chieu" Relationship="Self.FK_suatchieuorder" FromRole="orders" ToRole="suat_chieu" />
+          <Property Name="idtime" Type="Int32" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -902,6 +918,8 @@
           <NavigationProperty Name="ghe_ngoi" Relationship="Self.Fk_GhePC" FromRole="phong_chieu" ToRole="ghe_ngoi" />
           <NavigationProperty Name="orders" Relationship="Self.Fk_PhongChieuOrder" FromRole="phong_chieu" ToRole="orders" />
           <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_PhimPC" FromRole="phong_chieu" ToRole="suat_chieu" />
+          <Property Name="id_rapchieu" Type="Int32" />
+          <NavigationProperty Name="rap_chieu" Relationship="CinemaBookingModel.FK_RCphongchieu" FromRole="phong_chieu" ToRole="rap_chieu" />
         </EntityType>
         <EntityType Name="su_kien">
           <Key>
@@ -956,20 +974,6 @@
           <Property Name="update_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="list_phim_theloai" Relationship="Self.FK_list_phim_theloai_the_loai_phim" FromRole="the_loai_phim" ToRole="list_phim_theloai" />
         </EntityType>
-        <EntityType Name="thong_tin_cong_ty">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ten_rap" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="dia_chi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="phong_chieu" Type="Int32" />
-          <Property Name="status" Type="Int32" />
-          <Property Name="create_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="create_at" Type="DateTime" Precision="3" />
-          <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="update_at" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="TimeFrame">
           <Key>
             <PropertyRef Name="id" />
@@ -1000,6 +1004,7 @@
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ve_ban" Relationship="Self.Fk_VeNV" FromRole="users" ToRole="ve_ban" />
+          <Property Name="sex" Type="Int32" />
         </EntityType>
         <EntityType Name="ve_ban">
           <Key>
@@ -1301,7 +1306,6 @@
           <EntitySet Name="suat_chieu" EntityType="Self.suat_chieu" />
           <EntitySet Name="suatchieu_timeframe" EntityType="Self.suatchieu_timeframe" />
           <EntitySet Name="the_loai_phim" EntityType="Self.the_loai_phim" />
-          <EntitySet Name="thong_tin_cong_ty" EntityType="Self.thong_tin_cong_ty" />
           <EntitySet Name="TimeFrames" EntityType="Self.TimeFrame" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="ve_ban" EntityType="Self.ve_ban" />
@@ -1393,7 +1397,38 @@
             <End Role="users" EntitySet="users" />
             <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
+          <EntitySet Name="rap_chieu" EntityType="CinemaBookingModel.rap_chieu" />
+          <AssociationSet Name="FK_RCphongchieu" Association="CinemaBookingModel.FK_RCphongchieu">
+            <End Role="rap_chieu" EntitySet="rap_chieu" />
+            <End Role="phong_chieu" EntitySet="phong_chieu" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="rap_chieu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten_rap" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dia_chi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="create_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="create_at" Type="DateTime" Precision="3" />
+          <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="update_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="phong_chieu" Relationship="CinemaBookingModel.FK_RCphongchieu" FromRole="rap_chieu" ToRole="phong_chieu" />
+        </EntityType>
+        <Association Name="FK_RCphongchieu">
+          <End Type="CinemaBookingModel.rap_chieu" Role="rap_chieu" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.phong_chieu" Role="phong_chieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rap_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="phong_chieu">
+              <PropertyRef Name="id_rapchieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1553,6 +1588,7 @@
           <EntitySetMapping Name="orders">
             <EntityTypeMapping TypeName="CinemaBookingModel.order">
               <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="idtime" ColumnName="idtime" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="id_khachhang" ColumnName="id_khachhang" />
                 <ScalarProperty Name="ten_khach_hang" ColumnName="ten_khach_hang" />
@@ -1564,7 +1600,6 @@
                 <ScalarProperty Name="the_loai_phim" ColumnName="the_loai_phim" />
                 <ScalarProperty Name="id_phong_chieu" ColumnName="id_phong_chieu" />
                 <ScalarProperty Name="ten_phong_chieu" ColumnName="ten_phong_chieu" />
-                <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="ngay_mua" ColumnName="ngay_mua" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="suatchieu_id" ColumnName="suatchieu_id" />
@@ -1601,6 +1636,7 @@
           <EntitySetMapping Name="phong_chieu">
             <EntityTypeMapping TypeName="CinemaBookingModel.phong_chieu">
               <MappingFragment StoreEntitySet="phong_chieu">
+                <ScalarProperty Name="id_rapchieu" ColumnName="id_rapchieu" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="so_luong_day" ColumnName="so_luong_day" />
                 <ScalarProperty Name="so_luong_cot" ColumnName="so_luong_cot" />
@@ -1657,21 +1693,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="thong_tin_cong_ty">
-            <EntityTypeMapping TypeName="CinemaBookingModel.thong_tin_cong_ty">
-              <MappingFragment StoreEntitySet="thong_tin_cong_ty">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="ten_rap" ColumnName="ten_rap" />
-                <ScalarProperty Name="dia_chi" ColumnName="dia_chi" />
-                <ScalarProperty Name="phong_chieu" ColumnName="phong_chieu" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_at" ColumnName="create_at" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_at" ColumnName="update_at" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TimeFrames">
             <EntityTypeMapping TypeName="CinemaBookingModel.TimeFrame">
               <MappingFragment StoreEntitySet="TimeFrame">
@@ -1683,6 +1704,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="CinemaBookingModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="sex" ColumnName="sex" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ho_ten" ColumnName="ho_ten" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -1713,6 +1735,20 @@
                 <ScalarProperty Name="gia_ve_id" ColumnName="gia_ve_id" />
                 <ScalarProperty Name="ghe_id" ColumnName="ghe_id" />
                 <ScalarProperty Name="users_id" ColumnName="users_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rap_chieu">
+            <EntityTypeMapping TypeName="CinemaBookingModel.rap_chieu">
+              <MappingFragment StoreEntitySet="rap_chieu">
+                <ScalarProperty Name="update_at" ColumnName="update_at" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_at" ColumnName="create_at" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dia_chi" ColumnName="dia_chi" />
+                <ScalarProperty Name="ten_rap" ColumnName="ten_rap" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,16 +12,24 @@ namespace CinemaBooking.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class thong_tin_cong_ty
+    public partial class rap_chieu
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public rap_chieu()
+        {
+            this.phong_chieu = new HashSet<phong_chieu>();
+        }
+    
         public int id { get; set; }
         public string ten_rap { get; set; }
         public string dia_chi { get; set; }
-        public Nullable<int> phong_chieu { get; set; }
         public Nullable<int> status { get; set; }
         public string create_by { get; set; }
         public Nullable<System.DateTime> create_at { get; set; }
         public string update_by { get; set; }
         public Nullable<System.DateTime> update_at { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<phong_chieu> phong_chieu { get; set; }
     }
 }

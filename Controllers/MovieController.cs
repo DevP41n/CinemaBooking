@@ -165,7 +165,7 @@ namespace CinemaBooking.Controllers
             ViewBag.ghe = ghengoi;
             ViewBag.idtime = idtime;
             ViewBag.idsc = id;
-            var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.status == idtime);
+            var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime);
             List<int> idghedd = new List<int>();
             foreach (var item in order)
             {

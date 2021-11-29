@@ -67,6 +67,7 @@
                                                                 <input type="hidden" id="id" name="id" value="@kh.id">
                                                                 <input type="hidden" id="password" name="password" value="@kh.password">
                                                                 <input type="hidden" id="confirmpassword" name="confirmpassword" value="@kh.confirmpassword">
+                                                                <input type="hidden" id="create_at" name="create_at" value="@kh.create_at">
                                                                 <div class="form-group">
                                                                     <label for="name">Tài khoản <span>*</span></label>
                                                                     <input type="text" id="username" name="username" value="@kh.username" style="background:#0a1e5e;" readonly>
@@ -74,19 +75,23 @@
                                                                 <div class="form-group">
                                                                     <label for="email">Họ Tên <span></span></label>
                                                                     <input type="text" id="ho_ten" name="ho_ten" value="@kh.ho_ten" required>
+                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="ho_ten" data-valmsg-replace="true"></span>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="email">Email <span></span></label>
                                                                     <input type="email" id="email" name="email" value="@kh.email" required>
+                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="email" data-valmsg-replace="true"></span>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="email">Số điện thoại <span></span></label>
                                                                     <input type="text" id="sđt" name="sdt" value="@kh.sdt" required>
+                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="sdt" data-valmsg-replace="true"></span>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <label for="email">Địa chỉ <span></span></label>
                                                                     <input type="text" id="dia_chi" name="dia_chi" value="@kh.dia_chi" autocomplete="off" required>
+                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="dia_chi" data-valmsg-replace="true"></span>
                                                                 </div>
                                                                 <div class="form-group" id="saveinfo">
                                                                     <input type="submit" value="Lưu thông tin">
@@ -106,19 +111,23 @@
                                                                 <input type="hidden" id="sdt" name="sdt" value="@kh.sdt">
                                                                 <input type="hidden" id="password" name="password" value="@kh.password">
                                                                 <input type="hidden" id="cmnd" name="cmnd" value="@kh.cmnd">
+                                                                <input type="hidden" id="create_at" name="create_at" value="@kh.create_at">
                                                                 <div class="form-group">
                                                                     <label for="name">Mật khẩu cũ <span>*</span></label>
                                                                     <input type="password" id="mkcu" name="mkcu">
+                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="mkcu" data-valmsg-replace="true"></span>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <label for="name">Mật khẩu mới <span>*</span></label>
                                                                     <input type="password" id="mkmoi" name="mkmoi">
+                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="mkmoi" data-valmsg-replace="true"></span>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <label for="name">Xác nhận mật khẩu mới <span>*</span></label>
                                                                     <input type="password" id="xnmk" name="xnmk">
+                                                                    <span class="field-validation-valid text-danger" data-valmsg-for="xnmk" data-valmsg-replace="true"></span>
                                                                 </div>
 
                                                                 <div class="form-group">
@@ -184,7 +193,7 @@
                                                                         }
                                                                     </td>
                                                                     <td>@item.phong_chieu.ten_phong</td>
-                                                                    @{ var time = db.TimeFrames.Find(item.status); }
+                                                                    @{ var time = db.TimeFrames.Find(item.idtime); }
                                                                     <td>@time.Time</td>
                                                                     <td>
                                                                         @Html.Raw(String.Format("{0:0,0} VNĐ", item.tong_tien))

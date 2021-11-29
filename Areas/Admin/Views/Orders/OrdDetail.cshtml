@@ -69,7 +69,7 @@
                                                         <td class="text-main text-bold" style="font-weight:bold"> Phòng:</td>
                                                         <td class="text-center">@Model.phong_chieu.ten_phong</td>
                                                     </tr>
-                                                    @{ var gio = db.TimeFrames.Find(Model.status);}
+                                                    @{ var gio = db.TimeFrames.Find(Model.idtime);}
                                                     <tr>
                                                         <td class="text-main text-bold" style="font-weight:bold"> Lịch chiếu:</td>
                                                         <td class="text-center">@Html.FormatValue(@Model.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @gio.Time</td>

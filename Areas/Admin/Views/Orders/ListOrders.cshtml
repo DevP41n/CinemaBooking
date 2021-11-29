@@ -97,7 +97,7 @@
                                                 </td>
 
 
-                                                @{var it = db.TimeFrames.Find(item.status);}
+                                                @{var it = db.TimeFrames.Find(item.idtime);}
                                                 <td>
                                                     @Html.FormatValue(@item.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @(it.Time)
                                                 </td>

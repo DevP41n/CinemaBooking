@@ -37,6 +37,7 @@ namespace CinemaBooking.Models
         public Nullable<System.DateTime> create_at { get; set; }
         public string update_by { get; set; }
         public Nullable<System.DateTime> update_at { get; set; }
+        public Nullable<int> sex { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ve_ban> ve_ban { get; set; }

@@ -242,6 +242,9 @@
     <Compile Include="Models\phong_chieu.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\rap_chieu.cs">
+      <DependentUpon>CinemaBooking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\suatchieu_timeframe.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
@@ -252,9 +255,6 @@
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\the_loai_phim.cs">
-      <DependentUpon>CinemaBooking.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\thong_tin_cong_ty.cs">
       <DependentUpon>CinemaBooking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TimeFrame.cs">

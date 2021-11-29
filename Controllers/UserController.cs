@@ -113,10 +113,19 @@ namespace CinemaBooking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ProfileAccount(khach_hang kh)
         {
+            if (kh.sdt.Length >10)
+            {
+                TempData["Warning"] = "Cập nhật không thành công!";
+
+                string ur = "/TransHistory/" + kh.id;
+                return RedirectToAction(ur);
+            }
             db.Configuration.ValidateOnSaveEnabled = false;
+            kh.update_at = DateTime.Now;
             db.Entry(kh).State = EntityState.Modified;
             db.SaveChanges();
             TempData["Message"] = "Cập nhật thành công!";
+
             string url = "/TransHistory/" + kh.id;
             return RedirectToAction(url);
         }
@@ -137,24 +146,28 @@ namespace CinemaBooking.Controllers
         {
             var mkc = Request.Form["mkcu"];
             var mkcuu = MyString.ToMD5(mkc);
-            if (kh.password != mkcuu)
+            if (ModelState.IsValid)
             {
-                TempData["Warning"] = "Sai mật khẩu cũ!";
-                string urla = "/TransHistory/" + kh.id;
-                return RedirectToAction(urla);
+                if (kh.password != mkcuu)
+                {
+                    TempData["Warning"] = "Sai mật khẩu cũ!";
+                    string urla = "/TransHistory/" + kh.id;
+                    return RedirectToAction(urla);
+                }
+                if (Request.Form["mkmoi"] != Request.Form["xnmk"])
+                {
+                    TempData["Warning"] = "Mật khẩu không khớp!";
+                    string urlaz = "/TransHistory/" + kh.id;
+                    return RedirectToAction(urlaz);
+                }
+                var matkhau = Request.Form["mkmoi"];
+                kh.password = MyString.ToMD5(matkhau);
+                kh.confirmpassword = MyString.ToMD5(matkhau);
+                kh.update_at = DateTime.Now;
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.Entry(kh).State = EntityState.Modified;
+                db.SaveChanges();
             }
-            if (Request.Form["mkmoi"] != Request.Form["xnmk"])
-            {
-                TempData["Warning"] = "Mật khẩu không khớp!";
-                string urlaz = "/TransHistory/" + kh.id;
-                return RedirectToAction(urlaz);
-            }
-            var matkhau = Request.Form["mkmoi"];
-            kh.password = MyString.ToMD5(matkhau);
-            kh.confirmpassword = MyString.ToMD5(matkhau);
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.Entry(kh).State = EntityState.Modified;
-            db.SaveChanges();
             TempData["Message"] = "Đổi mật khẩu thành công!";
             string url = "/TransHistory/" + kh.id;
             return RedirectToAction(url);
@@ -174,7 +187,7 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Không đúng tài khoản của bạn!";
                 return RedirectToAction("Index", "Home");
             }
-            var orders = db.orders.Where(n => n.id_khachhang == idkh).OrderByDescending(n=>n.id).ToList();
+            var orders = db.orders.Where(n => n.id_khachhang == idkh).OrderByDescending(n => n.id).ToList();
             return View(orders);
         }
 
@@ -254,13 +267,13 @@ namespace CinemaBooking.Controllers
         public ActionResult Forgot(string email)
         {
             khach_hang KH = db.khach_hang.Where(x => x.email == email).FirstOrDefault();
-            if(KH == null)
+            if (KH == null)
             {
-                return Json(new { success = false});
+                return Json(new { success = false });
 
             }
             var rsinsert = new khach_hang().InsertForgot(KH);
-            if( rsinsert > 0)
+            if (rsinsert > 0)
             {
                 var id = rsinsert;
                 khach_hang khachhang = db.khach_hang.Find(id);
@@ -288,7 +301,7 @@ namespace CinemaBooking.Controllers
                     var num = rd.Next(1, 1000000).ToString();
                     new SendMail().SendMailTo(khachhang.email.ToString(), "Xác nhận mật khẩu [CINEMA]", mail);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return Json(new { success = false });
                 }
