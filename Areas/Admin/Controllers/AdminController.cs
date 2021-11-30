@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using CinemaBooking.Models;
+using System;
+using System.Web.Mvc;
 
 namespace CinemaBooking.Areas.Admin.Controllers
 {
@@ -16,6 +18,18 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
+        }
+
+        public ActionResult Testtime()
+        {
+            CinemaBookingEntities db = new CinemaBookingEntities();
+            var order = db.orders.Find(34);
+            var time = order.ngay_mua - DateTime.Now;
+            var ngay = order.ngay_mua.ToString();
+            var tach  =   ngay.Split(' ');
+            TimeSpan tinh = new TimeSpan(0,15,0);
+            var test = order.ngay_mua + tinh;
+            return View();
         }
     }
 }

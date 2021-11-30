@@ -143,7 +143,11 @@
             <div id="Seat"></div>
         </div>
     </section>
-
+@*Form*@
+<form action="/Movie/CheckSeat" method="post" style="display:none" id="formcheckseat">
+    <input type="text" name="giochieu" id="giochieu" value="0" />
+    <input type="text" name="suatchieu" id="suatchieu" value="0" />
+</form>
 
     <!-- ==========Movie-Section========== -->
     @section Scripts{
@@ -214,8 +218,12 @@
                 $('body').on('click', '.item', function () {
                     var idsc = $(this).data('sc');
                     var idtime = $(this).data('id');
+                    //truyền input cho checkseat
+                    $("#giochieu").val(idtime);
+                    $("#suatchieu").val(idsc);
                     var htmls = "";
                     htmls += "<a href='/Movie/BookSeat?idd=" + idsc + "&idtimee=" + idtime + "' class='custom-button seatPlanButton'>";
+                    //htmls += "<a class='custom-button seatPlanButton submitcheck'>";
                     htmls += "Chọn ghế";
                     htmls += "<i class='fas fa-angle-right'></i></a>";
                     $('#Seat').html(htmls);
@@ -232,8 +240,11 @@
                         currentDate = Date.now();
                     } while (currentDate - date < milliseconds);
                 }
-
-
+                //submit checkseat
+                $('body').on('click', '.submitcheck', function () {
+                    $('#formcheckseat').submit();
+                });
+                
 
             });
         </script>

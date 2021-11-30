@@ -216,6 +216,7 @@ namespace CinemaBooking.Controllers
             addorder.suatchieu_id = idsuatchieu;
             addorder.ngay_mua = DateTime.Now;
             addorder.idtime = idtimechieu;
+            addorder.pay_method = "Thanh toán Paypal";
             addorder.status = 1;
             addorder.tong_tien = idghengoi.Count() * 75000;
             addorder.so_luong_ve = idghengoi.Count();

@@ -504,4 +504,6 @@ add idtime int Null;
 
 alter table users
 add sex int Null; 
-
+--Thêm 1 ít database
+alter table orders
+add pay_method Nvarchar(255);

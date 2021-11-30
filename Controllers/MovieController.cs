@@ -2,6 +2,7 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -137,6 +138,28 @@ namespace CinemaBooking.Controllers
             return Json(data: new { times, idtimes, Count, idsc }, JsonRequestBehavior.AllowGet);
         }
 
+        //[HttpPost]
+        //public ActionResult CheckSeat(string suatchieu, string giochieu)
+        //{
+        //    int idsc = Convert.ToInt32(suatchieu);
+        //    int idtime = Convert.ToInt32(giochieu);
+        //    //ghế đang chờ thanh toán
+        //    TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
+        //    var orderss = db.orders.Where(n => n.suatchieu_id == idsc && n.idtime == idtime && n.status == 10);
+        //    var counttt = orderss.Count();
+        //    List<int> idgheddss = new List<int>();
+        //    foreach (var itemm in orderss)
+        //    {
+        //        if (itemm.ngay_mua + tinhgio <= DateTime.Now)
+        //        {
+        //            itemm.status = 0;
+        //            db.Entry(itemm).State = EntityState.Modified;
+        //        }
+        //    }
+        //    db.SaveChanges();
+        //    return RedirectToAction("BookSeat", "Movie", new { idd = suatchieu, idtimee = giochieu });
+        //}
+
 
         //Chọn ghế
         public ActionResult BookSeat(string idd, string idtimee)
@@ -165,7 +188,32 @@ namespace CinemaBooking.Controllers
             ViewBag.ghe = ghengoi;
             ViewBag.idtime = idtime;
             ViewBag.idsc = id;
-            var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime);
+            //ghế đang chờ thanh toán
+            TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
+            //Status 2: đang chờ thanh toán tại quầy
+            var orderss = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
+            var counttt = orderss.Count();
+            List<int> idgheddss = new List<int>();
+            foreach (var itemm in orderss)
+            {
+                if (itemm.ngay_mua + tinhgio <= DateTime.Now)
+                {
+                //    var idghed = db.order_details.Where(n => n.id_orders == itemm.id);
+                //    foreach (var ii in idghed)
+                //    {
+                //        idgheddss.Add((int)ii.id_ghe);
+                //    }
+                //}
+                //else
+                //{
+                    itemm.status = 0;
+                    db.Entry(itemm).State = EntityState.Modified;
+                }
+            }
+            db.SaveChanges();
+             
+            var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 1 ||
+            n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
             List<int> idghedd = new List<int>();
             foreach (var item in order)
             {
@@ -177,6 +225,7 @@ namespace CinemaBooking.Controllers
             }
 
             ViewBag.idghedat = idghedd;
+
             return View(ghengoi);
         }
         //Thanh toán
@@ -224,6 +273,16 @@ namespace CinemaBooking.Controllers
             TempData["idkh"] = int.Parse(Session["MaKH"].ToString());
             return RedirectToAction("Momo", "PaymentMomo");
         }
+
+        public ActionResult ReceptionPay(FormCollection f)
+        {
+            TempData["idghe"] = Request.Form["idghe"];
+            TempData["idsuatc"] = Request.Form["idsuatc"];
+            TempData["idtime"] = Request.Form["idtime"];
+            TempData["idkh"] = int.Parse(Session["MaKH"].ToString());
+            return RedirectToAction("withReceptionPay", "ReceptionPayment");
+        }
+
         [HttpPost]
         public ActionResult AddRate(movie_rate movieRate)
         {

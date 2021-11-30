@@ -162,6 +162,7 @@
           <Property Name="status" Type="int" />
           <Property Name="suatchieu_id" Type="int" />
           <Property Name="idtime" Type="int" />
+          <Property Name="pay_method" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -874,6 +875,7 @@
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhongChieuOrder" FromRole="orders" ToRole="phong_chieu" />
           <NavigationProperty Name="suat_chieu" Relationship="Self.FK_suatchieuorder" FromRole="orders" ToRole="suat_chieu" />
           <Property Name="idtime" Type="Int32" />
+          <Property Name="pay_method" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -1588,6 +1590,7 @@
           <EntitySetMapping Name="orders">
             <EntityTypeMapping TypeName="CinemaBookingModel.order">
               <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="pay_method" ColumnName="pay_method" />
                 <ScalarProperty Name="idtime" ColumnName="idtime" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="id_khachhang" ColumnName="id_khachhang" />
