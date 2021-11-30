@@ -429,6 +429,7 @@
     <Content Include="Frontend\Client\assets\images\payment\momo.png" />
     <Content Include="Frontend\Client\assets\images\payment\paypal-logo.png" />
     <Content Include="Frontend\Client\assets\images\payment\paypal.png" />
+    <Content Include="Frontend\Client\assets\images\payment\storrreee.png" />
     <Content Include="Frontend\Client\assets\images\philosophy\icon1.png" />
     <Content Include="Frontend\Client\assets\images\philosophy\icon2.png" />
     <Content Include="Frontend\Client\assets\images\philosophy\icon3.png" />

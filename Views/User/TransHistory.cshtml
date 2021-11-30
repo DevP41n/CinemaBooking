@@ -13,18 +13,18 @@
 <section class="main-page-header speaker-banner bg_img" data-background="./assets/images/banner/banner07.jpg" style="padding: 130px 0 10px;">
     <div class="container">
         @*<div class="speaker-banner-content">
-            <h2 class="title">ĐỔI MẬT KHẨU</h2>
-            <ul class="breadcrumb">
-                <li>
-                    <a href="/Home/Index">
-                        Trang chủ
-                    </a>
-                </li>
-                <li>
-                    Đổi mật khẩu
-                </li>
-            </ul>
-        </div>*@
+                <h2 class="title">ĐỔI MẬT KHẨU</h2>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/Home/Index">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li>
+                        Đổi mật khẩu
+                    </li>
+                </ul>
+            </div>*@
     </div>
 </section>
 <!-- ==========Banner-Section========== -->
@@ -49,7 +49,7 @@
                                                 <li class="active">
                                                     Quản lý tài khoản
                                                 </li>
-                                                <li >
+                                                <li>
                                                     Lịch sử giao dịch
                                                 </li>
                                             </ul>
@@ -199,6 +199,12 @@
                                                                         @Html.Raw(String.Format("{0:0,0} VNĐ", item.tong_tien))
                                                                     </td>
                                                                     @{tongtien = tongtien + (Double)item.tong_tien;}
+                                                                    @if(item.status == 2)
+                                                                    { 
+                                                                        <td>
+                                                                            <a href="/User/CancelTicket?id=@item.id" class="btn btn-primary">Hủy dặt</a>
+                                                                        </td>
+                                                                    }
                                                                 </tr>
                                                             }
                                                         </table>
@@ -212,7 +218,7 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     </section>
                 </div>
             </div>
