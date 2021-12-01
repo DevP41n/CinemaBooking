@@ -145,74 +145,88 @@ namespace CinemaBooking.Controllers
             }
             //Lấy ra ViewBag ngày với điều kiện ngày không được trùng.
             ViewBag.date = ng.Distinct();
+            var checkdate = ng.Distinct().Count();
+            if (checkdate <= 0)
+            {
+                TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         public ActionResult ShowTime(string ngay, string idphim)
         {
-            var ng = Convert.ToDateTime(ngay);
-            int idfilm = Convert.ToInt32(idphim);
-            var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
-
-            //Tạo list để add giờ, id giờ, id suất chiếu
-            List<String> times = new List<String>();
-            List<String> idtimes = new List<String>();
-            List<String> idsc = new List<String>();
-            string nhay = "-";
-            times.Add(nhay);
-            idtimes.Add(nhay);
-            idsc.Add(nhay);
-
-            //Chạy vòng lặp trong list suất chiếu lấy từ ngày chiếu và id phim.
-            foreach (var item in suatchieu)
+            if (ngay != "")
             {
-                var dem = 0;
-                var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.id_Timeframe).ToList();
+                var ng = Convert.ToDateTime(ngay);
+                int idfilm = Convert.ToInt32(idphim);
+                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
 
-                //Chạy vòng lặp trong list suất chiếu timeframe để thêm từ suất chiếu vào list.
-                foreach (var time in suatChieuTime)
+                //Tạo list để add giờ, id giờ, id suất chiếu
+                List<String> times = new List<String>();
+                List<String> idtimes = new List<String>();
+                List<String> idsc = new List<String>();
+                string nhay = "-";
+                times.Add(nhay);
+                idtimes.Add(nhay);
+                idsc.Add(nhay);
+
+                //Chạy vòng lặp trong list suất chiếu lấy từ ngày chiếu và id phim.
+                foreach (var item in suatchieu)
                 {
-                    var datenow = DateTime.UtcNow.ToString("d");
-                    if (ng == Convert.ToDateTime(datenow))
+                    var dem = 0;
+                    var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.id_Timeframe).ToList();
+
+                    //Chạy vòng lặp trong list suất chiếu timeframe để thêm từ suất chiếu vào list.
+                    foreach (var time in suatChieuTime)
                     {
-                        //Tạo biến thời gian hiện tại để so sánh với giờ của suất chiếu.
-                        TimeSpan timenow = DateTime.Now.TimeOfDay;
-                        if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn hơn giờ của hiện tại thì thêm vào, nếu không thì không thêm.
+                        var datenow = DateTime.UtcNow.ToString("d");
+                        if (ng == Convert.ToDateTime(datenow))
+                        {
+                            //Tạo biến thời gian hiện tại để so sánh với giờ của suất chiếu.
+                            TimeSpan timenow = DateTime.Now.TimeOfDay;
+                            if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn hơn giờ của hiện tại thì thêm vào, nếu không thì không thêm.
+                            {
+                                times.Add((time.TimeFrame.Time).ToString());
+                                idtimes.Add(time.TimeFrame.id.ToString());
+                                idsc.Add(item.id.ToString());
+                                dem++;
+                            }
+                        }
+                        else // Nếu ngày chiếu cũng là ngày mơi ngày mốt gì đó thì cho biết đếm -- để nó add dô list luôn
+                             // vì suất chiếu ngày = ngày hiện tại thì mới cho ++ :D
                         {
                             times.Add((time.TimeFrame.Time).ToString());
                             idtimes.Add(time.TimeFrame.id.ToString());
                             idsc.Add(item.id.ToString());
-                            dem++;
+                            dem--;
                         }
                     }
-                    else // Nếu ngày chiếu cũng là ngày mơi ngày mốt gì đó thì cho biết đếm -- để nó add dô list luôn
-                         // vì suất chiếu ngày = ngày hiện tại thì mới cho ++ :D
+
+                    //Chạy xong vòng lặp, Nếu biến dem > 0 thì thêm dấu - vào để phân biệt              
+                    if (dem > 0)
                     {
-                        times.Add((time.TimeFrame.Time).ToString());
-                        idtimes.Add(time.TimeFrame.id.ToString());
-                        idsc.Add(item.id.ToString());
-                        dem--;
+                        times.Add(nhay);
+                        idtimes.Add(nhay);
+                        idsc.Add(nhay);
                     }
-                }
+                    else if (dem < 0)
+                    {
+                        times.Add(nhay);
+                        idtimes.Add(nhay);
+                        idsc.Add(nhay);
+                    }
 
-                //Chạy xong vòng lặp, Nếu biến dem > 0 thì thêm dấu - vào để phân biệt              
-                if (dem > 0)
-                {
-                    times.Add(nhay);
-                    idtimes.Add(nhay);
-                    idsc.Add(nhay);
                 }
-                else if (dem < 0)
-                {
-                    times.Add(nhay);
-                    idtimes.Add(nhay);
-                    idsc.Add(nhay);
-                }
+                var Count = times.Count();
 
+                return Json(data: new { times, idtimes, Count, idsc }, JsonRequestBehavior.AllowGet);
             }
-            var Count = times.Count();
-
-            return Json(data: new { times, idtimes, Count, idsc }, JsonRequestBehavior.AllowGet);
+            else
+            {
+                TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //[HttpPost]
