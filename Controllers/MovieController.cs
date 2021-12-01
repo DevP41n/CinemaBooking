@@ -103,27 +103,40 @@ namespace CinemaBooking.Controllers
             foreach (var item in ngay)
             {
                 var ngaychieu = Convert.ToDateTime(item.ngay_chieu);
+                var datenow = DateTime.UtcNow.ToString("d");
 
                 if ((ngaychieu + congngay) > DateTime.Now)  //Nếu ngày chiếu của suất chiếu cộng thêm 1 ngày mà lớn hơn ngày hiện tại thì thêm vào list.
                 {
                     var dem = 0;
-                    //Lấy ra suất chiếu có trong item.ngay_chieu của mảng ngay
-                    var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id).ToList();
-                    foreach (var sctoday in suatchieu)
+                    if (ngaychieu == Convert.ToDateTime(datenow))
                     {
-                        //Lấy ra danh sách giờ chiếu theo id suất chiếu của mảng suatchieu
-                        var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == sctoday.id).OrderBy(x => x.id_Timeframe).ToList();
-                        TimeSpan timenow = DateTime.Now.TimeOfDay;
-                        foreach (var time in suatChieuTime)
+                        //Lấy ra suất chiếu có trong item.ngay_chieu của mảng ngay
+                        var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id).ToList();
+                        foreach (var sctoday in suatchieu)
                         {
-                            if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn giờ của hiện tại thì có suất chiếu giờ đó, tăng biến đếm lên 1.
+                            //Lấy ra danh sách giờ chiếu theo id suất chiếu của mảng suatchieu
+                            var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == sctoday.id).OrderBy(x => x.id_Timeframe).ToList();
+                            TimeSpan timenow = DateTime.Now.TimeOfDay;
+                            foreach (var time in suatChieuTime)
                             {
-                                dem++;
+                                if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn giờ của hiện tại thì có suất chiếu giờ đó, tăng biến đếm lên 1.
+                                {
+                                    dem++;
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        dem = -1; // Nếu ngày chiếu là ngày mơi ngày mốt gì đó thì cho biết đếm = -1 để nó add thẳng dô list luôn :D
+                    }
+
                     if (dem > 0)   // Nếu biến đếm > 0 thì add ngày vào (vì có suất chiếu trong ngày)
                                    // nếu = 0 thì không add (vì không có suất chiếu nào trong ngày ).
+                    {
+                        ng.Add(item.ngay_chieu);
+                    }
+                    if (dem < 0)
                     {
                         ng.Add(item.ngay_chieu);
                     }
@@ -159,20 +172,37 @@ namespace CinemaBooking.Controllers
                 //Chạy vòng lặp trong list suất chiếu timeframe để thêm từ suất chiếu vào list.
                 foreach (var time in suatChieuTime)
                 {
-
-                    //Tạo biến thời gian hiện tại để so sánh với giờ của suất chiếu.
-                    TimeSpan timenow = DateTime.Now.TimeOfDay;
-                    if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn hơn giờ của hiện tại thì thêm vào, nếu không thì không thêm.
+                    var datenow = DateTime.UtcNow.ToString("d");
+                    if (ng == Convert.ToDateTime(datenow))
+                    {
+                        //Tạo biến thời gian hiện tại để so sánh với giờ của suất chiếu.
+                        TimeSpan timenow = DateTime.Now.TimeOfDay;
+                        if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn hơn giờ của hiện tại thì thêm vào, nếu không thì không thêm.
+                        {
+                            times.Add((time.TimeFrame.Time).ToString());
+                            idtimes.Add(time.TimeFrame.id.ToString());
+                            idsc.Add(item.id.ToString());
+                            dem++;
+                        }
+                    }
+                    else // Nếu ngày chiếu cũng là ngày mơi ngày mốt gì đó thì cho biết đếm -- để nó add dô list luôn
+                         // vì suất chiếu ngày = ngày hiện tại thì mới cho ++ :D
                     {
                         times.Add((time.TimeFrame.Time).ToString());
                         idtimes.Add(time.TimeFrame.id.ToString());
                         idsc.Add(item.id.ToString());
-                        dem++;
+                        dem--;
                     }
                 }
 
                 //Chạy xong vòng lặp, Nếu biến dem > 0 thì thêm dấu - vào để phân biệt              
                 if (dem > 0)
+                {
+                    times.Add(nhay);
+                    idtimes.Add(nhay);
+                    idsc.Add(nhay);
+                }
+                else if (dem < 0)
                 {
                     times.Add(nhay);
                     idtimes.Add(nhay);
