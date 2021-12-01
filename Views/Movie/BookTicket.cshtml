@@ -97,10 +97,10 @@
                 <span class="type">Ngày</span>
 
                 <select class="select-bar showdate" id="showdate">
-                   
+
                     @foreach (var date in ViewBag.date)
                     {
-                        
+
                         <option>@Html.FormatValue(@date, "{0:dd/MM/yyyy}")</option>
 
                     }
@@ -109,12 +109,10 @@
             </div>
 
         </form>
-        <span style="display:none" id="idphim" >@ViewBag.idphim</span>
+        <span style="display:none" id="idphim">@ViewBag.idphim</span>
         <div class="row justify-content-center">
             <div class="col-lg-9 mb-5 mb-lg-0">
                 <ul class="seat-plan-wrapper bg-five" id="thisTime">
-                    
-
                 </ul>
 
             </div>
@@ -130,123 +128,125 @@
         </div>
     </div>
 </div>
-    <!-- Modal E-->
+<!-- Modal E-->
 
-    <section class="window-warning inActive" id="modalseat">
-        <div class="lay"></div>
-        <div class="warning-item">
-            <h6 class="subtitle">Xin chào bạn! </h6>
-            <h4 class="title">Vui lòng chọn ghế !</h4>
-            <div class="thumb">
-                <img src="/Frontend/Client/assets/images/movie/seat-plan.png" alt="movie">
-            </div>
-            <div id="Seat"></div>
+<section class="window-warning inActive" id="modalseat">
+    <div class="lay"></div>
+    <div class="warning-item">
+        <h6 class="subtitle">Xin chào bạn! </h6>
+        <h4 class="title">Vui lòng chọn ghế !</h4>
+        <div class="thumb">
+            <img src="/Frontend/Client/assets/images/movie/seat-plan.png" alt="movie">
         </div>
-    </section>
+        <div id="Seat"></div>
+    </div>
+</section>
 @*Form*@
 <form action="/Movie/CheckSeat" method="post" style="display:none" id="formcheckseat">
     <input type="text" name="giochieu" id="giochieu" value="0" />
     <input type="text" name="suatchieu" id="suatchieu" value="0" />
 </form>
 
-    <!-- ==========Movie-Section========== -->
-    @section Scripts{
-        <script>
-            $(document).ready(function () {
-                var idsuatchieu = $(".current").text();
-                var idp = $("#idphim").text();
-                loadTime(idsuatchieu, idp);
-                //Hiển thị suất chiếu theo ngày chiếu
-                $('#showdate').change(function () {
-                    var idsuat = $("#showdate option:selected").text();
-                    var idfilm = $("#idphim").text();
-                    loadTime(idsuat,idfilm);
-                });
+<!-- ==========Movie-Section========== -->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var idsuatchieu = $(".current").text();
+            var idp = $("#idphim").text();
+            loadTime(idsuatchieu, idp);
+            //Hiển thị suất chiếu theo ngày chiếu
+            $('#showdate').change(function () {
+                var idsuat = $("#showdate option:selected").text();
+                var idfilm = $("#idphim").text();
+                loadTime(idsuat, idfilm);
+            });
 
-                // Load suất chiếu
-                function loadTime(ids, idf) {
-                    $.ajax({
-                        url: '/Movie/ShowTime/',
-                        type: 'GET',
-                        data: {
-                            ngay: ids,
-                            idphim: idf,
-                            
-                        },
-                        success: function (res) {
-                            if (res.Count != null) {
-                                var time = res.times;
-                                var idschieu = res.idsc;
-                                var idtimes = res.idtimes;
-                                var rap = 1;
-                                var html = "";
-                                html += "";
-                                for (let i = 0; i < res.Count; i++) {
-                                    if (i < res.Count-1) {
-                                        if (time[i] == "-") {
-                                            html += "<li >";
-                                            html += "<div class='movie-name'>";
-                                            html += "<a href='#0' class='name'>";
-                                            html += "Hyper Cinema "+rap+"";
-                                            html += "</a>";
-                                            html += "<div class='location-icon'>";
-                                            html += "<i class='fas fa-map-marker-alt'></i></div></div>";
-                                            html += "<div class='movie-schedule' style='width:auto' >";
-                                            rap++;
-                                        }
-                                        else {
-                                            const hms = time[i];
-                                            const [hours, minutes, seconds] = hms.split(':');
-                                            const timefinal = (hours) + ":" + (minutes);
-                                            html += "<div class='item' style = 'margin-right: 20px' data-id = '" + idtimes[i] + "' data-sc = '" + idschieu[i] + "'> ";
-                                            html += timefinal;
-                                            html += "</div>";
-                                            if (time[i + 1] == "-") {
-                                                html += "</div></li >";
-                                            }
-                                        }
+            // Load suất chiếu
+            function loadTime(ids, idf) {
+                $.ajax({
+                    url: '/Movie/ShowTime/',
+                    type: 'GET',
+                    data: {
+                        ngay: ids,
+                        idphim: idf,
+
+                    },
+                    success: function (res) {
+                        if (res.Count != null) {
+                            var time = res.times;
+                            var idschieu = res.idsc;
+                            var idtimes = res.idtimes;
+                            var rap = 1;
+
+                            var html = "";
+                            html += "";
+                            for (let i = 0; i < res.Count; i++) {
+                                if (i < res.Count - 1) {
+                                    if (time[i] == "-") {
+                                        html += "<li >";
+                                        html += "<div class='movie-name'>";
+                                        html += "<a href='#0' class='name'>";
+                                        html += "Hyper Cinema " + rap + "";
+                                        html += "</a>";
+                                        html += "<div class='location-icon'>";
+                                        html += "<i class='fas fa-map-marker-alt'></i></div></div>";
+                                        html += "<div class='movie-schedule' style='width:auto' >";
+                                        rap++;                                                                                
+                                    }
+                                    else {
+                                        const hms = time[i];
+                                        const [hours, minutes, seconds] = hms.split(':');
+                                        const timefinal = (hours) + ":" + (minutes);
+                                        html += "<div class='item' style = 'margin-right: 20px' data-id = '" + idtimes[i] + "' data-sc = '" + idschieu[i] + "'> ";
+                                        html += timefinal;
+                                        html += "</div>";
+
+                                    }
+                                    if (time[i + 1] == "-") {
+                                        html += "</div></li >";
                                     }
                                 }
-                                $('#thisTime').html(html);
-
                             }
+                            $('#thisTime').html(html);
+
                         }
-                    });
-                }
-
-                //Click vào suất chiếu
-                $('body').on('click', '.item', function () {
-                    var idsc = $(this).data('sc');
-                    var idtime = $(this).data('id');
-                    //truyền input cho checkseat
-                    $("#giochieu").val(idtime);
-                    $("#suatchieu").val(idsc);
-                    var htmls = "";
-                    htmls += "<a href='/Movie/BookSeat?idd=" + idsc + "&idtimee=" + idtime + "' class='custom-button seatPlanButton'>";
-                    //htmls += "<a class='custom-button seatPlanButton submitcheck'>";
-                    htmls += "Chọn ghế";
-                    htmls += "<i class='fas fa-angle-right'></i></a>";
-                    $('#Seat').html(htmls);
-                    sleep(100);
-
-                    $("#modalseat").removeClass("inActive").addClass("Active");
+                    }
                 });
+            }
 
-                //Sleep
-                function sleep(milliseconds) {
-                    const date = Date.now();
-                    let currentDate = null;
-                    do {
-                        currentDate = Date.now();
-                    } while (currentDate - date < milliseconds);
-                }
-                //submit checkseat
-                $('body').on('click', '.submitcheck', function () {
-                    $('#formcheckseat').submit();
-                });
-                
+            //Click vào suất chiếu
+            $('body').on('click', '.item', function () {
+                var idsc = $(this).data('sc');
+                var idtime = $(this).data('id');
+                //truyền input cho checkseat
+                $("#giochieu").val(idtime);
+                $("#suatchieu").val(idsc);
+                var htmls = "";
+                htmls += "<a href='/Movie/BookSeat?idd=" + idsc + "&idtimee=" + idtime + "' class='custom-button seatPlanButton'>";
+                //htmls += "<a class='custom-button seatPlanButton submitcheck'>";
+                htmls += "Chọn ghế";
+                htmls += "<i class='fas fa-angle-right'></i></a>";
+                $('#Seat').html(htmls);
+                sleep(100);
 
+                $("#modalseat").removeClass("inActive").addClass("Active");
             });
-        </script>
 
-    }
+            //Sleep
+            function sleep(milliseconds) {
+                const date = Date.now();
+                let currentDate = null;
+                do {
+                    currentDate = Date.now();
+                } while (currentDate - date < milliseconds);
+            }
+            //submit checkseat
+            $('body').on('click', '.submitcheck', function () {
+                $('#formcheckseat').submit();
+            });
+
+
+        });
+    </script>
+
+}
