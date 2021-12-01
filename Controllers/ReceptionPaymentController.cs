@@ -39,7 +39,7 @@ namespace CinemaBooking.Controllers
             {
                 foreach (var i in checkorder)
                 {
-                    var checkdetails = db.order_details.Where(x => x.id_ghe == item && x.id_orders == i.id);
+                    var checkdetails = db.order_details.Where(x => x.id_ghe == item && x.id_orders == i.id && i.status >= 1);
                     if (checkdetails.Count() != 0)
                     {
                         dem++;
@@ -123,19 +123,61 @@ namespace CinemaBooking.Controllers
                 var numrd = rd.Next(1, 1000000).ToString();
                 new SendMail().SendMailTo(kh.email.ToString(), "Xác nhận thanh toán [CINEMA" + numrd + "]", mail);
                 TempData["Message"] = "Đặt vé thành công!";
-                return RedirectToAction("Success", "ReceptionPayment", new { id = addorder.id });
+                return RedirectToAction("Success", "ReceptionPayment", new { idord = addorder.id });
             }
             catch (Exception)
             {
 
                 TempData["Message"] = "Đặt vé thành công!";
-                return RedirectToAction("Success", "ReceptionPayment", new { id = addorder.id });
+                return RedirectToAction("Success", "ReceptionPayment", new { idord = addorder.id });
             }
         }
 
         public ActionResult Success(int? idord)
         {
+            if (Session["TenCus"] == null)
+            {
+                TempData["Warning"] = "Vui lòng đăng nhập";
+                return RedirectToAction("SignIn", "User");
+            }
+
+            if(idord==null)
+            {
+                TempData["Warning"] = "Không phải tài khoản của bạn";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var makh = Convert.ToInt32(Session["MaKH"]);
             var ord = db.orders.Find(idord);
+            if(ord.id_khachhang != makh)
+            {
+                TempData["Warning"] = "Không phải tài khoản của bạn";
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.kh = db.khach_hang.Find(ord.id_khachhang);
+            ViewBag.film = db.phims.Find(ord.id_phim);
+            var dsghe = db.order_details.Where(x => x.id_orders == ord.id);
+            int count = dsghe.Count();
+            int dem = 0;
+            string dayghe = "";
+            foreach (var i in dsghe)
+            {
+                dem++;
+                var ghe = db.ghe_ngoi.Find(i.id_ghe);
+                if (dem == count)
+                {
+                    dayghe += ghe.Row + ghe.Col;
+                }
+                else
+                {
+                    dayghe += ghe.Row + ghe.Col + ",";
+                }
+            }
+
+            ViewBag.ghe = dayghe;
+            TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
+            var tinhthem = ord.ngay_mua + tinhgio;
+            ViewBag.time = Convert.ToDateTime(tinhthem).ToString("MM/dd/yyyy HH:mm:ss");
             return View(ord);
         }
 

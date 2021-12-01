@@ -140,7 +140,7 @@ namespace CinemaBooking.Controllers
             {
                 foreach (var i in checkorder)
                 {
-                    var checkdetails = db.order_details.Where(x => x.id_ghe == item && x.id_orders == i.id);
+                    var checkdetails = db.order_details.Where(x => x.id_ghe == item && x.id_orders == i.id && i.status >= 1);
                     if (checkdetails.Count() != 0)
                     {
                         dem++;

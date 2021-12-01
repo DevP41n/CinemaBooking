@@ -4,6 +4,150 @@
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
-<h2>Đặt vé thành công</h2>
+@{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();
+    var kh = @ViewBag.kh;
+    var film = @ViewBag.film;
+    var ngaymua = @ViewBag.time;}
+
+<section class="page-title bg-one" style="margin-top:60px">
+    <div class="container">
+        <div class="page-title-area">
+            <div class="item md-order-1">
+                <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" value="Trở về">
+            </div>
+        </div>
+    </div>
+</section>
 
 
+<div class="movie-facility padding-bottom padding-top">
+    <div class="container">
+        <h5 id="countdown" style="float:right;margin-bottom:30px;color:#de3b0d"></h5>
+        <h5 class="title" style="text-align:center;margin-bottom:30px">ĐẶT VÉ THÀNH CÔNG!</h5>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="checkout-widget checkout-contact">
+                    <h5 class="title">Thông tin tài khoản thanh toán</h5>
+                    <form class="checkout-contact-form">
+                        <div class="form-group">
+                            <label style="font-weight:bold">Tên:</label>
+                            <input type="text" placeholder="Tên" value="@kh.ho_ten" readonly data-id="@Model.id" id="idord">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight:bold">Email:</label>
+                            <input type="text" placeholder="Mail" value="@kh.email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight:bold">Số điện thoại:</label>
+                            <input type="text" placeholder="sdt" readonly value="@kh.sdt">
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="checkout-widget checkout-contact">
+                    <a style="font-weight:bold;margin-bottom:10px;color:white" href="/Movie/MovieDetail/@film.slug">PHIM : @film.ten_phim</a>
+                    <a href="/Movie/MovieDetail/@film.slug"><img src="/images/movies/background/@film.anhbackground" alt="Alternate Text" class="img-thumbnail" /></a>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4">
+                <div class="booking-summery bg-one">
+                    <h4 class="title">Vé</h4>
+                    <ul>
+                        <li>
+                            <h6 class="subtitle">Ghế: @ViewBag.ghe</h6>
+                            <span class="info">Số lượng vé : @Model.so_luong_ve</span>
+                            <span class="info">Bạn cần phải thanh toán : @Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(Model.so_luong_ve) * 75000)))</span>
+                        </li>
+                       @*Đang thêm QRCODE*@
+                    </ul>
+                    <ul class="side-shape">
+                        <li>
+
+                        </li>
+                        <li>
+                            <h6 class="subtitle">
+                                <span>
+                                    Vị trí:
+                                </span>
+                            </h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        var countDownDate = new Date("@ngaymua").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+            //check trạng thái
+            var ido = $("#idord").data("id");
+            checksecond(ido);
+            // Get today's date and time
+            var now = new Date().getTime();
+
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="demo"
+            document.getElementById("countdown").innerHTML =  minutes + ":" + seconds;
+
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                //Hủy Vé
+                Fix(ido);
+                document.getElementById("countdown").innerHTML = "Đã quá thời gian thanh toán!";
+            }
+        }, 1000);
+
+        function Fix(id) {
+            $.ajax({
+                url: '/User/Check/',
+                type: 'POST',
+                data: {
+                    id: id,
+                },
+                success: function (res) {
+                }
+            });
+        }
+
+        function checksecond(id) {
+            $.ajax({
+                url: '/User/CheckSecond/',
+                type: 'POST',
+                data: {
+                    id: id,
+                },
+                success: function (res) {
+                    if (res.success == true) {
+                        clearInterval(x);
+                        document.getElementById("countdown").innerHTML = "Đã thanh toán!";
+                    }
+                    if (res.success == false) {
+                        clearInterval(x);
+                        document.getElementById("countdown").innerHTML = "Vé của bạn đã được hủy!";
+                    }
+                }
+            });
+        }
+
+    </script>
+}

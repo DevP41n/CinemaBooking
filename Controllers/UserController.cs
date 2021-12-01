@@ -359,5 +359,35 @@ namespace CinemaBooking.Controllers
             string url = "/TransHistory/" + ord.id_khachhang;
             return RedirectToAction(url);
         }
+
+        [HttpPost]
+        public ActionResult Check(string id)
+        {
+            int idord = Convert.ToInt32(id);
+            order ord = db.orders.Find(idord);
+            if (ord.status == 2)
+            {
+                ord.status = 0;
+                db.Entry(ord).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public ActionResult CheckSecond(string id)
+        {
+            int idord = Convert.ToInt32(id);
+            order ord = db.orders.Find(idord);
+            if (ord.status == 1)
+            {
+                return Json(new { success = true });
+            }
+            if(ord.status==0)
+            {
+                return Json(new { success = false });
+            }
+            return Json(new { check = false });
+        }
     }
 }
