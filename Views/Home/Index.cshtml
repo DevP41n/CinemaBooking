@@ -3,7 +3,7 @@
     ViewBag.Title = "Rạp phim";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
-@{ int count = 1;int count2 = 1;int b=0 ; CinemaBooking.Models.CinemaBookingEntities dbmovie = new CinemaBooking.Models.CinemaBookingEntities();}
+@{ int count = 1;int count2 = 1; int b = 0; CinemaBooking.Models.CinemaBookingEntities dbmovie = new CinemaBooking.Models.CinemaBookingEntities();}
 <!-- ==========Banner-Section========== -->
 <!-- owl-carousel Banner Start -->
 <section class="pt-0 pb-0">
@@ -16,8 +16,7 @@
                          data-autoplay="true" data-loop="true" data-margin="30">
                         @foreach (var banner in dbmovie.phims.Where(x => x.status == 1 && x.loai_phim_chieu == 1).OrderByDescending(x => x.ngay_cong_chieu))
                         {
-                            if (b == 5)
-                            {
+                            if(b == 5){
                                 break;
                             }
                             <div class="item" style="background: url('../../images/movies/background/@banner.anhbackground')">
@@ -46,7 +45,7 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="gen-movie-action" style="padding-top: 5px; padding-bottom: 5px; height: 128px; transition-delay: .7s;">
+                                                <div class="gen-movie-action"  style="padding-top: 5px; padding-bottom: 5px; height: 128px; transition-delay: .7s;">
                                                     <a class="overflow-text-4">@Html.Raw(banner.chi_tiet)</a>
                                                 </div>
                                                 <div class="gen-movie-action" style="margin-top:10px">
@@ -69,36 +68,7 @@
                             </div>
                             b++;
                         }
-                        <div class="item" style="background: url('../../images/news/@ViewBag.sk.anh')">
-                            <div class="gen-movie-contain h-100">
-                                <div class="container h-100">
-                                    <div class="row align-items-center h-100">
-                                        <div class="col-xl-6" style="padding-top: 47px;">
-                                            <div class="gen-tag-line"><span></span></div>
-                                            <div class="gen-movie-info">
-                                                <h3>@ViewBag.sk.tieu_de</h3>
-                                            </div>
 
-                                            <div class="gen-movie-action" style="padding-top: 5px; padding-bottom: 5px; height: 128px; transition-delay: .7s;">
-                                                <a class="overflow-text-4">@Html.Raw(ViewBag.sk.noi_dung)</a>
-                                            </div>
-                                            <div class="gen-movie-action" style="margin-top:10px">
-                                                <div class="gen-btn-container button-1">
-                                                    <a href="@Url.Action("NewsDetail","News", new {id= ViewBag.sk.slug })" class="gen-button" style="border-radius: 40px;">
-                                                        <span class="text">Chi tiết</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4" style="margin-left:auto">
-                                            <a href="@Url.Action("NewsDetail","News", new {id = ViewBag.sk.slug })">
-                                                <img src="~/images/news/@ViewBag.sk.anh" alt="event" height="550" style="">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
@@ -154,12 +124,23 @@
                                         <h5 class="title m-0" style="padding: 14px 0px;">
                                             <a href="@Url.Action("MovieDetail","Movie", new { id=movie.slug })" class="title-movie-home overflow-text-2">@movie.ten_phim</a>
                                         </h5>
-                                        <ul class="movie-rating-percent">
-                                            <li style=" margin-left: auto;">
+                                        <!--<ul class="movie-rating-percent" style="padding: 5px 0px;">-->
+                                            @*<li>
+                                                    <div class="thumb">
+                                                        <img src="~/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">88%</span>
+                                                </li>
+                                                <li>
+                                                    <div class="thumb">
+                                                        <img src="~/Frontend/Client/assets/images/movie/cake.png" alt="movie">
+                                                    </div>
+                                                    <span class="content">88%</span>
+                                                </li>*@
+                                            <!--<li style=" margin-left: auto;">
                                                 <span class="content">@Html.FormatValue(movie.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                             </li>
-                                        </ul>
-
+                                        </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +214,8 @@
                 <div class="tab-item active">
                     <!-- slide cho ưu đãi-->
                     <div class="owl-carousel owl-theme tab-slider">
-                        @foreach (var item in dbmovie.su_kien.OrderByDescending(x => x.create_at))
+                        @{CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
+                        @foreach (var item in db.su_kien.OrderByDescending(x => x.create_at))
                         {
                             <div class="item">
                                 <div class="event-grid">

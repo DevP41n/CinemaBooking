@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="CinemaBookingModel.phim" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.phong_chieu" Width="1.5" PointX="6" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.su_kien" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CinemaBookingModel.suat_chieu" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.suatchieu_timeframe" Width="1.5" PointX="7.5" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.the_loai_phim" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CinemaBookingModel.TimeFrame" Width="1.5" PointX="5.25" PointY="24.375" IsExpanded="true" />
@@ -41,16 +42,15 @@
         <AssociationConnector Association="CinemaBookingModel.Fk_Oder" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhimOrder" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_PhongChieuOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="CinemaBookingModel.FK_suatchieuorder" ManuallyRouted="false" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_PhimSC" ManuallyRouted="false" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" ManuallyRouted="false" />
+        <AssociationConnector Association="CinemaBookingModel.FK_Suatchieu_frame" ManuallyRouted="false" />
+        <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.FK_frame_suatchieu" ManuallyRouted="false" />
         <AssociationConnector Association="CinemaBookingModel.Fk_VeNV" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CinemaBookingModel.rap_chieu" Width="1.5" PointX="3.75" PointY="19.125" />
         <AssociationConnector Association="CinemaBookingModel.FK_RCphongchieu" />
-        <EntityTypeShape EntityType="CinemaBookingModel.suat_chieu" Width="1.5" PointX="5.375" PointY="12.625" />
-        <AssociationConnector Association="CinemaBookingModel.FK_suatchieuorder" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_PhimSC" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_PhimPC" />
-        <AssociationConnector Association="CinemaBookingModel.FK_Suatchieu_frame" />
-        <AssociationConnector Association="CinemaBookingModel.Fk_VeSC" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

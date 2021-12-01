@@ -14,7 +14,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // GET: Admin/Showtime
         public ActionResult ListShowTime()
         {
-            return View(db.suat_chieu.OrderByDescending(x=>x.ngay_chieu).ToList());
+            return View(db.suat_chieu.ToList());
         }
 
         public ActionResult CreateShowTime()
@@ -32,8 +32,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
             suatchieu_timeframe sctime = new suatchieu_timeframe();
-            // suat chieu: status 1 là trong quá trình, 2 là đã chiếu
-            suatChieu.status = "1";
             db.suat_chieu.Add(suatChieu);
             db.SaveChanges();
             if (ModelState.IsValid)

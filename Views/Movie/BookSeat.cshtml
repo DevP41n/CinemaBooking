@@ -8,17 +8,22 @@
     CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 
 <!-- ==========Banner-Section========== -->
-<section class="details-banner hero-area bg_img seat-plan-banner" style=" padding-top: 40px; padding-bottom: 30px;" @*data-background="../../images/movies/background/@ViewBag.tenphim.anhbackground"*@>
+<section class="details-banner hero-area bg_img seat-plan-banner" data-background="../../images/movies/background/@ViewBag.tenphim.anhbackground">
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two">
+                <h3 class="title">@ViewBag.tenphim.ten_phim</h3>
+                <div class="tags">
+                    <a>@ViewBag.tenphim.thoi_luong phút</a>
+                    <a>@ViewBag.tenphim.ngon_ngu</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 <!-- ==========Banner-Section========== -->
 <!-- ==========Page-Title========== -->
-<!--<section class="page-title bg-one" style=" padding: 15px 0px">
+<section class="page-title bg-one">
     <div class="container">
         <div class="page-title-area">
             <div class="item md-order-1">
@@ -28,66 +33,104 @@
 
             <div class="item date-item">
                 <div class="tags">
-                    <a class="bookseat-taskbar">@ViewBag.tenphim.ten_phim</a>
-                </div>-->
-                @*<span class="date">@Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</span>*@
+                    <a class="bookseat-taskbar">Giờ chiếu: @ViewBag.giochieu</a>
+                    <a class="bookseat-taskbar">|</a>
+                    <a class="bookseat-taskbar">Ngày @Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</a>
+                </div>
+@*<span class="date">@Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</span>*@
                 @*<select class="select-bar">
-                        <option value="sc1">09:40</option>
-                        <option value="sc2">13:45</option>
-                        <option value="sc3">15:45</option>
-                        <option value="sc4">19:50</option>
-                    </select>*@
-            <!--</div>
-            <div class="item">-->
-                @*<h5 class="title">05:00</h5>
-        <p>Mins Left</p>*@
-                <!--<a class="bookseat-taskbar">Giờ chiếu: @ViewBag.giochieu</a>
-                <br />
-                <a class="bookseat-taskbar">Ngày @Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</a>
-                <br />
-                <a class="bookseat-taskbar">Thời lượng: @ViewBag.tenphim.thoi_luong phút</a>
+            <option value="sc1">09:40</option>
+            <option value="sc2">13:45</option>
+            <option value="sc3">15:45</option>
+            <option value="sc4">19:50</option>
+        </select>*@
             </div>
+        <div class="item">
+            @*<h5 class="title">05:00</h5>
+            <p>Mins Left</p>*@
+        </div>
         </div>
     </div>
-</section>-->
+</section>
 <!-- ==========Page-Title========== -->
 <!-- ==========Movie-Section========== -->
-<div class="seat-plan-section padding-bottom">
+<div class="seat-plan-section padding-bottom padding-top">
     <div class="container">
         <div class="screen-area">
-            <div class="page-title-area">
-                <div class="item ">
-                    <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" style="font-weight: 700; background-image: -webkit-linear-gradient( 169deg, #181e72 17%, #523a82 63%, #ef0d0da3 100%); " value="Trở về">
-                </div>
-
-                <div class="item " style=" margin-left: 6%;">
-                    @*<span style="font-size: 21px;">Tên phim:</span>*@ <a style="font-size: 24px; padding: 10px; background: #233d7e; border-radius: 14px; font-weight: 700;">
-                    @ViewBag.tenphim.ten_phim</a>
-                </div>
-                <div class="item">
-                    @*<h5 class="title">05:00</h5>
-                <p>Mins Left</p>*@
-                    <a class="bookseat-taskbar">Giờ chiếu: @ViewBag.giochieu</a>
-                    <br />
-                    <a class="bookseat-taskbar">Ngày @Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</a>
-                    <br />
-                    <a class="bookseat-taskbar">Thời lượng: @ViewBag.tenphim.thoi_luong phút</a>
-                </div>
-            </div>
-            <h4 class="screen" @*style="width:250px"*@>Màn hình</h4>
+            <h4 class="screen">Màn hình</h4>
             <div class="screen-thumb">
                 <img src="/Frontend/Client/assets/images/movie/screen-thumb.png" alt="movie">
             </div>
             <h5 class="subtitle"></h5>
             <div class="screen-wrapper">
                 <ul class="seat-area">
+                    @*<li class="seat-line">
+            <span>G</span>
+            <ul class="seat--area">
+                <li class="front-seat">
+                    <ul>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                    </ul>
+                </li>
+                <li class="front-seat">
+                    <ul>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                    </ul>
+                </li>
+                <li class="front-seat">
+                    <ul>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                        <li class="single-seat">
+                            <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <span>G</span>
+        </li>*@
 
                     @{ var count = 0; }
                     @foreach (var item in ViewBag.ghe)
                     {
                         if (item.Col == 1)
                         {
-                            <li class="seat-line" style=" width: 50%; margin: auto;">
+                            <li class="seat-line">
                                 <span>@item.Row</span>
                                 <ul class="seat--area" style="width: calc(70% - 60 px );">
                                     @foreach (var it in Model.Where(m => m.Row == item.Row))
@@ -212,30 +255,29 @@
                             </li>
                         }
                     }
-                </ul>
-            </div>
+            </ul>
+                    </div>
         </div>
-            <div class="proceed-book bg_img" data-background="/Frontend/Client/assets/images/movie/movie-bg-proceed.jpg">
-                <div class="proceed-to-book">
-                    <div class="book-item">
-                        <span>Ghế đã chọn:</span>
-                        <input type="text" style="width:500px" readonly class="title" id="tenghe" />
-                        <input type="hidden" style="width:500px" readonly class="title" id="idgheinput" />
-                        <input type="hidden" style="width:500px" readonly class="title" id="idtime" value="@ViewBag.idtime" />
-                        <input type="hidden" style="width:500px" readonly class="title" id="idsc" value="@ViewBag.idsc" />
-                    </div>
-                    <div class="book-item">
-                        <span>Tổng giá</span>
-                        <input  type="hidden" readonly style="width:100px" class="title" id="giatien" value="0" />
-                        <a class="title" readonly style="width:100px;border: 0.5px solid groove;" id="giatienshow">0</a>
-                        VNĐ
-                    </div>
-                    <div class="book-item">
-                        <button @*href="@Url.Action("CheckOut","Movie", new { id = @ViewBag.idtime, idtime = @ViewBag.idsc})"*@ class="custom-button" id="checkout">Tiếp</button>
-                    </div>
+        <div class="proceed-book bg_img" data-background="/Frontend/Client/assets/images/movie/movie-bg-proceed.jpg">
+            <div class="proceed-to-book">
+                <div class="book-item">
+                    <span>Ghế đã chọn:</span>
+                    <input type="text" style="width:500px" readonly class="title" id="tenghe" />
+                    <input type="hidden" style="width:500px" readonly class="title" id="idgheinput" />
+                    <input type="hidden" style="width:500px" readonly class="title" id="idtime" value="@ViewBag.idtime"/>
+                    <input type="hidden" style="width:500px" readonly class="title" id="idsc" value="@ViewBag.idsc"/>
+                </div>
+                <div class="book-item">
+                    <span>Tổng giá</span>
+                    <input type="text" readonly style="width:100px" class="title" id="giatien" value="0" />
+                    VNĐ
+                </div>
+                <div class="book-item">
+                    <button @*href="@Url.Action("CheckOut","Movie", new { id = @ViewBag.idtime, idtime = @ViewBag.idsc})"*@ class="custom-button" id="checkout">Tiếp</button>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 <!-- ==========Movie-Section========== -->
 
@@ -262,13 +304,7 @@
                 var tien = $('#giatien').val();
                 var dongia = "75000";
                 var tongtien = parseInt(tien) + parseInt(dongia);
-                function format1(n, currency) {
-                    return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
-                        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
-                    });
-                }
                 $('#giatien').val(tongtien);
-                document.getElementById("giatienshow").textContent = format1(tongtien,"");
                 $(id).removeClass('UnAct').addClass('Act');
             });
 
@@ -316,15 +352,7 @@
                 var tien = $('#giatien').val();
                 var dongia = "75000";
                 var tongtien = parseInt(tien) - parseInt(dongia);
-                function format1(n, currency) {
-                    return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
-                        return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
-                    });
-                }
-                format1(tongtien);
-                
                 $('#giatien').val(tongtien);
-                document.getElementById("giatienshow").textContent = format1(tongtien,"");
             });
 
             $('body').on('click', '#checkout', function () {

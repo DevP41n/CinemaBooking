@@ -4665,9 +4665,9 @@ input[type="submit"] {
 }
 
 @media (min-width: 576px) {
-    .screen {
-        margin-bottom: 15px;
-    }
+  .screen {
+    margin-bottom: 60px;
+  }
 }
 
 .screen-thumb {
@@ -4681,9 +4681,9 @@ input[type="submit"] {
 }
 
 @media (min-width: 576px) {
-    .screen-thumb {
-        margin-bottom: 35px;
-    }
+  .screen-thumb {
+    margin-bottom: 60px;
+  }
 }
 
 .screen-area .subtitle {
@@ -4770,7 +4770,7 @@ input[type="submit"] {
 }
 
 .seat-area .seat-line ul.seat--area {
-  width: calc(100% - 40px);
+  width: calc(100% - 60px);
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
@@ -4810,34 +4810,26 @@ input[type="submit"] {
   position: relative;
 }
 
-    .single-seat .sit-num {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        text-transform: uppercase;
-        font-size: 14px;
-        font-weight: 600;
-    }
-        .single-seat .sit-num:hover {
-            color: black;
-            font-weight: 700;
-        }
+.single-seat .sit-num {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  font-size: 14px;
+}
 
 @media (max-width: 991px) {
-    .single-seat .sit-num {
-        width: 100%;
-        font-size: 12px;
-        text-align: center;
-        font-weight: 600;
-    }
+  .single-seat .sit-num {
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+  }
 }
 
 .single-seat:hover .sit-num {
-    /*  display: none;*/
-    color: black  ;
-    font-weight: 700;
+  display: none;
 }
 
 @media (max-width: 767px) {

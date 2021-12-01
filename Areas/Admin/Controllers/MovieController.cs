@@ -466,24 +466,5 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             return RedirectToAction("ListContentRating");
         }
-        public ActionResult CheckDateMovie()
-        {
-            foreach (var item in db.phims.Where(x => x.loai_phim_chieu == 2))
-            {
-                if (item.ngay_cong_chieu <= DateTime.Now)
-                {
-                    foreach (var sc in db.suat_chieu.Where(s => s.phim_id == item.id))
-                    {
-                        phim Phim = db.phims.Find(item.id);
-                        Phim.loai_phim_chieu = 1;
-                        db.Entry(Phim).State = EntityState.Modified;
-                    }
-
-
-                }
-            }
-            db.SaveChanges();
-            return RedirectToAction("ListMovie");
-        }
     }
 }

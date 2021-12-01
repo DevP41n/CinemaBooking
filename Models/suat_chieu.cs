@@ -30,7 +30,7 @@ namespace CinemaBooking.Models
         public Nullable<System.DateTime> ngay_chieu { get; set; }
         public Nullable<int> phim_id { get; set; }
         public Nullable<int> phong_chieu_id { get; set; }
-        public string status { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
         public virtual phim phim { get; set; }
