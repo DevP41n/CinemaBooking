@@ -507,3 +507,7 @@ add sex int Null;
 --Thêm 1 ít database
 alter table orders
 add pay_method Nvarchar(255);
+
+-- thêm trạng thái suất chiếu; * Mới*
+alter table suat_chieu
+add status char(1) Null;

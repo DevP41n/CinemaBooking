@@ -237,6 +237,7 @@
           <Property Name="ngay_chieu" Type="date" />
           <Property Name="phim_id" Type="int" />
           <Property Name="phong_chieu_id" Type="int" />
+          <Property Name="status" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="suatchieu_timeframe">
           <Key>
@@ -873,9 +874,9 @@
           <NavigationProperty Name="order_details" Relationship="Self.Fk_Oder" FromRole="orders" ToRole="order_details" />
           <NavigationProperty Name="phim" Relationship="Self.Fk_PhimOrder" FromRole="orders" ToRole="phim" />
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhongChieuOrder" FromRole="orders" ToRole="phong_chieu" />
-          <NavigationProperty Name="suat_chieu" Relationship="Self.FK_suatchieuorder" FromRole="orders" ToRole="suat_chieu" />
           <Property Name="idtime" Type="Int32" />
           <Property Name="pay_method" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="suat_chieu" Relationship="CinemaBookingModel.FK_suatchieuorder" FromRole="order" ToRole="suat_chieu" />
         </EntityType>
         <EntityType Name="phim">
           <Key>
@@ -907,7 +908,7 @@
           <NavigationProperty Name="list_phim_dienvien" Relationship="Self.FK_list_phim_dienvien_phim" FromRole="phim" ToRole="list_phim_dienvien" />
           <NavigationProperty Name="list_phim_theloai" Relationship="Self.FK_list_phim_theloai_phim" FromRole="phim" ToRole="list_phim_theloai" />
           <NavigationProperty Name="orders" Relationship="Self.Fk_PhimOrder" FromRole="phim" ToRole="orders" />
-          <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_PhimSC" FromRole="phim" ToRole="suat_chieu" />
+          <NavigationProperty Name="suat_chieu" Relationship="CinemaBookingModel.Fk_PhimSC" FromRole="phim" ToRole="suat_chieu" />
         </EntityType>
         <EntityType Name="phong_chieu">
           <Key>
@@ -919,9 +920,9 @@
           <Property Name="ten_phong" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ghe_ngoi" Relationship="Self.Fk_GhePC" FromRole="phong_chieu" ToRole="ghe_ngoi" />
           <NavigationProperty Name="orders" Relationship="Self.Fk_PhongChieuOrder" FromRole="phong_chieu" ToRole="orders" />
-          <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_PhimPC" FromRole="phong_chieu" ToRole="suat_chieu" />
           <Property Name="id_rapchieu" Type="Int32" />
           <NavigationProperty Name="rap_chieu" Relationship="CinemaBookingModel.FK_RCphongchieu" FromRole="phong_chieu" ToRole="rap_chieu" />
+          <NavigationProperty Name="suat_chieu" Relationship="CinemaBookingModel.Fk_PhimPC" FromRole="phong_chieu" ToRole="suat_chieu" />
         </EntityType>
         <EntityType Name="su_kien">
           <Key>
@@ -938,21 +939,6 @@
           <Property Name="update_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="suat_chieu">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="gio_bat_dau" Type="Time" Precision="7" />
-          <Property Name="ngay_chieu" Type="DateTime" Precision="0" />
-          <Property Name="phim_id" Type="Int32" />
-          <Property Name="phong_chieu_id" Type="Int32" />
-          <NavigationProperty Name="orders" Relationship="Self.FK_suatchieuorder" FromRole="suat_chieu" ToRole="orders" />
-          <NavigationProperty Name="phim" Relationship="Self.Fk_PhimSC" FromRole="suat_chieu" ToRole="phim" />
-          <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhimPC" FromRole="suat_chieu" ToRole="phong_chieu" />
-          <NavigationProperty Name="suatchieu_timeframe" Relationship="Self.FK_Suatchieu_frame" FromRole="suat_chieu" ToRole="suatchieu_timeframe" />
-          <NavigationProperty Name="ve_ban" Relationship="Self.Fk_VeSC" FromRole="suat_chieu" ToRole="ve_ban" />
-        </EntityType>
         <EntityType Name="suatchieu_timeframe">
           <Key>
             <PropertyRef Name="id" />
@@ -960,8 +946,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_Suatchieu" Type="Int32" />
           <Property Name="id_Timeframe" Type="Int32" />
-          <NavigationProperty Name="suat_chieu" Relationship="Self.FK_Suatchieu_frame" FromRole="suatchieu_timeframe" ToRole="suat_chieu" />
           <NavigationProperty Name="TimeFrame" Relationship="Self.FK_frame_suatchieu" FromRole="suatchieu_timeframe" ToRole="TimeFrame" />
+          <NavigationProperty Name="suat_chieu" Relationship="CinemaBookingModel.FK_Suatchieu_frame" FromRole="suatchieu_timeframe" ToRole="suat_chieu" />
         </EntityType>
         <EntityType Name="the_loai_phim">
           <Key>
@@ -1021,8 +1007,8 @@
           <Property Name="users_id" Type="Int32" />
           <NavigationProperty Name="ghe_ngoi" Relationship="Self.Fk_VeGhe" FromRole="ve_ban" ToRole="ghe_ngoi" />
           <NavigationProperty Name="gia_ve" Relationship="Self.Fk_VeGia" FromRole="ve_ban" ToRole="gia_ve" />
-          <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_VeSC" FromRole="ve_ban" ToRole="suat_chieu" />
           <NavigationProperty Name="user" Relationship="Self.Fk_VeNV" FromRole="ve_ban" ToRole="users" />
+          <NavigationProperty Name="suat_chieu" Relationship="CinemaBookingModel.Fk_VeSC" FromRole="ve_ban" ToRole="suat_chieu" />
         </EntityType>
         <Association Name="FK_phim_content_rating">
           <End Role="content_rating" Type="Self.content_rating" Multiplicity="0..1" />
@@ -1204,66 +1190,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_suatchieuorder">
-          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
-          <End Role="orders" Type="Self.order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="suat_chieu">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="orders">
-              <PropertyRef Name="suatchieu_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_PhimSC">
-          <End Role="phim" Type="Self.phim" Multiplicity="0..1" />
-          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="phim">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="suat_chieu">
-              <PropertyRef Name="phim_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_PhimPC">
-          <End Role="phong_chieu" Type="Self.phong_chieu" Multiplicity="0..1" />
-          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="phong_chieu">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="suat_chieu">
-              <PropertyRef Name="phong_chieu_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Suatchieu_frame">
-          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
-          <End Role="suatchieu_timeframe" Type="Self.suatchieu_timeframe" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="suat_chieu">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="suatchieu_timeframe">
-              <PropertyRef Name="id_Suatchieu" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Fk_VeSC">
-          <End Role="suat_chieu" Type="Self.suat_chieu" Multiplicity="0..1" />
-          <End Role="ve_ban" Type="Self.ve_ban" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="suat_chieu">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ve_ban">
-              <PropertyRef Name="suat_chieu_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_frame_suatchieu">
           <End Role="TimeFrame" Type="Self.TimeFrame" Multiplicity="0..1" />
           <End Role="suatchieu_timeframe" Type="Self.suatchieu_timeframe" Multiplicity="*" />
@@ -1305,7 +1231,6 @@
           <EntitySet Name="phims" EntityType="Self.phim" />
           <EntitySet Name="phong_chieu" EntityType="Self.phong_chieu" />
           <EntitySet Name="su_kien" EntityType="Self.su_kien" />
-          <EntitySet Name="suat_chieu" EntityType="Self.suat_chieu" />
           <EntitySet Name="suatchieu_timeframe" EntityType="Self.suatchieu_timeframe" />
           <EntitySet Name="the_loai_phim" EntityType="Self.the_loai_phim" />
           <EntitySet Name="TimeFrames" EntityType="Self.TimeFrame" />
@@ -1371,26 +1296,6 @@
             <End Role="phong_chieu" EntitySet="phong_chieu" />
             <End Role="orders" EntitySet="orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_suatchieuorder" Association="Self.FK_suatchieuorder">
-            <End Role="suat_chieu" EntitySet="suat_chieu" />
-            <End Role="orders" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_PhimSC" Association="Self.Fk_PhimSC">
-            <End Role="phim" EntitySet="phims" />
-            <End Role="suat_chieu" EntitySet="suat_chieu" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_PhimPC" Association="Self.Fk_PhimPC">
-            <End Role="phong_chieu" EntitySet="phong_chieu" />
-            <End Role="suat_chieu" EntitySet="suat_chieu" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Suatchieu_frame" Association="Self.FK_Suatchieu_frame">
-            <End Role="suat_chieu" EntitySet="suat_chieu" />
-            <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
-          </AssociationSet>
-          <AssociationSet Name="Fk_VeSC" Association="Self.Fk_VeSC">
-            <End Role="suat_chieu" EntitySet="suat_chieu" />
-            <End Role="ve_ban" EntitySet="ve_ban" />
-          </AssociationSet>
           <AssociationSet Name="FK_frame_suatchieu" Association="Self.FK_frame_suatchieu">
             <End Role="TimeFrame" EntitySet="TimeFrames" />
             <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
@@ -1403,6 +1308,27 @@
           <AssociationSet Name="FK_RCphongchieu" Association="CinemaBookingModel.FK_RCphongchieu">
             <End Role="rap_chieu" EntitySet="rap_chieu" />
             <End Role="phong_chieu" EntitySet="phong_chieu" />
+          </AssociationSet>
+          <EntitySet Name="suat_chieu" EntityType="CinemaBookingModel.suat_chieu" />
+          <AssociationSet Name="FK_suatchieuorder" Association="CinemaBookingModel.FK_suatchieuorder">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_PhimSC" Association="CinemaBookingModel.Fk_PhimSC">
+            <End Role="phim" EntitySet="phims" />
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_PhimPC" Association="CinemaBookingModel.Fk_PhimPC">
+            <End Role="phong_chieu" EntitySet="phong_chieu" />
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Suatchieu_frame" Association="CinemaBookingModel.FK_Suatchieu_frame">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="suatchieu_timeframe" EntitySet="suatchieu_timeframe" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_VeSC" Association="CinemaBookingModel.Fk_VeSC">
+            <End Role="suat_chieu" EntitySet="suat_chieu" />
+            <End Role="ve_ban" EntitySet="ve_ban" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="rap_chieu">
@@ -1428,6 +1354,82 @@
             </Principal>
             <Dependent Role="phong_chieu">
               <PropertyRef Name="id_rapchieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="suat_chieu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gio_bat_dau" Type="Time" Precision="7" />
+          <Property Name="ngay_chieu" Type="DateTime" Precision="0" />
+          <Property Name="phim_id" Type="Int32" />
+          <Property Name="phong_chieu_id" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="orders" Relationship="CinemaBookingModel.FK_suatchieuorder" FromRole="suat_chieu" ToRole="order" />
+          <NavigationProperty Name="phim" Relationship="CinemaBookingModel.Fk_PhimSC" FromRole="suat_chieu" ToRole="phim" />
+          <NavigationProperty Name="phong_chieu" Relationship="CinemaBookingModel.Fk_PhimPC" FromRole="suat_chieu" ToRole="phong_chieu" />
+          <NavigationProperty Name="suatchieu_timeframe" Relationship="CinemaBookingModel.FK_Suatchieu_frame" FromRole="suat_chieu" ToRole="suatchieu_timeframe" />
+          <NavigationProperty Name="ve_ban" Relationship="CinemaBookingModel.Fk_VeSC" FromRole="suat_chieu" ToRole="ve_ban" />
+        </EntityType>
+        <Association Name="FK_suatchieuorder">
+          <End Type="CinemaBookingModel.suat_chieu" Role="suat_chieu" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suat_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="suatchieu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_PhimSC">
+          <End Type="CinemaBookingModel.phim" Role="phim" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.suat_chieu" Role="suat_chieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="phim">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suat_chieu">
+              <PropertyRef Name="phim_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_PhimPC">
+          <End Type="CinemaBookingModel.phong_chieu" Role="phong_chieu" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.suat_chieu" Role="suat_chieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="phong_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suat_chieu">
+              <PropertyRef Name="phong_chieu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Suatchieu_frame">
+          <End Type="CinemaBookingModel.suat_chieu" Role="suat_chieu" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.suatchieu_timeframe" Role="suatchieu_timeframe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suat_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="suatchieu_timeframe">
+              <PropertyRef Name="id_Suatchieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_VeSC">
+          <End Type="CinemaBookingModel.suat_chieu" Role="suat_chieu" Multiplicity="0..1" />
+          <End Type="CinemaBookingModel.ve_ban" Role="ve_ban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suat_chieu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ve_ban">
+              <PropertyRef Name="suat_chieu_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1663,17 +1665,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="suat_chieu">
-            <EntityTypeMapping TypeName="CinemaBookingModel.suat_chieu">
-              <MappingFragment StoreEntitySet="suat_chieu">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="gio_bat_dau" ColumnName="gio_bat_dau" />
-                <ScalarProperty Name="ngay_chieu" ColumnName="ngay_chieu" />
-                <ScalarProperty Name="phim_id" ColumnName="phim_id" />
-                <ScalarProperty Name="phong_chieu_id" ColumnName="phong_chieu_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="suatchieu_timeframe">
             <EntityTypeMapping TypeName="CinemaBookingModel.suatchieu_timeframe">
               <MappingFragment StoreEntitySet="suatchieu_timeframe">
@@ -1751,6 +1742,18 @@
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="dia_chi" ColumnName="dia_chi" />
                 <ScalarProperty Name="ten_rap" ColumnName="ten_rap" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suat_chieu">
+            <EntityTypeMapping TypeName="CinemaBookingModel.suat_chieu">
+              <MappingFragment StoreEntitySet="suat_chieu">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="phong_chieu_id" ColumnName="phong_chieu_id" />
+                <ScalarProperty Name="phim_id" ColumnName="phim_id" />
+                <ScalarProperty Name="ngay_chieu" ColumnName="ngay_chieu" />
+                <ScalarProperty Name="gio_bat_dau" ColumnName="gio_bat_dau" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -76,11 +76,11 @@ namespace CinemaBooking.Controllers
             {
                 ViewBag.category = category;
                 string category1 = category.ToString();
-                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderByDescending(s => s.ngay_cong_chieu).Where(x => x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
+                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderBy(s => s.ngay_cong_chieu).Where(x => x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
             }
             else
             {
-                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
+                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderBy(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
             }
 
         }
@@ -89,53 +89,56 @@ namespace CinemaBooking.Controllers
         {
             if (Session["TenCus"] == null)
             {
+                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 TempData["Warning"] = "Vui lòng đăng nhập";
-                return RedirectToAction("SignIn", "User");
+                return RedirectToAction("SignIn", "User",new {url = CurrentURL });
             }
+            ViewBag.tenphim = db.phims.Find(id);
 
-            var ngay = db.suat_chieu.Where(n => n.phim_id == id).ToList();
-            List<DateTime?> ng = new List<DateTime?>();
-            ViewBag.idphim = id;
+            var ngay = db.suat_chieu.Where(n => n.phim_id == id && n.status == "1").ToList();
+                List<DateTime?> ng = new List<DateTime?>();
+                ViewBag.idphim = id;
 
-
-            foreach (var item in ngay)
-            {
-                ng.Add(item.ngay_chieu);
-            }
-            ViewBag.date = ng.Distinct();
-            return View();
+                foreach (var item in ngay)
+                {
+                    ng.Add(item.ngay_chieu);
+                }
+                ViewBag.date = ng.Distinct();
+                return View();
+               
         }
 
         public ActionResult ShowTime(string ngay, string idphim)
         {
-            var ng = Convert.ToDateTime(ngay);
-            int idfilm = Convert.ToInt32(idphim);
-            var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
-            List<String> times = new List<String>();
-            List<String> idtimes = new List<String>();
-            List<String> idsc = new List<String>();
-            string nhay = "-";
-            times.Add(nhay);
-            idtimes.Add(nhay);
-            idsc.Add(nhay);
-            foreach (var item in suatchieu)
-            {
-                var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.id_Timeframe).ToList();
-
-
-                foreach (var time in suatChieuTime)
-                {
-                    times.Add((time.TimeFrame.Time).ToString());
-                    idtimes.Add(time.TimeFrame.id.ToString());
-                    idsc.Add(item.id.ToString());
-                }
+                var ng = Convert.ToDateTime(ngay);
+                int idfilm = Convert.ToInt32(idphim);
+                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
+                List<String> times = new List<String>();
+                List<String> idtimes = new List<String>();
+                List<String> idsc = new List<String>();
+                string nhay = "-";
                 times.Add(nhay);
                 idtimes.Add(nhay);
                 idsc.Add(nhay);
-            }
-            var Count = times.Count();
+                foreach (var item in suatchieu)
+                {
+                    var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.id_Timeframe).ToList();
 
-            return Json(data: new { times, idtimes, Count, idsc }, JsonRequestBehavior.AllowGet);
+
+                    foreach (var time in suatChieuTime)
+                    {
+                        times.Add((time.TimeFrame.Time).ToString());
+                        idtimes.Add(time.TimeFrame.id.ToString());
+                        idsc.Add(item.id.ToString());
+                    }
+                    times.Add(nhay);
+                    idtimes.Add(nhay);
+                    idsc.Add(nhay);
+                }
+                var Count = times.Count();
+
+                return Json(data: new { times, idtimes, Count, idsc }, JsonRequestBehavior.AllowGet);
+            
         }
 
         //[HttpPost]
@@ -166,8 +169,9 @@ namespace CinemaBooking.Controllers
         {
             if (Session["TenCus"] == null)
             {
+                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 TempData["Warning"] = "Vui lòng đăng nhập";
-                return RedirectToAction("SignIn", "User");
+                return RedirectToAction("SignIn", "User", new { url = CurrentURL });
             }
 
             var id = Convert.ToInt32(idd);
