@@ -341,5 +341,40 @@ namespace CinemaBooking.Controllers
             }
             return Json(new { success = true });
         }
+
+        // hủy vé
+        public ActionResult CancelTicket(int? id)
+        {
+            if (Session["MaKH"] == null)
+            {
+                TempData["Warning"] = "Bạn chưa đăng nhập!";
+                return RedirectToAction("SignIn", "User");
+            }
+            var idkh = Convert.ToInt32(Session["MaKH"]);
+            string idkhach = Session["MaKH"].ToString();
+            string ur = "/TransHistory/" + idkhach;
+            var ord = db.orders.Find(id);
+            if (ord == null || idkh != ord.id_khachhang)
+            {
+                TempData["Warning"] = "Không đúng tài khoản của bạn!";
+                return RedirectToAction(ur);
+            }
+            if(ord.status == 0)
+            {
+                TempData["Warning"] = "Vé đã hủy!";
+                return RedirectToAction(ur);
+            }
+            else if(ord.status == 1)
+            {
+                TempData["Warning"] = "Vé đã thanh toán. Không thể hủy!";
+                return RedirectToAction(ur);
+            }
+            ord.status = 0;
+            db.Entry(ord).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["Message"] = "Hủy thành công!";
+            string url = "/TransHistory/" + ord.id_khachhang;
+            return RedirectToAction(url);
+        }
     }
 }
