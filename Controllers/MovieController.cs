@@ -11,12 +11,14 @@ namespace CinemaBooking.Controllers
     public class MovieController : Controller
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
+        public static string urlprevious=null;
         // GET: Movie
         //Chi tiết phim
         public ActionResult MovieDetail(String id)
         {
             try
             {
+                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 var movie = db.phims
                             .Where(m => m.slug == id && m.status == 1).First();
                 ViewBag.Rates = db.movie_rate.Where(m => m.movie_id == movie.id);
@@ -41,7 +43,7 @@ namespace CinemaBooking.Controllers
                     tong = Math.Round((double)tong, 1);
                     ViewBag.RatesTong = tong;
                 }
-
+                ViewBag.urlmoviedetail = CurrentURL;
                 return View(movie);
             }
             catch (Exception)
@@ -85,7 +87,7 @@ namespace CinemaBooking.Controllers
 
         }
         //Đặt vé
-        public ActionResult BookTicket(int? id)
+        public ActionResult BookTicket(int? id,string url)
         {
             if (Session["TenCus"] == null)
             {
@@ -93,6 +95,7 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User", new { url = CurrentURL });
             }
+            urlprevious = url;
             ViewBag.tenphim = db.phims.Find(id);
             //Lấy ra list suất chiếu với id phim
             var ngay = db.suat_chieu.Where(n => n.phim_id == id).OrderBy(n => n.ngay_chieu).ToList();
@@ -148,10 +151,11 @@ namespace CinemaBooking.Controllers
             //Lấy ra ViewBag ngày với điều kiện ngày không được trùng.
             ViewBag.date = ng.Distinct();
             var checkdate = ng.Distinct().Count();
+           
             if (checkdate <= 0)
             {
                 TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
-                return RedirectToAction("Index", "Home");
+                return Redirect(url);
             }
             return View();
         }
@@ -227,7 +231,7 @@ namespace CinemaBooking.Controllers
             else
             {
                 TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index","Home");
             }
         }
 

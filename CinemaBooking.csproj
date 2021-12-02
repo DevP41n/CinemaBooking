@@ -926,6 +926,7 @@
     <Content Include="template\admin\assets\images\users\user-7.jpg" />
     <Content Include="template\admin\assets\images\users\user-8.jpg" />
     <Content Include="template\admin\assets\images\users\user-9.jpg" />
+    <Content Include="template\admin\assets\images\users\useradmin.png" />
     <Content Include="template\admin\assets\js\app.js" />
     <Content Include="template\admin\assets\js\pages\apexcharts.init.js" />
     <Content Include="template\admin\assets\js\pages\calendar.init.js" />
