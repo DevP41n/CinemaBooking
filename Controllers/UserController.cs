@@ -13,15 +13,25 @@ namespace CinemaBooking.Controllers
     public class UserController : Controller
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
+        public static string urlpre = null;
         // GET: User
-        public ActionResult SignIn()
+        public ActionResult SignIn(string url)
         {
             if (Session["TenCus"] != null)
             {
+                if (url != null)
+                {
+                    return Redirect(url);
+                }
                 return RedirectToAction("Index", "Home");
             }
             else
             {
+                if (url != null)
+                {
+                    urlpre = url;
+                }
+
                 return View();
             }
 
@@ -44,7 +54,14 @@ namespace CinemaBooking.Controllers
                     Session["MaKH"] = data.FirstOrDefault().id;
                     Session["SDT"] = data.FirstOrDefault().sdt;
                     TempData["Message"] = "Đăng nhập thành công";
-                    return RedirectToAction("Index", "Home");
+                    if (urlpre != null)
+                    {
+                        return Redirect(urlpre);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {

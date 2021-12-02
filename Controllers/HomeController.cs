@@ -15,6 +15,7 @@ namespace CinemaBooking.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            ViewBag.sk = db.su_kien.Find(1);
             return View();
         }
         public ActionResult SearchMovie()

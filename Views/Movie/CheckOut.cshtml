@@ -30,25 +30,23 @@
     </section>*@
 <!-- ==========Banner-Section========== -->
 <!-- ==========Page-Title========== -->
-<section class="page-title bg-one" style="margin-top:60px">
+<section class="page-title bg-one" style="margin-top: 60px; background-image: -webkit-linear-gradient( 271deg,#01172c,#01172c,#01172c); border: transparent; ">
     <div class="container">
         <div class="page-title-area">
             <div class="item md-order-1">
-                <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" value="Trở về">
+                <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" style="font-weight: 700; background-image: -webkit-linear-gradient( 169deg, #181e72 17%, #523a82 63%, #ef0d0da3 100%);" value="Trở về">
             </div>
-            @* <div class="item date-item">
-                    <span class="date">MON, SEP 09 2020</span>
-                    <select class="select-bar">
-                        <option value="sc1">09:40</option>
-                        <option value="sc2">13:45</option>
-                        <option value="sc3">15:45</option>
-                        <option value="sc4">19:50</option>
-                    </select>
-                </div>
+            <div class="item date-item">
+                @*<span  style="    font-size: 40px;
+                 font-weight: 600;
+                 background: #15236e;
+                 padding: 15px;
+                 border-radius: 7px;
+                 text-transform: uppercase;"> 
+                    Thanh toán</span>*@
+            </div>
                 <div class="item">
-                    <h5 class="title">05:00</h5>
-                    <p>Mins Left</p>
-                </div>*@
+                </div>
         </div>
     </div>
 </section>
@@ -56,7 +54,7 @@
 
 <!-- ==========Page-Title========== -->
 <!-- ==========Movie-Section========== -->
-<div class="movie-facility padding-bottom padding-top">
+<div class="movie-facility padding-bottom ">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -114,9 +112,9 @@
                             </a>
                         </li>*@
                         <li class="active" id="paypal">
-                            <a href="#0" style="width:120px">
-                                <img src="/Frontend/Client/assets/images/payment/paypal.png" alt="payment">
-                                <span style="font-weight:bold">paypal</span>
+                            <a href="#0" style="width: 120px; align-content: center;">
+                                <img src="/Frontend/Client/assets/images/payment/paypal.png" alt="payment" style="width: 90px;">
+                                <span style="font-weight:bold">@*paypal*@</span>
                             </a>
                         </li>
 
@@ -142,15 +140,16 @@
                     <ul>
                         <li>
                             <h6 class="subtitle">@Model.phim.ten_phim</h6>
-                            <span class="info">@Model.phim.ngon_ngu</span>
-                            <span class="info">@Model.phim.thoi_luong phút</span>
+                            <span class="info">Ngôn ngữ: @Model.phim.ngon_ngu</span>
+                            <span class="info">Thời lượng: @Model.phim.thoi_luong phút</span>
                         </li>
                         <li>
-                            <h6 class="subtitle"><span>Phòng chiếu: @Model.phong_chieu.ten_phong</span><span>@*02*@</span></h6>
-                            <div class="info"><span>@Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}"),@time.Time </span>@* <span>Tickets</span>*@</div>
+                            <h6 class="subtitle"><span>Phòng chiếu: @Model.phong_chieu.ten_phong</span></h6>
+                            <div class="info"><span>Thời gian bắt đầu: @time.Time </span></div>
+                            <div class="info"><span>Ngày: @Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}") </span></div>
                         </li>
                         <li>
-                            <h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 ₫</span></h6>
+                            <h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 VNĐ</span></h6>
                         </li>
                     </ul>
                     <ul class="side-shape">
@@ -185,13 +184,13 @@
                     </ul>
                     <ul>
                         <li>
-                            <span class="info"><span>Tổng tiền</span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></span>
+                            <span class="info"><span>Tổng tiền</span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></span>
                             @*<span class="info"><span>vat</span><span>$15</span></span>*@
                         </li>
                     </ul>
                 </div>
-                <div class="proceed-area  text-center">
-                    <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
+                <div class="proceed-area  text-center">             @*₫*@
+                    <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
                     <a href="#0" class="custom-button back-button" id="confirm">Thanh toán</a>
                 </div>
             </div>
