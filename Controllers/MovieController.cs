@@ -408,6 +408,8 @@ namespace CinemaBooking.Controllers
 
         public ActionResult MomoPay(FormCollection f)
         {
+            string currentUrl = Request.UrlReferrer.ToString();
+            TempData["Url"] = currentUrl;
             TempData["idghe"] = Request.Form["idghe"];
             TempData["idsuatc"] = Request.Form["idsuatc"];
             TempData["idtime"] = Request.Form["idtime"];
