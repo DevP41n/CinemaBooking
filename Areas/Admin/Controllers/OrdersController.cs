@@ -29,26 +29,74 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult OrdDetail(int? id)
         {
-            if(id == null)
+            TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
+            if (id == null)
             {
                 return RedirectToAction("ListOrders");
             }
             try
             {
-                var order = db.orders.Find(id);
-                if (order == null)
+                order ord = db.orders.Find(id);
+                if (ord == null)
                 {
                     return RedirectToAction("ListOrders");
                 }
+                if(ord.status == 2 && ord.ngay_mua + tinhgio <= DateTime.Now)
+                {
+                    ord.status = 0;
+                    db.Entry(ord).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 ViewBag.detail = db.order_details.Where(n => n.id_orders == id);
-                return View(order);
+                return View(ord);
             }
             catch(Exception)
             {
                 return RedirectToAction("ListOrders");
             }
         }
+        [HttpPost]
+        public ActionResult confirmPay(string id)
+        {
+            var idord = Convert.ToInt32(id);
+            order ord = db.orders.Find(idord);
+            if(ord.status == 0)
+            {
+                return Json(new { success = false });
+            }
+            else if(ord.status == 1)
+            {
+                return Json(new { check = true });
+            }
+            else if(ord.status == 2)
+            {
+                ord.status = 1;
+                db.Entry(ord).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new { success = true });
+        }
 
-
+        [HttpPost]
+        public ActionResult confirmCancel(string id)
+        {
+            var idord = Convert.ToInt32(id);
+            order ord = db.orders.Find(idord);
+            if (ord.status == 0)
+            {
+                return Json(new { success = false });
+            }
+            else if (ord.status == 1)
+            {
+                return Json(new { check = true });
+            }
+            else if (ord.status == 2)
+            {
+                ord.status = 0;
+                db.Entry(ord).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Json(new { success = true });
+        }
     }
 }

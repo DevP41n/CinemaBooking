@@ -100,11 +100,19 @@ namespace CinemaBooking.Controllers
 
             if (signature != Request["signature".ToString()])
             {
+                Session["idghe"] = null;
+                Session["idsc"] = null;
+                Session["idtime"] = null;
                 TempData["Error"] = "Thanh toán thất bại";
+                return RedirectToAction("Index", "Home");
             }
             if (!Request.QueryString["errorCode"].Equals("0"))
             {
+                Session["idghe"] = null;
+                Session["idsc"] = null;
+                Session["idtime"] = null;
                 TempData["Error"] = "Thanh toán thất bại";
+                return RedirectToAction("Index", "Home");
             }
             else
             {

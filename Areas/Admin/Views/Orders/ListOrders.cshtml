@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
             <!-- end page title -->
             <div class="row">
@@ -55,7 +55,7 @@
                                                     Điện thoại
                                                 </th>
                                                 <th>
-                                                    Số lượng vé
+                                                    Số lượng
                                                 </th>
 
                                                 <th>
@@ -64,6 +64,9 @@
 
                                                 <th>
                                                     Tổng tiền
+                                                </th>
+                                                <th>
+                                                    Trạng thái
                                                 </th>
                                                 <th>
                                                     Công cụ
@@ -77,40 +80,60 @@
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                            <tr>
-                                                <td>
-                                                    @(rownumber++)
-                                                </td>
+                                                <tr>
+                                                    <td>
+                                                        @(rownumber++)
+                                                    </td>
 
-                                                <td>
-                                                    @item.ngay_mua
-                                                </td>
+                                                    <td>
+                                                        @item.ngay_mua
+                                                    </td>
 
-                                                <td>
-                                                    @item.khach_hang.ho_ten
-                                                </td>
-                                                <td>
-                                                    @item.khach_hang.sdt
-                                                </td>
-                                                <td>
-                                                    @item.so_luong_ve
-                                                </td>
+                                                    <td>
+                                                        @item.khach_hang.ho_ten
+                                                    </td>
+                                                    <td>
+                                                        @item.khach_hang.sdt
+                                                    </td>
+                                                    <td>
+                                                        @item.so_luong_ve vé
+                                                    </td>
 
 
-                                                @{var it = db.TimeFrames.Find(item.idtime);}
-                                                <td>
-                                                    @Html.FormatValue(@item.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @(it.Time)
-                                                </td>
-                                                <td>
-                                                    @Html.Raw(String.Format("{0:0,0} đ", @item.tong_tien))
-                                                </td>
+                                                    @{var it = db.TimeFrames.Find(item.idtime);}
+                                                    <td>
+                                                        @Html.FormatValue(@item.suat_chieu.ngay_chieu, "{0:dd/MM/yyyy}") - @(it.Time)
+                                                    </td>
+                                                    <td>
+                                                        @Html.Raw(String.Format("{0:0,0} đ", @item.tong_tien))
+                                                    </td>
 
-                                                <td>
-                                                    <a type="button" class="btn btn-primary" href="@Url.Action("OrdDetail","Orders",new { id = item.id })">
-                                                        Xem chi tiết
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                    @if (item.status == 1)
+                                                    {
+                                                        <td style="color:#02a499">
+                                                            Đã thanh toán
+                                                        </td>
+                                                    }
+                                                    else if (item.status == 2)
+                                                    {
+                                                        <td style="color:#dada0f">
+                                                            Chờ thanh toán
+                                                        </td>
+                                                    }
+                                                    else if (item.status == 0)
+                                                    {
+                                                        <td style="color:red">
+                                                            Đã hủy
+                                                        </td>
+                                                    }
+
+
+                                                    <td>
+                                                        <a type="button" class="btn btn-primary" href="@Url.Action("OrdDetail","Orders",new { id = item.id })">
+                                                            Xem chi tiết
+                                                        </a>
+                                                    </td>
+                                                </tr>
 
                                             }
                                         </tbody>
@@ -135,6 +158,3 @@
 </div>
 <!-- end main content-->
 <!-- Modal -->
-
-
-
