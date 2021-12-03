@@ -20,7 +20,7 @@
     <span id="Warning" class="d-none">@TempData["Warning"]</span>
     <span id="Error" class="d-none">@TempData["Error"]</span>
 </div>
-<section class="fxt-template-animation fxt-template-layout3" data-bg-image="/images/banner/lambor.jpg">
+<section class="fxt-template-animation fxt-template-layout3" data-bg-image="/images/banner/account-bg.jpg">
     <div class="container" style="margin-left:300px;">
         <div class="row align-items-center">
             <div class="col-lg-6 col-12 fxt-none-991">
@@ -29,14 +29,14 @@
                         @*<a href="login-3.html" class="fxt-logo"><img src="~/images/logo/HyperGear.png" alt="Logo"></a>*@
                     </div>
                     <div class="fxt-transformY-50 fxt-transition-delay-2">
-                        <a href="login-3.html" class="fxt-logo"><img src="~/images/logo/titleHyperGear.png" alt="Logo"></a>
+                        <a class="fxt-logo"></a>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-12 fxt-bg-color">
                 <div class="fxt-content" style="border-radius:20px;">
                     <div class="fxt-form">
-                        <center>Đăng nhập để tiếp tục</center>
+                        <center style=" font-size: 24px;">Đăng nhập</center>
                         @*<center><img src="~/images/logo/LOGO1.png" style="width:250px" alt="" /></center>*@
                         @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
                         {
@@ -50,16 +50,16 @@
                                 <label for="password" class="input-label">Mật khẩu</label>
                                 @*@Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })*@
                                 <input id="password" type="password" class="form-control" name="password" placeholder="********" required="required">
-                                <i toggle="#Password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                <i id="Password" toggle="#Password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
                             </div>
                             <div class="form-group">
-                                <div class="fxt-checkbox-area">
+                                @*<div class="fxt-checkbox-area">
                                     <div class="checkbox">
                                         <input id="checkbox1" type="checkbox">
-                                        <label for="checkbox1">Keep me logged in</label>
+                                        <label for="checkbox1">Lưu thông tin đăng nhập</label>
                                     </div>
 
-                                </div>
+                                </div>*@
                             </div>
                             <div class="form-group">
 
@@ -96,6 +96,15 @@
             if (error != '') {
                 toastr.error(error);
             }
+            $('#Password').on('click', function () {
+                const div = document.querySelector('#Password');
+                if (div.classList.contains('fa-eye-slash') == true) {
+                    document.getElementById("password").type = "text";
+                } else {
+                    document.getElementById("password").type = "password";
+                }
+                
+            })
 
         });
     </script>

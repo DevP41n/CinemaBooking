@@ -2,7 +2,6 @@
 
 <html lang="en">
 <head>
-
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
     <title>@ViewBag.Title | Admin Cinema</title>
@@ -54,24 +53,25 @@
             <div class="navbar-header">
                 <div class="d-flex">
                     <!-- LOGO -->
-                    <div class="navbar-brand-box">
-                        <a href="@Url.Action("Dashboard","Admin")" class="logo logo-dark">
+                    <div class="navbar-brand-box" style="background: #090e3c">
+                        <img src="~/Frontend/Client/assets/images/logo/Logo-Hyper-Cinema-Booking.png" alt="logo" style="width: -webkit-fill-available;">
+                        <!--<a href="@Url.Action("Dashboard","Admin")" class="logo logo-dark">-->
                             @*<span class="logo-sm">
-                                    <img src="~/images/logo/LOGO6.png" alt="" height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="~/images/logo/LOGO6.png" alt="" height="17">
-                                </span>*@
-                        </a>
+                <img src="~/images/logo/LOGO6.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="~/images/logo/LOGO6.png" alt="" height="17">
+            </span>*@
+                        <!--</a>
 
-                        <a href="@Url.Action("Dashboard","Admin")" class="logo logo-light">
+                        <a href="@Url.Action("Dashboard","Admin")" class="logo logo-light">-->
                             @*<span class="logo-sm">
-                                    <img src="~/images/logo/logo8.png" alt="" height="35">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="~/images/logo/LOGO6.png" alt="" height="50">
-                                </span>*@
-                        </a>
+                <img src="~/images/logo/logo8.png" alt="" height="35">
+            </span>
+            <span class="logo-lg">
+                <img src="~/images/logo/LOGO6.png" alt="" height="50">
+            </span>*@
+                        <!--</a>-->
                     </div>
 
                     <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
@@ -233,7 +233,7 @@
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle header-profile-user" src="~/template/admin/assets/images/users/user-4.jpg"
+                            <img class="rounded-circle header-profile-user" src="~/template/admin/assets/images/users/useradmin.png"
                                  alt="Header Avatar">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -258,7 +258,7 @@
         </header>
 
         <!-- ========== Left Sidebar Start ========== -->
-        <div class="vertical-menu">
+        <div class="vertical-menu" style=" background: #090e3c;">
 
             <div data-simplebar class="h-100">
 
@@ -451,13 +451,13 @@
                     <label class="custom-control-label" for="dark-mode-switch">Dark Mode</label>
                 </div>
 
-                <div class="mb-2">
-                    <img src="~/template/admin/assets/images/layouts/layout-3.jpg" class="img-fluid img-thumbnail" alt="">
-                </div>
-                <div class="custom-control custom-switch mb-5">
-                    <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="~/template/admin/assets/css/app-rtl.min.css" />
-                    <label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
-                </div>
+                   @* <div class="mb-2">
+                        <img src="~/template/admin/assets/images/layouts/layout-3.jpg" class="img-fluid img-thumbnail" alt="">
+                    </div>
+                    <div class="custom-control custom-switch mb-5">
+                        <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="~/template/admin/assets/css/app-rtl.min.css" />
+                        <label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
+                    </div>*@
             </div>
 
 
@@ -466,7 +466,22 @@
     <!-- /Right-bar -->
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
-
+    <style >
+        body[data-sidebar=dark] .mm-active .active {
+            color: #b4c9de !important;
+            background-color: #5a0d37 !important;
+        }
+        body[data-sidebar=dark] #sidebar-menu ul > li > a.mm-active {
+            background-color: #2b0386 !important;
+        }
+        #sidebar-menu ul li ul.sub-menu li a {
+            font-size: 16px;
+        }
+        .sub-menu.mm-collapse.mm-show {
+            border-top: 0.5px dashed #4147ae;
+            border-bottom: 1px solid rgb(57 54 150);
+        }
+    </style>
     <!-- toastr -->
     <div style="display:none">
         <span id="Message" class="d-none">@TempData["Message"]</span>

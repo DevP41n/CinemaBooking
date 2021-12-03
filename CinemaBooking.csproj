@@ -390,6 +390,8 @@
     <Content Include="Frontend\Client\assets\images\icons\book.png" />
     <Content Include="Frontend\Client\assets\images\icons\heart.png" />
     <Content Include="Frontend\Client\assets\images\icons\play-button.png" />
+    <Content Include="Frontend\Client\assets\images\logo\cong-thuong.png" />
+    <Content Include="Frontend\Client\assets\images\logo\Logo-Hyper-Cinema-Booking.png" />
     <Content Include="Frontend\Client\assets\images\logo\logo.png" />
     <Content Include="Frontend\Client\assets\images\movie\cake.png" />
     <Content Include="Frontend\Client\assets\images\movie\cake2.png" />
@@ -479,6 +481,7 @@
     <Content Include="Frontend\Client\assets\images\tour\icon01.png" />
     <Content Include="Frontend\Client\assets\images\tour\icon02.png" />
     <Content Include="Frontend\Client\assets\images\tour\tour.png" />
+    <Content Include="images\banner\account-bg.jpg" />
     <Content Include="Library\Forgot.html" />
     <Content Include="Library\MailFeedback.html" />
     <Content Include="Library\ReplyMail.html" />
@@ -928,6 +931,7 @@
     <Content Include="template\admin\assets\images\users\user-7.jpg" />
     <Content Include="template\admin\assets\images\users\user-8.jpg" />
     <Content Include="template\admin\assets\images\users\user-9.jpg" />
+    <Content Include="template\admin\assets\images\users\useradmin.png" />
     <Content Include="template\admin\assets\js\app.js" />
     <Content Include="template\admin\assets\js\pages\apexcharts.init.js" />
     <Content Include="template\admin\assets\js\pages\calendar.init.js" />

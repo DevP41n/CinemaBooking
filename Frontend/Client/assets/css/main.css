@@ -1539,20 +1539,21 @@ input[type="submit"] {
   .header-wrapper .menu > li > a {
     position: relative;
   }
-  .header-wrapper .menu > li > a::before {
-    width: calc(100% - 10px);
-    height: 2px;
-    background: #31d7a9;
-    top: calc(100% + 12px);
-    position: absolute;
-    content: "";
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transition: all ease 0.3s;
-    transition: all ease 0.3s;
-    -webkit-transform-origin: left;
-            transform-origin: left;
-  }
+    .header-wrapper .menu > li > a::before {
+        width: calc(100% - 10px);
+        height: 3px;
+        background: #31d7a9;
+        top: calc(100% + 10px);
+        position: absolute;
+        content: "";
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        -webkit-transition: all ease 0.3s;
+        transition: all ease 0.3s;
+        -webkit-transform-origin: left;
+        transform-origin: left;
+        z-index: 99;
+    }
   .header-wrapper .menu > li > a:hover::before, .header-wrapper .menu > li > a.active::before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
@@ -1677,7 +1678,7 @@ input[type="submit"] {
 
 .header-section {
   border-bottom: 1px solid rgba(255, 255, 255, 0.102);
-  padding: 6px 0;
+  padding: 2px 0;
   position: fixed;
   width: 100%;
   top: 0;
@@ -4665,9 +4666,9 @@ input[type="submit"] {
 }
 
 @media (min-width: 576px) {
-  .screen {
-    margin-bottom: 60px;
-  }
+    .screen {
+        margin-bottom: 15px;
+    }
 }
 
 .screen-thumb {
@@ -4681,9 +4682,9 @@ input[type="submit"] {
 }
 
 @media (min-width: 576px) {
-  .screen-thumb {
-    margin-bottom: 60px;
-  }
+    .screen-thumb {
+        margin-bottom: 35px;
+    }
 }
 
 .screen-area .subtitle {
@@ -4769,9 +4770,9 @@ input[type="submit"] {
   padding: 5px;
 }
 
-.seat-area .seat-line ul.seat--area {
-  width: calc(100% - 60px);
-}
+    .seat-area .seat-line ul.seat--area {
+        width: calc(100% - 40px);
+    }
 
 @media (max-width: 991px) and (min-width: 768px) {
   .seat-area .seat-line .single-seat {
@@ -4811,25 +4812,34 @@ input[type="submit"] {
 }
 
 .single-seat .sit-num {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-transform: uppercase;
-  font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.single-seat .sit-num:hover {
+    color: black;
+    font-weight: 700;
 }
 
 @media (max-width: 991px) {
-  .single-seat .sit-num {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-  }
+    .single-seat .sit-num {
+        width: 100%;
+        font-size: 12px;
+        text-align: center;
+        font-weight: 600;
+    }
 }
 
 .single-seat:hover .sit-num {
-  display: none;
+    /*display: none;*/
+    color: black;
+    font-weight: 700;
 }
 
 @media (max-width: 767px) {
@@ -4895,8 +4905,8 @@ input[type="submit"] {
 }
 
 .proceed-book {
-  padding: 32px 40px 32px;
-  position: relative;
+    padding: 10px 40px 21px;
+    position: relative;
 }
 
 .proceed-book::before {
@@ -9924,5 +9934,13 @@ aside {
     font-size: larger;
     font-weight: 600;
     font-style: italic;
+}
+.hyper-permision h2 a {
+    display: inline-block;
+    width: 200px;
+    height: 70px;
+    position: relative;
+    text-indent: -9999px;
+    background: url(../images/logo/cong-thuong.PNG) no-repeat scroll top left transparent;
 }
 /*# sourceMappingURL=main.css.map */

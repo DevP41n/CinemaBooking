@@ -11,12 +11,14 @@ namespace CinemaBooking.Controllers
     public class MovieController : Controller
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
+        public static string urlprevious=null;
         // GET: Movie
         //Chi tiết phim
         public ActionResult MovieDetail(String id)
         {
             try
             {
+                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 var movie = db.phims
                             .Where(m => m.slug == id && m.status == 1).First();
                 ViewBag.Rates = db.movie_rate.Where(m => m.movie_id == movie.id);
@@ -41,7 +43,7 @@ namespace CinemaBooking.Controllers
                     tong = Math.Round((double)tong, 1);
                     ViewBag.RatesTong = tong;
                 }
-
+                ViewBag.urlmoviedetail = CurrentURL;
                 return View(movie);
             }
             catch (Exception)
@@ -76,22 +78,25 @@ namespace CinemaBooking.Controllers
             {
                 ViewBag.category = category;
                 string category1 = category.ToString();
-                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderByDescending(s => s.ngay_cong_chieu).Where(x => x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
+                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderBy(s => s.ngay_cong_chieu).Where(x => x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
             }
             else
             {
-                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
+                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderBy(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
             }
 
         }
         //Đặt vé
-        public ActionResult BookTicket(int? id)
+        public ActionResult BookTicket(int? id,string url)
         {
             if (Session["TenCus"] == null)
             {
+                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 TempData["Warning"] = "Vui lòng đăng nhập";
-                return RedirectToAction("SignIn", "User");
+                return RedirectToAction("SignIn", "User", new { url = CurrentURL });
             }
+            urlprevious = url;
+            ViewBag.tenphim = db.phims.Find(id);
             //Lấy ra list suất chiếu với id phim
             var ngay = db.suat_chieu.Where(n => n.phim_id == id).OrderBy(n => n.ngay_chieu).ToList();
             List<DateTime?> ng = new List<DateTime?>();
@@ -146,10 +151,11 @@ namespace CinemaBooking.Controllers
             //Lấy ra ViewBag ngày với điều kiện ngày không được trùng.
             ViewBag.date = ng.Distinct();
             var checkdate = ng.Distinct().Count();
+           
             if (checkdate <= 0)
             {
                 TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
-                return RedirectToAction("Index", "Home");
+                return Redirect(url);
             }
             return View();
         }
@@ -225,7 +231,7 @@ namespace CinemaBooking.Controllers
             else
             {
                 TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index","Home");
             }
         }
 
@@ -257,8 +263,9 @@ namespace CinemaBooking.Controllers
         {
             if (Session["TenCus"] == null)
             {
+                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 TempData["Warning"] = "Vui lòng đăng nhập";
-                return RedirectToAction("SignIn", "User");
+                return RedirectToAction("SignIn", "User", new { url = CurrentURL });
             }
 
             var id = Convert.ToInt32(idd);
@@ -324,8 +331,9 @@ namespace CinemaBooking.Controllers
         {
             if (Session["TenCus"] == null)
             {
+                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 TempData["Warning"] = "Vui lòng đăng nhập";
-                return RedirectToAction("SignIn", "User");
+                return RedirectToAction("SignIn", "User", new { url = CurrentURL });
             }
             var sc = db.suat_chieu.Find(id);
             var mkh = Convert.ToInt32(Session["MaKH"]);
