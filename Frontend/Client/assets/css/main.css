@@ -1539,20 +1539,21 @@ input[type="submit"] {
   .header-wrapper .menu > li > a {
     position: relative;
   }
-  .header-wrapper .menu > li > a::before {
-    width: calc(100% - 10px);
-    height: 2px;
-    background: #31d7a9;
-    top: calc(100% + 12px);
-    position: absolute;
-    content: "";
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transition: all ease 0.3s;
-    transition: all ease 0.3s;
-    -webkit-transform-origin: left;
-            transform-origin: left;
-  }
+    .header-wrapper .menu > li > a::before {
+        width: calc(100% - 10px);
+        height: 3px;
+        background: #31d7a9;
+        top: calc(100% + 10px);
+        position: absolute;
+        content: "";
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        -webkit-transition: all ease 0.3s;
+        transition: all ease 0.3s;
+        -webkit-transform-origin: left;
+        transform-origin: left;
+        z-index: 99;
+    }
   .header-wrapper .menu > li > a:hover::before, .header-wrapper .menu > li > a.active::before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
@@ -1677,7 +1678,7 @@ input[type="submit"] {
 
 .header-section {
   border-bottom: 1px solid rgba(255, 255, 255, 0.102);
-  padding: 6px 0;
+  padding: 2px 0;
   position: fixed;
   width: 100%;
   top: 0;
@@ -9933,5 +9934,13 @@ aside {
     font-size: larger;
     font-weight: 600;
     font-style: italic;
+}
+.hyper-permision h2 a {
+    display: inline-block;
+    width: 200px;
+    height: 70px;
+    position: relative;
+    text-indent: -9999px;
+    background: url(../images/logo/cong-thuong.PNG) no-repeat scroll top left transparent;
 }
 /*# sourceMappingURL=main.css.map */

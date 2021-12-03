@@ -390,6 +390,8 @@
     <Content Include="Frontend\Client\assets\images\icons\book.png" />
     <Content Include="Frontend\Client\assets\images\icons\heart.png" />
     <Content Include="Frontend\Client\assets\images\icons\play-button.png" />
+    <Content Include="Frontend\Client\assets\images\logo\cong-thuong.png" />
+    <Content Include="Frontend\Client\assets\images\logo\Logo-Hyper-Cinema-Booking.png" />
     <Content Include="Frontend\Client\assets\images\logo\logo.png" />
     <Content Include="Frontend\Client\assets\images\movie\cake.png" />
     <Content Include="Frontend\Client\assets\images\movie\cake2.png" />
