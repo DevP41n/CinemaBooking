@@ -108,7 +108,7 @@
             }*@
             @if (Model.loai_phim_chieu == 1)
             {
-                <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id, url = ViewBag.urlmoviedetail })" class="button-ticket" style=" margin-right: 20px;">
+                <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id })" class="button-ticket" style=" margin-right: 20px;">
                     <span class="button-ticket-span">Mua vé</span>
                 </a>
             }

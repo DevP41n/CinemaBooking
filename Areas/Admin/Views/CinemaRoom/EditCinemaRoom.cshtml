@@ -57,10 +57,16 @@
                                 @Html.HiddenFor(model => model.so_luong_cot)
                                 @Html.HiddenFor(model => model.so_luong_day)
                                 <div class="form-group row">
-                                    @Html.LabelFor(model => model.ten_phong,"Tên phòng", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    @Html.LabelFor(model => model.ten_phong, "Tên phòng", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
                                     <div class="col-sm-10">
                                         @Html.EditorFor(model => model.ten_phong, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.ten_phong, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.Label("Rạp phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.id_rapchieu, (SelectList)ViewBag.id_rapc, new { @class = "col-sm-2 col-form-label" })
                                     </div>
                                 </div>
 

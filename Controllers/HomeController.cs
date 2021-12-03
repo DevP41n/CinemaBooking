@@ -1,10 +1,7 @@
 ﻿using CinemaBooking.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Controllers
@@ -15,7 +12,7 @@ namespace CinemaBooking.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            ViewBag.sk = db.su_kien.Find(1);
+            ViewBag.sk = db.su_kien.First();
             return View();
         }
         public ActionResult SearchMovie()

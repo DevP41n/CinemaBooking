@@ -11,14 +11,13 @@ namespace CinemaBooking.Controllers
     public class MovieController : Controller
     {
         private CinemaBookingEntities db = new CinemaBookingEntities();
-        public static string urlprevious=null;
+
         // GET: Movie
         //Chi tiết phim
         public ActionResult MovieDetail(String id)
         {
             try
             {
-                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
                 var movie = db.phims
                             .Where(m => m.slug == id && m.status == 1).First();
                 ViewBag.Rates = db.movie_rate.Where(m => m.movie_id == movie.id);
@@ -43,7 +42,7 @@ namespace CinemaBooking.Controllers
                     tong = Math.Round((double)tong, 1);
                     ViewBag.RatesTong = tong;
                 }
-                ViewBag.urlmoviedetail = CurrentURL;
+
                 return View(movie);
             }
             catch (Exception)
@@ -87,75 +86,82 @@ namespace CinemaBooking.Controllers
 
         }
         //Đặt vé
-        public ActionResult BookTicket(int? id,string url)
+        public ActionResult BookTicket(int? id)
         {
-            if (Session["TenCus"] == null)
+            if (id != null)
             {
-                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
-                TempData["Warning"] = "Vui lòng đăng nhập";
-                return RedirectToAction("SignIn", "User", new { url = CurrentURL });
-            }
-            urlprevious = url;
-            ViewBag.tenphim = db.phims.Find(id);
-            //Lấy ra list suất chiếu với id phim
-            var ngay = db.suat_chieu.Where(n => n.phim_id == id).OrderBy(n => n.ngay_chieu).ToList();
-            List<DateTime?> ng = new List<DateTime?>();
-            ViewBag.idphim = id;
-
-            //Tạo biến congngay để cộng thêm vào ngày suất chiếu 1 ngày
-            TimeSpan congngay = new TimeSpan(1, 0, 0, 0);
-
-            foreach (var item in ngay)
-            {
-                var ngaychieu = Convert.ToDateTime(item.ngay_chieu);
-                var datenow = DateTime.UtcNow.ToString("d");
-
-                if ((ngaychieu + congngay) > DateTime.Now)  //Nếu ngày chiếu của suất chiếu cộng thêm 1 ngày mà lớn hơn ngày hiện tại thì thêm vào list.
+                if (Session["TenCus"] == null)
                 {
-                    var dem = 0;
-                    if (ngaychieu == Convert.ToDateTime(datenow))
+                    string CurrentURL = Request.UrlReferrer.ToString(); //Request.UrlReferrer.ToString() Lấy ra url hiện tại
+                    TempData["Warning"] = "Vui lòng đăng nhập";
+                    return RedirectToAction("SignIn", "User", new { url = CurrentURL });
+                }
+
+                ViewBag.tenphim = db.phims.Find(id);
+                //Lấy ra list suất chiếu với id phim
+                var ngay = db.suat_chieu.Where(n => n.phim_id == id).OrderBy(n => n.ngay_chieu).ToList();
+                List<DateTime?> ng = new List<DateTime?>();
+                ViewBag.idphim = id;
+
+                //Tạo biến congngay để cộng thêm vào ngày suất chiếu 1 ngày
+                TimeSpan congngay = new TimeSpan(1, 0, 0, 0);
+
+                foreach (var item in ngay)
+                {
+                    var ngaychieu = Convert.ToDateTime(item.ngay_chieu);
+                    var datenow = DateTime.UtcNow.ToString("d");
+
+                    if ((ngaychieu + congngay) > DateTime.Now)  //Nếu ngày chiếu của suất chiếu cộng thêm 1 ngày mà lớn hơn ngày hiện tại thì thêm vào list.
                     {
-                        //Lấy ra suất chiếu có trong item.ngay_chieu của mảng ngay
-                        var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id).ToList();
-                        foreach (var sctoday in suatchieu)
+                        var dem = 0;
+                        if (ngaychieu == Convert.ToDateTime(datenow))
                         {
-                            //Lấy ra danh sách giờ chiếu theo id suất chiếu của mảng suatchieu
-                            var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == sctoday.id).OrderBy(x => x.id_Timeframe).ToList();
-                            TimeSpan timenow = DateTime.Now.TimeOfDay;
-                            foreach (var time in suatChieuTime)
+                            //Lấy ra suất chiếu có trong item.ngay_chieu của mảng ngay
+                            var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id).ToList();
+                            foreach (var sctoday in suatchieu)
                             {
-                                if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn giờ của hiện tại thì có suất chiếu giờ đó, tăng biến đếm lên 1.
+                                //Lấy ra danh sách giờ chiếu theo id suất chiếu của mảng suatchieu
+                                var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == sctoday.id).OrderBy(x => x.id_Timeframe).ToList();
+                                TimeSpan timenow = DateTime.Now.TimeOfDay;
+                                foreach (var time in suatChieuTime)
                                 {
-                                    dem++;
+                                    if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn giờ của hiện tại thì có suất chiếu giờ đó, tăng biến đếm lên 1.
+                                    {
+                                        dem++;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        dem = -1; // Nếu ngày chiếu là ngày mơi ngày mốt gì đó thì cho biết đếm = -1 để nó add thẳng dô list luôn :D
-                    }
+                        else
+                        {
+                            dem = -1; // Nếu ngày chiếu là ngày mơi ngày mốt gì đó thì cho biết đếm = -1 để nó add thẳng dô list luôn :D
+                        }
 
-                    if (dem > 0)   // Nếu biến đếm > 0 thì add ngày vào (vì có suất chiếu trong ngày)
-                                   // nếu = 0 thì không add (vì không có suất chiếu nào trong ngày ).
-                    {
-                        ng.Add(item.ngay_chieu);
-                    }
-                    if (dem < 0)
-                    {
-                        ng.Add(item.ngay_chieu);
-                    }
+                        if (dem > 0)   // Nếu biến đếm > 0 thì add ngày vào (vì có suất chiếu trong ngày)
+                                       // nếu = 0 thì không add (vì không có suất chiếu nào trong ngày ).
+                        {
+                            ng.Add(item.ngay_chieu);
+                        }
+                        if (dem < 0)
+                        {
+                            ng.Add(item.ngay_chieu);
+                        }
 
+                    }
+                }
+                //Lấy ra ViewBag ngày với điều kiện ngày không được trùng.
+                ViewBag.date = ng.Distinct();
+                var checkdate = ng.Distinct().Count();
+
+                if (checkdate <= 0)
+                {
+                    TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
+                    return Redirect(Request.UrlReferrer.ToString());
                 }
             }
-            //Lấy ra ViewBag ngày với điều kiện ngày không được trùng.
-            ViewBag.date = ng.Distinct();
-            var checkdate = ng.Distinct().Count();
-           
-            if (checkdate <= 0)
+            else
             {
-                TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
-                return Redirect(url);
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -172,6 +178,7 @@ namespace CinemaBooking.Controllers
                 List<String> times = new List<String>();
                 List<String> idtimes = new List<String>();
                 List<String> idsc = new List<String>();
+                List<String> tenrap = new List<String>();
                 string nhay = "-";
                 times.Add(nhay);
                 idtimes.Add(nhay);
@@ -196,6 +203,7 @@ namespace CinemaBooking.Controllers
                                 times.Add((time.TimeFrame.Time).ToString());
                                 idtimes.Add(time.TimeFrame.id.ToString());
                                 idsc.Add(item.id.ToString());
+                                tenrap.Add(item.phong_chieu.rap_chieu.ten_rap);
                                 dem++;
                             }
                         }
@@ -205,6 +213,7 @@ namespace CinemaBooking.Controllers
                             times.Add((time.TimeFrame.Time).ToString());
                             idtimes.Add(time.TimeFrame.id.ToString());
                             idsc.Add(item.id.ToString());
+                            tenrap.Add(item.phong_chieu.rap_chieu.ten_rap);
                             dem--;
                         }
                     }
@@ -215,23 +224,26 @@ namespace CinemaBooking.Controllers
                         times.Add(nhay);
                         idtimes.Add(nhay);
                         idsc.Add(nhay);
+                        tenrap.Add(nhay);
                     }
                     else if (dem < 0)
                     {
                         times.Add(nhay);
                         idtimes.Add(nhay);
                         idsc.Add(nhay);
+                        tenrap.Add(nhay);
                     }
 
                 }
                 var Count = times.Count();
 
-                return Json(data: new { times, idtimes, Count, idsc }, JsonRequestBehavior.AllowGet);
+                return Json(data: new { times, idtimes, Count, idsc, tenrap }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
-                return RedirectToAction("Index","Home");
+                var slug = db.phims.Find(idphim);
+                return RedirectToAction("MovieDetail", "Movie", new { id = slug.slug });
             }
         }
 

@@ -18,11 +18,13 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Thêm phòng chiếu mới
         public ActionResult CreateCinemaRoom()
         {
+            ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             return View();
         }
         [HttpPost]
         public ActionResult CreateCinemaRoom(phong_chieu phongChieu)
         {
+            ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             string[] room = new string[5] { "A", "B", "C", "D", "E" };
             ghe_ngoi ghe = new ghe_ngoi();
             phongChieu.so_luong_cot = 10;
@@ -47,6 +49,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult EditCinemaRoom(int? id)
         {
+            ViewBag.id_rapc = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             phong_chieu phongChieu = db.phong_chieu.Find(id);
             if (phongChieu == null)
             {
@@ -58,6 +61,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditCinemaRoom(phong_chieu phongChieu)
         {
+            ViewBag.id_rapc = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             if (ModelState.IsValid)
             {
                 db.Entry(phongChieu).State = EntityState.Modified;
