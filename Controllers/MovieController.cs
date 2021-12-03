@@ -273,70 +273,91 @@ namespace CinemaBooking.Controllers
         //Chọn ghế
         public ActionResult BookSeat(string idd, string idtimee)
         {
-            if (Session["TenCus"] == null)
+            try
             {
-                string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
-                TempData["Warning"] = "Vui lòng đăng nhập";
-                return RedirectToAction("SignIn", "User", new { url = CurrentURL });
-            }
-
-            var id = Convert.ToInt32(idd);
-            var idtime = Convert.ToInt32(idtimee);
-            var idpc = db.suat_chieu.Find(id);
-            ViewBag.ngaychieu = idpc.ngay_chieu;
-
-            var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
-            string time1 = time.TimeFrame.Time.ToString();
-            string[] time2 = time1.Split(':');
-            string timef = time2[0] + ':' + time2[1];
-            ViewBag.giochieu = timef;
-
-            ViewBag.tenphim = db.phims.Find(idpc.phim_id);
-            phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
-            ViewBag.pc = phongChieu;
-            var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).ToList();
-            ViewBag.ghe = ghengoi;
-            ViewBag.idtime = idtime;
-            ViewBag.idsc = id;
-            //ghế đang chờ thanh toán
-            TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
-            //Status 2: đang chờ thanh toán tại quầy
-            var orderss = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
-            var counttt = orderss.Count();
-            List<int> idgheddss = new List<int>();
-            foreach (var itemm in orderss)
-            {
-                if (itemm.ngay_mua + tinhgio <= DateTime.Now)
+                if (Session["TenCus"] == null)
                 {
-                    //    var idghed = db.order_details.Where(n => n.id_orders == itemm.id);
-                    //    foreach (var ii in idghed)
-                    //    {
-                    //        idgheddss.Add((int)ii.id_ghe);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    itemm.status = 0;
-                    db.Entry(itemm).State = EntityState.Modified;
+                    string CurrentURL = HttpContext.Request.Url.AbsoluteUri;
+                    TempData["Warning"] = "Vui lòng đăng nhập";
+                    return RedirectToAction("SignIn", "User", new { url = CurrentURL });
                 }
-            }
-            db.SaveChanges();
 
-            var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 1 ||
-            n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
-            List<int> idghedd = new List<int>();
-            foreach (var item in order)
-            {
-                var idghe = db.order_details.Where(n => n.id_orders == item.id);
-                foreach (var i in idghe)
+                if (idd == null || idtimee == null || idd == "" || idtimee == "")
                 {
-                    idghedd.Add((int)i.id_ghe);
+                    TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                    return RedirectToAction("Index", "Home");
                 }
+
+
+                var id = Convert.ToInt32(idd);
+
+                var idtime = Convert.ToInt32(idtimee);
+                var idpc = db.suat_chieu.Find(id);
+
+                var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
+                //ràng buộc
+                if (time == null || idpc == null)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                    return RedirectToAction("Index", "Home");
+                }
+                ViewBag.ngaychieu = idpc.ngay_chieu;
+                string time1 = time.TimeFrame.Time.ToString();
+                string[] time2 = time1.Split(':');
+                string timef = time2[0] + ':' + time2[1];
+                ViewBag.giochieu = timef;
+
+                ViewBag.tenphim = db.phims.Find(idpc.phim_id);
+                phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
+                ViewBag.pc = phongChieu;
+                var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).ToList();
+                ViewBag.ghe = ghengoi;
+                ViewBag.idtime = idtime;
+                ViewBag.idsc = id;
+                //ghế đang chờ thanh toán
+                TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
+                                                           //Status 2: đang chờ thanh toán tại quầy
+                var orderss = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
+                var counttt = orderss.Count();
+                List<int> idgheddss = new List<int>();
+                foreach (var itemm in orderss)
+                {
+                    if (itemm.ngay_mua + tinhgio <= DateTime.Now)
+                    {
+                        //    var idghed = db.order_details.Where(n => n.id_orders == itemm.id);
+                        //    foreach (var ii in idghed)
+                        //    {
+                        //        idgheddss.Add((int)ii.id_ghe);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        itemm.status = 0;
+                        db.Entry(itemm).State = EntityState.Modified;
+                    }
+                }
+                db.SaveChanges();
+
+                var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 1 ||
+                n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
+                List<int> idghedd = new List<int>();
+                foreach (var item in order)
+                {
+                    var idghe = db.order_details.Where(n => n.id_orders == item.id);
+                    foreach (var i in idghe)
+                    {
+                        idghedd.Add((int)i.id_ghe);
+                    }
+                }
+
+                ViewBag.idghedat = idghedd;
+                return View(ghengoi);
             }
-
-            ViewBag.idghedat = idghedd;
-
-            return View(ghengoi);
+            catch(Exception)
+            {
+                TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                return RedirectToAction("Index", "Home");
+            }         
         }
         //Thanh toán
         public ActionResult CheckOut(int? id, int? idtime, string idg)
@@ -347,10 +368,31 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Vui lòng đăng nhập";
                 return RedirectToAction("SignIn", "User", new { url = CurrentURL });
             }
+
+            if (id == null || idtime == null || idg == null)
+            {
+                TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (id <1 || idtime <1 || idg == "")
+            {
+                TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                return RedirectToAction("Index", "Home");
+            }
             var sc = db.suat_chieu.Find(id);
             var mkh = Convert.ToInt32(Session["MaKH"]);
             var kh = db.khach_hang.Find(mkh);
-            ViewBag.time = db.TimeFrames.Find(idtime);
+
+            var timefr = db.TimeFrames.Find(idtime);
+
+            if (sc == null || kh == null || timefr == null)
+            {
+                TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.time = timefr;
             ViewBag.kh = kh;
             List<String> idghe = new List<String>();
             string[] listid = idg.Split(',');
@@ -378,6 +420,8 @@ namespace CinemaBooking.Controllers
 
         public ActionResult MomoPay(FormCollection f)
         {
+            string currentUrl = Request.UrlReferrer.ToString();
+            TempData["Url"] = currentUrl;
             TempData["idghe"] = Request.Form["idghe"];
             TempData["idsuatc"] = Request.Form["idsuatc"];
             TempData["idtime"] = Request.Form["idtime"];
