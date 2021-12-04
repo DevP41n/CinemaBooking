@@ -1,31 +1,25 @@
-﻿@model CinemaBooking.Models.phong_chieu
+﻿@model CinemaBooking.Models.rap_chieu
 
 @{
-    ViewBag.Title = "EditCinemaRoom";
+    ViewBag.Title = "CreateCinema";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>EditCinemaRoom</h2>
-
-
 <div class="main-content">
-
     <div class="page-content">
         <div class="container-fluid">
-            <!-- start page title -->
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Data Table</h4>
+                        <h4 class="font-size-18">Rạp phim</h4>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Rạp chiếu</a></li>
-                            <li class="breadcrumb-item active">Chỉnh sửa rạp</li>
+                            <li class="breadcrumb-item active">Tạo rạp phim mới</li>
                         </ol>
                     </div>
                 </div>
 
-                @*<div class="col-sm-6">
+                <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,11 +34,11 @@
                             </div>
                         </div>
                     </div>
-                </div>*@
+                </div>
             </div>
             <!-- end page title -->
 
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("CreateCinema", "CinemaRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -53,40 +47,38 @@
                         <div class="card">
                             <div class="card-body">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.id)
-                                @Html.HiddenFor(model => model.so_luong_cot)
-                                @Html.HiddenFor(model => model.so_luong_day)
+
+
                                 <div class="form-group row">
-                                    @Html.LabelFor(model => model.ten_phong, "Tên phòng", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.ten_phong, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ten_phong, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    @Html.Label("Rạp phim", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <label>Tên rạp phim</label>
                                     <div class="col-md-10">
-                                        @Html.DropDownListFor(model => model.id_rapchieu, (SelectList)ViewBag.id_rapc, new { @class = "col-sm-2 col-form-label" })
+                                        @Html.EditorFor(model => model.ten_rap, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ten_rap, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label>Địa chỉ</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.dia_chi, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.dia_chi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>                            
                                 <div class="float-lg-right">
                                     <div class="form-group mb-0">
                                         <div>
-                                            <input type="submit" value="Save" class="btn btn-primary waves-effect waves-light mr-1" />
+                                            <input type="submit" value="Create" class="btn btn-primary waves-effect waves-light mr-1" />
+                                            <a href="@Url.Action("CinemaList","CinemaRoom")" class="btn btn-primary waves-effect waves-light mr-1">
+                                                Cancel
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group mb-4">
 
                                 </div>
 
-                                <div class="form-group mb-0">
-                                    @Html.ActionLink("Trở về", "ListCinemaRoom")
-                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -96,3 +88,4 @@
 </div>
 
 
+<!-- end main content-->

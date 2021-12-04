@@ -2,7 +2,6 @@
 using CinemaBooking.Models;
 using Facebook;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
@@ -56,7 +55,10 @@ namespace CinemaBooking.Controllers
                     TempData["Message"] = "Đăng nhập thành công";
                     if (urlpre != null)
                     {
-                        return Redirect(urlpre);
+                        string url = urlpre;
+                        urlpre = null; // gán lại cái urlpre null, nếu không thì khi user đăng xuất rồi đăng nhập tiếp thì nó lại vào cái urlpre này.
+                        return Redirect(url);
+
                     }
                     else
                     {
@@ -131,7 +133,7 @@ namespace CinemaBooking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ProfileAccount(khach_hang kh)
         {
-            if (kh.sdt.Length >10)
+            if (kh.sdt.Length > 10)
             {
                 TempData["Warning"] = "Cập nhật không thành công!";
 
@@ -359,12 +361,12 @@ namespace CinemaBooking.Controllers
                 TempData["Warning"] = "Không đúng tài khoản của bạn!";
                 return RedirectToAction(ur);
             }
-            if(ord.status == 0)
+            if (ord.status == 0)
             {
                 TempData["Warning"] = "Vé đã hủy!";
                 return RedirectToAction(ur);
             }
-            else if(ord.status == 1)
+            else if (ord.status == 1)
             {
                 TempData["Warning"] = "Vé đã thanh toán. Không thể hủy!";
                 return RedirectToAction(ur);
@@ -400,7 +402,7 @@ namespace CinemaBooking.Controllers
             {
                 return Json(new { success = true });
             }
-            if(ord.status==0)
+            if (ord.status == 0)
             {
                 return Json(new { success = false });
             }

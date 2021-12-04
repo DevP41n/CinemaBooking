@@ -18,11 +18,13 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Thêm phòng chiếu mới
         public ActionResult CreateCinemaRoom()
         {
+            ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             return View();
         }
         [HttpPost]
         public ActionResult CreateCinemaRoom(phong_chieu phongChieu)
         {
+            ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             string[] room = new string[5] { "A", "B", "C", "D", "E" };
             ghe_ngoi ghe = new ghe_ngoi();
             phongChieu.so_luong_cot = 10;
@@ -30,9 +32,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
             db.phong_chieu.Add(phongChieu);
             db.SaveChanges();
             var id = phongChieu.id;
-            for (int i =0; i<5;i++)
+            for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j<10;j++)
+                for (int j = 0; j < 10; j++)
                 {
                     ghe.Row = room[i];
                     ghe.Col = j + 1;
@@ -47,6 +49,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult EditCinemaRoom(int? id)
         {
+            ViewBag.id_rapc = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             phong_chieu phongChieu = db.phong_chieu.Find(id);
             if (phongChieu == null)
             {
@@ -58,6 +61,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditCinemaRoom(phong_chieu phongChieu)
         {
+            ViewBag.id_rapc = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             if (ModelState.IsValid)
             {
                 db.Entry(phongChieu).State = EntityState.Modified;
@@ -140,7 +144,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             var tong = ghn.Count();
             ghe_ngoi ghengoi = new ghe_ngoi();
             var checkghe = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
-            var checkpc = db.phong_chieu.Find(id);          
+            var checkpc = db.phong_chieu.Find(id);
             try
             {
                 if (tong < ghe)
@@ -148,7 +152,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     checkpc.so_luong_cot = checkghe.Count() + (ghe - tong);
                     db.Entry(checkpc).State = EntityState.Modified;
                     db.SaveChanges();
-                    for (int i = tong; i <ghe; i++)
+                    for (int i = tong; i < ghe; i++)
                     {
                         ghengoi.Row = hang;
                         ghengoi.Col = i + 1;
@@ -157,13 +161,13 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         db.SaveChanges();
                     }
                 }
-                else if(tong > ghe)
+                else if (tong > ghe)
                 {
-                    checkpc.so_luong_cot = checkghe.Count() - (tong-ghe);
+                    checkpc.so_luong_cot = checkghe.Count() - (tong - ghe);
                     db.Entry(checkpc).State = EntityState.Modified;
                     foreach (var item in ghn)
                     {
-                        if(item.Col>ghe)
+                        if (item.Col > ghe)
                         {
                             ghe_ngoi seat = db.ghe_ngoi.Find(item.id);
                             db.ghe_ngoi.Remove(seat);
@@ -189,7 +193,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             var checkpc = db.phong_chieu.Find(id);
             try
             {
-                foreach(var item in ghn)
+                foreach (var item in ghn)
                 {
                     ghe_ngoi seat = db.ghe_ngoi.Find(item.id);
                     db.ghe_ngoi.Remove(seat);
@@ -204,6 +208,80 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 return Json(new { success = false });
             }
             return Json(new { success = true });
+        }
+
+        //Danh sách các rạp chiếu
+        public ActionResult CinemaList()
+        {
+            return View(db.rap_chieu.OrderByDescending(n => n.id).ToList());
+        }
+
+        //Tạo rạp chiếu phim
+        public ActionResult CreateCinema()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateCinema(rap_chieu rapChieu)
+        {
+            if (ModelState.IsValid)
+            {
+                rapChieu.create_at = DateTime.Now;
+                //rapChieu.create_by = Session["HoTen"].ToString();
+                db.rap_chieu.Add(rapChieu);
+                TempData["Message"] = "Tạo thành công!";
+                db.SaveChanges();
+                return RedirectToAction("CinemaList");
+            }
+            return View(rapChieu);
+        }
+        public ActionResult EditCinema(int? id)
+        {
+            rap_chieu rapChieu = db.rap_chieu.Find(id);
+            if (rapChieu == null)
+            {
+                return RedirectToAction("CinemaList");
+            }
+            return View(rapChieu);
+        }
+        [HttpPost, ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCinema(rap_chieu rapChieu)
+        {
+            if (ModelState.IsValid)
+            {
+                rapChieu.update_at = DateTime.Now;
+                //rapChieu.update_by = Session["HoTen"].ToString();
+
+                db.Entry(rapChieu).State = EntityState.Modified;
+                TempData["Message"] = "Cập nhật thành công!";
+                db.SaveChanges();
+                return RedirectToAction("CinemaList");
+            }
+            else
+            {
+                TempData["Error"] = "Cập nhập không thành công!";
+            }
+            return View(rapChieu);
+        }
+
+
+        public ActionResult DeleteCinema(int? id)
+        {
+            if (db.phong_chieu.Where(n => n.id_rapchieu == id).ToList().Count() == 0)
+            {
+                rap_chieu rapChieu = db.rap_chieu.Find(id);
+                db.rap_chieu.Remove(rapChieu);
+                TempData["Message"] = "Xóa thành công!";
+                db.SaveChanges();
+                return RedirectToAction("CinemaList");
+            }
+            else
+            {
+                TempData["Error"] = "Không thể xóa !";
+                return RedirectToAction("CinemaList");
+            }
         }
     }
 }

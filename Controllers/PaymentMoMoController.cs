@@ -36,6 +36,7 @@ namespace CinemaBooking.Controllers
             Session["idghe"] = idghe;
             Session["idsc"] = idsc;
             Session["idtime"] = idtime;
+            Session["UrlPre"] = TempData["Url"].ToString();
 
             string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
             string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
@@ -96,15 +97,24 @@ namespace CinemaBooking.Controllers
             string serectKey = ConfigurationManager.AppSettings["serectkey"].ToString();
             string signature = crypto.signSHA256(param, serectKey);
 
-
+            string urlback = Session["UrlPre"].ToString();
+            Session["UrlPre"] = null;
 
             if (signature != Request["signature".ToString()])
             {
+                Session["idghe"] = null;
+                Session["idsc"] = null;
+                Session["idtime"] = null;
                 TempData["Error"] = "Thanh toán thất bại";
+                return Redirect(urlback);
             }
             if (!Request.QueryString["errorCode"].Equals("0"))
             {
+                Session["idghe"] = null;
+                Session["idsc"] = null;
+                Session["idtime"] = null;
                 TempData["Error"] = "Thanh toán thất bại";
+                return Redirect(urlback);
             }
             else
             {
@@ -140,11 +150,12 @@ namespace CinemaBooking.Controllers
                 }
                 if (dem > 0)
                 {
+                    
                     Session["idghe"] = null;
                     Session["idsc"] = null;
                     Session["idtime"] = null;
                     TempData["Error"] = "Ghế đã có người vừa đặt, Vui lòng chọn ghế khác!";
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(urlback);
                 }
 
                 //add order
