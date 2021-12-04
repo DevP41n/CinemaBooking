@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Rạp phim";
+    ViewBag.Title = "Hyper Cinema | Trang chủ";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 @{ int count = 1;int count2 = 1; int b = 0; CinemaBooking.Models.CinemaBookingEntities dbmovie = new CinemaBooking.Models.CinemaBookingEntities();}
@@ -157,7 +157,7 @@
                                         </h5>
                                         <ul class="movie-rating-percent" style="padding: 5px 0px;">
                                             <li style=" margin-left: auto;">
-                                                <span class="content">@Html.FormatValue(movie.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
+                                                <span class="content">Công chiếu: @Html.FormatValue(movie.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                             </li>
                                         </ul>
                                     </div>

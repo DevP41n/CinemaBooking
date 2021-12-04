@@ -371,6 +371,7 @@
     <Content Include="Frontend\Client\assets\images\event\ticket\ticket01.png" />
     <Content Include="Frontend\Client\assets\images\event\ticket\ticket02.png" />
     <Content Include="Frontend\Client\assets\images\event\ticket\ticket03.png" />
+    <Content Include="Frontend\Client\assets\images\Favicon-Hyper-Cinema-Booking.png" />
     <Content Include="Frontend\Client\assets\images\favicon.png" />
     <Content Include="Frontend\Client\assets\images\footer\footer-logo.png" />
     <Content Include="Frontend\Client\assets\images\footer\footer-shape.png" />

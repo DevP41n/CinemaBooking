@@ -10,7 +10,7 @@
         <div class="padding-top padding-bottom">
             <div class="account-area">
                 <div class="section-header-3">
-                    <span class="cate">Cinema</span>
+                    <span class="cate" style="color:orangered;font-weight:600">Hyper Cinema</span>
                     <h2 class="title">Đăng nhập</h2>
                 </div>
                 <form class="account-form" action="/User/SignIn" method="post">
@@ -24,8 +24,9 @@
                         <input id="Matkhau" name="Matkhau" type="password" placeholder="Mật khẩu" required>
                     </div>
                     <div class="form-group checkgroup">
-                        <input type="checkbox" id="bal2" required checked>
-                        <label for="bal2">Ghi nhớ đăng nhập</label>
+                        @*<input type="checkbox" id="bal2" required checked>
+                          <label for="bal2">Ghi nhớ đăng nhập</label>*@
+                        <label></label>
                         <a href="#" data-target="#Forgot" data-toggle="modal" class="forget-pass">Quên mật khẩu?</a>
                     </div>
                     <div class="form-group text-center">
@@ -42,7 +43,7 @@
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </li>
-                    <li>
+                    @*<li>
                         <a href="#0">
                             <i class="fab fa-twitter"></i>
                         </a>
@@ -51,7 +52,7 @@
                         <a href="#0">
                             <i class="fab fa-google"></i>
                         </a>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
         </div>
