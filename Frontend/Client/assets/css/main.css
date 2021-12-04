@@ -9943,4 +9943,26 @@ aside {
     text-indent: -9999px;
     background: url(../images/logo/cong-thuong.PNG) no-repeat scroll top left transparent;
 }
+.term-content {
+    width: 90%;
+    margin:auto;
+}
+.p-term {
+    margin-left: 30px;
+    line-height: 29px;
+}
+.term-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 15px;
+    line-height: 1.3;
+    color: #fd8181;
+    font-family: "Open Sans", sans-serif;
+}
+.head-term {
+    font-size: 33px;
+    font-weight: 700;
+    color: #ff2f2f;
+}
+
 /*# sourceMappingURL=main.css.map */

@@ -73,6 +73,18 @@ namespace CinemaBooking.Controllers
         {
             return View();
         }
+        public ActionResult TermConditions()
+        {
+            return View();
+        }
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+        public ActionResult PaymentPolicy()
+        {
+            return View();
+        }
 
         //Phản hổi của khách hàng.
         public ActionResult Contact()
