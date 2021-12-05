@@ -108,49 +108,55 @@ namespace CinemaBooking.Controllers
 
                 foreach (var item in ngay)
                 {
-                    var ngaychieu = Convert.ToDateTime(item.ngay_chieu);
-                    var datenow = DateTime.UtcNow.ToString("d");
-
-                    if ((ngaychieu + congngay) > DateTime.Now)  //Nếu ngày chiếu của suất chiếu cộng thêm 1 ngày mà lớn hơn ngày hiện tại thì thêm vào list.
+                    var checknull = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id).Count(); //Kiểm tra xem ngày chiếu này có giờ chiếu nào không
+                    if (checknull > 0) //Nếu có giờ chiếu thì dô, không thì khỏi dô :)))
                     {
-                        var dem = 0;
-                        if (ngaychieu == Convert.ToDateTime(datenow))
+                        var ngaychieu = Convert.ToDateTime(item.ngay_chieu);
+                        var datenow = DateTime.UtcNow.ToString("d");
+
+                        if ((ngaychieu + congngay) > DateTime.Now)  //Nếu ngày chiếu của suất chiếu cộng thêm 1 ngày mà lớn hơn ngày hiện tại thì thêm vào list.
                         {
-                            //Lấy ra suất chiếu có trong item.ngay_chieu của mảng ngay
-                            var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id).ToList();
-                            foreach (var sctoday in suatchieu)
+                            var dem = 0;
+                            if (ngaychieu == Convert.ToDateTime(datenow))
                             {
-                                //Lấy ra danh sách giờ chiếu theo id suất chiếu của mảng suatchieu
-                                var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == sctoday.id).OrderBy(x => x.id_Timeframe).ToList();
-                                TimeSpan timenow = DateTime.Now.TimeOfDay;
-                                foreach (var time in suatChieuTime)
+                                //Lấy ra suất chiếu có trong item.ngay_chieu của mảng ngay
+                                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id).ToList();
+                                foreach (var sctoday in suatchieu)
                                 {
-                                    if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn giờ của hiện tại thì có suất chiếu giờ đó, tăng biến đếm lên 1.
+                                    //Lấy ra danh sách giờ chiếu theo id suất chiếu của mảng suatchieu
+                                    var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == sctoday.id).OrderBy(x => x.id_Timeframe).ToList();
+                                    TimeSpan timenow = DateTime.Now.TimeOfDay;
+                                    foreach (var time in suatChieuTime)
                                     {
-                                        dem++;
+                                        if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn giờ của hiện tại thì có suất chiếu giờ đó, tăng biến đếm lên 1.
+                                        {
+                                            dem++;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
-                            dem = -1; // Nếu ngày chiếu là ngày mơi ngày mốt gì đó thì cho biết đếm = -1 để nó add thẳng dô list luôn :D
-                        }
+                            else
+                            {
+                                dem = -1; // Nếu ngày chiếu là ngày mơi ngày mốt gì đó thì cho biết đếm = -1 để nó add thẳng dô list luôn :D
+                            }
 
-                        if (dem > 0)   // Nếu biến đếm > 0 thì add ngày vào (vì có suất chiếu trong ngày)
-                                       // nếu = 0 thì không add (vì không có suất chiếu nào trong ngày ).
-                        {
-                            ng.Add(item.ngay_chieu);
+                            if (dem > 0)   // Nếu biến đếm > 0 thì add ngày vào (vì có suất chiếu trong ngày)
+                                           // nếu = 0 thì không add (vì không có suất chiếu nào trong ngày ).
+                            {
+                                ng.Add(item.ngay_chieu);
+                            }
+                            if (dem < 0)
+                            {
+                                ng.Add(item.ngay_chieu);
+                            }
                         }
-                        if (dem < 0)
-                        {
-                            ng.Add(item.ngay_chieu);
-                        }
-
                     }
                 }
                 //Lấy ra ViewBag ngày với điều kiện ngày không được trùng.
                 ViewBag.date = ng.Distinct();
+
+
+                ViewBag.rap = db.rap_chieu.ToList().Distinct();
                 var checkdate = ng.Distinct().Count();
 
                 if (checkdate <= 0)
@@ -166,6 +172,53 @@ namespace CinemaBooking.Controllers
             return View();
         }
 
+        public ActionResult ShowCinema(string ngay, string idphim)
+        {
+            if (ngay != "")
+            {
+                var ng = Convert.ToDateTime(ngay);
+                int idfilm = Convert.ToInt32(idphim);
+                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
+                List<String> tenrap = new List<String>();
+
+
+                foreach (var item in suatchieu)
+                {
+                    var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.TimeFrame.Time).ToList(); //OrderBy theo giờ chiếu của bảng Time
+
+                    //Chạy vòng lặp trong list suất chiếu timeframe để thêm từ suất chiếu vào list.
+                    foreach (var time in suatChieuTime)
+                    {
+                        var datenow = DateTime.UtcNow.ToString("d");
+                        if (ng == Convert.ToDateTime(datenow))
+                        {
+                            //Tạo biến thời gian hiện tại để so sánh với giờ của suất chiếu.
+                            TimeSpan timenow = DateTime.Now.TimeOfDay;
+                            if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn hơn giờ của hiện tại thì thêm vào, nếu không thì không thêm.
+                            {
+                                tenrap.Add(item.phong_chieu.rap_chieu.ten_rap);
+                            }
+                        }
+                        else // Nếu ngày chiếu cũng là ngày mơi ngày mốt gì đó thì cho biết đếm -- để nó add dô list luôn
+                             // vì suất chiếu ngày = ngày hiện tại thì mới cho ++ :D
+                        {
+                            tenrap.Add(item.phong_chieu.rap_chieu.ten_rap);
+                        }
+                    }
+
+                    //Chạy xong vòng lặp, Nếu biến dem > 0 thì thêm dấu - vào để phân biệt              
+
+                }
+                var rapphim = tenrap.Distinct();
+                var Count = rapphim.Count();
+
+                return Json(data: new { Count, rapphim }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(data: new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult ShowTime(string ngay, string idphim)
         {
             if (ngay != "")
@@ -183,12 +236,13 @@ namespace CinemaBooking.Controllers
                 times.Add(nhay);
                 idtimes.Add(nhay);
                 idsc.Add(nhay);
+                tenrap.Add(nhay);
 
                 //Chạy vòng lặp trong list suất chiếu lấy từ ngày chiếu và id phim.
                 foreach (var item in suatchieu)
                 {
                     var dem = 0;
-                    var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.id_Timeframe).ToList();
+                    var suatChieuTime = db.suatchieu_timeframe.Where(n => n.id_Suatchieu == item.id).OrderBy(x => x.TimeFrame.Time).ToList(); //OrderBy theo giờ chiếu của bảng Time
 
                     //Chạy vòng lặp trong list suất chiếu timeframe để thêm từ suất chiếu vào list.
                     foreach (var time in suatChieuTime)
@@ -235,6 +289,7 @@ namespace CinemaBooking.Controllers
                     }
 
                 }
+
                 var Count = times.Count();
 
                 return Json(data: new { times, idtimes, Count, idsc, tenrap }, JsonRequestBehavior.AllowGet);
@@ -242,7 +297,7 @@ namespace CinemaBooking.Controllers
             else
             {
                 TempData["Warning"] = "Phim này đã hết hoặc chưa có suất chiếu !";
-                var slug = db.phims.Find(idphim);
+                var slug = db.phims.Find(Convert.ToInt32(idphim));
                 return RedirectToAction("MovieDetail", "Movie", new { id = slug.slug });
             }
         }
@@ -353,11 +408,11 @@ namespace CinemaBooking.Controllers
                 ViewBag.idghedat = idghedd;
                 return View(ghengoi);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
                 return RedirectToAction("Index", "Home");
-            }         
+            }
         }
         //Thanh toán
         public ActionResult CheckOut(int? id, int? idtime, string idg)
@@ -375,7 +430,7 @@ namespace CinemaBooking.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            if (id <1 || idtime <1 || idg == "")
+            if (id < 1 || idtime < 1 || idg == "")
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
                 return RedirectToAction("Index", "Home");

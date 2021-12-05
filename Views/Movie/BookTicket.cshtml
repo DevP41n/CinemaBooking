@@ -34,9 +34,9 @@
 </section>
 <!-- ==========Movie-Section========== -->
 @*<div class="ticket-plan-section padding-bottom " style="padding-top:30px">*@
-<section class="book-section bg-one"> 
+<section class="book-section bg-one" style="background-image: -webkit-linear-gradient( 271deg,#01172c,#01172c,#01172c); padding: 20px 0; border-top: 1px solid #01172c; border-bottom: 1px solid #01172c; ">
     <div class="container">
-        <form class="ticket-search-form two">
+        <form class="ticket-search-form two" style="justify-content: space-evenly;">
             <div class="form-group">
                 <div class="thumb">
                     <img src="/Frontend/Client/assets/images/ticket/date.png" alt="ticket">
@@ -55,10 +55,28 @@
 
             </div>
 
+            <div class="form-group" style="padding-right:100px">
+                <div class="thumb">
+                    <img src="~/Frontend/Client/assets/images/ticket/cinema.png" alt="ticket" />
+                </div>
+                <span class="type">Rạp Phim</span>
+                <select class="select-bar showcinema" id="showcinema">
+                    <option value="0">Chọn rạp phim</option>
+                    @foreach (var rap in ViewBag.rap)
+                    {
+
+                        <option value="@rap.ten_rap">@rap.ten_rap</option>
+
+                    }
+                </select>
+            </div>
+
+
+
         </form>
     </div>
 </section>
-<div class="ticket-plan-section padding-bottom padding-top">
+<div class="ticket-plan-section padding-bottom padding-top" style=" padding-top: 60px;">
     <div class="container">
         <span style="display:none" id="idphim">@ViewBag.idphim</span>
         <div class="row justify-content-center">
@@ -103,7 +121,7 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            var idsuatchieu = $(".current").text();
+            var idsuatchieu = $(".showdate .current").text();
             var idp = $("#idphim").text();
             loadTime(idsuatchieu, idp);
             //Hiển thị suất chiếu theo ngày chiếu
@@ -113,6 +131,11 @@
                 loadTime(idsuat, idfilm);
             });
 
+            $('#showcinema').change(function () {
+                var idsuat = $("#showdate option:selected").text();
+                var idfilm = $("#idphim").text();
+                loadTime(idsuat, idfilm);
+            });
             // Load suất chiếu
             function loadTime(ids, idf) {
                 $.ajax({
@@ -129,18 +152,21 @@
                             var idschieu = res.idsc;
                             var idtimes = res.idtimes;
                             var rapphim = res.tenrap;
-
-
+                            var tenrap = $("#showcinema option:selected").val();
+                            var dem = 0;
                             var html = "";
                             html += "";
                             for (let i = 0; i < res.Count; i++) {
-                                /*if (rapphim[i] == "Hyper Cinema Bình Thạnh") {*/
+                                //Hàm if xuất các suất chiếu theo tên rạp được chọn từ select list
+                                if (rapphim[i + 1] == tenrap || rapphim[i] == tenrap)   // Vì rapphim[0] là dấu - nên phải so sánh i+1 trước để né dấu - 
+                                                                                        // Rồi so tiếp với rapphim[i]
+                                {
                                     if (i < res.Count - 1) {
                                         if (time[i] == "-") {
                                             html += "<li >";
                                             html += "<div class='movie-name'>";
                                             html += "<a href='#0' class='name'>";
-                                            html += rapphim[i];
+                                            html += rapphim[i + 1];
                                             html += "</a>";
                                             html += "<div class='location-icon'>";
                                             html += "<i class='fas fa-map-marker-alt'></i></div></div>";
@@ -159,9 +185,45 @@
                                         if (time[i + 1] == "-") {
                                             html += "</div></li >";
                                         }
+                                        dem++;
                                     }
                                 }
-                            /*}*/
+                                //nếu select list để mặc định thì xuất ra tất cả rạp phim có suất chiếu theo ngày, mặc định thì value = 0
+                                else if (tenrap == 0) {
+                                    if (i < res.Count - 1) {
+                                        if (time[i] == "-") {
+                                            html += "<li >";
+                                            html += "<div class='movie-name'>";
+                                            html += "<a href='#0' class='name'>";
+                                            html += rapphim[i + 1];
+                                            html += "</a>";
+                                            html += "<div class='location-icon'>";
+                                            html += "<i class='fas fa-map-marker-alt'></i></div></div>";
+                                            html += "<div class='movie-schedule' style='width:auto' >";
+
+                                        }
+                                        else {
+                                            const hms = time[i];
+                                            const [hours, minutes, seconds] = hms.split(':');
+                                            const timefinal = (hours) + ":" + (minutes);
+                                            html += "<div class='item' style = 'margin-right: 20px' data-id = '" + idtimes[i] + "' data-sc = '" + idschieu[i] + "'> ";
+                                            html += timefinal;
+                                            html += "</div>";
+
+                                        }
+                                        if (time[i + 1] == "-") {
+                                            html += "</div></li >";
+                                        }
+                                        dem++;
+                                    }
+                                }
+                                 
+                            }
+                            //Nếu biến dem = 0 thì không có xuất chiếu nào.
+                            if (dem == 0) {
+                                html += "<p style='text-align:center'>Rạp <strong>" + tenrap + " </strong> đã hết suất chiếu, quý khách vui lòng chọn ngày khác !</p>";
+                                
+                            }
                             $('#thisTime').html(html);
 
                         }

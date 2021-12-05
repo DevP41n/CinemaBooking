@@ -177,7 +177,7 @@
                                                     <td style="float:left;">
                                                         <div class="text-left no-print">
                                                             <a href="javascript:window.print()" class="btn btn-default"><i class="demo-pli-printer icon-lg"></i></a>
-                                                            <a href="#" onclick="history.go(-1)" class="btn btn-primary">Quay lại</a>
+                                                            <a href="@Url.Action("ListOrders","Orders")" class="btn btn-primary">Quay lại</a>
                                                         </div>
                                                     </td>
                                                     <td style="float:right; font-size:20px"><strong>Tổng tiền: @Html.Raw(String.Format("{0:0,0} đ", @Model.tong_tien))</strong></td>
