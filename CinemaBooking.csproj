@@ -3659,6 +3659,7 @@
     <Content Include="Views\Information\TermConditions.cshtml" />
     <Content Include="Views\Information\PrivacyPolicy.cshtml" />
     <Content Include="Views\Information\PaymentPolicy.cshtml" />
+    <Content Include="Views\Home\Error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

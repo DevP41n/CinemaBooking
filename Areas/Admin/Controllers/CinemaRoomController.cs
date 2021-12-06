@@ -90,7 +90,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         {
             phong_chieu phongChieu = db.phong_chieu.Find(id);
             ViewBag.pc = phongChieu;
-            var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).ToList();
+            var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == id).OrderBy(x=>x.Row);
             ViewBag.ghe = ghengoi;
             return View(ghengoi);
         }
