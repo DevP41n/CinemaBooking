@@ -62,7 +62,9 @@
                             <span class="info">Số lượng vé : @Model.so_luong_ve</span>
                             <span class="info">Bạn cần phải thanh toán : @Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(Model.so_luong_ve) * 75000)))</span>
                         </li>
-                       @*Đang thêm QRCODE*@
+                        <li>
+                            <img src="@ViewBag.QrCodeUri" class="img-thumbnail" />
+                        </li>
                     </ul>
                     <ul class="side-shape">
                         <li>

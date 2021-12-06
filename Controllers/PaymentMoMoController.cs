@@ -2,6 +2,7 @@
 using CinemaBooking.Models;
 
 using Newtonsoft.Json.Linq;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -33,15 +34,48 @@ namespace CinemaBooking.Controllers
                 }
             }
 
+            string ghee = "";
+            var demm = 0;
+            foreach (var j in idghengoi)
+            {
+                demm++;
+                var tenghh = db.ghe_ngoi.Find(Convert.ToInt32(j));
+                if (demm == idghengoi.Count())
+                {
+                    ghee += tenghh.Row + tenghh.Col;
+                }
+                else
+                {
+                    ghee += tenghh.Row + tenghh.Col + ", ";
+                }
+            }
+
+
             Session["idghe"] = idghe;
             Session["idsc"] = idsc;
             Session["idtime"] = idtime;
             Session["UrlPre"] = TempData["Url"].ToString();
 
+            Random random = new Random();
+
+            bool check = false;
+            while (check == false)
+            {
+                int length = 15;
+                const string chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+                string codeticket = new string(Enumerable.Repeat(chars, length)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+                if (db.orders.Where(n => n.code_ticket == codeticket).Count() == 0)
+                {
+                    check = true;
+                    Session["codeticket"] = codeticket;
+                }
+            }
+
             string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
             string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
             string serectKey = ConfigurationManager.AppSettings["serectKey"].ToString();
-            string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");
+            string orderInfo = ghee;
             string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
             string notifyurl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
             string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
@@ -50,7 +84,7 @@ namespace CinemaBooking.Controllers
             string tongtien = tien.ToString();
 
             string amount = tongtien;
-            string orderid = Guid.NewGuid().ToString();
+            string orderid = Session["codeticket"].ToString();
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
 
@@ -98,29 +132,32 @@ namespace CinemaBooking.Controllers
             string signature = crypto.signSHA256(param, serectKey);
 
             string urlback = Session["UrlPre"].ToString();
+            string codeticket = Session["codeticket"].ToString();
+            string idghe = Session["idghe"].ToString();
+            string idsc = Session["idsc"].ToString();
+            string idtime = Session["idtime"].ToString();
+
+            Session["idghe"] = null;
+            Session["idsc"] = null;
+            Session["idtime"] = null;
+            Session["codeticket"] = null;
             Session["UrlPre"] = null;
 
             if (signature != Request["signature".ToString()])
             {
-                Session["idghe"] = null;
-                Session["idsc"] = null;
-                Session["idtime"] = null;
+
                 TempData["Error"] = "Thanh toán thất bại";
                 return Redirect(urlback);
             }
             if (!Request.QueryString["errorCode"].Equals("0"))
             {
-                Session["idghe"] = null;
-                Session["idsc"] = null;
-                Session["idtime"] = null;
+
                 TempData["Error"] = "Thanh toán thất bại";
                 return Redirect(urlback);
             }
             else
             {
-                string idghe = Session["idghe"].ToString();
-                string idsc = Session["idsc"].ToString();
-                string idtime = Session["idtime"].ToString();
+
 
                 int idsuatchieu = Convert.ToInt32(idsc);
                 int idtimechieu = Convert.ToInt32(idtime);
@@ -150,10 +187,7 @@ namespace CinemaBooking.Controllers
                 }
                 if (dem > 0)
                 {
-                    
-                    Session["idghe"] = null;
-                    Session["idsc"] = null;
-                    Session["idtime"] = null;
+
                     TempData["Error"] = "Ghế đã có người vừa đặt, Vui lòng chọn ghế khác!";
                     return Redirect(urlback);
                 }
@@ -173,9 +207,16 @@ namespace CinemaBooking.Controllers
                 addorder.idtime = idtimechieu;
                 addorder.tong_tien = idghengoi.Count() * 75000;
                 addorder.so_luong_ve = idghengoi.Count();
-                //addorder.code_ticket = "";
+                addorder.code_ticket = codeticket;
                 db.orders.Add(addorder);
                 db.SaveChanges();
+
+                //Mã QR Code
+                QRCodeGenerator QrGenerator = new QRCodeGenerator();
+                QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(addorder.code_ticket, QRCodeGenerator.ECCLevel.Q);
+
+                string path = Server.MapPath("~/images/qrcode/");
+                QrCodeInfo.SaveRawData(path + addorder.code_ticket + ".qrr", QRCodeData.Compression.Uncompressed);
 
                 //add order details
                 int idorder = addorder.id;
@@ -188,9 +229,7 @@ namespace CinemaBooking.Controllers
                     db.order_details.Add(addorderdetails);
                     db.SaveChanges();
                 }
-                Session["idghe"] = null;
-                Session["idsc"] = null;
-                Session["idtime"] = null;
+
 
 
                 //send

@@ -220,7 +220,23 @@ namespace CinemaBooking.Controllers
             addorder.status = 1;
             addorder.tong_tien = idghengoi.Count() * 75000;
             addorder.so_luong_ve = idghengoi.Count();
-            //addorder.code_ticket = "";
+            //Random Code ticket
+            Random random = new Random();
+
+            bool check = false;
+            while (check == false)
+            {
+                int length = 15;
+                const string chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+                string codeticket = new string(Enumerable.Repeat(chars, length)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+                if (db.orders.Where(n => n.code_ticket == codeticket).Count() == 0)
+                {
+                    addorder.code_ticket = codeticket;
+                    check = true;
+                }
+            }
+
             db.orders.Add(addorder);
             db.SaveChanges();
 

@@ -1,11 +1,13 @@
 ﻿using CinemaBooking.Library;
 using CinemaBooking.Models;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Controllers
@@ -67,10 +69,32 @@ namespace CinemaBooking.Controllers
             addorder.status = 2;
             addorder.tong_tien = idghengoi.Count() * 75000;
             addorder.so_luong_ve = idghengoi.Count();
-            //addorder.code_ticket = "";
+            //code ticket
+            Random random = new Random();
+
+            bool check = false;
+            while (check == false)
+            {
+                int length = 15;
+                const string chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+                string codeticket = new string(Enumerable.Repeat(chars, length)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+                if (db.orders.Where(n => n.code_ticket == codeticket).Count() == 0)
+                {
+                    addorder.code_ticket = codeticket;
+                    check = true;
+                }
+            }
+
+            //Mã QR Code
+            QRCodeGenerator QrGenerator = new QRCodeGenerator();
+            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(addorder.code_ticket, QRCodeGenerator.ECCLevel.Q);
+
+            string path = Server.MapPath("~/images/qrcode/");
+            QrCodeInfo.SaveRawData(path + addorder.code_ticket + ".qrr", QRCodeData.Compression.Uncompressed);
+
             db.orders.Add(addorder);
             db.SaveChanges();
-
             //add order details
             int idorder = addorder.id;
             order_details addorderdetails = new order_details();
@@ -105,6 +129,7 @@ namespace CinemaBooking.Controllers
                     ghee += tenghh.Row + tenghh.Col + ", ";
                 }
             }
+
             try
             {
                 string mail = System.IO.File.ReadAllText(Server.MapPath("~/Library/ReplyMail.html"));
@@ -141,7 +166,7 @@ namespace CinemaBooking.Controllers
                 return RedirectToAction("SignIn", "User");
             }
 
-            if(idord==null)
+            if (idord == null)
             {
                 TempData["Warning"] = "Không phải tài khoản của bạn";
                 return RedirectToAction("Index", "Home");
@@ -149,7 +174,7 @@ namespace CinemaBooking.Controllers
 
             var makh = Convert.ToInt32(Session["MaKH"]);
             var ord = db.orders.Find(idord);
-            if(ord.id_khachhang != makh)
+            if (ord.id_khachhang != makh)
             {
                 TempData["Warning"] = "Không phải tài khoản của bạn";
                 return RedirectToAction("Index", "Home");
@@ -170,10 +195,23 @@ namespace CinemaBooking.Controllers
                 }
                 else
                 {
-                    dayghe += ghe.Row + ghe.Col + ",";
+                    dayghe += ghe.Row + ghe.Col + ", ";
                 }
             }
 
+
+            string qRCode = "Vé xem phim: ghế " + dayghe + ". Trạng thái chưa thanh toán!";
+
+
+            string path = Server.MapPath("~/images/qrcode/");
+
+            QRCodeData qrCodeData1 = new QRCodeData(path + ord.code_ticket + ".qrr", QRCodeData.Compression.Uncompressed);
+            QRCode QrCode = new QRCode(qrCodeData1);
+            Bitmap QrBitmap = QrCode.GetGraphic(60);
+            byte[] BitmapArray = QrBitmap.BitmapToByteArray();
+            string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
+
+            ViewBag.QrCodeUri = QrUri;
             ViewBag.ghe = dayghe;
             TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
             var tinhthem = ord.ngay_mua + tinhgio;
@@ -182,4 +220,21 @@ namespace CinemaBooking.Controllers
         }
 
     }
+
+    public static class BitmapExtension
+    {
+        public static byte[] BitmapToByteArray(this Bitmap bitmap)
+        {
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+
+                bitmap.Save(ms, ImageFormat.Png);
+                return ms.ToArray();
+            }
+        }
+    }
+
+
+
 }
