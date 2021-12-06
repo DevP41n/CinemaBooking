@@ -22,7 +22,18 @@ namespace CinemaBooking.Controllers
         // GET: News/NewsDetail
         public ActionResult NewsDetail(int id)
         {
-            return View(db.su_kien.SingleOrDefault(s =>s.id.Equals(id)));
+            try
+            {
+                if (id < 0)
+                {
+                    return RedirectToAction("Error404", "Home");
+                }
+                return View(db.su_kien.SingleOrDefault(s => s.id.Equals(id)));
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("Error404", "Home");
+            }
         }
     }
 }

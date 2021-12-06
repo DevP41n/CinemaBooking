@@ -1,5 +1,6 @@
 ﻿using CinemaBooking.Models;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -35,8 +36,24 @@ namespace CinemaBooking.Controllers
         }
         public ActionResult Search(string name)
         {
+            if (name == null || name == "")
+            {
+                return RedirectToAction("Error404", "Home");
+            }
             ViewBag.tukhoa = name;
-            return View(db.phims.Where(p => p.ten_phim.Contains(name)).OrderByDescending(x => x.ten_phim));
+            try
+            {
+                return View(db.phims.Where(p => p.ten_phim.Contains(name)).OrderByDescending(x => x.ten_phim));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error404", "Home");
+            }
+        }
+
+        public ActionResult Error404()
+        {
+            return View();
         }
     }
 }

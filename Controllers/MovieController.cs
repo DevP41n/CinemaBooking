@@ -16,6 +16,11 @@ namespace CinemaBooking.Controllers
         //Chi tiết phim
         public ActionResult MovieDetail(String id)
         {
+            if (id == null || id == "")
+            {
+                return RedirectToAction("Error404", "Home");
+            }
+
             try
             {
                 var movie = db.phims
@@ -47,7 +52,7 @@ namespace CinemaBooking.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Error404", "Home");
             }
         }
         //Phim đang chiếu
@@ -167,7 +172,7 @@ namespace CinemaBooking.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Error404", "Home");
             }
             return View();
         }
@@ -340,7 +345,7 @@ namespace CinemaBooking.Controllers
                 if (idd == null || idtimee == null || idd == "" || idtimee == "")
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Error404", "Home");
                 }
 
 
@@ -354,7 +359,7 @@ namespace CinemaBooking.Controllers
                 if (time == null || idpc == null)
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Error404", "Home");
                 }
                 ViewBag.ngaychieu = idpc.ngay_chieu;
                 string time1 = time.TimeFrame.Time.ToString();
@@ -365,7 +370,7 @@ namespace CinemaBooking.Controllers
                 ViewBag.tenphim = db.phims.Find(idpc.phim_id);
                 phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
                 ViewBag.pc = phongChieu;
-                var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).ToList();
+                var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).OrderBy(x=>x.Row);
                 ViewBag.ghe = ghengoi;
                 ViewBag.idtime = idtime;
                 ViewBag.idsc = id;
@@ -411,7 +416,7 @@ namespace CinemaBooking.Controllers
             catch (Exception)
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Error404", "Home");
             }
         }
         //Thanh toán
@@ -427,13 +432,13 @@ namespace CinemaBooking.Controllers
             if (id == null || idtime == null || idg == null)
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Error404", "Home");
             }
 
             if (id < 1 || idtime < 1 || idg == "")
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Error404", "Home");
             }
             var sc = db.suat_chieu.Find(id);
             var mkh = Convert.ToInt32(Session["MaKH"]);
@@ -444,7 +449,7 @@ namespace CinemaBooking.Controllers
             if (sc == null || kh == null || timefr == null)
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Error404", "Home");
             }
 
             ViewBag.time = timefr;
