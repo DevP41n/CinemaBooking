@@ -507,3 +507,26 @@ add sex int Null;
 --Thêm 1 ít database
 alter table orders
 add pay_method Nvarchar(255);
+
+
+-- Bug to nên phải sửa (7/12/2021).
+alter table phong_chieu
+add status int null;
+
+alter table rap_chieu
+add status int null;
+
+alter table ghe_ngoi
+add status int null;
+
+alter table TimeFrame
+add status int null;
+
+alter table suat_chieu
+add status int null;
+
+-- chạy status = 1 cho ghế nè nếu làm biếng 
+update ghe_ngoi
+set status = '1'
+where id > 0;
+

@@ -742,6 +742,7 @@
     <Content Include="Areas\Admin\Views\CinemaRoom\CinemaList.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\CreateCinema.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\EditCinema.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\AError404.cshtml" />
     <None Include="Areas\Admin\Views\Information\ListDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\EditDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\CreateDirector.cshtml" />

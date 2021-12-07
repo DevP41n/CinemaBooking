@@ -55,6 +55,7 @@
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="Row" Type="nvarchar" MaxLength="255" />
           <Property Name="Col" Type="int" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="gia_ve">
           <Key>
@@ -195,10 +196,10 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="so_luong_day" Type="int" />
           <Property Name="so_luong_cot" Type="int" />
           <Property Name="ten_phong" Type="nvarchar" MaxLength="255" />
           <Property Name="id_rapchieu" Type="int" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="rap_chieu">
           <Key>
@@ -237,6 +238,7 @@
           <Property Name="ngay_chieu" Type="date" />
           <Property Name="phim_id" Type="int" />
           <Property Name="phong_chieu_id" Type="int" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="suatchieu_timeframe">
           <Key>
@@ -264,6 +266,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Time" Type="time" Precision="7" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <EntityType Name="users">
           <Key>
@@ -754,6 +757,7 @@
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_GhePC" FromRole="ghe_ngoi" ToRole="phong_chieu" />
           <NavigationProperty Name="loai_ghe" Relationship="Self.Fk_LoaiGhe" FromRole="ghe_ngoi" ToRole="loai_ghe" />
           <NavigationProperty Name="ve_ban" Relationship="Self.Fk_VeGhe" FromRole="ghe_ngoi" ToRole="ve_ban" />
+          <Property Name="status" Type="Int32" />
         </EntityType>
         <EntityType Name="gia_ve">
           <Key>
@@ -914,7 +918,6 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="so_luong_day" Type="Int32" />
           <Property Name="so_luong_cot" Type="Int32" />
           <Property Name="ten_phong" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ghe_ngoi" Relationship="Self.Fk_GhePC" FromRole="phong_chieu" ToRole="ghe_ngoi" />
@@ -922,6 +925,7 @@
           <NavigationProperty Name="suat_chieu" Relationship="Self.Fk_PhimPC" FromRole="phong_chieu" ToRole="suat_chieu" />
           <Property Name="id_rapchieu" Type="Int32" />
           <NavigationProperty Name="rap_chieu" Relationship="CinemaBookingModel.FK_RCphongchieu" FromRole="phong_chieu" ToRole="rap_chieu" />
+          <Property Name="status" Type="Int32" />
         </EntityType>
         <EntityType Name="su_kien">
           <Key>
@@ -952,6 +956,7 @@
           <NavigationProperty Name="phong_chieu" Relationship="Self.Fk_PhimPC" FromRole="suat_chieu" ToRole="phong_chieu" />
           <NavigationProperty Name="suatchieu_timeframe" Relationship="Self.FK_Suatchieu_frame" FromRole="suat_chieu" ToRole="suatchieu_timeframe" />
           <NavigationProperty Name="ve_ban" Relationship="Self.Fk_VeSC" FromRole="suat_chieu" ToRole="ve_ban" />
+          <Property Name="status" Type="Int32" />
         </EntityType>
         <EntityType Name="suatchieu_timeframe">
           <Key>
@@ -983,6 +988,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Time" Type="Time" Precision="7" />
           <NavigationProperty Name="suatchieu_timeframe" Relationship="Self.FK_frame_suatchieu" FromRole="TimeFrame" ToRole="suatchieu_timeframe" />
+          <Property Name="status" Type="Int32" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -1481,6 +1487,7 @@
           <EntitySetMapping Name="ghe_ngoi">
             <EntityTypeMapping TypeName="CinemaBookingModel.ghe_ngoi">
               <MappingFragment StoreEntitySet="ghe_ngoi">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="da_chon" ColumnName="da_chon" />
                 <ScalarProperty Name="phong_chieu_id" ColumnName="phong_chieu_id" />
@@ -1639,9 +1646,9 @@
           <EntitySetMapping Name="phong_chieu">
             <EntityTypeMapping TypeName="CinemaBookingModel.phong_chieu">
               <MappingFragment StoreEntitySet="phong_chieu">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id_rapchieu" ColumnName="id_rapchieu" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="so_luong_day" ColumnName="so_luong_day" />
                 <ScalarProperty Name="so_luong_cot" ColumnName="so_luong_cot" />
                 <ScalarProperty Name="ten_phong" ColumnName="ten_phong" />
               </MappingFragment>
@@ -1666,6 +1673,7 @@
           <EntitySetMapping Name="suat_chieu">
             <EntityTypeMapping TypeName="CinemaBookingModel.suat_chieu">
               <MappingFragment StoreEntitySet="suat_chieu">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="gio_bat_dau" ColumnName="gio_bat_dau" />
                 <ScalarProperty Name="ngay_chieu" ColumnName="ngay_chieu" />
@@ -1699,6 +1707,7 @@
           <EntitySetMapping Name="TimeFrames">
             <EntityTypeMapping TypeName="CinemaBookingModel.TimeFrame">
               <MappingFragment StoreEntitySet="TimeFrame">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
               </MappingFragment>

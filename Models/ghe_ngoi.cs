@@ -29,6 +29,7 @@ namespace CinemaBooking.Models
         public string image { get; set; }
         public string Row { get; set; }
         public Nullable<int> Col { get; set; }
+        public Nullable<int> status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_details> order_details { get; set; }

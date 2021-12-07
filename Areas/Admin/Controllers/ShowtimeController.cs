@@ -14,11 +14,19 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // GET: Admin/Showtime
         public ActionResult ListShowTime()
         {
-            return View(db.suat_chieu.ToList());
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            return View(db.suat_chieu.Where(x=>x.status==1).ToList());
         }
 
         public ActionResult CreateShowTime()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
@@ -32,6 +40,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
             suatchieu_timeframe sctime = new suatchieu_timeframe();
+            suatChieu.status = 1;
             db.suat_chieu.Add(suatChieu);
             db.SaveChanges();
             if (ModelState.IsValid)
@@ -53,12 +62,19 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult EditShowTime(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (id == null || id <1)
+            {
+                return RedirectToAction("AError404", "Admin");
+            }
             suat_chieu suatChieu = db.suat_chieu.Find(id);
-            ViewBag.phim = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
             if (suatChieu == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("AError404", "Admin");
             }
             return View(suatChieu);
         }
@@ -66,7 +82,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditShowTime(suat_chieu suatChieu)
         {
-            ViewBag.phim = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.phong_chieu = new SelectList(db.phong_chieu.ToList().OrderBy(n => n.id), "id", "ten_phong");
             if (ModelState.IsValid)
             {
@@ -84,6 +99,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult DeleteConfirmed(int? id)
         {
+            //Note : chưa check - fix nhiều quá mệt chưa kịp fix
             var timesc = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id).ToList();
             foreach(var item in timesc)
             {

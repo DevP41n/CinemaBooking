@@ -22,6 +22,7 @@ namespace CinemaBooking.Models
     
         public int id { get; set; }
         public Nullable<System.TimeSpan> Time { get; set; }
+        public Nullable<int> status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<suatchieu_timeframe> suatchieu_timeframe { get; set; }
