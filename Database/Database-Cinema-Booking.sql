@@ -530,3 +530,4 @@ update ghe_ngoi
 set status = '1'
 where id > 0;
 
+-- lỗi thì thêm status( Suất chiếu, phòng chiếu, ghế ngồi ) = 1 là chạy được nhe

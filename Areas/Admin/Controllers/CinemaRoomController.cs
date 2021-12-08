@@ -123,6 +123,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             try
             {
                 phong_chieu phongChieu = db.phong_chieu.Find(id);
+                if (phongChieu == null)
+                {
+                    return RedirectToAction("AError404", "Admin");
+                }
+
                 if (phongChieu.status != 2)
                 {
                     return RedirectToAction("AError404", "Admin");
@@ -176,6 +181,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
                 phong_chieu phong_Chieu = db.phong_chieu.Find(id);
                 var check = db.suat_chieu.Where(x => x.phong_chieu_id == id && x.status == 1);
+                if(phong_Chieu == null || check == null)
+                {
+                    return RedirectToAction("AError404", "Admin");
+                }
                 TimeSpan timecheck = new TimeSpan(1, 0, 0, 0);
                 int dem = 0;
                 foreach (var item in check)
@@ -227,7 +236,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
 
                 phong_chieu phong_Chieu = db.phong_chieu.Find(id);
-
+                if(phong_Chieu == null)
+                {
+                    return RedirectToAction("AError404", "Admin");
+                }
 
                 //Nếu không phải = 2 là sai
                 if (phong_Chieu.status != 2)
@@ -260,6 +272,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
             try
             {
                 phong_chieu phongChieu = db.phong_chieu.Find(id);
+                if (phongChieu == null)
+                {
+                    return RedirectToAction("AError404", "Admin");
+                }
                 if (phongChieu.status == 0)
                 {
                     return RedirectToAction("AError404", "Admin");
@@ -278,7 +294,16 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateSeat(string hang, int ghe, int id)
         {
+            if (hang == null || ghe <1|| id < 1)
+            {
+                return Json(new { checkr = false });
+            }
+
             var check = db.suat_chieu.Where(x => x.phong_chieu_id == id && x.status == 1);
+            if(check == null)
+            {
+                return Json(new { checkr = false });
+            }
             TimeSpan timecheck = new TimeSpan(1, 0, 0, 0);
             int dem = 0;
             foreach (var item in check)
@@ -513,7 +538,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 rap_chieu rapChieu = db.rap_chieu.Find(id);
                 if (rapChieu == null)
                 {
-                    return RedirectToAction("CinemaList");
+                    return RedirectToAction("AError404", "Admin");
                 }
                 return View(rapChieu);
             }
