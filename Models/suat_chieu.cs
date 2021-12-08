@@ -28,13 +28,16 @@ namespace CinemaBooking.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ngay_chieu { get; set; }
+        [Required]
         public Nullable<int> phim_id { get; set; }
+        [Required]
         public Nullable<int> phong_chieu_id { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
         public virtual phim phim { get; set; }
         public virtual phong_chieu phong_chieu { get; set; }
+        public Nullable<int> status { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ve_ban> ve_ban { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

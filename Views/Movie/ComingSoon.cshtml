@@ -6,7 +6,7 @@
 }
 @{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
 <!-- ==========Movie-Section========== -->
-<section class="movie-section padding-bottom"style="padding-top:87px">
+<section class="movie-section padding-bottom" style="padding-top:87px">
     <div class="container">
         <div class="row flex-wrap-reverse justify-content-center">
             <div class="col-sm-8 col-md-6 col-lg-2">
@@ -21,7 +21,7 @@
                                     <input type="checkbox" name="theloai" id="@itemtheloai.id" value="@itemtheloai.id">
                                     @if (ViewBag.category == @itemtheloai.id)
                                     {
-                                        <label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "ComingSoon", "Movie", new { page = 1}, new { @style = "color:white;" })</label>
+                                        <label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "ComingSoon", "Movie", new { page = 1 }, new { @style = "color:white;" })</label>
 
                                     }
                                     else
@@ -29,7 +29,7 @@
                                         <label for="@itemtheloai.id">@Html.ActionLink(@itemtheloai.ten_the_loai, "ComingSoon", "Movie", new { page = 1, category = @itemtheloai.id }, new { @style = "color:white;" })</label>
 
                                     }
-                               
+
                                 </div>
                             }
 
@@ -42,7 +42,7 @@
                     <div class="filter-area" style="border: none;">
                         <div class="filter-main">
                             <div class="left">
-                              
+
                             </div>
                             <ul class="grid-button tab-menu">
                                 <li class="active">
@@ -57,6 +57,13 @@
                     <div class="tab-area">
                         <div class="tab-item active">
                             <div class="row mb-10">
+                                <!--Check nếu không có phim nào trong thể loại này-->
+                                @if (Model.Count() == 0)
+                                {
+                                    <h3 class="title" style=" overflow: hidden; text-align: center;padding:20px">
+                                        Hiện thể loại này chưa có phim nào đang chiếu :(
+                                    </h3>
+                                }
                                 @foreach (var item in Model)
                                 {
                                     <div class="col-sm-6 col-lg-4">
@@ -83,6 +90,13 @@
                         </div>
                         <div class="tab-item">
                             <div class="movie-area mb-10">
+                                <!--Check nếu không có phim nào trong thể loại này-->
+                                @if (Model.Count() == 0)
+                                {
+                                    <h3 class="title" style=" overflow: hidden; text-align: center;padding:20px">
+                                        Hiện thể loại này chưa có phim nào đang chiếu :(
+                                    </h3>
+                                }
                                 @foreach (var mov in Model)
                                 {
                                     <div class="movie-list">
@@ -136,7 +150,10 @@
                         </div>
                     </div>
                     <div class="pagination-area text-center">
-                        @Html.PagedListPager(Model, page => Url.Action("ComingSoon", "Movie", new { page, category = ViewBag.category }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                        @if (Model.Count() > 0)
+                        {
+                            @Html.PagedListPager(Model, page => Url.Action("ComingSoon", "Movie", new { page, category = ViewBag.category }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                        }
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@
                 <div class="col-sm-6">
                     <div class="page-title-box">
                         <h4 class="font-size-18">Danh sách suất chiếu</h4>
-                       
+
                     </div>
                 </div>
 
@@ -33,117 +33,348 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            STT
-                                        </th>
-                                        <th>
-                                            Phim
-                                        </th>
-                                        <th>
-                                            Ngày Chiếu
-                                        </th>
-                                        @*<th>
-                                                Khung giờ
-                                            </th>*@
-                                        <th>
-                                            Phòng chiếu
-                                        </th>
-                                        <th style="width: 50px;">
-                                            Danh Sách
-                                        </th>
-                                        <th>
-                                            Công cụ
-                                        </th>
-                                    </tr>
-                                </thead>
 
-                                @{ int rownumber = 1; }
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @(rownumber++)
-                                            </td>
-                                            <td>
-                                                @item.phim.ten_phim
-                                            </td>
-                                            <td>
-                                                @Html.FormatValue(@item.ngay_chieu, "{0:dd/MM/yyyy}")
-                                            </td>
-                                            @*<td>
-                                                    @foreach (var i in db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id))
+                            <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#list" role="tab">
+                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                        <span class="fas fa-list-ol">&ensp;Danh Sách Suất chiếu đang và sắp chiếu</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#cbcongchieu" role="tab">
+                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                        <span class="">&ensp;Chuẩn bị công chiếu&ensp;</span>
+                                        <span class="badge badge-pill badge-primary float-right">  @ViewBag.cbcongchieu</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#hethan" role="tab">
+                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                        <span class="">&ensp;Suất chiếu hết hạn&ensp;</span>
+                                        <span class="badge badge-pill badge-primary float-right"></span>
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane active p-3" id="list" role="tabpanel">
+
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    STT
+                                                </th>
+                                                <th>
+                                                    Phim
+                                                </th>
+                                                <th>
+                                                    Ngày Chiếu
+                                                </th>
+                                                @*<th>
+                                                        Khung giờ
+                                                    </th>*@
+                                                <th>
+                                                    Phòng chiếu
+                                                </th>
+                                                <th>
+                                                    Rạp chiếu
+                                                </th>
+                                                <th style="width: 50px;">
+                                                    Danh Sách
+                                                </th>
+
+                                                <th>
+                                                    Trạng thái
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        @{ int rownumber = 1; }
+                                        <tbody>
+                                            @foreach (var item in Model.Where(x => x.status == 1))
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @(rownumber++)
+                                                    </td>
+                                                    <td>
+                                                        @item.phim.ten_phim
+                                                    </td>
+                                                    <td>
+                                                        @Html.FormatValue(@item.ngay_chieu, "{0:dd/MM/yyyy}")
+                                                    </td>
+                                                    @*<td>
+                                                            @foreach (var i in db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id))
+                                                            {
+                                                                <a class="btn btn-primary">@i.TimeFrame.Time</a>
+                                                            }
+                                                        </td>*@
+                                                    <td>
+                                                        @item.phong_chieu.ten_phong
+                                                    </td>
+
+                                                    <td>@item.phong_chieu.rap_chieu.ten_rap</td>
+
+                                                    <td>
+                                                        @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
+                                                        <button type="button" class="btn btn-primary ListdatTime" data-target="#showdata" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
+                                                            <a class="text-white ListdatTime" data-id="@item.id">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" data-id="@item.id" class="icon icon-tabler icon-tabler-clipboard-list ListdatTime" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                                                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                                                                    <line x1="9" y1="12" x2="9.01" y2="12" />
+                                                                    <line x1="13" y1="12" x2="15" y2="12" />
+                                                                    <line x1="9" y1="16" x2="9.01" y2="16" />
+                                                                    <line x1="13" y1="16" x2="15" y2="16" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>
+                                                    </td>
+
+
+                                                    <!--button edit-->
+                                                    @if (db.orders.Where(x => x.suatchieu_id == item.id).Count() == 0)
                                                     {
-                                                        <a class="btn btn-primary">@i.TimeFrame.Time</a>
+                                                        <td>
+                                                            <!--Nếu chưa có người nào đặt thì có thể chuyển về chuẩn bị để sửa-->
+                                                            <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Quay lại trạng thái chuẩn bị công chiếu">
+                                                                <a href="@Url.Action("BackToReady", "Showtime", new { id = item.id })" class="text-white">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back-up" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                        <path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" />
+                                                                    </svg>
+                                                                </a>
+                                                            </button>
+                                                        </td>
                                                     }
-                                                </td>*@
-                                            <td>
-                                                @item.phong_chieu.ten_phong
-                                            </td>
-                                            <td>
-                                                @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
-                                                <button type="button" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
-                                                        <a class="text-white ListTime" data-id="@item.id">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" data-id="@item.id" class="icon icon-tabler icon-tabler-clipboard-list ListTime" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-                                                                <rect x="9" y="3" width="6" height="4" rx="2" />
-                                                                <line x1="9" y1="12" x2="9.01" y2="12" />
-                                                                <line x1="13" y1="12" x2="15" y2="12" />
-                                                                <line x1="9" y1="16" x2="9.01" y2="16" />
-                                                                <line x1="13" y1="16" x2="15" y2="16" />
-                                                            </svg>
-                                                        </a>
-                                                    </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
-                                                    <a href="@Url.Action("EditShowTime", "Showtime", new { id = item.id })" class="text-white">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z" />
-                                                            <path d="M16 5l3 3" />
-                                                            <path d="M9 7.07a7.002 7.002 0 0 0 1 13.93a7.002 7.002 0 0 0 6.929 -5.999" />
-                                                        </svg>
-                                                    </a>
-                                                </button>
-
-                                                @*<button type="button" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
-                                                        <a class="text-white ListTime">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-                                                                <rect x="9" y="3" width="6" height="4" rx="2" />
-                                                                <line x1="9" y1="12" x2="9.01" y2="12" />
-                                                                <line x1="13" y1="12" x2="15" y2="12" />
-                                                                <line x1="9" y1="16" x2="9.01" y2="16" />
-                                                                <line x1="13" y1="16" x2="15" y2="16" />
-                                                            </svg>
-                                                        </a>
-                                                    </button>*@
+                                                    else
+                                                    {
+                                                        <td style="color:#037f03">
+                                                            Suất chiếu đã có vé đặt
+                                                        </td>
+                                                    }
+                                                    <!--button thừa-->
+                                                    @*<button type="button" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
+                                                            <a class="text-white ListTime">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-list" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                                                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                                                                    <line x1="9" y1="12" x2="9.01" y2="12" />
+                                                                    <line x1="13" y1="12" x2="15" y2="12" />
+                                                                    <line x1="9" y1="16" x2="9.01" y2="16" />
+                                                                    <line x1="13" y1="16" x2="15" y2="16" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>*@
 
 
+                                                    <!--Buttn delete-->
+                                                    @*<button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                                            <a href="@Url.Action("DeleteConfirmed", "Showtime", new { id = item.id })" class="text-white">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <line x1="4" y1="7" x2="20" y2="7" />
+                                                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>*@
 
-                                                <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa">
-                                                    <a href="@Url.Action("DeleteConfirmed", "Showtime", new { id = item.id })" class="text-white">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <line x1="4" y1="7" x2="20" y2="7" />
-                                                            <line x1="10" y1="11" x2="10" y2="17" />
-                                                            <line x1="14" y1="11" x2="14" y2="17" />
-                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                        </svg>
-                                                    </a>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!--Chuẩn bị công chiếu status = 2-->
+                                <div class="tab-pane p-3" id="cbcongchieu" role="tabpanel">
+
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    STT
+                                                </th>
+                                                <th>
+                                                    Phim
+                                                </th>
+                                                <th>
+                                                    Ngày Chiếu
+                                                </th>
+                                                <th>
+                                                    Phòng chiếu
+                                                </th>
+                                                <th>
+                                                    Rạp chiếu
+                                                </th>
+                                                <th style="width: 50px;">
+                                                    Danh Sách
+                                                </th>
+                                                <th>
+                                                    Công cụ
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        @{ int rown = 1; }
+                                        <tbody>
+                                            @foreach (var item in Model.Where(x => x.status == 2))
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @(rown++)
+                                                    </td>
+                                                    <td>
+                                                        @item.phim.ten_phim
+                                                    </td>
+                                                    <td>
+                                                        @Html.FormatValue(@item.ngay_chieu, "{0:dd/MM/yyyy}")
+                                                    </td>
+                                                    <td>
+                                                        @item.phong_chieu.ten_phong
+                                                    </td>
+                                                    <td>@item.phong_chieu.rap_chieu.ten_rap</td>
+                                                    <td>
+                                                        @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
+                                                        <button type="button" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
+                                                            <a class="text-white ListTime" data-id="@item.id">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" data-id="@item.id" class="icon icon-tabler icon-tabler-clipboard-list ListTime" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                                                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                                                                    <line x1="9" y1="12" x2="9.01" y2="12" />
+                                                                    <line x1="13" y1="12" x2="15" y2="12" />
+                                                                    <line x1="9" y1="16" x2="9.01" y2="16" />
+                                                                    <line x1="13" y1="16" x2="15" y2="16" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <!--Chỉnh sửa giờ-->
+                                                        <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
+                                                            <a href="@Url.Action("EditShowTime", "Showtime", new { id = item.id })" class="text-white">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z" />
+                                                                    <path d="M16 5l3 3" />
+                                                                    <path d="M9 7.07a7.002 7.002 0 0 0 1 13.93a7.002 7.002 0 0 0 6.929 -5.999" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>
+
+                                                        <!--Chuyển sang công chiếu-->
+                                                        <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Công chiếu">
+                                                            <a href="@Url.Action("changetoSTime", "Showtime", new { id = item.id })" class="text-white">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ticket" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <line x1="15" y1="5" x2="15" y2="7" />
+                                                                    <line x1="15" y1="11" x2="15" y2="13" />
+                                                                    <line x1="15" y1="17" x2="15" y2="19" />
+                                                                    <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>
+
+                                                        <!--Nếu chưa công chiếu thì có thể xóa-->
+                                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                                            <a href="@Url.Action("DeleteConfirmed", "Showtime", new { id = item.id })" class="text-white">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <line x1="4" y1="7" x2="20" y2="7" />
+                                                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                <!--Suất hết hạn status = 0-->
+
+                                <div class="tab-pane p-3" id="hethan" role="tabpanel">
+
+                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    STT
+                                                </th>
+                                                <th>
+                                                    Phim
+                                                </th>
+                                                <th>
+                                                    Ngày Chiếu
+                                                </th>
+                                                <th>
+                                                    Phòng chiếu
+                                                </th>
+                                                <th>
+                                                    Rạp chiếu
+                                                </th>
+                                                <th style="width: 50px;">
+                                                    Danh Sách
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        @{ int row = 1; }
+                                        <tbody>
+                                            @foreach (var item in Model.Where(x => x.status == 0))
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @(row++)
+                                                    </td>
+                                                    <td>
+                                                        @item.phim.ten_phim
+                                                    </td>
+                                                    <td>
+                                                        @Html.FormatValue(@item.ngay_chieu, "{0:dd/MM/yyyy}")
+                                                    </td>
+                                                    <td>
+                                                        @item.phong_chieu.ten_phong
+                                                    </td>
+                                                    <td>@item.phong_chieu.rap_chieu.ten_rap</td>
+                                                    <td>
+                                                        @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
+                                                        <button type="button" class="btn btn-primary ListdatTime" data-target="#showdata" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
+                                                            <a class="text-white ListdatTime" data-id="@item.id">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" data-id="@item.id" class="icon icon-tabler icon-tabler-clipboard-list ListdatTime" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                                                    <rect x="9" y="3" width="6" height="4" rx="2" />
+                                                                    <line x1="9" y1="12" x2="9.01" y2="12" />
+                                                                    <line x1="13" y1="12" x2="15" y2="12" />
+                                                                    <line x1="9" y1="16" x2="9.01" y2="16" />
+                                                                    <line x1="13" y1="16" x2="15" y2="16" />
+                                                                </svg>
+                                                            </a>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div> <!-- end col -->
@@ -168,10 +399,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered" >
+                <table class="table table-bordered">
                     @*<a class="btn btn-success pull-right" data-target="#CreateSeat" data-toggle="modal" style="float:left;margin-bottom:10px">
-                         Thêm khung giờ mới
-                    </a>*@
+                             Thêm khung giờ mới
+                        </a>*@
                     <div id="createaatime">
 
                     </div>
@@ -222,23 +453,59 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Show giờ chiếu cho stt = 1, stt =0-->
+<div class="modal fade" id="showdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Danh sách khung giờ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="cl">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Khung giờ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="showdatat">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!------------------------------------------------>
 <!------------------------------------------------>
 @section Scripts{
     <script>
         $(document).ready(function () {
-            //List time
+            //List time cho stt= 2
             $('body').on('click', '.ListTime', function () {
                 var idsuatchieu = $(this).data('id');
                 LoadTime(idsuatchieu);
             });
+            //List time cho stt= 1, stt =0
+            $('body').on('click', '.ListdatTime', function () {
+                var idsuatchieu = $(this).data('id');
+                LoadTimeFor12(idsuatchieu);
+            });
+
             //Show data create
             $('body').on('click', '.CreateFr', function () {
                 $('#EditTime').modal('hide');
                 var id = $(this).data('id');
                 ShowCreateTimeFr(id);
             });
-           //btn Xóa
+            //btn Xóa
             $('body').on('click', '.deletet', function () {
                 var id = $(this).data('id');
                 var idsc = $(this).data('idsc');
@@ -293,6 +560,35 @@
                 })
             }
 
+
+            //Show data time cho status = 1, status =0
+
+            function LoadTimeFor12(idsuatchieu) {
+                $.ajax({
+                    url: '/Showtime/ShowTimeFor12/',
+                    type: 'GET',
+                    data: {
+                        idsuatchieu: idsuatchieu,
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var itemid = res.id;
+                            var itemtime = res.Times;
+                            var html = "";
+                            for (let i = 0; i < res.count; i++) {
+                                html += "<tr>";
+                                html += "<td>" + (i + 1) + "</td>";
+                                html += "<td>" + itemtime[i] + "</td>";
+                                html += "</tr>";
+                            }
+                            $('#showdatat').html(html);
+                            $('#showdata').modal('show');
+                        }
+                    }
+                })
+            }
+
+            //Xóa
             function DeleteTime(id) {
                 $.ajax({
                     url: '/Showtime/DeleteTime/',
@@ -327,6 +623,7 @@
                             }
                             html += "</select>";
                             $("#listtime").html(html);
+                            $("#timeframe").select2();
                             $('#CreateTimeFr').modal('show');
                         }
                     }

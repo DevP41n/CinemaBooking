@@ -23,22 +23,22 @@
                     </div>
                 </div>
 
-               @* <div class="col-sm-6">
-                    <div class="float-right d-none d-md-block">
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-settings mr-2"></i> Settings
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                @* <div class="col-sm-6">
+                        <div class="float-right d-none d-md-block">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-settings mr-2"></i> Settings
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>*@
+                    </div>*@
             </div>
             <!-- end page title -->
 
@@ -67,14 +67,14 @@
                                 </div>
                             </div>
                             @*<div class="form-group row">
-                                <div class="col-lg-2">
-                                </div>
+                                    <div class="col-lg-2">
+                                    </div>
 
-                                <div class="col-lg-8">
-                                    <label>số lượng dãy</label>
-                                    <input class="form-control text-box single-line" type="text" id="fname" name="fname" value="@ViewBag.pc.so_luong_day" readonly>
-                                </div>
-                            </div>*@
+                                    <div class="col-lg-8">
+                                        <label>số lượng dãy</label>
+                                        <input class="form-control text-box single-line" type="text" id="fname" name="fname" value="@ViewBag.pc.so_luong_day" readonly>
+                                    </div>
+                                </div>*@
                             <div class="form-group mb-4">
 
                             </div>
@@ -102,7 +102,7 @@
                                 <div class="col-lg-10" style="margin-bottom:10px;">
 
                                     <button class="btn mg-5-2" style=" width: 500px; height: 25px; background-color: #fb4848; color: #000000; font-size: 14px; font-weight: 500;">Màn hình</button>
-                                    <br/> 
+                                    <br />
                                 </div>
 
                                 @foreach (var item in ViewBag.ghe)
@@ -217,12 +217,17 @@
                     type: 'POST',
                     data: { hang, ghe, id },
                     success: function (res) {
-                        if (res.success) {
+                        if (res.success == true) {
                             window.location.reload();
                         }
-                        else {
+                        else if (res.success == false) {
                             alert('Hàng này đã có rồi!');
                         }
+                        else if (res.checkr == false) {
+                            toastr.warning("Đã xảy ra lỗi hoặc phòng này chưa hết suất chiếu!");
+                            $('#CreateSeat').modal('hide');
+                        }
+
 
                     }
                 });
@@ -266,7 +271,8 @@
                         window.location.reload();
                     }
                     else {
-                        toastr.warning('Hàng này đã có rồi!');
+                        toastr.warning('Đã xảy ra lỗi hoặc suất chiếu của phòng này chưa hết ngày!');
+                        $('#Edit').modal('hide');
                     }
 
                 }
@@ -285,8 +291,12 @@
                     id: pcid,
                 },
                 success: function (res) {
-                    if (res.success)
+                    if (res.success == true) {
                         window.location.reload();
+                    }
+                    else if (res.success == false) {
+                        toastr.warning("Không thể xóa hàng này vì phòng này chưa hết suất chiếu!");
+                    }
                 }
             });
         });

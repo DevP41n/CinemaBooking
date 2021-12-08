@@ -68,14 +68,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     String StrPath = Path.Combine(Server.MapPath("~/images/movies/background/"));
                     file1.SaveAs(Path.Combine(StrPath, filename));
                 }
-                string theloai = "";
-                foreach (string theloaiid in theloaiarray)
-                {
-                    the_loai_phim selecttheloai = db.the_loai_phim.ToList().Find(p => p.id.ToString() == theloaiid);
-                    theloai += selecttheloai.id;
-                }
-                int theloailist = Int32.Parse(theloai);
-                Phim.theloaichinh = theloailist;
+                //không cần thêm thể loại chính : nếu thêm thì nên dùng string cho thêm dấu "-" ở giữa mỗi thể loại
+                //tránh trường hợp id thể loại lưu vào có {1,3} mà có id thể loại là 13 thì nó suất theo luôn id 13 nữa. 
                 db.phims.Add(Phim);
                 db.SaveChanges();
                 TempData["Message"] = "Tạo thành công!";
@@ -149,17 +143,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     String StrPath = Path.Combine(Server.MapPath("~/images/movies/background/"));
                     file1.SaveAs(Path.Combine(StrPath, filename));
                 }
-                if (theloaiarray != null)
-                {
-                    string theloai = "";
-                    foreach (string theloaiid in theloaiarray)
-                    {
-                        the_loai_phim selecttheloai = db.the_loai_phim.ToList().Find(p => p.id.ToString() == theloaiid);
-                        theloai += selecttheloai.id;
-                    }
-                    int theloailist = Int32.Parse(theloai);
-                    Phim.theloaichinh = theloailist;
-                }
+                //không cần thêm thể loại chính : nếu thêm thì nên dùng string cho thêm dấu "-" ở giữa mỗi thể loại
+                //tránh trường hợp id thể loại lưu vào có {1,3} mà có id thể loại là 13 thì nó suất theo luôn id 13 nữa. 
                 db.Entry(Phim).State = EntityState.Modified;
                 TempData["Message"] = "Cập nhật thành công!";
                 db.SaveChanges();
@@ -212,6 +197,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public JsonResult changeStatus(int id)
         {
             phim Phim = db.phims.Find(id);
+            var checkstime = db.suat_chieu.Where(x => x.phim_id == id && x.status != 0).Count();
+            if(checkstime !=0)
+            {
+                return Json(new { success = false });
+            }
             Phim.status = (Phim.status == 1) ? 2 : 1;
             //if (mProduct.Status==1)
             //{
@@ -232,6 +222,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public JsonResult ChangeRelease(int id)
         {
             phim Phim = db.phims.Find(id);
+            var checkstime = db.suat_chieu.Where(x => x.phim_id == id && x.status != 0).Count();
+            if (checkstime != 0)
+            {
+                return Json(new { success = false });
+            }
             Phim.loai_phim_chieu = (Phim.loai_phim_chieu == 1) ? 2 : 1;
             db.Entry(Phim).State = EntityState.Modified;
             db.SaveChanges();

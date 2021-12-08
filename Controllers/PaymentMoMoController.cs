@@ -283,7 +283,6 @@ namespace CinemaBooking.Controllers
                 }
 
             }
-            return View();
         }
 
         public ActionResult NotifyUrl()
