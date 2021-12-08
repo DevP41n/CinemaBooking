@@ -354,27 +354,27 @@ namespace CinemaBooking.Controllers
                 var id = Convert.ToInt32(idd);
 
                 var idtime = Convert.ToInt32(idtimee);
-                var idpc = db.suat_chieu.Find(id);
-                if (idpc.status != 1)
+                var idsc = db.suat_chieu.Find(id);
+                if (idsc.status != 1)
                 {
                     return RedirectToAction("Error404", "Home");
                 }
 
                 var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
                 //ràng buộc
-                if (time == null || idpc == null)
+                if (time == null || idsc == null)
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
                     return RedirectToAction("Error404", "Home");
                 }
-                ViewBag.ngaychieu = idpc.ngay_chieu;
+                ViewBag.ngaychieu = idsc.ngay_chieu;
                 string time1 = time.TimeFrame.Time.ToString();
                 string[] time2 = time1.Split(':');
                 string timef = time2[0] + ':' + time2[1];
                 ViewBag.giochieu = timef;
 
-                ViewBag.tenphim = db.phims.Find(idpc.phim_id);
-                phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
+                ViewBag.tenphim = db.phims.Find(idsc.phim_id);
+                phong_chieu phongChieu = db.phong_chieu.Find(idsc.phong_chieu_id);
                 ViewBag.pc = phongChieu;
                 var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).OrderBy(x => x.Row);
                 ViewBag.ghe = ghengoi;
@@ -383,7 +383,7 @@ namespace CinemaBooking.Controllers
                 //ghế đang chờ thanh toán
                 TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
                                                            //Status 2: đang chờ thanh toán tại quầy
-                var orderss = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
+                var orderss = db.orders.Where(n => n.suatchieu_id == idsc.id && n.idtime == idtime && n.status == 2);
                 var counttt = orderss.Count();
                 List<int> idgheddss = new List<int>();
                 foreach (var itemm in orderss)
@@ -404,8 +404,8 @@ namespace CinemaBooking.Controllers
                 }
                 db.SaveChanges();
 
-                var order = db.orders.Where(n => n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 1 ||
-                n.suatchieu_id == idpc.id && n.idtime == idtime && n.status == 2);
+                var order = db.orders.Where(n => n.suatchieu_id == idsc.id && n.idtime == idtime && n.status == 1 ||
+                n.suatchieu_id == idsc.id && n.idtime == idtime && n.status == 2);
                 List<int> idghedd = new List<int>();
                 foreach (var item in order)
                 {

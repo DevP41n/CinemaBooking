@@ -56,7 +56,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.Time), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
-            ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
+            ViewBag.rapchieu = db.rap_chieu.ToList();
 
             return View();
         }
@@ -74,7 +74,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
                 ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.Time), "id", "Time");
                 ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
-                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
+                ViewBag.rapchieu = db.rap_chieu.ToList();
                 suatchieu_timeframe sctime = new suatchieu_timeframe();
                 suatChieu.status = 2;
                 // không cho đặt suất chiếu ngày hiện tại Hoặc đặt suất chiếu trước 10 ngày
@@ -133,7 +133,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     TempData["Warning"] = "Suất này đang chiếu. Chỉ chỉnh sửa được suất chiếu đang chuẩn bị!";
                     return RedirectToAction("ListShowTime");
                 }
-                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
+                ViewBag.rapchieu = db.rap_chieu.ToList();
                 if (suatChieu == null)
                 {
                     return RedirectToAction("AError404", "Admin");
@@ -151,7 +151,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
+                ViewBag.rapchieu = db.rap_chieu.ToList();
                 if (ModelState.IsValid)
                 {
                     db.Entry(suatChieu).State = EntityState.Modified;
