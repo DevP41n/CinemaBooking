@@ -102,6 +102,19 @@ namespace CinemaBooking.Controllers
                     TempData["Warning"] = "Vui lòng đăng nhập";
                     return RedirectToAction("SignIn", "User", new { url = CurrentURL });
                 }
+                //check film
+                try
+                {
+                    var checkfilm = db.phims.Find(id);
+                    if (checkfilm == null)
+                    {
+                        return RedirectToAction("Error404", "Home");
+                    }
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Error404", "Home");
+                }
 
                 ViewBag.tenphim = db.phims.Find(id);
                 //Lấy ra list suất chiếu với id phim
@@ -350,16 +363,9 @@ namespace CinemaBooking.Controllers
                     return RedirectToAction("Error404", "Home");
                 }
 
-
                 var id = Convert.ToInt32(idd);
-
                 var idtime = Convert.ToInt32(idtimee);
                 var idsc = db.suat_chieu.Find(id);
-                if (idsc.status != 1)
-                {
-                    return RedirectToAction("Error404", "Home");
-                }
-
                 var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
                 //ràng buộc
                 if (time == null || idsc == null)
@@ -367,6 +373,12 @@ namespace CinemaBooking.Controllers
                     TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
                     return RedirectToAction("Error404", "Home");
                 }
+
+                if (idsc.status != 1)
+                {
+                    return RedirectToAction("Error404", "Home");
+                }
+
                 ViewBag.ngaychieu = idsc.ngay_chieu;
                 string time1 = time.TimeFrame.Time.ToString();
                 string[] time2 = time1.Split(':');
@@ -516,13 +528,14 @@ namespace CinemaBooking.Controllers
             //{
             //    return Json(new { success = false });
             //}
-            if (Session["MaKH"] != null)
+            if (movieRate == null)
             {
-
+                return RedirectToAction("Error404", "Home");
             }
-            else
+
+            if (Session["MaKH"] == null)
             {
-                return Json(new { success = false });
+                return Json(new { checklogin = false });
             }
             int uID = int.Parse(Session["MaKH"].ToString());
             var listorder = db.orders.Where(x => x.id_khachhang == uID);
