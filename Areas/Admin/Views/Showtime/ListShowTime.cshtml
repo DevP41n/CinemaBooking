@@ -81,6 +81,9 @@
                                                 <th>
                                                     Phòng chiếu
                                                 </th>
+                                                <th>
+                                                    Rạp chiếu
+                                                </th>
                                                 <th style="width: 50px;">
                                                     Danh Sách
                                                 </th>
@@ -114,6 +117,8 @@
                                                     <td>
                                                         @item.phong_chieu.ten_phong
                                                     </td>
+
+                                                    <td>@item.phong_chieu.rap_chieu.ten_rap</td>
 
                                                     <td>
                                                         @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
@@ -208,6 +213,9 @@
                                                 <th>
                                                     Phòng chiếu
                                                 </th>
+                                                <th>
+                                                    Rạp chiếu
+                                                </th>
                                                 <th style="width: 50px;">
                                                     Danh Sách
                                                 </th>
@@ -234,6 +242,7 @@
                                                     <td>
                                                         @item.phong_chieu.ten_phong
                                                     </td>
+                                                    <td>@item.phong_chieu.rap_chieu.ten_rap</td>
                                                     <td>
                                                         @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
                                                         <button type="button" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">
@@ -316,6 +325,9 @@
                                                 <th>
                                                     Phòng chiếu
                                                 </th>
+                                                <th>
+                                                    Rạp chiếu
+                                                </th>
                                                 <th style="width: 50px;">
                                                     Danh Sách
                                                 </th>
@@ -339,6 +351,7 @@
                                                     <td>
                                                         @item.phong_chieu.ten_phong
                                                     </td>
+                                                    <td>@item.phong_chieu.rap_chieu.ten_rap</td>
                                                     <td>
                                                         @*<a href="" class="btn btn-primary ListTime" data-target="#ListTime" data-toggle="modal" title="Danh sách khung giờ" data-id="@item.id">List</a>*@
                                                         <button type="button" class="btn btn-primary ListdatTime" data-target="#showdata" data-toggle="modal" data-placement="top" title="Danh sách khung giờ" data-id="@item.id">

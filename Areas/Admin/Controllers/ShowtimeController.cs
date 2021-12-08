@@ -64,44 +64,53 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateShowTime(suat_chieu suatChieu, String[] timeeframe)
         {
+
             if(timeeframe == null)
             {
                 TempData["Warning"] = "Giờ chiếu không thể trống!";
                 return RedirectToAction("CreateShowTime");
             }
-
-            ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
-            ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
-            ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
-            suatchieu_timeframe sctime = new suatchieu_timeframe();
-            suatChieu.status = 2;
-            // không cho đặt suất chiếu ngày hiện tại Hoặc đặt suất chiếu trước 10 ngày
-            string now = (DateTime.Now).ToString("dd/MM/yyyy");
-            TimeSpan plustime1day = new TimeSpan(1, 0, 0, 0);
-            DateTime datenow = Convert.ToDateTime(now) + plustime1day;
-            //10 ngày
-            TimeSpan check10day = new TimeSpan(11, 0, 0, 0);
-            DateTime date10day = Convert.ToDateTime(now) + check10day;
-            if (suatChieu.ngay_chieu < datenow || suatChieu.ngay_chieu > date10day)
-            {
-                TempData["Warning"] = "Ngày chiếu phải hơn ngày hiện tại 1 ngày hoặc không thể hơn quá 10 ngày!";
-                return View();
-            }
-            db.suat_chieu.Add(suatChieu);
-            db.SaveChanges();
             if (ModelState.IsValid)
             {
-                foreach (var timeidd in timeeframe)
+
+                ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
+                ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
+                ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
+                suatchieu_timeframe sctime = new suatchieu_timeframe();
+                suatChieu.status = 2;
+                // không cho đặt suất chiếu ngày hiện tại Hoặc đặt suất chiếu trước 10 ngày
+                string now = (DateTime.Now).ToString("dd/MM/yyyy");
+                TimeSpan plustime1day = new TimeSpan(1, 0, 0, 0);
+                DateTime datenow = Convert.ToDateTime(now) + plustime1day;
+                //10 ngày
+                TimeSpan check10day = new TimeSpan(11, 0, 0, 0);
+                DateTime date10day = Convert.ToDateTime(now) + check10day;
+                if (suatChieu.ngay_chieu < datenow || suatChieu.ngay_chieu > date10day)
                 {
-                    int timeee = Convert.ToInt32(timeidd);
-                    //TimeFrame time = db.TimeFrames.Find(timeee);
-                    sctime.id_Timeframe = timeee;
-                    sctime.id_Suatchieu = suatChieu.id;
-                    db.suatchieu_timeframe.Add(sctime);
-                    db.SaveChanges();
+                    TempData["Warning"] = "Ngày chiếu phải hơn ngày hiện tại 1 ngày hoặc không thể hơn quá 10 ngày!";
+                    return View();
                 }
-                TempData["Message"] = "Tạo thành công, Suất chiếu đã chuyển sang phần chuẩn bị chiếu!";
-                return RedirectToAction("ListShowTime");
+                db.suat_chieu.Add(suatChieu);
+                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    foreach (var timeidd in timeeframe)
+                    {
+                        int timeee = Convert.ToInt32(timeidd);
+                        //TimeFrame time = db.TimeFrames.Find(timeee);
+                        sctime.id_Timeframe = timeee;
+                        sctime.id_Suatchieu = suatChieu.id;
+                        db.suatchieu_timeframe.Add(sctime);
+                        db.SaveChanges();
+                    }
+                    TempData["Message"] = "Tạo thành công, Suất chiếu đã chuyển sang phần chuẩn bị chiếu!";
+                    return RedirectToAction("ListShowTime");
+                }
+            }
+            else
+            {
+                TempData["Warning"] = "Không thể để trống!";
+                return RedirectToAction("CreateShowTime");
             }
             return View(suatChieu);
         }
@@ -140,17 +149,20 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditShowTime(suat_chieu suatChieu)
         {
-            ViewBag.phong_chieu = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
             if (ModelState.IsValid)
             {
-                db.Entry(suatChieu).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["Message"] = "Cập nhật thành công!";
-                return RedirectToAction("ListShowTime");
-            }
-            else
-            {
-                TempData["Error"] = "Cập nhật không thành công!";
+                ViewBag.phong_chieu = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(suatChieu).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["Message"] = "Cập nhật thành công!";
+                    return RedirectToAction("ListShowTime");
+                }
+                else
+                {
+                    TempData["Error"] = "Cập nhật không thành công!";
+                }
             }
             return View(suatChieu);
         }

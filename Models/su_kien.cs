@@ -11,7 +11,8 @@ namespace CinemaBooking.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class su_kien
     {
         public int id { get; set; }

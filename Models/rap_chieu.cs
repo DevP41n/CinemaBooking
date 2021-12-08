@@ -11,7 +11,8 @@ namespace CinemaBooking.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class rap_chieu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,9 @@ namespace CinemaBooking.Models
         }
     
         public int id { get; set; }
+        [Required]
         public string ten_rap { get; set; }
+        [Required]
         public string dia_chi { get; set; }
         public Nullable<int> status { get; set; }
         public string create_by { get; set; }

@@ -11,7 +11,8 @@ namespace CinemaBooking.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class phong_chieu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,7 +25,9 @@ namespace CinemaBooking.Models
     
         public int id { get; set; }
         public Nullable<int> so_luong_cot { get; set; }
+        [Required]
         public string ten_phong { get; set; }
+        [Required]
         public Nullable<int> id_rapchieu { get; set; }
         public Nullable<int> status { get; set; }
     

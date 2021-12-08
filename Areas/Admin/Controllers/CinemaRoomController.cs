@@ -33,27 +33,34 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateCinemaRoom(phong_chieu phongChieu)
         {
-            ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
-            string[] room = new string[5] { "A", "B", "C", "D", "E" };
-            ghe_ngoi ghe = new ghe_ngoi();
-            phongChieu.so_luong_cot = 10;
-            phongChieu.status = 1;
-            db.phong_chieu.Add(phongChieu);
-            db.SaveChanges();
-            var id = phongChieu.id;
-            for (int i = 0; i < 5; i++)
+            if (ModelState.IsValid)
             {
-                for (int j = 0; j < 10; j++)
+                ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
+                string[] room = new string[5] { "A", "B", "C", "D", "E" };
+                ghe_ngoi ghe = new ghe_ngoi();
+                phongChieu.so_luong_cot = 10;
+                phongChieu.status = 1;
+                db.phong_chieu.Add(phongChieu);
+                db.SaveChanges();
+                var id = phongChieu.id;
+                for (int i = 0; i < 5; i++)
                 {
-                    ghe.Row = room[i];
-                    ghe.Col = j + 1;
-                    ghe.phong_chieu_id = id;
-                    ghe.status = 1;
-                    db.ghe_ngoi.Add(ghe);
-                    db.SaveChanges();
+                    for (int j = 0; j < 10; j++)
+                    {
+                        ghe.Row = room[i];
+                        ghe.Col = j + 1;
+                        ghe.phong_chieu_id = id;
+                        ghe.status = 1;
+                        db.ghe_ngoi.Add(ghe);
+                        db.SaveChanges();
+                    }
                 }
+                TempData["Message"] = "Tạo thành công!";
             }
-            TempData["Message"] = "Tạo thành công!";
+            else
+            {
+                TempData["Warning"] = "Không thể để trống";
+            }
             return RedirectToAction("ListCinemaRoom");
         }
 
@@ -74,10 +81,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 // status = 0 là đã xóa
                 if (phongChieu == null || phongChieu.status == 0)
                 {
-                    return RedirectToAction("AError404","Admin");
+                    return RedirectToAction("AError404", "Admin");
                 }
                 return View(phongChieu);
-            }catch(Exception)
+            }
+            catch (Exception)
             {
                 return RedirectToAction("AError404", "Admin");
             }
@@ -115,7 +123,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             try
             {
                 phong_chieu phongChieu = db.phong_chieu.Find(id);
-                if(phongChieu.status != 2 )
+                if (phongChieu.status != 2)
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
@@ -125,14 +133,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 int dem = 0;
                 foreach (var item in check)
                 {
-                    if(item.ngay_chieu + timecheck > DateTime.Now)
+                    if (item.ngay_chieu + timecheck > DateTime.Now)
                     {
                         dem++;
                     }
 
                 }
 
-                if(dem >0)
+                if (dem > 0)
                 {
                     TempData["Warning"] = "Hiện tại không thể xóa vì phòng này tồn tại suất chiếu hoặc chưa hết ngày chiếu!";
                     return RedirectToAction("ListCinemaRoom");
@@ -145,7 +153,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 TempData["Message"] = "Xóa thành công!";
                 return RedirectToAction("ListCinemaRoom");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return RedirectToAction("AError404", "Admin");
             }
@@ -196,7 +204,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 db.SaveChanges();
                 TempData["Message"] = "Dừng hoạt động thành công";
                 return RedirectToAction("ListCinemaRoom");
-            }catch(Exception)
+            }
+            catch (Exception)
             {
                 return RedirectToAction("AError404", "Admin");
             }
@@ -218,7 +227,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
 
                 phong_chieu phong_Chieu = db.phong_chieu.Find(id);
-               
+
 
                 //Nếu không phải = 2 là sai
                 if (phong_Chieu.status != 2)
@@ -244,14 +253,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
-            if (id == null || id <1)
+            if (id == null || id < 1)
             {
                 return RedirectToAction("AError404", "Admin");
             }
             try
             {
                 phong_chieu phongChieu = db.phong_chieu.Find(id);
-                if(phongChieu.status == 0)
+                if (phongChieu.status == 0)
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
@@ -262,7 +271,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("AError404","Admin");
+                return RedirectToAction("AError404", "Admin");
             }
         }
 
@@ -287,7 +296,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             //check xem phòng đã xóa chưa
             phong_chieu phongChieu = db.phong_chieu.Find(id);
-            if(phongChieu.status == 0)
+            if (phongChieu.status == 0)
             {
                 return Json(new { checkr = false });
             }
@@ -338,7 +347,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ghe_ngoi ghengoi = new ghe_ngoi();
             var checkghe = db.ghe_ngoi.Where(x => x.phong_chieu_id == id && x.status == 1).ToList();
             var checkpc = db.phong_chieu.Find(id);
-            if(checkpc.status == 0)
+            if (checkpc.status == 0)
             {
                 return Json(new { success = false });
             }
@@ -356,7 +365,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
             }
             //không cho thêm sửa nếu có suất chiếu
-            if(dem >0)
+            if (dem > 0)
             {
                 return Json(new { success = false });
             }
@@ -367,7 +376,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 if (tong < ghe)
                 {
                     checkpc.so_luong_cot = checkghe.Count() + (ghe - tong);
-                    db.Entry(checkpc).State = EntityState.Modified;                    
+                    db.Entry(checkpc).State = EntityState.Modified;
                     for (int i = tong; i < ghe; i++)
                     {
                         ghengoi.Row = hang;
@@ -426,11 +435,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 return Json(new { success = false });
             }
 
-            var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id && n.status == 1).ToList();  
+            var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id && n.status == 1).ToList();
             ghe_ngoi ghengoi = new ghe_ngoi();
             var checkghe = db.ghe_ngoi.Where(x => x.phong_chieu_id == id && x.status == 1).ToList();
             var checkpc = db.phong_chieu.Find(id);
-            if(checkpc.status == 0)
+            if (checkpc.status == 0)
             {
                 return Json(new { success = false });
             }
@@ -508,9 +517,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 }
                 return View(rapChieu);
             }
-            catch(Exception)
+            catch (Exception)
             {
-                    return RedirectToAction("AError404", "Admin");
+                return RedirectToAction("AError404", "Admin");
             }
         }
         [HttpPost, ValidateInput(false)]
