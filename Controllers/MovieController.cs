@@ -93,7 +93,7 @@ namespace CinemaBooking.Controllers
         //Đặt vé
         public ActionResult BookTicket(int? id)
         {
-            // Note: cái này chưa fix status = 1 mệt vl
+
             if (id != null)
             {
                 if (Session["TenCus"] == null)
@@ -105,7 +105,7 @@ namespace CinemaBooking.Controllers
 
                 ViewBag.tenphim = db.phims.Find(id);
                 //Lấy ra list suất chiếu với id phim
-                var ngay = db.suat_chieu.Where(n => n.phim_id == id).OrderBy(n => n.ngay_chieu).ToList();
+                var ngay = db.suat_chieu.Where(n => n.phim_id == id && n.status == 1).OrderBy(n => n.ngay_chieu).ToList();
                 List<DateTime?> ng = new List<DateTime?>();
                 ViewBag.idphim = id;
 
@@ -126,7 +126,7 @@ namespace CinemaBooking.Controllers
                             if (ngaychieu == Convert.ToDateTime(datenow))
                             {
                                 //Lấy ra suất chiếu có trong item.ngay_chieu của mảng ngay
-                                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id).ToList();
+                                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == item.ngay_chieu && n.phim_id == id && n.status == 1).ToList();
                                 foreach (var sctoday in suatchieu)
                                 {
                                     //Lấy ra danh sách giờ chiếu theo id suất chiếu của mảng suatchieu
@@ -184,7 +184,7 @@ namespace CinemaBooking.Controllers
             {
                 var ng = Convert.ToDateTime(ngay);
                 int idfilm = Convert.ToInt32(idphim);
-                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
+                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm && n.status == 1).ToList();
                 List<String> tenrap = new List<String>();
 
 
@@ -231,7 +231,7 @@ namespace CinemaBooking.Controllers
             {
                 var ng = Convert.ToDateTime(ngay);
                 int idfilm = Convert.ToInt32(idphim);
-                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm).ToList();
+                var suatchieu = db.suat_chieu.Where(n => n.ngay_chieu == ng && n.phim_id == idfilm && n.status == 1).ToList();
 
                 //Tạo list để add giờ, id giờ, id suất chiếu
                 List<String> times = new List<String>();
@@ -257,8 +257,9 @@ namespace CinemaBooking.Controllers
                         if (ng == Convert.ToDateTime(datenow))
                         {
                             //Tạo biến thời gian hiện tại để so sánh với giờ của suất chiếu.
+                            TimeSpan timeplus = new TimeSpan(0, 15, 0);
                             TimeSpan timenow = DateTime.Now.TimeOfDay;
-                            if (time.TimeFrame.Time > timenow) // Nếu giờ của suất chiếu lớn hơn giờ của hiện tại thì thêm vào, nếu không thì không thêm.
+                            if (time.TimeFrame.Time + timeplus > timenow) // Nếu giờ của suất chiếu lớn hơn giờ của hiện tại thì thêm vào, nếu không thì không thêm.
                             {
                                 times.Add((time.TimeFrame.Time).ToString());
                                 idtimes.Add(time.TimeFrame.id.ToString());
@@ -354,6 +355,10 @@ namespace CinemaBooking.Controllers
 
                 var idtime = Convert.ToInt32(idtimee);
                 var idpc = db.suat_chieu.Find(id);
+                if (idpc.status != 1)
+                {
+                    return RedirectToAction("Error404", "Home");
+                }
 
                 var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
                 //ràng buộc
@@ -371,7 +376,7 @@ namespace CinemaBooking.Controllers
                 ViewBag.tenphim = db.phims.Find(idpc.phim_id);
                 phong_chieu phongChieu = db.phong_chieu.Find(idpc.phong_chieu_id);
                 ViewBag.pc = phongChieu;
-                var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).OrderBy(x=>x.Row);
+                var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).OrderBy(x => x.Row);
                 ViewBag.ghe = ghengoi;
                 ViewBag.idtime = idtime;
                 ViewBag.idsc = id;
@@ -450,6 +455,11 @@ namespace CinemaBooking.Controllers
             if (sc == null || kh == null || timefr == null)
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                return RedirectToAction("Error404", "Home");
+            }
+
+            if (sc.status != 1)
+            {
                 return RedirectToAction("Error404", "Home");
             }
 

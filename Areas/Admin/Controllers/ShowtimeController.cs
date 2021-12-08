@@ -1,7 +1,6 @@
 ﻿using CinemaBooking.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -55,9 +54,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
-            ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
+            ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.Time), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
-            ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
+            ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
 
             return View();
         }
@@ -65,7 +64,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult CreateShowTime(suat_chieu suatChieu, String[] timeeframe)
         {
 
-            if(timeeframe == null)
+            if (timeeframe == null)
             {
                 TempData["Warning"] = "Giờ chiếu không thể trống!";
                 return RedirectToAction("CreateShowTime");
@@ -73,9 +72,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.id), "id", "Time");
+                ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.Time), "id", "Time");
                 ViewBag.phim_id = new SelectList(db.phims.ToList().OrderBy(n => n.id), "id", "ten_phim");
-                ViewBag.phong_chieu_id = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
+                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
                 suatchieu_timeframe sctime = new suatchieu_timeframe();
                 suatChieu.status = 2;
                 // không cho đặt suất chiếu ngày hiện tại Hoặc đặt suất chiếu trước 10 ngày
@@ -115,6 +114,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             return View(suatChieu);
         }
 
+
         public ActionResult EditShowTime(int? id)
         {
             if (Session["HoTen"] == null)
@@ -133,7 +133,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     TempData["Warning"] = "Suất này đang chiếu. Chỉ chỉnh sửa được suất chiếu đang chuẩn bị!";
                     return RedirectToAction("ListShowTime");
                 }
-                ViewBag.phong_chieu = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
+                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
                 if (suatChieu == null)
                 {
                     return RedirectToAction("AError404", "Admin");
@@ -151,7 +151,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.phong_chieu = new SelectList(db.phong_chieu.Where(x => x.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phong");
+                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
                 if (ModelState.IsValid)
                 {
                     db.Entry(suatChieu).State = EntityState.Modified;
@@ -166,6 +166,52 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             return View(suatChieu);
         }
+
+        //Phòng chiếu của rạp chiếu
+        public JsonResult RoomOfCinema(int? id, int? idphong)
+        {
+            if (id == null)
+            {
+                return Json(new { succes = false });
+            }
+            List<int> idroom = new List<int>();
+            List<string> roomname = new List<string>();
+            if (id == 0)
+            {
+                var count = idroom.Count();
+                return Json(new { count, idroom, roomname }, JsonRequestBehavior.AllowGet);
+            }
+            if (idphong == null)
+            {
+
+
+                var room = db.phong_chieu.Where(n => n.id_rapchieu == id).ToList();
+                foreach (var item in room)
+                {
+                    idroom.Add(item.id);
+                    roomname.Add(item.ten_phong);
+                }
+                var count = idroom.Count();
+                return Json(new { count, idroom, roomname }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var room = db.phong_chieu.Where(n => n.id_rapchieu == id).ToList();
+                foreach (var item in room)
+                {
+                    if (item.id != idphong)
+                    {
+                        idroom.Add(item.id);
+                        roomname.Add(item.ten_phong);
+                    }
+
+                }
+                var count = idroom.Count();
+                return Json(new { count, idroom, roomname }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
 
 
         // chuyển sang công chiếu
@@ -195,7 +241,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 }
 
                 var listtime = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == sc.id).OrderByDescending(x => x.TimeFrame.Time).FirstOrDefault();
-                if(listtime == null)
+                if (listtime == null)
                 {
                     TempData["Error"] = "Chưa có giờ chiếu. Không thể công chiếu!";
                     return RedirectToAction("ListShowTime");
@@ -368,7 +414,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult ShowCreateTimeFr(int? id)
         {
             var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id);
-            var timeframe = db.TimeFrames.ToList();
+            var timeframe = db.TimeFrames.ToList().OrderBy(n => n.Time);
             List<int> idtimes = new List<int>();
             List<String> times = new List<String>();
             foreach (var item in timeframe)
@@ -407,7 +453,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         ///
         public ActionResult ListShowTimeFrame()
         {
-            return View(db.TimeFrames.ToList());
+            return View(db.TimeFrames.ToList().OrderBy(n => n.Time));
         }
 
         public ActionResult CreateShowTimeFrame()

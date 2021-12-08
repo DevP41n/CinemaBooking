@@ -22,22 +22,22 @@
                     </div>
                 </div>
 
-               @* <div class="col-sm-6">
-                    <div class="float-right d-none d-md-block">
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-settings mr-2"></i> Settings
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                @* <div class="col-sm-6">
+                        <div class="float-right d-none d-md-block">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-settings mr-2"></i> Settings
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>*@
+                    </div>*@
             </div>
             <!-- end page title -->
 
@@ -69,13 +69,37 @@
                                         <input type="text" class="form-control" value="@Model.phim.ten_phim" readonly />
                                     </div>
                                 </div>
+                                @*<div class="form-group row">
+                                        @Html.Label("Phòng chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownListFor(model => model.phong_chieu_id, (SelectList)ViewBag.phong_chieu, new { @class = "col-sm-2 col-form-label" })
+                                        </div>
+                                    </div>*@
+
                                 <div class="form-group row">
-                                    @Html.Label("Phòng chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <label class="col-sm-2 col-form-label" for="cinema">Rạp phim:</label>
                                     <div class="col-md-10">
-                                        @Html.DropDownListFor(model => model.phong_chieu_id, (SelectList)ViewBag.phong_chieu, new { @class = "col-sm-2 col-form-label" })
+                                        <select name="cinema" id="cinema" class="selectpc">
+                                            <option value="@Model.phong_chieu.rap_chieu.id" >@Model.phong_chieu.rap_chieu.ten_rap</option>
+                                            @foreach (var rap in ViewBag.rapchieu)
+                                            {
+                                                if (rap.id != @Model.phong_chieu.rap_chieu.id)
+                                                {
+                                                    <option value="@rap.id">@rap.ten_rap</option>
+                                                }
+                                            }
+                                        </select>
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.phong_chieu, "Phòng chiếu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-10">
+                                        <select name="phong_chieu_id" id="phong_chieu_id" class="selectpc">                                            
+                                            <option value="@Model.phong_chieu_id" selected>@Model.phong_chieu.ten_phong</option>
+                                        </select>
+                                    </div>
+                                </div>                                
                                 <div class="float-lg-right">
                                     <div class="form-group mb-0">
                                         <div>
@@ -101,3 +125,42 @@
     </div>
 </div>
 
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $(".selectpc").select2();         
+            var idr = $("#cinema").val();
+            var idpc = $("#phong_chieu_id").val();
+            loadRoom(idr,idpc);
+            $('#cinema').change(function () {
+                var id = $("#cinema option:selected").val();
+                loadRoom(id);
+            });
+            function loadRoom(id, idpc) {
+                $.ajax({
+                    url: '/Showtime/RoomOfCinema/',
+                    type: 'GET',
+                    data: {
+                        id: id,
+                        idphong:idpc
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var idr = res.idroom;
+                            var name = res.roomname;
+                            var html = "";
+                            for (let i = 0; i < res.count; i++) {
+                                html += '<option value="' + idr[i] + '">' + name[i] + '</option>';
+                            }
+                            $('#phong_chieu_id').append(html);
+
+                            $('#EditTime').modal('show');
+                        }
+                    }
+                })
+            }
+        });
+    </script>
+
+}
