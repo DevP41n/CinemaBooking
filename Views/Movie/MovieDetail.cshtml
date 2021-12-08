@@ -27,19 +27,28 @@
                 }
                 @foreach (var theloai in db.list_phim_theloai.Where(t => t.id_phim == Model.id))
                 {
-                    <a href="@Url.Action("NowShowing","Movie",new { page = 1, category = theloai.id_theloai })" class="button" style="margin-bottom: 0px;">@theloai.the_loai_phim.ten_the_loai</a>
+                    //Check lỗi : nếu phim đang chiếu thì lọc theo trang đang chiếu
+                    if (Model.loai_phim_chieu == 1)
+                    {
+                        <a href="@Url.Action("NowShowing", "Movie", new { page = 1, category = theloai.id_theloai })" class="button" style="margin-bottom: 0px;">@theloai.the_loai_phim.ten_the_loai</a>
+                    }
+                    //nếu phim sắp chiếu thì lọc theo trang sắp chiếu
+                    else if (Model.loai_phim_chieu == 2)
+                    {
+                        <a href="@Url.Action("ComingSoon", "Movie", new { page = 1, category = theloai.id_theloai })" class="button" style="margin-bottom: 0px;">@theloai.the_loai_phim.ten_the_loai</a>
+                    }
                 }
 
                 @*<div class="social-and-duration">
-                    <div class="duration-area">
-                        <div class="item">
-                            <i class="fas fa-calendar-alt"></i><span>@Html.FormatValue(@Model.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
-                        </div>
-                        <div class="item">
-                            <i class="far fa-clock"></i><span>@Model.thoi_luong phút</span>
-                        </div>
-                    </div>
-                </div>*@
+            <div class="duration-area">
+                <div class="item">
+                    <i class="fas fa-calendar-alt"></i><span>@Html.FormatValue(@Model.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
+                </div>
+                <div class="item">
+                    <i class="far fa-clock"></i><span>@Model.thoi_luong phút</span>
+                </div>
+            </div>
+        </div>*@
             </div>
         </div>
 
@@ -65,47 +74,48 @@
                 </div>
                 <div class="item"><span class="content-rating-tag" style="cursor: help;" title="@Model.content_rating.mo_ta">@Model.content_rating.ten_rating</span><a style="margin-left:5px"> @Model.content_rating.mo_ta</a></div>
                 @*<div class="item">
-            <div class="item-header" style="cursor: help;" title="IMDb là một trang web trực tuyến lưu trữ những thông tin chi tiết về những bộ phim, diễn viên, đạo diễn, nhà sản xuất… nổi tiếng. Ngoài ra, IMDb còn là nơi tổng hợp những ý kiến đánh giá và xếp hạng về các yếu tố như kỹ thuật quay phim, bối cảnh, kịch bản, hiệu quả hình ảnh… của một tác phẩm điện ảnh. Các bộ phim trên IMDb được đánh giá với thang điểm 10, đó là điểm IMDb. Phim nhận được điểm IMDb cao tức là nó nhận được nhiều sự ủng hộ của khán giả.">
-                <a href="http://www.imdb.com/title/@Model.idrating" target="_blank">
-                    <span style="cursor: help;" class="imdb-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M44 13H4c-2.2 0-4 1.8-4 4v16c0 2.2 1.8 4 4 4h40c2.2 0 4-1.8 4-4V17c0-2.2-1.8-4-4-4z" fill="#ffc107"></path><path d="M28.102 18h-3.704v13.102h3.704c2 0 2.796-.403 3.296-.704.602-.398.903-1.097.903-1.796v-7.903c0-.898-.403-1.699-.903-2-.796-.5-1.097-.699-3.296-.699zm.699 10.3c0 .598-.7.598-1.301.598V20c.602 0 1.3 0 1.3.602zM33.8 18v13.3h2.802s.199-.902.398-.698c.398 0 1.5.597 2.2.597.698 0 1.1 0 1.5-.199.6-.398.698-.7.698-1.3v-7.802c0-1.097-1.097-1.796-2-1.796-.898 0-1.796.597-2.199.898v-3zm3.598 4.2c0-.4 0-.598.403-.598.199 0 .398.199.398.597v6.602c0 .398 0 .597-.398.597-.2 0-.403-.199-.403-.597zM22.7 31.3V18h-4.4l-.8 6.3-1.102-6.3h-4v13.3h2.903v-7.402l1.3 7.403h2l1.297-7.403v7.403zM7.602 18h3.097v13.3H7.602z" fill="#263238"></path></svg></span>
-                </a>
-                <div class="counter-area">
-                    <span class="counter-item odometer" id="imdb-rating" data-odometer-final="">0</span><a style="margin-left:5px"> Đánh giá từ trang nước ngoài (tham khảo) </a>
-                </div>
-            </div>
-        </div>*@
+                        <div class="item-header" style="cursor: help;" title="IMDb là một trang web trực tuyến lưu trữ những thông tin chi tiết về những bộ phim, diễn viên, đạo diễn, nhà sản xuất… nổi tiếng. Ngoài ra, IMDb còn là nơi tổng hợp những ý kiến đánh giá và xếp hạng về các yếu tố như kỹ thuật quay phim, bối cảnh, kịch bản, hiệu quả hình ảnh… của một tác phẩm điện ảnh. Các bộ phim trên IMDb được đánh giá với thang điểm 10, đó là điểm IMDb. Phim nhận được điểm IMDb cao tức là nó nhận được nhiều sự ủng hộ của khán giả.">
+                            <a href="http://www.imdb.com/title/@Model.idrating" target="_blank">
+                                <span style="cursor: help;" class="imdb-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M44 13H4c-2.2 0-4 1.8-4 4v16c0 2.2 1.8 4 4 4h40c2.2 0 4-1.8 4-4V17c0-2.2-1.8-4-4-4z" fill="#ffc107"></path><path d="M28.102 18h-3.704v13.102h3.704c2 0 2.796-.403 3.296-.704.602-.398.903-1.097.903-1.796v-7.903c0-.898-.403-1.699-.903-2-.796-.5-1.097-.699-3.296-.699zm.699 10.3c0 .598-.7.598-1.301.598V20c.602 0 1.3 0 1.3.602zM33.8 18v13.3h2.802s.199-.902.398-.698c.398 0 1.5.597 2.2.597.698 0 1.1 0 1.5-.199.6-.398.698-.7.698-1.3v-7.802c0-1.097-1.097-1.796-2-1.796-.898 0-1.796.597-2.199.898v-3zm3.598 4.2c0-.4 0-.598.403-.598.199 0 .398.199.398.597v6.602c0 .398 0 .597-.398.597-.2 0-.403-.199-.403-.597zM22.7 31.3V18h-4.4l-.8 6.3-1.102-6.3h-4v13.3h2.903v-7.402l1.3 7.403h2l1.297-7.403v7.403zM7.602 18h3.097v13.3H7.602z" fill="#263238"></path></svg></span>
+                            </a>
+                            <div class="counter-area">
+                                <span class="counter-item odometer" id="imdb-rating" data-odometer-final="">0</span><a style="margin-left:5px"> Đánh giá từ trang nước ngoài (tham khảo) </a>
+                            </div>
+                        </div>
+                    </div>*@
                 @if (ViewBag.RatesTong == 0)
                 {
                     <div class="item">
-                    
+
                         <i class="fa fa-comments" style="font-size: 25px; color: #cf84dd; "></i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #00cdff; font-style: italic; "> Đánh giá (Review): </a>
                         <span> Chưa có</span>
                     </div>
                 }
                 else
                 {
-            <div class="item">
-                <i class="fa fa-comments" style="font-size: 25px; color: #cf84dd; "></i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #5cd4f1; font-style: italic; "> 
-                Đánh giá của người xem: </a>
-                <div class="item-header">
-                    <h5 class="title"><i class="fas fa-star" style="color: #ffc107; font-size: 23px; "></i> @ViewBag.RatesTong /5 </h5>
-                    @*<div class="rated">
-                <i class="fas fa-star" style="color: #ffc107 "></i>
-                <i class="fas fa-star" style="color: #ffc107 "></i>
-                <i class="fas fa-star" style="color: #ffc107 "></i>
-                <i class="fas fa-star" style="color: #ffc107 "></i>
-                <i class="fas fa-star-half" style="color: #ffc107 "></i>
-            </div>*@
-                </div>
-            </div>
+                    <div class="item">
+                        <i class="fa fa-comments" style="font-size: 25px; color: #cf84dd; "></i><a style="margin-left: 5px; font-weight: 600; font-family: 'Open Sans'; color: #5cd4f1; font-style: italic; ">
+                            Đánh giá của người xem:
+                        </a>
+                        <div class="item-header">
+                            <h5 class="title"><i class="fas fa-star" style="color: #ffc107; font-size: 23px; "></i> @ViewBag.RatesTong /5 </h5>
+                            @*<div class="rated">
+                                    <i class="fas fa-star" style="color: #ffc107 "></i>
+                                    <i class="fas fa-star" style="color: #ffc107 "></i>
+                                    <i class="fas fa-star" style="color: #ffc107 "></i>
+                                    <i class="fas fa-star" style="color: #ffc107 "></i>
+                                    <i class="fas fa-star-half" style="color: #ffc107 "></i>
+                                </div>*@
+                        </div>
+                    </div>
                 }
             </div>
             @*@if (Model.loai_phim_chieu == 1)
-            {
-                <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id })" class="custom-button" style=" background-image: -webkit-linear-gradient( 48deg, #9e1818 17%, #df0b0b 63%, #7a1111 100%);">
-                    Mua vé
-                </a>
-            }*@
+                {
+                    <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id })" class="custom-button" style=" background-image: -webkit-linear-gradient( 48deg, #9e1818 17%, #df0b0b 63%, #7a1111 100%);">
+                        Mua vé
+                    </a>
+                }*@
             @if (Model.loai_phim_chieu == 1)
             {
                 <a href="@Url.Action("BookTicket", "Movie", new { id = Model.id })" class="button-ticket" style=" margin-right: 20px;">
@@ -204,10 +214,10 @@
                                         <div class="movie-review-item">
                                             <div class="author">
                                                 @*                                            <div class="thumb">
-                                <a href="#0">
-                                    <img src="~/Frontend/Client/assets/images/cast/cast02.jpg" alt="cast">
-                                </a>
-                            </div>*@
+                                                        <a href="#0">
+                                                            <img src="~/Frontend/Client/assets/images/cast/cast02.jpg" alt="cast">
+                                                        </a>
+                                                    </div>*@
                                                 <div class="movie-review-info">
                                                     <span class="reply-date">@item.created_at</span>
                                                     <h6 class="subtitle"><a href="#0">@item.ten_khachhang</a></h6>
@@ -233,16 +243,16 @@
                                                     @item.comment
                                                 </p>
                                                 @*<div class="review-meta">
-                                <a href="#0">
-                                    <i class="flaticon-hand"></i><span>8</span>
-                                </a>
-                                <a href="#0" class="dislike">
-                                    <i class="flaticon-dont-like-symbol"></i><span>0</span>
-                                </a>
-                                <a href="#0">
-                                    Report Abuse
-                                </a>
-                            </div>*@
+                                                        <a href="#0">
+                                                            <i class="flaticon-hand"></i><span>8</span>
+                                                        </a>
+                                                        <a href="#0" class="dislike">
+                                                            <i class="flaticon-dont-like-symbol"></i><span>0</span>
+                                                        </a>
+                                                        <a href="#0">
+                                                            Report Abuse
+                                                        </a>
+                                                    </div>*@
                                             </div>
                                         </div>
                                     }
@@ -268,7 +278,7 @@
                                     <button type="button" class="btn-primary" id="btnRate" data-id="@Model.id" title="Gửi" href="#">Gửi</button>
                                 </div>
                             }
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -313,12 +323,13 @@
                             }
                             else if (res.check == true) {
                                 var text = "Bạn chưa từng xem phim này nên chưa được đánh giá!"
-                                toastr.warning(text);                         }
+                                toastr.warning(text);
+                            }
                             else if (res.checklogin == false) {
                                 var a = "Bạn chưa đăng nhập, Vui lòng đăng nhập để đánh giá!";
                                 toastr.warning(a);
                             }
-                            
+
                         },
                         //check: function (res) {
                         //    if (res.check) {

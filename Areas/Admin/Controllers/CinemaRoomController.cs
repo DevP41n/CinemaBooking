@@ -40,6 +40,12 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 ghe_ngoi ghe = new ghe_ngoi();
                 phongChieu.so_luong_cot = 10;
                 phongChieu.status = 1;
+                var checkopc = db.phong_chieu.Where(x => x.ten_phong == phongChieu.ten_phong && x.id_rapchieu == phongChieu.id_rapchieu).Count();
+                if(checkopc !=0)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 phòng chiếu giống phòng chiếu này. Vui lòng kiểm tra lại!";
+                    return View();
+                }
                 db.phong_chieu.Add(phongChieu);
                 db.SaveChanges();
                 var id = phongChieu.id;
@@ -83,6 +89,24 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
+                var check = db.suat_chieu.Where(x => x.phong_chieu_id == id && x.status == 1);
+                TimeSpan timecheck = new TimeSpan(1, 0, 0, 0);
+                int dem = 0;
+                foreach (var item in check)
+                {
+                    if (item.ngay_chieu + timecheck > DateTime.Now)
+                    {
+                        dem++;
+                    }
+
+                }
+
+                if (dem > 0)
+                {
+                    TempData["Warning"] = "Hiện tại không thể dừng hoạt động vì phòng này tồn tại suất chiếu hoặc chưa hết ngày chiếu!";
+                    return RedirectToAction("ListCinemaRoom");
+                }
+
                 return View(phongChieu);
             }
             catch (Exception)
@@ -97,6 +121,12 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.id_rapc = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             if (ModelState.IsValid)
             {
+                var checkopc = db.phong_chieu.Where(x => x.ten_phong == phongChieu.ten_phong && x.id_rapchieu == phongChieu.id_rapchieu).Count();
+                if (checkopc != 0)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 phòng chiếu giống phòng chiếu này. Vui lòng kiểm tra lại!";
+                    return RedirectToAction("ListCinemaRoom");
+                }
                 db.Entry(phongChieu).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["Message"] = "Cập nhật thành công!";
@@ -181,7 +211,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
                 phong_chieu phong_Chieu = db.phong_chieu.Find(id);
                 var check = db.suat_chieu.Where(x => x.phong_chieu_id == id && x.status == 1);
-                if(phong_Chieu == null || check == null)
+                if(phong_Chieu == null)
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
@@ -300,10 +330,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
 
             var check = db.suat_chieu.Where(x => x.phong_chieu_id == id && x.status == 1);
-            if(check == null)
-            {
-                return Json(new { checkr = false });
-            }
             TimeSpan timecheck = new TimeSpan(1, 0, 0, 0);
             int dem = 0;
             foreach (var item in check)

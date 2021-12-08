@@ -62,9 +62,15 @@ namespace CinemaBooking.Controllers
             int pageSize = 6;
             if (category != null)
             {
+                var check = db.list_phim_theloai.Where(x => x.id_theloai == category);
+                List<phim> phims = new List<phim>();
+                foreach(var item in check)
+                {
+                    phims.Add(db.phims.Find(item.id_phim));
+                }
                 ViewBag.category = category;
                 string category1 = category.ToString();
-                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderByDescending(s => s.ngay_cong_chieu).Where(x => x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
+                return View(phims.Where(s => s.status == 1 && s.loai_phim_chieu == 1).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
             }
             else
             {
@@ -80,9 +86,15 @@ namespace CinemaBooking.Controllers
             int pageSize = 6;
             if (category != null)
             {
+                var check = db.list_phim_theloai.Where(x => x.id_theloai == category);
+                List<phim> phims = new List<phim>();
+                foreach (var item in check)
+                {
+                    phims.Add(db.phims.Find(item.id_phim));
+                }
                 ViewBag.category = category;
                 string category1 = category.ToString();
-                return View(db.phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderBy(s => s.ngay_cong_chieu).Where(x => x.theloaichinh.ToString().Contains(category1)).ToPagedList(pageNumber, pageSize));
+                return View(phims.Where(s => s.status == 1 && s.loai_phim_chieu == 2).OrderByDescending(s => s.ngay_cong_chieu).ToPagedList(pageNumber, pageSize));
             }
             else
             {
@@ -107,6 +119,10 @@ namespace CinemaBooking.Controllers
                 {
                     var checkfilm = db.phims.Find(id);
                     if (checkfilm == null)
+                    {
+                        return RedirectToAction("Error404", "Home");
+                    }
+                    if (checkfilm.loai_phim_chieu != 1 || checkfilm.status !=1)
                     {
                         return RedirectToAction("Error404", "Home");
                     }
@@ -367,8 +383,15 @@ namespace CinemaBooking.Controllers
                 var idtime = Convert.ToInt32(idtimee);
                 var idsc = db.suat_chieu.Find(id);
                 var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
+                var checkfilm = db.phims.Find(idsc.phim_id);
                 //ràng buộc
-                if (time == null || idsc == null)
+                if (time == null || idsc == null || checkfilm == null)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                    return RedirectToAction("Error404", "Home");
+                }
+
+                if(checkfilm.status != 1 || checkfilm.loai_phim_chieu!=1)
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
                     return RedirectToAction("Error404", "Home");
@@ -385,7 +408,7 @@ namespace CinemaBooking.Controllers
                 string timef = time2[0] + ':' + time2[1];
                 ViewBag.giochieu = timef;
 
-                ViewBag.tenphim = db.phims.Find(idsc.phim_id);
+                ViewBag.tenphim = checkfilm;
                 phong_chieu phongChieu = db.phong_chieu.Find(idsc.phong_chieu_id);
                 ViewBag.pc = phongChieu;
                 var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).OrderBy(x => x.Row);
@@ -461,15 +484,24 @@ namespace CinemaBooking.Controllers
             var sc = db.suat_chieu.Find(id);
             var mkh = Convert.ToInt32(Session["MaKH"]);
             var kh = db.khach_hang.Find(mkh);
-
+            var checkfilm = db.phims.Find(sc.phim_id);
             var timefr = db.TimeFrames.Find(idtime);
 
-            if (sc == null || kh == null || timefr == null)
+            if (sc == null || kh == null || timefr == null || checkfilm == null)
             {
                 TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
                 return RedirectToAction("Error404", "Home");
             }
 
+
+            //ràng buộc kiểm tra xem phim này đang công chiếu với có ẩn hay không
+            if (checkfilm.status != 1 || checkfilm.loai_phim_chieu != 1)
+            {
+                TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                return RedirectToAction("Error404", "Home");
+            }
+
+            // stt = 1 là suất chiếu đang công chiếu 
             if (sc.status != 1)
             {
                 return RedirectToAction("Error404", "Home");

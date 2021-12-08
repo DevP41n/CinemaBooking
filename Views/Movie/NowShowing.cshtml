@@ -19,22 +19,22 @@
                             @foreach (var itemtheloai in db.the_loai_phim)
                             {
 
-                        <div class="form-group">
-                            <input type="checkbox" name="theloai" disabled id="@itemtheloai.id" value="@itemtheloai.id">
-                                @if (ViewBag.category == @itemtheloai.id)
-                                {
-                                    <label for="@itemtheloai.id">
-                                        @Html.ActionLink(@itemtheloai.ten_the_loai, "NowShowing", "Movie", new { page = 1 }, new { @style = "color:white;" })
-                                    </label>
-                                }
-                                else
-                                {
-                                    <label for="@itemtheloai.id">
-                                        @Html.ActionLink(@itemtheloai.ten_the_loai, "NowShowing", "Movie", new { page = 1, category = @itemtheloai.id }, new { @style = "color:white;" })
-                                    </label>
-                                }
+                                <div class="form-group">
+                                    <input type="checkbox" name="theloai" disabled id="@itemtheloai.id" value="@itemtheloai.id">
+                                    @if (ViewBag.category == @itemtheloai.id)
+                                    {
+                                        <label for="@itemtheloai.id">
+                                            @Html.ActionLink(@itemtheloai.ten_the_loai, "NowShowing", "Movie", new { page = 1 }, new { @style = "color:white;" })
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label for="@itemtheloai.id">
+                                            @Html.ActionLink(@itemtheloai.ten_the_loai, "NowShowing", "Movie", new { page = 1, category = @itemtheloai.id }, new { @style = "color:white;" })
+                                        </label>
+                                    }
 
-                        </div>
+                                </div>
                             }
                         </div>
                     </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="col-lg-9 mb-50 mb-lg-0">
                 <div class="filter-tab tab">
-                    <div class="filter-area"style="border: none;">
+                    <div class="filter-area" style="border: none;">
                         <div class="filter-main">
                             <div class="left">
                             </div>
@@ -59,6 +59,12 @@
                     <div class="tab-area">
                         <div class="tab-item active">
                             <div class="row mb-10">
+                                @if (Model.Count() == 0)
+                                {
+                                    <h3 class="title" style=" overflow: hidden; text-align: center;padding:20px">
+                                        Hiện thể loại này chưa có phim nào đang chiếu :(
+                                    </h3>
+                                }
                                 @foreach (var item in Model)
                                 {
                                     <div class="col-sm-6 col-lg-4">
@@ -98,7 +104,13 @@
                         </div>
                         <div class="tab-item">
                             <div class="movie-area mb-10">
-
+                                <!--Check nếu không có phim nào trong thể loại này-->
+                                @if (Model.Count() == 0)
+                                {
+                                    <h3 class="title" style=" overflow: hidden; text-align: center;padding:20px">
+                                        Hiện thể loại này chưa có phim nào đang chiếu :(
+                                    </h3>
+                                }
                                 @foreach (var mov in Model)
                                 {
                                     <div class="movie-list">
@@ -129,20 +141,20 @@
                                             <div class="release">
                                                 <span>Công chiếu: </span> <a> @Html.FormatValue(mov.ngay_cong_chieu, "{0:dd/MM/yyy}")</a>
                                             </div>
-          @*<ul class="movie-rating-percent">
-            <li>
-                <div class="thumb">
-                    <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
-                </div>
-                <span class="content">88%</span>
-            </li>
-            <li>
-                <div class="thumb">
-                    <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
-                </div>
-                <span class="content">88%</span>
-            </li>
-        </ul>*@
+                                            @*<ul class="movie-rating-percent">
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/Frontend/Client/assets/images/movie/tomato.png" alt="movie">
+                                                        </div>
+                                                        <span class="content">88%</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="thumb">
+                                                            <img src="/Frontend/Client/assets/images/movie/cake.png" alt="movie">
+                                                        </div>
+                                                        <span class="content">88%</span>
+                                                    </li>
+                                                </ul>*@
                                             <div style="padding-top: 5px; padding-bottom: 5px; height: 128px; ">
                                                 <a class="overflow-text-4">@Html.Raw(mov.chi_tiet)</a>
                                             </div>
@@ -172,7 +184,10 @@
                     </div>
                 </div>
                 <div class="pagination-area text-center">
-                    @Html.PagedListPager(Model, page => Url.Action("NowShowing", "Movie", new { page, category = ViewBag.category }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                    @if (Model.Count() > 0)
+                    {
+                        @Html.PagedListPager(Model, page => Url.Action("NowShowing", "Movie", new { page, category = ViewBag.category }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                    }
                 </div>
             </div>
         </div>
