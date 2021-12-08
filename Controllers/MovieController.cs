@@ -93,6 +93,7 @@ namespace CinemaBooking.Controllers
         //Đặt vé
         public ActionResult BookTicket(int? id)
         {
+            // Note: cái này chưa fix status = 1 mệt vl
             if (id != null)
             {
                 if (Session["TenCus"] == null)

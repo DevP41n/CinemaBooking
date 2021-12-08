@@ -115,11 +115,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             try
             {
                 phong_chieu phongChieu = db.phong_chieu.Find(id);
-                if(phongChieu.status == 1 || phongChieu.status == 0)
+                if(phongChieu.status != 2 )
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
-                // bằng 0 thì đã dừng hoạt động
+                // bằng 2 thì đã dừng hoạt động
                 var check = db.suat_chieu.Where(x => x.phong_chieu_id == id && x.status == 1);
                 TimeSpan timecheck = new TimeSpan(1, 0, 0, 0);
                 int dem = 0;
@@ -190,6 +190,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
+                //status = 2 là dừng hoạt động
                 phong_Chieu.status = 2;
                 db.Entry(phong_Chieu).State = EntityState.Modified;
                 db.SaveChanges();
@@ -224,6 +225,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
+                //status = 1 là hoạt động
                 phong_Chieu.status = 1;
                 db.Entry(phong_Chieu).State = EntityState.Modified;
                 db.SaveChanges();
