@@ -85,7 +85,7 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col"  data-gia="@seat3.gia" data-phuthu="@seat3.loai_ghe.phu_thu">
                                                                     <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat3.Row@seat3.Col">
                                                                     <span class="sit-num">@seat3.Row@seat3.Col</span>
                                                                 </li>
@@ -123,7 +123,7 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat7.Row@seat7.Col" id="@seat7.Row@seat7.Col" data-idghe="@seat7.id">
+                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat7.Row@seat7.Col" id="@seat7.Row@seat7.Col" data-idghe="@seat7.id" data-gia="@seat7.gia" data-phuthu="@seat7.loai_ghe.phu_thu">
                                                                     <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat7.Row@seat7.Col">
                                                                     <span class="sit-num">@seat7.Row@seat7.Col</span>
                                                                 </li>
@@ -160,7 +160,7 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat10.Row@seat10.Col" data-idghe="@seat10.id" id="@seat10.Row@seat10.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat10.Row@seat10.Col" data-idghe="@seat10.id" id="@seat10.Row@seat10.Col" data-gia="@seat10.gia" data-phuthu="@seat10.loai_ghe.phu_thu">
                                                                     <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat10.Row@seat10.Col">
                                                                     <span class="sit-num">@seat10.Row@seat10.Col</span>
                                                                 </li>
@@ -219,6 +219,10 @@
             $('body').on('click', '.UnAct', function () {
                 var tenghe = $(this).data('ten');
                 var idghe = $(this).data('idghe');
+                //giá ghế
+                var giaghe = $(this).data('gia');
+                //giá phụ thu
+                var phuthu = $(this).data('phuthu');
                 // them ten ghe
                 $('#tenghe').val($('#tenghe').val() + tenghe + " ");
                 //them id ghe
@@ -232,8 +236,10 @@
                 var imgid = "." + "ghe-" + tenghe;
                 $(imgid).attr("src", "/Frontend/Client/assets/images/movie/seat01-booked.png");
                 var tien = $('#giatien').val();
-                var dongia = "75000";
-                var tongtien = parseInt(tien) + parseInt(dongia);
+                //giá ghế
+                var dongia = giaghe;
+                //cộng thêm phụ thu
+                var tongtien = parseInt(tien) + parseInt(dongia) + parseInt(phuthu);
                 function format1(n, currency) {
                     return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
                         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
@@ -247,21 +253,13 @@
             $('body').on('click', '.Act', function () {
                 var tenghe = $(this).data('ten');
                 var idghen = $(this).data('idghe');
+                //giá ghế
+                var giaghe = $(this).data('gia');
+                //giá phụ thu
+                var phuthu = $(this).data('phuthu');
                 dataval = $('#tenghe').val();
                 dataidghe = $('#idgheinput').val();
-                //var data = dataval.split(',');
-                //var ghedadat;
-                //for (let i = 0; i < data.length; i++) {
-                //    if (JSON.stringify(data[i]) == tenghe) {
-                //        data.splice(i);
-                //    }
 
-                //}
-                //debugger;
-                //for (let j = 0; j < length.data; j++) {
-                //    ghedadat += data[j] + ",";
-                //}
-                // sửa id ghế
                 var check = ",";
                 if (dataidghe.indexOf(check) != -1) {
                     if (dataidghe.indexOf("," + idghen) != -1) {
@@ -286,8 +284,8 @@
 
                 $(id).removeClass('Act').addClass('UnAct');
                 var tien = $('#giatien').val();
-                var dongia = "75000";
-                var tongtien = parseInt(tien) - parseInt(dongia);
+                var dongia = giaghe;
+                var tongtien = parseInt(tien) - parseInt(dongia) - parseInt(phuthu);
                 function format1(n, currency) {
                     return currency + n.toFixed(0).replace(/./g, function (c, i, a) {
                         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;

@@ -518,6 +518,14 @@ namespace CinemaBooking.Controllers
                     idghe.Add(listid[i]);
                 }
             }
+            //tính tiền
+            decimal? price = 0;
+            foreach(var i in idghe)
+            {
+                var priceghe = db.ghe_ngoi.Find(Convert.ToInt32(i));
+                price += (priceghe.gia + priceghe.loai_ghe.phu_thu);
+            }
+            ViewBag.giatien = price;
             ViewBag.idghengoi = idghe;
             ViewBag.soluongh = idghe.Count();
             return View(sc);

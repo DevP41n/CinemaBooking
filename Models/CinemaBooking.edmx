@@ -120,6 +120,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ten_ghe" Type="nvarchar" MaxLength="250" />
           <Property Name="phu_thu" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="status" Type="int" />
+          <Property Name="anh" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="movie_rate">
           <Key>
@@ -829,6 +831,8 @@
           <Property Name="ten_ghe" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="phu_thu" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="ghe_ngoi" Relationship="Self.Fk_LoaiGhe" FromRole="loai_ghe" ToRole="ghe_ngoi" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="anh" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="movie_rate">
           <Key>
@@ -1563,6 +1567,8 @@
           <EntitySetMapping Name="loai_ghe">
             <EntityTypeMapping TypeName="CinemaBookingModel.loai_ghe">
               <MappingFragment StoreEntitySet="loai_ghe">
+                <ScalarProperty Name="anh" ColumnName="anh" />
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ten_ghe" ColumnName="ten_ghe" />
                 <ScalarProperty Name="phu_thu" ColumnName="phu_thu" />

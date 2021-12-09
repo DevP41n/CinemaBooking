@@ -79,8 +79,8 @@
                                                         <td class="text-center text-info text-bold">@Model.phim.ten_phim</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="text-main text-bold" style="font-weight:bold"> Phòng:</td>
-                                                        <td class="text-center">@Model.phong_chieu.ten_phong</td>
+                                                        <td class="text-main text-bold" style="font-weight:bold"> Rạp:</td>
+                                                        <td class="text-center">@Model.phong_chieu.rap_chieu.ten_rap - @Model.phong_chieu.ten_phong</td>
                                                     </tr>
                                                     @{ var gio = db.TimeFrames.Find(Model.idtime);}
                                                     <tr>
@@ -97,6 +97,10 @@
                                                     <tr>
                                                         <td class="text-main text-bold" style="font-weight:bold">Thời gian tạo: </td>
                                                         <td class="text-center"> @Model.ngay_mua</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-main text-bold" style="font-weight:bold">Phương thức: </td>
+                                                        <td class="text-center">@Model.pay_method</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-main text-bold" style="font-weight:bold">
@@ -142,7 +146,7 @@
                                                     {
                                                         <tr>
                                                             <td class="text-center">@item.ghe_ngoi.Row@item.ghe_ngoi.Col</td>
-                                                            <td class="text-center">@Html.Raw(String.Format("{0:0,0} đ", 75000))</td>
+                                                            <td class="text-center">@Html.Raw(String.Format("{0:0,0} đ", Math.Round(item.gia_ve)))</td>
                                                         </tr>
                                                     }
                                                 </tbody>

@@ -56,6 +56,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         ghe.Row = room[i];
                         ghe.Col = j + 1;
                         ghe.phong_chieu_id = id;
+                        ghe.gia = 75000;
+                        ghe.loai_ghe_id = 1;
                         ghe.status = 1;
                         db.ghe_ngoi.Add(ghe);
                         db.SaveChanges();
@@ -371,6 +373,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         ghengoi.Row = hang;
                         ghengoi.Col = i + 1;
                         ghengoi.phong_chieu_id = id;
+                        ghengoi.gia = 75000;
+                        //chưa sửa chọn ghế : VIP| Thường ...
+                        ghengoi.loai_ghe_id = 1;
                         ghengoi.status = 1;
                         db.ghe_ngoi.Add(ghengoi);
                         db.SaveChanges();
@@ -433,6 +438,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         ghengoi.Row = hang;
                         ghengoi.Col = i + 1;
                         ghengoi.phong_chieu_id = id;
+                        ghengoi.gia = 75000;
+                        //chưa sửa chọn ghế : VIP| Thường ...
+                        ghengoi.loai_ghe_id = 1;
                         ghengoi.status = 1;
                         db.ghe_ngoi.Add(ghengoi);
                         db.SaveChanges();
@@ -611,5 +619,6 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 return RedirectToAction("CinemaList");
             }
         }
+
     }
 }

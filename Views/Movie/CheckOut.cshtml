@@ -150,7 +150,7 @@
                             <div class="info"><span>Ngày: @Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}") </span></div>
                         </li>
                         <li>
-                            <h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 VNĐ</span></h6>
+                            @*<h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 VNĐ</span></h6>*@
                         </li>
                     </ul>
                     <ul class="side-shape">
@@ -185,13 +185,13 @@
                     </ul>
                     <ul>
                         <li>
-                            <span class="info"><span>Tổng tiền</span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></span>
+                            <span class="info"><span>Tổng tiền</span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @ViewBag.giatien))</span></span>
                             @*<span class="info"><span>vat</span><span>$15</span></span>*@
                         </li>
                     </ul>
                 </div>
                 <div class="proceed-area  text-center">             @*₫*@
-                    <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @Math.Round(Convert.ToDouble(sl) * 75000)))</span></h6>
+                    <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @ViewBag.giatien))</span></h6>
                     <a href="#0" class="custom-button back-button" id="confirm">Thanh toán</a>
                 </div>
             </div>

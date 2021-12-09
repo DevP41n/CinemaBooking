@@ -44,6 +44,14 @@ namespace CinemaBooking.Controllers
                     idghengoi.Add(listid[i]);
                 }
             }
+            //tổng giá
+            decimal? price = 0;
+            foreach (var i in idghengoi)
+            {
+                var priceghe = db.ghe_ngoi.Find(Convert.ToInt32(i));
+                price += (priceghe.gia + priceghe.loai_ghe.phu_thu);
+            }
+
             double count = idghengoi.Count();
             string ghe = "Vé ";
             var dem = 0;
@@ -62,7 +70,7 @@ namespace CinemaBooking.Controllers
             }
 
             double tygia = 23300;
-            double thanhtien = Math.Round((75000 * count) / tygia, 2);
+            double thanhtien = Math.Round(Convert.ToDouble(price) / tygia, 2);
             string tien = thanhtien.ToString().Replace(",", ".");
 
             ItemLIst.items.Add(new PayPal.Api.Item()
@@ -205,6 +213,14 @@ namespace CinemaBooking.Controllers
 
                 //throw;
             }
+            //giá vé
+            decimal? price = 0;
+            foreach (var i in idghengoi)
+            {
+                var priceghe = db.ghe_ngoi.Find(Convert.ToInt32(i));
+                price += (priceghe.gia + priceghe.loai_ghe.phu_thu);
+            }
+
             //add order
             var sc = db.suat_chieu.Find(idsuatchieu);
             order addorder = new order();
@@ -218,7 +234,7 @@ namespace CinemaBooking.Controllers
             addorder.idtime = idtimechieu;
             addorder.pay_method = "Thanh toán Paypal";
             addorder.status = 1;
-            addorder.tong_tien = idghengoi.Count() * 75000;
+            addorder.tong_tien = price;
             addorder.so_luong_ve = idghengoi.Count();
             //Random Code ticket
             Random random = new Random();
@@ -245,9 +261,10 @@ namespace CinemaBooking.Controllers
             order_details addorderdetails = new order_details();
             foreach (var gheid in idghengoi)
             {
+                var tiendetail = db.ghe_ngoi.Find(gheid);
                 addorderdetails.id_ghe = gheid;
                 addorderdetails.id_orders = idorder;
-                addorderdetails.gia_ve = 75000;
+                addorderdetails.gia_ve = tiendetail.gia + tiendetail.loai_ghe.phu_thu;
                 db.order_details.Add(addorderdetails);
                 db.SaveChanges();
             }

@@ -36,6 +36,15 @@ namespace CinemaBooking.Controllers
                     idghengoi.Add(Convert.ToInt32(listid[i]));
                 }
             }
+
+            //tổng tiền
+            decimal? price = 0;
+            foreach (var i in idghengoi)
+            {
+                var priceghe = db.ghe_ngoi.Find(Convert.ToInt32(i));
+                price += (priceghe.gia + priceghe.loai_ghe.phu_thu);
+            }
+
             int dem = 0;
             foreach (var item in idghengoi)
             {
@@ -67,7 +76,7 @@ namespace CinemaBooking.Controllers
             addorder.pay_method = "Thanh toán tại quầy";
             //Chờ thanh toán
             addorder.status = 2;
-            addorder.tong_tien = idghengoi.Count() * 75000;
+            addorder.tong_tien = price;
             addorder.so_luong_ve = idghengoi.Count();
             //code ticket
             Random random = new Random();
@@ -100,9 +109,10 @@ namespace CinemaBooking.Controllers
             order_details addorderdetails = new order_details();
             foreach (var gheid in idghengoi)
             {
+                var tiendetail = db.ghe_ngoi.Find(gheid);
                 addorderdetails.id_ghe = gheid;
                 addorderdetails.id_orders = idorder;
-                addorderdetails.gia_ve = 75000;
+                addorderdetails.gia_ve = tiendetail.gia + tiendetail.loai_ghe.phu_thu;
                 db.order_details.Add(addorderdetails);
                 db.SaveChanges();
             }

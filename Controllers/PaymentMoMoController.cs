@@ -34,6 +34,14 @@ namespace CinemaBooking.Controllers
                 }
             }
 
+            //tổng tiền 
+            decimal? price = 0;
+            foreach (var i in idghengoi)
+            {
+                var priceghe = db.ghe_ngoi.Find(Convert.ToInt32(i));
+                price += (priceghe.gia + priceghe.loai_ghe.phu_thu);
+            }
+
             string ghee = "";
             var demm = 0;
             foreach (var j in idghengoi)
@@ -80,8 +88,8 @@ namespace CinemaBooking.Controllers
             string notifyurl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
             string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
 
-            double tien = 75000 * idghengoi.Count();
-            string tongtien = tien.ToString();
+            //double tien = 75000 * idghengoi.Count();
+            string tongtien = price.ToString();
 
             string amount = tongtien;
             string orderid = Session["codeticket"].ToString();
@@ -173,6 +181,17 @@ namespace CinemaBooking.Controllers
                         idghengoi.Add(Convert.ToInt32(listid[i]));
                     }
                 }
+
+
+                //tổng tiền
+                decimal? price = 0;
+                foreach (var i in idghengoi)
+                {
+                    var priceghe = db.ghe_ngoi.Find(Convert.ToInt32(i));
+                    price += (priceghe.gia + priceghe.loai_ghe.phu_thu);
+                }
+
+
                 int dem = 0;
                 foreach (var item in idghengoi)
                 {
@@ -205,7 +224,7 @@ namespace CinemaBooking.Controllers
                 addorder.pay_method = "Thanh toán Momo";
                 addorder.status = 1;
                 addorder.idtime = idtimechieu;
-                addorder.tong_tien = idghengoi.Count() * 75000;
+                addorder.tong_tien = price;
                 addorder.so_luong_ve = idghengoi.Count();
                 addorder.code_ticket = codeticket;
                 db.orders.Add(addorder);
@@ -223,9 +242,10 @@ namespace CinemaBooking.Controllers
                 order_details addorderdetails = new order_details();
                 foreach (var gheid in idghengoi)
                 {
+                    var tiendetail = db.ghe_ngoi.Find(gheid);
                     addorderdetails.id_ghe = gheid;
                     addorderdetails.id_orders = idorder;
-                    addorderdetails.gia_ve = 75000;
+                    addorderdetails.gia_ve = tiendetail.gia + tiendetail.loai_ghe.phu_thu;
                     db.order_details.Add(addorderdetails);
                     db.SaveChanges();
                 }

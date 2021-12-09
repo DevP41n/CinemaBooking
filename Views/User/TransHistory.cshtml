@@ -160,8 +160,8 @@
                                                                 <th>Ngày mua</th>
                                                                 <th>Phim</th>
                                                                 <th>Số lượng vé</th>
-                                                                <th>Phòng chiếu</th>
-                                                                <th>Suất chiếu</th>
+                                                                <th>Rạp - phòng chiếu - suất</th>
+                                                                <th>Trạng thái</th>
                                                                 <th>Tiền đã thanh toán</th>
                                                             </tr>
                                                             <caption class="title"></caption>
@@ -192,15 +192,31 @@
                                                                             dem++;
                                                                         }
                                                                     </td>
-                                                                    <td>@item.phong_chieu.ten_phong</td>
                                                                     @{ var time = db.TimeFrames.Find(item.idtime); }
-                                                                    <td>@time.Time</td>
+                                                                    <td>@item.phong_chieu.rap_chieu.ten_rap - @item.phong_chieu.ten_phong - @time.Time</td>
+
+                                                                    @if (item.status == 0)
+                                                                    {
+                                                                        <td style="color:#dc3545">Vé đã hủy</td>
+                                                                    }
+                                                                    else if (item.status == 1)
+                                                                    {
+                                                                        <td style="color:#28a745">thanh toán thành công</td>
+                                                                    }
+                                                                    else if (item.status == 2)
+                                                                    {
+                                                                        <td style="color:#ffc107">Đang chờ thanh toán</td>
+                                                                    }
                                                                     <td>
                                                                         @Html.Raw(String.Format("{0:0,0} VNĐ", item.tong_tien))
                                                                     </td>
-                                                                    @{tongtien = tongtien + (Double)item.tong_tien;}
-                                                                    @if(item.status == 2)
-                                                                    { 
+                                                                    @if (item.status == 1)
+                                                                    {
+                                                                        tongtien = tongtien + (Double)item.tong_tien;
+                                                                    }
+
+                                                                    @if (item.status == 2)
+                                                                    {
                                                                         <td>
                                                                             <a href="/User/CancelTicket?id=@item.id" class="btn btn-primary">Hủy dặt</a>
                                                                         </td>

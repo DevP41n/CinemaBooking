@@ -11,7 +11,8 @@ namespace CinemaBooking.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class loai_ghe
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,8 +22,12 @@ namespace CinemaBooking.Models
         }
     
         public int id { get; set; }
+        [Required]
         public string ten_ghe { get; set; }
+        [Required]
         public Nullable<decimal> phu_thu { get; set; }
+        public Nullable<int> status { get; set; }
+        public string anh { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ghe_ngoi> ghe_ngoi { get; set; }

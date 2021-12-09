@@ -531,3 +531,25 @@ set status = '1'
 where id > 0;
 
 -- lỗi thì thêm status( Suất chiếu, phòng chiếu, ghế ngồi ) = 1 là chạy được nhe
+
+-- Update giá ghế : VIP, Thường
+
+Insert into loai_ghe 
+values (N'Ghế thường','0')
+
+Insert into loai_ghe 
+values (N'Ghế VIP','20000')
+
+
+update ghe_ngoi
+set loai_ghe_id = '1', gia = '75000'
+where id>0
+
+--- chạy trước ghế thường cho khỏi lỗi
+---- sửa loại ghế
+alter table loai_ghe
+add status int null;
+
+alter table loai_ghe
+add anh varchar(255) null;
+
