@@ -1,8 +1,6 @@
 ﻿using CinemaBooking.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Areas.Admin.Controllers
@@ -28,6 +26,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string username, string password)
         {
+            if (Session["HoTen"] != null)
+            {
+                return RedirectToAction("Dashboard", "Admin");
+            }
             if (ModelState.IsValid)
             {
                 var f_password = MyString.ToMD5(password);

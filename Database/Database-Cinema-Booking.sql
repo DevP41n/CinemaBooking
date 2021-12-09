@@ -534,11 +534,14 @@ where id > 0;
 
 -- Update giá ghế : VIP, Thường
 
+-- Cột ảnh thì thêm cái tên ảnh vào
 Insert into loai_ghe 
-values (N'Ghế thường','0')
+values (N'Ghế thường','0') 
+-- Ghế thường là ảnh tên seat-normal.png
 
 Insert into loai_ghe 
 values (N'Ghế VIP','20000')
+-- Ghế vip là seat01-redd.png
 
 
 update ghe_ngoi

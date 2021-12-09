@@ -85,8 +85,8 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col"  data-gia="@seat3.gia" data-phuthu="@seat3.loai_ghe.phu_thu">
-                                                                    <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat3.Row@seat3.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat3.loai_ghe.anh" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col"  data-gia="@seat3.gia" data-phuthu="@seat3.loai_ghe.phu_thu">
+                                                                    <img src="~/images/seattype/@seat3.loai_ghe.anh" alt="seat" class="ghe-@seat3.Row@seat3.Col">
                                                                     <span class="sit-num">@seat3.Row@seat3.Col</span>
                                                                 </li>
                                                             }
@@ -123,8 +123,8 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat7.Row@seat7.Col" id="@seat7.Row@seat7.Col" data-idghe="@seat7.id" data-gia="@seat7.gia" data-phuthu="@seat7.loai_ghe.phu_thu">
-                                                                    <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat7.Row@seat7.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat7.loai_ghe.anh" data-ten="@seat7.Row@seat7.Col" id="@seat7.Row@seat7.Col" data-idghe="@seat7.id" data-gia="@seat7.gia" data-phuthu="@seat7.loai_ghe.phu_thu">
+                                                                    <img src="~/images/seattype/@seat7.loai_ghe.anh" alt="seat" class="ghe-@seat7.Row@seat7.Col">
                                                                     <span class="sit-num">@seat7.Row@seat7.Col</span>
                                                                 </li>
                                                             }
@@ -160,8 +160,8 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-ten="@seat10.Row@seat10.Col" data-idghe="@seat10.id" id="@seat10.Row@seat10.Col" data-gia="@seat10.gia" data-phuthu="@seat10.loai_ghe.phu_thu">
-                                                                    <img src="/Frontend/Client/assets/images/movie/seat01-free.png" alt="seat" class="ghe-@seat10.Row@seat10.Col">
+                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat10.loai_ghe.anh" data-ten="@seat10.Row@seat10.Col" data-idghe="@seat10.id" id="@seat10.Row@seat10.Col" data-gia="@seat10.gia" data-phuthu="@seat10.loai_ghe.phu_thu">
+                                                                    <img src="~/images/seattype/@seat10.loai_ghe.anh" alt="seat" class="ghe-@seat10.Row@seat10.Col">
                                                                     <span class="sit-num">@seat10.Row@seat10.Col</span>
                                                                 </li>
                                                             }
@@ -278,7 +278,9 @@
                 $('#tenghe').val(ghedadat);
                 $('#idgheinput').val(idghedadat);
                 var imgid = "." + "ghe-" + tenghe;
-                $(imgid).attr("src", "/Frontend/Client/assets/images/movie/seat01-free.png");
+                var anh = $(this).data('anh');
+                var link = "/images/seattype/" + anh;
+                $(imgid).attr("src", link);
                 var id = "#" + tenghe;
 
 

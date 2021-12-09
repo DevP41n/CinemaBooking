@@ -40,6 +40,11 @@ namespace CinemaBooking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SignIn(string Taikhoan, string Matkhau)
         {
+            if (Session["TenCus"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 var f_password = MyString.ToMD5(Matkhau);

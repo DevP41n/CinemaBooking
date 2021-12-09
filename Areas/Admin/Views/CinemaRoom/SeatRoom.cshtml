@@ -137,7 +137,7 @@
                         </div>
 
                         <!-- Modal C-->
-                        <div class="modal fade" id="CreateSeat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal fade" id="CreateSeat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" @*style="height:300px"*@>
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -157,42 +157,54 @@
                                                 <label for="exampleInputPassword1">Số ghế</label>
                                                 <input type="text" class="form-control" id="soghe" placeholder="Nhập số ghế">
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" data-id="@ViewBag.pc.id" id="btnSave">Save changes</button>
-                                    </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Loại ghế</label>
+                                                <select name="id_loaighe" id="id_loaighe">
+                                                    @foreach (var idloaighe in ViewBag.loai_ghe_id)
+                                                    {
+                                                        <option value="@idloaighe.id">@idloaighe.ten_ghe</option>
+                                                    }
+                                                </select>
+
+                                            </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" data-id="@ViewBag.pc.id" id="btnSave">Save changes</button>
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal E-->
-                        <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Thêm hàng ghế</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Tên hàng</label>
-                                                @*<input type="hidden" id="exampleid" value="0" />*@
-                                                <input type="email" class="form-control" id="ehangghe" placeholder="Nhập tên hàng ghế" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Số ghế</label>
-                                                <input type="text" class="form-control" id="esoghe" placeholder="Nhập số ghế">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" data-id="@ViewBag.pc.id" id="btnEditSeat">Save changes</button>
-                                    </div>
+                    </div>
+                    <!-- Modal E-->
+                    <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Thêm hàng ghế</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Tên hàng</label>
+                                            @*<input type="hidden" id="exampleid" value="0" />*@
+                                            <input type="email" class="form-control" id="ehangghe" placeholder="Nhập tên hàng ghế" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Số ghế</label>
+                                            <input type="text" class="form-control" id="esoghe" placeholder="Nhập số ghế">
+                                        </div>
+                                        <select name="id_loai_ghe_edit" id="id_loai_ghe_edit">
+                                            
+                                        </select>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" data-id="@ViewBag.pc.id" id="btnEditSeat">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -202,20 +214,24 @@
         </div>
     </div>
 </div>
+</div>
 
 
 
 @section Scripts{
     <script>
+
+
         $(document).ready(function () {
             $('#btnSave').click(function () {
                 var hang = $('#hangghe').val();
                 var ghe = $('#soghe').val();
+                var idloaighe = $("#id_loaighe option:selected").val();
                 var id = $(this).data('id');
                 $.ajax({
                     url: '/CinemaRoom/CreateSeat',
                     type: 'POST',
-                    data: { hang, ghe, id },
+                    data: { hang, ghe, id, idloaighe },
                     success: function (res) {
                         if (res.success == true) {
                             window.location.reload();
@@ -240,7 +256,7 @@
         });
 
 
-        function Getdatabyrow(Row, pcid) {
+        function Getdatabyrow(Row, pcid, ) {
             $.ajax({
                 url: '/CinemaRoom/GetByRow',
                 type: 'Get',
@@ -250,8 +266,18 @@
                 },
                 success: function (res) {
                     if (res.seat != null && res.Row != null) {
+                        var idloaighe = res.idloaig;
+                        var tenloaighe = res.tenloaig;
+                        var html = "";
+                        html += '<option value="' + idloaighe[0] + '">' + tenloaighe[0] + '</option>';
+                        for (let i = 1; i < res.count; i++) {
+                            if (idloaighe[i] != idloaighe[0])
+                                html += '<option value="' + idloaighe[i] + '">' + tenloaighe[i] + '</option>';
+                        }
+                        $('#id_loai_ghe_edit').html(html);
                         $('#ehangghe').val(res.Row);
                         $('#esoghe').val(res.seat);
+
                         $('#Edit').modal('show');
                     }
                 }
@@ -261,11 +287,12 @@
         $('#btnEditSeat').click(function () {
             var hang = $('#ehangghe').val();
             var ghe = $('#esoghe').val();
+            var idloaighe = $("#id_loai_ghe_edit option:selected").val();
             var id = $(this).data('id');
             $.ajax({
                 url: '/CinemaRoom/EditSeat',
                 type: 'POST',
-                data: { hang, ghe, id },
+                data: { hang, ghe, id, idloaighe },
                 success: function (res) {
                     if (res.success) {
                         window.location.reload();
@@ -300,5 +327,12 @@
                 }
             });
         });
+        function sleep(milliseconds) {
+            const date = Date.now();
+            let currentDate = null;
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < milliseconds);
+        }
     </script>
 }

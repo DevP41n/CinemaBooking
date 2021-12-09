@@ -1,0 +1,97 @@
+﻿@model CinemaBooking.Models.loai_ghe
+
+@{
+    ViewBag.Title = "CreateSeatType";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">Loại ghế</h4>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                            <li class="breadcrumb-item active">Tạo mới</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="float-right d-none d-md-block">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-settings mr-2"></i> Settings
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            @using (Html.BeginForm("CreateSeatType", "CinemaRoom", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.ten_ghe, "Tên loại ghế", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-4">
+                                        @Html.EditorFor(model => model.ten_ghe, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ten_ghe, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.anh, "Ảnh", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(model => model.anh, new { htmlAttributes = new { type = "file", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.anh, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.phu_thu, "Giá phụ thu", htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(model => model.phu_thu, new { htmlAttributes = new {  @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.phu_thu, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="float-lg-right">
+                                    <div class="form-group mb-0">
+                                        <div>
+                                            <input type="submit" value="Create" class="btn btn-primary waves-effect waves-light mr-1" />
+                                            <input type="reset" value="Cancel" class="btn btn-primary waves-effect waves-light mr-1" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+
+                                </div>
+
+                                <div class="form-group mb-0">
+                                    @Html.ActionLink("Trở về", "ListSeatType")
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- end main content-->

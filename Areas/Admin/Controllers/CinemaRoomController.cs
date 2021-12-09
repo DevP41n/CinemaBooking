@@ -1,6 +1,8 @@
 ﻿using CinemaBooking.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -36,12 +38,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
+                //Lấy ra phụ thu của loại ghế nhỏ nhất để tạo phòng có giá default
+                var loaighe = db.loai_ghe.OrderBy(x => x.phu_thu).FirstOrDefault();
                 string[] room = new string[5] { "A", "B", "C", "D", "E" };
                 ghe_ngoi ghe = new ghe_ngoi();
                 phongChieu.so_luong_cot = 10;
                 phongChieu.status = 1;
                 var checkopc = db.phong_chieu.Where(x => x.ten_phong == phongChieu.ten_phong && x.id_rapchieu == phongChieu.id_rapchieu).Count();
-                if(checkopc !=0)
+                if (checkopc != 0)
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 phòng chiếu giống phòng chiếu này. Vui lòng kiểm tra lại!";
                     return View();
@@ -57,7 +61,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         ghe.Col = j + 1;
                         ghe.phong_chieu_id = id;
                         ghe.gia = 75000;
-                        ghe.loai_ghe_id = 1;
+                        ghe.loai_ghe_id = loaighe.id;
                         ghe.status = 1;
                         db.ghe_ngoi.Add(ghe);
                         db.SaveChanges();
@@ -213,7 +217,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
                 phong_chieu phong_Chieu = db.phong_chieu.Find(id);
                 var check = db.suat_chieu.Where(x => x.phong_chieu_id == id && x.status == 1);
-                if(phong_Chieu == null)
+                if (phong_Chieu == null)
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
@@ -268,7 +272,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
 
                 phong_chieu phong_Chieu = db.phong_chieu.Find(id);
-                if(phong_Chieu == null)
+                if (phong_Chieu == null)
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
@@ -312,6 +316,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 {
                     return RedirectToAction("AError404", "Admin");
                 }
+                ViewBag.loai_ghe_id = db.loai_ghe.ToList().OrderBy(n => n.id);
                 ViewBag.pc = phongChieu;
                 var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == id & x.status == 1).OrderBy(x => x.Row);
                 ViewBag.ghe = ghengoi;
@@ -324,9 +329,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateSeat(string hang, int ghe, int id)
+        public ActionResult CreateSeat(string hang, int ghe, int id, int idloaighe)
         {
-            if (hang == null || ghe <1|| id < 1)
+            if (hang == null || ghe < 1 || id < 1)
             {
                 return Json(new { checkr = false });
             }
@@ -375,7 +380,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         ghengoi.phong_chieu_id = id;
                         ghengoi.gia = 75000;
                         //chưa sửa chọn ghế : VIP| Thường ...
-                        ghengoi.loai_ghe_id = 1;
+                        ghengoi.loai_ghe_id = idloaighe;
                         ghengoi.status = 1;
                         db.ghe_ngoi.Add(ghengoi);
                         db.SaveChanges();
@@ -392,11 +397,23 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult GetByRow(string Row, int? pcid)
         {
             var seat = db.ghe_ngoi.Where(x => x.Row == Row && x.phong_chieu_id == pcid && x.status == 1).Count();
-            return Json(data: new { seat, Row }, JsonRequestBehavior.AllowGet);
+            var idLoaiGhe = db.ghe_ngoi.Where(x => x.Row == Row && x.phong_chieu_id == pcid && x.status == 1).FirstOrDefault();
+            List<int?> idloaig = new List<int?>();
+            List<string> tenloaig = new List<string>();
+            idloaig.Add(idLoaiGhe.loai_ghe_id);
+            tenloaig.Add(idLoaiGhe.loai_ghe.ten_ghe);
+            foreach (var item in db.loai_ghe.ToList())
+            {
+                idloaig.Add(item.id);
+                tenloaig.Add(item.ten_ghe);
+            }
+            var count = idloaig.Count();
+            return Json(data: new { count, idloaig, tenloaig, seat, Row }, JsonRequestBehavior.AllowGet);
         }
 
+
         [HttpPost]
-        public ActionResult EditSeat(string hang, int ghe, int id)
+        public ActionResult EditSeat(string hang, int ghe, int id, int idloaighe)
         {
             var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id && n.status == 1).ToList();
             var tong = ghn.Count();
@@ -433,6 +450,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 {
                     checkpc.so_luong_cot = checkghe.Count() + (ghe - tong);
                     db.Entry(checkpc).State = EntityState.Modified;
+                    //Sửa ghế trước rồi tạo mới ghế sau
+                    foreach (var gheht in ghn)
+                    {
+                        ghe_ngoi seat = db.ghe_ngoi.Find(gheht.id);
+                        seat.loai_ghe_id = idloaighe;
+                        db.Entry(seat).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                     for (int i = tong; i < ghe; i++)
                     {
                         ghengoi.Row = hang;
@@ -440,7 +465,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                         ghengoi.phong_chieu_id = id;
                         ghengoi.gia = 75000;
                         //chưa sửa chọn ghế : VIP| Thường ...
-                        ghengoi.loai_ghe_id = 1;
+                        ghengoi.loai_ghe_id = idloaighe;
                         ghengoi.status = 1;
                         db.ghe_ngoi.Add(ghengoi);
                         db.SaveChanges();
@@ -461,7 +486,25 @@ namespace CinemaBooking.Areas.Admin.Controllers
                             db.SaveChanges();
                         }
                     }
+                    var ghehientai = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id && n.status == 1).ToList();
+                    foreach (var gheht in ghehientai)
+                    {
+                        ghe_ngoi seat = db.ghe_ngoi.Find(gheht.id);
+                        seat.loai_ghe_id = idloaighe;
+                        db.Entry(seat).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                     db.SaveChanges();
+                }
+                else if (tong == ghe)
+                {
+                    foreach (var idghe in ghn)
+                    {
+                        ghe_ngoi seat = db.ghe_ngoi.Find(idghe.id);
+                        seat.loai_ghe_id = idloaighe;
+                        db.Entry(seat).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
             }
             catch (Exception)
@@ -620,5 +663,122 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
         }
 
+        //Tạo loại ghế
+        public ActionResult ListSeatType()
+        {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            return View(db.loai_ghe.ToList().OrderBy(n => n.id));
+        }
+
+        public ActionResult CreateSeatType()
+        {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateSeatType(loai_ghe loaiGhe)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var file = Request.Files["anh"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    Random rd = new Random();
+                    var numrd = rd.Next(1, 100).ToString();
+                    string filename = "seattype" + DateTime.Now.ToString("MMMM'-'dd'-'yyyy") + file.FileName.Substring(file.FileName.LastIndexOf("."));
+                    loaiGhe.anh = filename;
+                    string path = Server.MapPath("~/images/seattype/");
+                    string StrPath = Path.Combine(path, filename);
+                    file.SaveAs(StrPath);
+                }
+                loaiGhe.status = 1;
+                db.loai_ghe.Add(loaiGhe);
+                TempData["Message"] = "Tạo thành công!";
+                db.SaveChanges();
+                return RedirectToAction("ListSeatType");
+            }
+            return View(loaiGhe);
+        }
+
+        public ActionResult EditSeatType(int? id)
+        {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (id == null || id < 1)
+            {
+                return RedirectToAction("AError404", "Admin");
+            }
+            try
+            {
+
+                loai_ghe loaiGhe = db.loai_ghe.Find(id);
+                if (loaiGhe == null)
+                {
+                    return RedirectToAction("AError404", "Admin");
+                }
+                return View(loaiGhe);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("AError404", "Admin");
+            }
+        }
+        [HttpPost, ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSeatType(loai_ghe loaiGhe)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var file = Request.Files["anh"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    Random rd = new Random();
+                    var numrd = rd.Next(1, 100).ToString();
+                    string filename = "seattype" + DateTime.Now.ToString("MMMM'-'dd'-'yyyy") + file.FileName.Substring(file.FileName.LastIndexOf("."));
+                    loaiGhe.anh = filename;
+                    string path = Server.MapPath("~/images/seattype/");
+                    string StrPath = Path.Combine(path, filename);
+                    file.SaveAs(StrPath);
+                }
+                db.Entry(loaiGhe).State = EntityState.Modified;
+                TempData["Error"] = "Cập nhật thành công!";
+                db.SaveChanges();
+                return RedirectToAction("ListSeatType");
+            }
+            else
+            {
+                TempData["Error"] = "Cập nhật không thành công!";
+            }
+            return View(loaiGhe);
+        }
+
+        public ActionResult DeleteSeatType(int? id)
+        {
+            if (db.ghe_ngoi.Where(n => n.loai_ghe_id == id && n.phong_chieu.status != 0).ToList().Count() == 0)
+            {
+                loai_ghe loaiGhe = db.loai_ghe.Find(id);
+                db.loai_ghe.Remove(loaiGhe);
+                TempData["Message"] = "Xóa thành công!";
+                db.SaveChanges();
+                return RedirectToAction("CinemaList");
+            }
+            else
+            {
+                TempData["Error"] = "Không thể xóa vì loại ghế đang tồn tại trong rạp chiếu!";
+                return RedirectToAction("CinemaList");
+            }
+        }
+
     }
+
 }

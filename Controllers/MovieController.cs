@@ -64,7 +64,7 @@ namespace CinemaBooking.Controllers
             {
                 var check = db.list_phim_theloai.Where(x => x.id_theloai == category);
                 List<phim> phims = new List<phim>();
-                foreach(var item in check)
+                foreach (var item in check)
                 {
                     phims.Add(db.phims.Find(item.id_phim));
                 }
@@ -122,7 +122,7 @@ namespace CinemaBooking.Controllers
                     {
                         return RedirectToAction("Error404", "Home");
                     }
-                    if (checkfilm.loai_phim_chieu != 1 || checkfilm.status !=1)
+                    if (checkfilm.loai_phim_chieu != 1 || checkfilm.status != 1)
                     {
                         return RedirectToAction("Error404", "Home");
                     }
@@ -391,7 +391,7 @@ namespace CinemaBooking.Controllers
                     return RedirectToAction("Error404", "Home");
                 }
 
-                if(checkfilm.status != 1 || checkfilm.loai_phim_chieu!=1)
+                if (checkfilm.status != 1 || checkfilm.loai_phim_chieu != 1)
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
                     return RedirectToAction("Error404", "Home");
@@ -411,7 +411,7 @@ namespace CinemaBooking.Controllers
                 ViewBag.tenphim = checkfilm;
                 phong_chieu phongChieu = db.phong_chieu.Find(idsc.phong_chieu_id);
                 ViewBag.pc = phongChieu;
-                var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id).OrderBy(x => x.Row);
+                var ghengoi = db.ghe_ngoi.Where(x => x.phong_chieu_id == phongChieu.id && x.status == 1).OrderBy(x => x.Row);
                 ViewBag.ghe = ghengoi;
                 ViewBag.idtime = idtime;
                 ViewBag.idsc = id;
@@ -520,7 +520,7 @@ namespace CinemaBooking.Controllers
             }
             //tính tiền
             decimal? price = 0;
-            foreach(var i in idghe)
+            foreach (var i in idghe)
             {
                 var priceghe = db.ghe_ngoi.Find(Convert.ToInt32(i));
                 price += (priceghe.gia + priceghe.loai_ghe.phu_thu);
