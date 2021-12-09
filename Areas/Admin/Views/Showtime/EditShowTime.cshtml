@@ -138,7 +138,7 @@
             loadRoom(idr, idpc);
             $('#cinema').change(function () {
                 var id = $("#cinema option:selected").val();
-                loadRoom(id);
+                loadRoombyCinema(id);
             });
             function loadRoom(id, idpc) {
                 $.ajax({
@@ -163,6 +163,31 @@
                     }
                 })
             }
+
+            function loadRoombyCinema(id, idpc) {
+                $.ajax({
+                    url: '/Showtime/RoomOfCinema/',
+                    type: 'GET',
+                    data: {
+                        id: id,
+                        idphong: idpc
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var idr = res.idroom;
+                            var name = res.roomname;
+                            var html = "";
+                            for (let i = 0; i < res.count; i++) {
+                                html += '<option value="' + idr[i] + '">' + name[i] + '</option>';
+                            }
+                            $('#phong_chieu_id').html(html);
+
+                            $('#EditTime').modal('show');
+                        }
+                    }
+                })
+            }
+
         });
     </script>
 

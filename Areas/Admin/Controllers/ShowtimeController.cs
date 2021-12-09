@@ -172,6 +172,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
             ViewBag.rapchieu = db.rap_chieu.ToList();
             if (ModelState.IsValid)
             {
+                //// check xem có sửa gì không nếu không thì trả về
+                //suat_chieu sccc = db.suat_chieu.Find(suatChieu.id);
+                //if (sccc.ngay_chieu == suatChieu.ngay_chieu && sccc.phim_id == suatChieu.phim_id && sccc.phong_chieu_id == suatChieu.phong_chieu_id 
+                //    && sccc.id == suatChieu.id)
+                //{
+                //    TempData["Message"] = "Bạn đã chưa thay đổi gì khi sửa suất chiếu!";
+                //    return RedirectToAction("ListShowTime");
+                //}
+
                 var phim = db.phims.Find(suatChieu.phim_id);
                 if (phim == null)
                 {
@@ -182,6 +191,18 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     TempData["Warning"] = "Đã xảy ra lỗi! Phim này chưa công chiếu hoặc đã bị ẩn";
                     return RedirectToAction("ListShowTime");
                 }
+
+                var pccc = db.phong_chieu.Find(suatChieu.phong_chieu_id);
+                if (pccc == null)
+                {
+                    return RedirectToAction("AError404", "Admin");
+                }
+                if (pccc.status != 1)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi! phòng chiếu này chưa hoạt động hoặc không có";
+                    return RedirectToAction("ListShowTime");
+                }
+
 
                 // không cho đặt suất chiếu ngày hiện tại Hoặc đặt suất chiếu trước 10 ngày
                 string now = (DateTime.Now).ToString("dd/MM/yyyy");
@@ -196,9 +217,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     return RedirectToAction("ListShowTime");
                 }
 
-                //check lại nếu có suất chiếu trùng ngày + trùng phòng (cùng rạp) => không cho tạo
+                //check lại nếu có suất chiếu trùng ngày + trùng phòng (cùng rạp) => không cho sửa lại(không tính chính nó)
                 var checksc = db.suat_chieu.Where(x => x.phim_id == suatChieu.phim_id && x.ngay_chieu == suatChieu.ngay_chieu
-                                                        && x.phong_chieu_id == suatChieu.phong_chieu_id).Count();
+                                                        && x.phong_chieu_id == suatChieu.phong_chieu_id && x.id != suatChieu.id).Count();              
                 if (checksc != 0)
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 suất chiếu giống suất chiếu này. Vui lòng kiểm tra lại!";
@@ -223,7 +244,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (id == null)
             {
                 return Json(new { succes = false });
-            }
+            }            
             List<int> idroom = new List<int>();
             List<string> roomname = new List<string>();
             if (id == 0)
@@ -235,7 +256,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
 
 
-                var room = db.phong_chieu.Where(n => n.id_rapchieu == id).ToList();
+                var room = db.phong_chieu.Where(n => n.id_rapchieu == id&& n.status == 1).ToList();
                 foreach (var item in room)
                 {
                     idroom.Add(item.id);
@@ -246,7 +267,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             else
             {
-                var room = db.phong_chieu.Where(n => n.id_rapchieu == id).ToList();
+                var room = db.phong_chieu.Where(n => n.id_rapchieu == id && n.status == 1).ToList();
                 foreach (var item in room)
                 {
                     if (item.id != idphong)

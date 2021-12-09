@@ -492,6 +492,7 @@
     <Content Include="images\seattype\seat-normal.png" />
     <Content Include="images\seattype\seat-yellow.png" />
     <Content Include="images\seattype\seat01-redd.png" />
+    <Content Include="images\seattype\seat01-yellow.png" />
     <Content Include="images\seattype\seat01.png" />
     <Content Include="images\Ảnh loại ghế\seat01-blue.png" />
     <Content Include="images\Ảnh loại ghế\seat01-orange.png" />
