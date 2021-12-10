@@ -67,22 +67,32 @@
                 @*<i class="fas fa-user"></i><span>Sign in</span>*@
                 <!--</a>
                 </div>-->
+
                 <div class="checkout-widget checkout-contact">
                     <h5 class="title">Thông tin tài khoản thanh toán</h5>
                     <form class="checkout-contact-form">
                         <div class="form-group">
+                            <label style="font-weight:bold">Tên:</label>
                             <input type="text" placeholder="Tên" value="@kh.ho_ten" readonly>
                         </div>
                         <div class="form-group">
+                            <label style="font-weight:bold">Email:</label>
                             <input type="text" placeholder="Mail" value="@kh.email" readonly>
                         </div>
                         <div class="form-group">
+                            <label style="font-weight:bold">Số điện thoại:</label>
                             <input type="text" placeholder="sdt" readonly value="@kh.sdt">
                         </div>
-                        @*                        <div class="form-group">
-                                <input type="submit" value="Continue" class="custom-button">
-                            </div>*@
+
+
+
+
                     </form>
+
+                    @*                        <div class="form-group">
+                            <input type="submit" value="Continue" class="custom-button">
+                        </div>*@
+
                 </div>
                 @*<div class="checkout-widget checkout-contact">
                         <h5 class="title">Promo Code </h5>
@@ -140,23 +150,34 @@
                     <h4 class="title">Hóa đơn</h4>
                     <ul>
                         <li>
-                            <h6 class="subtitle">@Model.phim.ten_phim</h6>
-                            <span class="info">Ngôn ngữ: @Model.phim.ngon_ngu</span>
-                            <span class="info">Thời lượng: @Model.phim.thoi_luong phút</span>
+                            <h6 class="subtitle"><span> Phim: @Model.phim.ten_phim</span>  </h6>
+                            <div class="info"><span>Thời lượng: @Model.phim.thoi_luong phút </span></div>
                         </li>
                         <li>
-                            <h6 class="subtitle"><span>Phòng chiếu: @Model.phong_chieu.ten_phong</span></h6>
-                            <div class="info"><span>Thời gian bắt đầu: @time.Time </span></div>
-                            <div class="info"><span>Ngày: @Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}") </span></div>
-                        </li>
-                        <li>
-                            @*<h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 VNĐ</span></h6>*@
+                            <h6 class="subtitle"><span>Rạp: @Model.phong_chieu.rap_chieu.ten_rap</span></h6>
+                            <div class="info"><span>Phòng: @Model.phong_chieu.ten_phong</span></div>
+                            <div class="info"><span>@Html.FormatValue(@Model.ngay_chieu, "{0:dddd, dd/MM/yyyy}") - @time.Time</span></div>
                         </li>
                     </ul>
+                    @*<ul>
+                            <li>
+                                <h6 class="subtitle">@Model.phim.ten_phim</h6>
+                                <span class="info">Ngôn ngữ: @Model.phim.ngon_ngu</span>
+                                <span class="info">Thời lượng: @Model.phim.thoi_luong phút</span>
+                            </li>
+                            <li>
+                                <h6 class="subtitle"><span>Phòng chiếu: @Model.phong_chieu.ten_phong</span></h6>
+                                <div class="info"><span>Thời gian bắt đầu: @time.Time </span></div>
+                                <div class="info"><span>Ngày: @Html.FormatValue(@Model.ngay_chieu, "{0:dd/MM/yyyy}") </span></div>
+                            </li>
+                            <li>
+                                <h6 class="subtitle mb-0"><span>Giá vé</span><span>75,000 VNĐ</span></h6>
+                            </li>
+                        </ul>*@
                     <ul class="side-shape">
                         <li>
-                            <h6 class="subtitle"><span>Số lượng</span><span></span></h6>
-                            <span class="info"><span>@sl vé</span></span>
+                            <h6 class="subtitle"><span>Số lượng: @sl vé</span></h6>
+
                         </li>
                         <li>
                             <h6 class="subtitle">
@@ -182,13 +203,24 @@
                                 </span>
                             </h6>
                         </li>
+
+                        @foreach (var idghengoi in ghengoi)
+                        {
+                            var id = Convert.ToInt32(idghengoi);
+                            var giaghe = db.ghe_ngoi.Find(id);
+                            <li>
+                                <h6 class="info"><span>Ghế @giaghe.Row@giaghe.Col </span>@Html.Raw(String.Format("{0:0,0} VNĐ", giaghe.gia))</h6>
+                            </li>
+                        }
+
+
                     </ul>
-                    <ul>
-                        <li>
-                            <span class="info"><span>Tổng tiền</span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @ViewBag.giatien))</span></span>
-                            @*<span class="info"><span>vat</span><span>$15</span></span>*@
-                        </li>
-                    </ul>
+                    @*<ul>
+                            <li>
+                                <span class="info"><span>Tổng tiền</span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @ViewBag.giatien))</span></span>
+                                <span class="info"><span>vat</span><span>$15</span></span>
+                            </li>
+                        </ul>*@
                 </div>
                 <div class="proceed-area  text-center">
                     @*₫*@

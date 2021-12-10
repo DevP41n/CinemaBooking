@@ -93,7 +93,7 @@
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                                if (item.status == 1)
+                                                if (item.status == 1 || item.status == 2)
                                                 {
                                             <tr>
                                                 <td>
@@ -116,7 +116,7 @@
                                                     @Html.DisplayFor(modelItem => item.thoi_luong) Phút
                                                 </td>
                                                 <td>
-                                                    @Html.FormatValue(item.ngay_cong_chieu, "{0:MM/dd/yyyy}")
+                                                    @Html.FormatValue(item.ngay_cong_chieu, "{0:dd/MM/yyyy}")
                                                 </td>
                                                 <td>
                                                     <label class="switch">
@@ -224,10 +224,10 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.thoi_luong)
+                                                    @Html.DisplayFor(modelItem => item.thoi_luong) phút
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ngay_cong_chieu)
+                                                    @Html.FormatValue(item.ngay_cong_chieu, "{0:dd/MM/yyyy}")
                                                 </td>
                                                 <td>
                                                     <label class="switch">

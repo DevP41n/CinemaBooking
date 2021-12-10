@@ -147,8 +147,12 @@ namespace CinemaBooking.Controllers
             }
             db.Configuration.ValidateOnSaveEnabled = false;
             kh.update_at = DateTime.Now;
+
             db.Entry(kh).State = EntityState.Modified;
             db.SaveChanges();
+            Session["TenCus"] = kh.ho_ten;
+            Session["EmailCus"] = kh.email;
+            Session["SDT"] = kh.sdt;
             TempData["Message"] = "Cập nhật thành công!";
 
             string url = "/TransHistory/" + kh.id;
@@ -169,7 +173,16 @@ namespace CinemaBooking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ChangePass(khach_hang kh, FormCollection f)
         {
+
             var mkc = Request.Form["mkcu"];
+            var mkm = Request.Form["mkmoi"];
+            var xnmk = Request.Form["xnmk"];
+            if (mkc == "" || mkm == "" || xnmk == "")
+            {
+                string urlaz = "/TransHistory/" + kh.id;
+                TempData["Warning"] = "Không được để trống!";
+                return RedirectToAction(urlaz);
+            }
             var mkcuu = MyString.ToMD5(mkc);
             if (ModelState.IsValid)
             {
@@ -196,6 +209,7 @@ namespace CinemaBooking.Controllers
             TempData["Message"] = "Đổi mật khẩu thành công!";
             string url = "/TransHistory/" + kh.id;
             return RedirectToAction(url);
+
         }
         public ActionResult Logout()
         {

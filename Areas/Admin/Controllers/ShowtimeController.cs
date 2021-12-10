@@ -97,12 +97,12 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     return RedirectToAction("CreateShowTime");
                 }
                 //check lại nếu có suất chiếu trùng ngày + trùng phòng (cùng rạp) => không cho tạo
-
+                var rc = db.phong_chieu.Find(suatChieu.phong_chieu_id);
                 var checksc = db.suat_chieu.Where(x => x.phim_id == suatChieu.phim_id && x.ngay_chieu == suatChieu.ngay_chieu
-                                                        && x.phong_chieu_id == suatChieu.phong_chieu_id).Count();
-                if(checksc !=0)
+                                                        && x.phong_chieu.rap_chieu.id == rc.rap_chieu.id && x.status != 0).Count();
+                if (checksc != 0)
                 {
-                    TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 suất chiếu giống suất chiếu này. Vui lòng kiểm tra lại!";
+                    TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 suất chiếu tại rạp này. Vui lòng kiểm tra lại!";
                     return View();
                 }
 
@@ -218,11 +218,12 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 }
 
                 //check lại nếu có suất chiếu trùng ngày + trùng phòng (cùng rạp) => không cho sửa lại(không tính chính nó)
+                var rc = db.phong_chieu.Find(suatChieu.phong_chieu_id);
                 var checksc = db.suat_chieu.Where(x => x.phim_id == suatChieu.phim_id && x.ngay_chieu == suatChieu.ngay_chieu
-                                                        && x.phong_chieu_id == suatChieu.phong_chieu_id && x.id != suatChieu.id).Count();              
+                                                        && x.phong_chieu.rap_chieu.id == rc.rap_chieu.id && x.status != 0 && x.id != suatChieu.id).Count();
                 if (checksc != 0)
                 {
-                    TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 suất chiếu giống suất chiếu này. Vui lòng kiểm tra lại!";
+                    TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 suất chiếu tại rạp này. Vui lòng kiểm tra lại!";
                     return RedirectToAction("ListShowTime");
                 }
 
@@ -244,7 +245,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (id == null)
             {
                 return Json(new { succes = false });
-            }            
+            }
             List<int> idroom = new List<int>();
             List<string> roomname = new List<string>();
             if (id == 0)
@@ -256,7 +257,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
 
 
-                var room = db.phong_chieu.Where(n => n.id_rapchieu == id&& n.status == 1).ToList();
+                var room = db.phong_chieu.Where(n => n.id_rapchieu == id && n.status == 1).ToList();
                 foreach (var item in room)
                 {
                     idroom.Add(item.id);

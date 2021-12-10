@@ -190,6 +190,16 @@
                         <ul class="seat--area" style="width: calc(70% - 60 px );margin-top:30px; margin-bottom:-50px">
                             <li class="front-seat">
                                 <ul>
+
+                                    <li class="single-seat" style="margin:5px;text-align:center">
+                                        <img src="~/Frontend/Client/assets/images/movie/seat01.png" alt="seat" style="width:29px;height:27px">
+                                        <figure style="font-size:13px">Ghế đã được đặt</figure>
+                                    </li>
+
+                                    <li class="single-seat" style="margin:5px;text-align:center">
+                                        <img src="~/Frontend/Client/assets/images/movie/seat01-booked.png" alt="seat" style="width:29px;height:27px">
+                                        <figure style="font-size:13px">Ghế đang chọn</figure>
+                                    </li>
                                     @foreach (var loaig in ViewBag.loaighe)
                                     {
                                         <li class="single-seat" style="margin:5px;text-align:center">
@@ -197,10 +207,6 @@
                                             <figure style="font-size:13px">@loaig.ten_ghe</figure>
                                         </li>
                                     }
-                                    @*<li class="single-seat" style="margin-right:5px;text-align:center">
-                                            <img src="~/images/seattype/seat-normal.png" alt="seat" style="width:29px;height:27px">
-                                            <figure>Ghế thường</figure>
-                                        </li>*@
 
                                 </ul>
                             </li>
