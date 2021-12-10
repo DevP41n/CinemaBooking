@@ -16,12 +16,20 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //list phim
         public ActionResult ListMovie()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             ViewBag.trash = db.phims.Where(m => m.status == 0).Count();
             return View(db.phims.OrderByDescending(m => m.id).ToList());
         }
         //Tạo phim mới
         public ActionResult CreateMovie()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             ViewBag.the_loai_phim_id = new SelectList(db.the_loai_phim.ToList().OrderBy(n => n.id), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList().OrderBy(n => n.id), "id", "ho_ten");
@@ -97,7 +105,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
         }
         //Edit phim mới
         public ActionResult EditMovie(int? id)
-        {
+        { 
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             ViewBag.the_loai_phim_id = new MultiSelectList(db.the_loai_phim.ToList(), "id", "ten_the_loai");
             ViewBag.dao_dien_id = new SelectList(db.dao_dien.ToList().OrderBy(n => n.id), "id", "ho_ten");
             ViewBag.dien_vien_id = new SelectList(db.dien_vien.ToList(), "id", "ho_ten");
@@ -105,7 +117,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
             phim Phim = db.phims.Find(id);
             if (Phim == null)
             {
-                return RedirectToAction("ListMovie", "Movie");
+                return RedirectToAction("AError404", "Admin");
+            }
+
+            var checkstime = db.suat_chieu.Where(x => x.phim_id == id && x.status != 0).Count();
+            if (checkstime != 0)
+            {
+                TempData["Warning"] = "Hiện tại phim này còn suất chiếu! không thể sửa";
+                return RedirectToAction("ListMovie");
             }
             return View(Phim);
         }
@@ -234,11 +253,22 @@ namespace CinemaBooking.Areas.Admin.Controllers
         }
         public ActionResult DelToTrash(int? id)
         {
-            //if (Session["HoTen"] == null)
-            //{
-            //    return RedirectToAction("Login", "Auth");
-            //}
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            if(id == null || id<1)
+            {
+                return RedirectToAction("AError404", "Admin");
+            }
             phim Phim = db.phims.Find(id);
+            var checkstime = db.suat_chieu.Where(x => x.phim_id == id && x.status != 0).Count();
+            if (checkstime != 0)
+            {
+                TempData["Warning"] = "Hiện tại phim này còn suất chiếu!";
+                return RedirectToAction("ListMovie");
+            }
             Phim.status = 0;
 
             Phim.update_at = DateTime.Now;
@@ -251,10 +281,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult Undo(int? id)
         {
-            //if (Session["HoTen"] == null)
-            //{
-            //    return RedirectToAction("Login", "Auth");
-            //}
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             phim Phim = db.phims.Find(id);
             Phim.status = 2;
 
@@ -271,10 +301,23 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // POST: Admin/Product/Delete/5
         public ActionResult DeleteConfirmed(int id)
         {
-            //if (Session["HoTen"] == null)
-            //{
-            //    return RedirectToAction("Login", "Auth");
-            //}
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            phim Phim = db.phims.Find(id);
+            if (Phim == null)
+            {
+                return RedirectToAction("AError404", "Admin");
+            }
+
+            var checkstime = db.suat_chieu.Where(x => x.phim_id == id && x.status != 0).Count();
+            if (checkstime != 0)
+            {
+                TempData["Warning"] = "Đã xảy ra lỗi không thể xóa !";
+                return RedirectToAction("ListMovie");
+            }
             var list = db.list_phim_theloai.Where(x => x.id_phim == id).ToList() ;
             foreach (list_phim_theloai item in list)
             {
@@ -287,8 +330,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 db.list_phim_dienvien.Remove(item1);
                 db.SaveChanges();
             }
-            phim Phim = db.phims.Find(id);
-            db.phims.Remove(Phim);
+            // cho nó khỏi hiện thị lên. Xóa là lỗi
+            Phim.status = 10;
+            db.Entry(Phim).State = EntityState.Modified;
             TempData["Message"] = "Xóa thành công!";
             db.SaveChanges();
             return RedirectToAction("ListMovie");
@@ -297,6 +341,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // Danh sách thể loại phim
         public ActionResult ListCate()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             //Gọi danh sách thể loại từ bảng thể loại phim và sắp xếp tăng dần theo id
             return View(db.the_loai_phim.OrderByDescending(m => m.id));
         }
@@ -304,12 +352,20 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Thêm thể loại phim
         public ActionResult CreateCate()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateCate(the_loai_phim TheLoai)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             String strSlug = MyString.ToAscii(TheLoai.ten_the_loai); // Tạo slug cho tên thể loại phim
             TheLoai.slug = strSlug;
             TheLoai.create_at = DateTime.Now;
@@ -323,6 +379,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Sửa thể loại
         public ActionResult EditCate(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             the_loai_phim TheLoai = db.the_loai_phim.Find(id);
             if (TheLoai == null)
             {
@@ -355,6 +415,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Xóa thể loại
         public ActionResult DeleteCate(int id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             //Tìm kiếm id thể loại phim có tồn tại trong phim nào không
             var del = from dele in db.list_phim_theloai
                       where dele.id_theloai == id
@@ -380,12 +444,20 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Đánh giá nội dung phim
         public ActionResult ListContentRating()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             return View(db.content_rating.OrderByDescending(m => m.ID));
         }
 
         //Thêm loại
         public ActionResult CreateContentRating()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             return View();
         }
 
@@ -414,6 +486,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Sửa loại đánh giá nội dung
         public ActionResult EditContentRating(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             content_rating ctRating = db.content_rating.Find(id);
             if (ctRating == null)
             {
@@ -443,6 +519,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Xóa loại đánh giá nội dung
         public ActionResult DeleteContentRating(int id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             var del = from dele in db.phims
                       where dele.id_content_rating == id
                       select dele;

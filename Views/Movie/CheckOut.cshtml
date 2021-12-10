@@ -38,15 +38,15 @@
             </div>
             <div class="item date-item">
                 @*<span  style="    font-size: 40px;
-                 font-weight: 600;
-                 background: #15236e;
-                 padding: 15px;
-                 border-radius: 7px;
-                 text-transform: uppercase;"> 
-                    Thanh toán</span>*@
+                    font-weight: 600;
+                    background: #15236e;
+                    padding: 15px;
+                    border-radius: 7px;
+                    text-transform: uppercase;">
+                       Thanh toán</span>*@
             </div>
-                <div class="item">
-                </div>
+            <div class="item">
+            </div>
         </div>
     </div>
 </section>
@@ -59,14 +59,14 @@
         <div class="row">
             <div class="col-lg-8">
                 <!--<div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
-            <div class="title-area">
-                <h5 class="title">Already a Boleto  Member?</h5>
-                <p>Sign in to earn points and make booking easier!</p>
-            </div>
-            <a href="#0" class="sign-in-area">-->
+                <div class="title-area">
+                    <h5 class="title">Already a Boleto  Member?</h5>
+                    <p>Sign in to earn points and make booking easier!</p>
+                </div>
+                <a href="#0" class="sign-in-area">-->
                 @*<i class="fas fa-user"></i><span>Sign in</span>*@
                 <!--</a>
-            </div>-->
+                </div>-->
                 <div class="checkout-widget checkout-contact">
                     <h5 class="title">Thông tin tài khoản thanh toán</h5>
                     <form class="checkout-contact-form">
@@ -80,37 +80,37 @@
                             <input type="text" placeholder="sdt" readonly value="@kh.sdt">
                         </div>
                         @*                        <div class="form-group">
-                            <input type="submit" value="Continue" class="custom-button">
-                        </div>*@
+                                <input type="submit" value="Continue" class="custom-button">
+                            </div>*@
                     </form>
                 </div>
                 @*<div class="checkout-widget checkout-contact">
-                    <h5 class="title">Promo Code </h5>
-                    <form class="checkout-contact-form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Please enter promo code">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Verify" class="custom-button">
-                        </div>
-                    </form>
-                </div>*@
+                        <h5 class="title">Promo Code </h5>
+                        <form class="checkout-contact-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="Please enter promo code">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Verify" class="custom-button">
+                            </div>
+                        </form>
+                    </div>*@
 
                 <div class="checkout-widget checkout-card mb-0">
                     <h5 class="title">Phương thức thanh toán</h5>
                     <ul class="payment-option">
                         @*<li class="active">
-                            <a href="#0">
-                                <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
-                                <span>Credit Card</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#0">
-                                <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
-                                <span>Debit Card</span>
-                            </a>
-                        </li>*@
+                                <a href="#0">
+                                    <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
+                                    <span>Credit Card</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#0">
+                                    <img src="/Frontend/Client/assets/images/payment/card.png" alt="payment">
+                                    <span>Debit Card</span>
+                                </a>
+                            </li>*@
                         <li class="active" id="paypal">
                             <a style="width: 120px; align-content: center;">
                                 <img src="/Frontend/Client/assets/images/payment/paypal.png" alt="payment" style="width: 90px;">
@@ -128,7 +128,7 @@
 
                         <li class="" id="taiquay">
                             <a style="width:120px">
-                                <img src="~/Frontend/Client/assets/images/payment/storrreee.png" alt="payment"/>
+                                <img src="~/Frontend/Client/assets/images/payment/storrreee.png" alt="payment" />
                                 <span style="font-weight:bold">Thanh toán tại quầy</span>
                             </a>
                         </li>
@@ -190,7 +190,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="proceed-area  text-center">             @*₫*@
+                <div class="proceed-area  text-center">
+                    @*₫*@
                     <h6 class="subtitle"><span>Tổng: </span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", @ViewBag.giatien))</span></h6>
                     <a href="#0" class="custom-button back-button" id="confirm">Thanh toán</a>
                 </div>
@@ -220,25 +221,25 @@
 </form>
 
 @*<form style="display: none" action="/Movie/MomoPay" method="POST" id="Momo">
-    @{ var t = 0;
-    }
-    <input type="text" value="@foreach (var item in ghengoi)
-                                    {
-                                        t++;
-                                        var ph = ",";
-                                        if (t == sl)
+        @{ var t = 0;
+        }
+        <input type="text" value="@foreach (var item in ghengoi)
                                         {
-                                            @item
-                                        }
-                                        else
-                                        {
-                                            @item@ph
-                                        }
+                                            t++;
+                                            var ph = ",";
+                                            if (t == sl)
+                                            {
+                                                @item
+                                            }
+                                            else
+                                            {
+                                                @item@ph
+                                            }
 
-                                    }" id="idghe" name="idghe" />
-    <input type="text" value="@time.id" id="idtime" name="idtime" />
-    <input type="text" value="@Model.id" id="idsuatc" name="idsuatc" />
-</form>*@
+                                        }" id="idghe" name="idghe" />
+        <input type="text" value="@time.id" id="idtime" name="idtime" />
+        <input type="text" value="@Model.id" id="idsuatc" name="idsuatc" />
+    </form>*@
 
 @*<form style="display: none" action="/Movie/CreatePay" method="POST" id="hiddenformCreate">
         @{ var t = 0;
@@ -261,6 +262,18 @@
         <input type="text" value="@Model.id" id="idsuatch" />
     </form>*@
 <!-- ==========Movie-Section========== -->
+
+
+
+<div class="modal fade" id="load" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="spinner-border" role="status" style="margin:auto">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script>
         $(document).ready(function () {
@@ -279,7 +292,7 @@
                     document.getElementById('hiddenformwithpay').submit();
                 }
 
-
+                $('#load').modal('show');
                 //document.getElementById('hiddenformCreate').submit();
             });
 

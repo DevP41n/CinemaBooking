@@ -446,12 +446,13 @@ namespace CinemaBooking.Controllers
                 {
                     var idghe = db.order_details.Where(n => n.id_orders == item.id);
                     foreach (var i in idghe)
-                    {
+                    {                        
                         idghedd.Add((int)i.id_ghe);
                     }
                 }
 
                 ViewBag.idghedat = idghedd;
+                ViewBag.loaighe = db.loai_ghe.ToList();
                 return View(ghengoi);
             }
             catch (Exception)

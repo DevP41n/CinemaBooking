@@ -12,11 +12,11 @@
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two">
-               @* <h3 class="title">@ViewBag.tenphim.ten_phim</h3>
-                <div class="tags">
-                    <a>@ViewBag.tenphim.thoi_luong phút</a>
-                    <a>@ViewBag.tenphim.ngon_ngu</a>
-                </div>*@
+                @* <h3 class="title">@ViewBag.tenphim.ten_phim</h3>
+                    <div class="tags">
+                        <a>@ViewBag.tenphim.thoi_luong phút</a>
+                        <a>@ViewBag.tenphim.ngon_ngu</a>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="item">
                     @*<h5 class="title">05:00</h5>
-                    <p>Mins Left</p>*@
+                        <p>Mins Left</p>*@
                     <a class="bookseat-taskbar">Giờ chiếu: @ViewBag.giochieu</a>
                     <br />
                     <a class="bookseat-taskbar">Ngày @Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</a>
@@ -85,7 +85,7 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat3.loai_ghe.anh" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col"  data-gia="@seat3.gia" data-phuthu="@seat3.loai_ghe.phu_thu">
+                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat3.loai_ghe.anh" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col" data-gia="@seat3.gia" data-phuthu="@seat3.loai_ghe.phu_thu">
                                                                     <img src="~/images/seattype/@seat3.loai_ghe.anh" alt="seat" class="ghe-@seat3.Row@seat3.Col">
                                                                     <span class="sit-num">@seat3.Row@seat3.Col</span>
                                                                 </li>
@@ -184,6 +184,28 @@
                             </li>
                         }
                     }
+
+                    <!---test-->
+                    <li class="seat-line" style=" width: 50%; margin: auto;">
+                        <ul class="seat--area" style="width: calc(70% - 60 px );margin-top:30px; margin-bottom:-50px">
+                            <li class="front-seat">
+                                <ul>
+                                    @foreach (var loaig in ViewBag.loaighe)
+                                    {
+                                        <li class="single-seat" style="margin:5px;text-align:center">
+                                            <img src="~/images/seattype/@loaig.anh" style="width:29px;height:27px" alt="seat">
+                                            <figure style="font-size:13px">@loaig.ten_ghe</figure>
+                                        </li>
+                                    }
+                                    @*<li class="single-seat" style="margin-right:5px;text-align:center">
+                                            <img src="~/images/seattype/seat-normal.png" alt="seat" style="width:29px;height:27px">
+                                            <figure>Ghế thường</figure>
+                                        </li>*@
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -231,7 +253,7 @@
                 }
                 else {
                     $('#idgheinput').val($('#idgheinput').val() + "," + idghe);
-                }              
+                }
                 var id = "#" + tenghe;
                 var imgid = "." + "ghe-" + tenghe;
                 $(imgid).attr("src", "/Frontend/Client/assets/images/movie/seat01-booked.png");
@@ -270,7 +292,7 @@
                     }
                 }
                 else {
-                   var idghedadat = dataidghe.replace(idghen, '');
+                    var idghedadat = dataidghe.replace(idghen, '');
                 }
 
                 // sửa tên ghế
