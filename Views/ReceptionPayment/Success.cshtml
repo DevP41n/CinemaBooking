@@ -7,9 +7,11 @@
 @{ CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();
     var kh = @ViewBag.kh;
     var film = @ViewBag.film;
-    var ngaymua = @ViewBag.time;}
+    var ngaymua = @ViewBag.time;    
+    var time = db.TimeFrames.Find(Model.idtime);
+    var orderdetail = db.order_details.Where(n => n.id_orders == Model.id).ToList();    }
 
-<section class="page-title bg-one" style="margin-top:60px">
+@*<section class="page-title bg-one" style="margin-top:60px">
     <div class="container">
         <div class="page-title-area">
             <div class="item md-order-1">
@@ -17,7 +19,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 
 
 <div class="movie-facility padding-bottom padding-top">
@@ -27,6 +29,15 @@
 
         <div class="row">
             <div class="col-lg-8">
+                <div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between">
+                    <div class="title-area" style="width:650px">
+                        <h5 class="title">Quý khách vui lòng thanh toán trước @ViewBag.timetopay</h5>
+                        <p>Chúc quý khách có một buổi xem phim vui vẻ.</p>
+                    </div>
+                    <a href="#0" class="sign-in-area">
+                        <img src="/Frontend/Client/assets/images/logo/Logo-Hyper-Cinema-Booking.png" alt="logo" style="width:200px;height:80px">
+                    </a>                      
+                </div>
                 <div class="checkout-widget checkout-contact">
                     <h5 class="title">Thông tin tài khoản thanh toán</h5>
                     <form class="checkout-contact-form">
@@ -42,42 +53,98 @@
                             <label style="font-weight:bold">Số điện thoại:</label>
                             <input type="text" placeholder="sdt" readonly value="@kh.sdt">
                         </div>
+                        <div class="form-group">
+                            <label style="font-weight:bold">Phương thức thanh toán:</label>
+                            <input type="text" placeholder="sdt" readonly value="@Model.pay_method">
+                        </div>
+                        <div class="form-group">
+                            <div class="item ">
+                                <a href="@Url.Action("Index","Home")">
+                                    <input type="button" class="custom-button back-button" style="font-weight: 700; background-image: -webkit-linear-gradient( 169deg, #181e72 17%, #523a82 63%, #ef0d0da3 100%); width:100px " value="Trở về">
+                                </a>
+                            </div>
+                        </div>
                     </form>
 
                 </div>
 
-                <div class="checkout-widget checkout-contact">
-                    <a style="font-weight:bold;margin-bottom:10px;color:white" href="/Movie/MovieDetail/@film.slug">PHIM : @film.ten_phim</a>
-                    <a href="/Movie/MovieDetail/@film.slug"><img src="/images/movies/background/@film.anhbackground" alt="Alternate Text" class="img-thumbnail" /></a>
-                </div>
+
+                @*<div class="checkout-widget checkout-contact">
+            <a style="font-weight:bold;margin-bottom:10px;color:white" href="/Movie/MovieDetail/@film.slug">PHIM : @film.ten_phim</a>
+            <a href="/Movie/MovieDetail/@film.slug"><img src="/images/movies/background/@film.anhbackground" alt="Alternate Text" class="img-thumbnail" /></a>
+        </div>*@
             </div>
+            
 
 
+            @*<div class="col-lg-4">
+            <div class="booking-summery bg-one">
+                <h4 class="title">Thông tin Vé</h4>
+                <ul>
+                    <li>
+                        <img style="width: 200px; height: 200px; display: block; margin-left: auto; margin-right: auto;" src="@ViewBag.QrCodeUri" />
+                    </li>
+                    <li>
+                        <h6 class="subtitle">Ghế: @ViewBag.ghe</h6>
+                        <span class="info">Số lượng vé : @Model.so_luong_ve</span>
+                        <span class="info">Bạn cần phải thanh toán : @Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(Model.so_luong_ve) * 75000)))</span>
+                    </li>
+                </ul>
+                <ul class="side-shape">
+                    <li>
+
+                    </li>
+                    <li>
+                        <h6 class="subtitle">
+                            <span>
+                                Vị trí:
+                            </span>
+                        </h6>
+                    </li>
+                </ul>
+            </div>
+        </div>*@
             <div class="col-lg-4">
                 <div class="booking-summery bg-one">
-                    <h4 class="title">Vé</h4>
+                    <h4 class="title">Thông tin vé</h4>
                     <ul>
                         <li>
-                            <h6 class="subtitle">Ghế: @ViewBag.ghe</h6>
-                            <span class="info">Số lượng vé : @Model.so_luong_ve</span>
-                            <span class="info">Bạn cần phải thanh toán : @Html.Raw(String.Format("{0:0,0} ₫", @Math.Round(Convert.ToDouble(Model.so_luong_ve) * 75000)))</span>
+                            @*<h6 class="subtitle"><img style="width: 300px; height: 200px; display: block; margin-left: auto; margin-right: auto;" src="~/images/movies/background/@Model.phim.anhbackground" /></h6>*@
+                            <img style="width: 200px; height: 200px; display: block; margin-left: auto; margin-right: auto;" src="@ViewBag.QrCodeUri" />
+                            <br>
+
+                            <h6 class="subtitle"><span> Phim: @Model.ten_phim</span>  </h6>
+                            <div class="info"><span>Thời lượng: @Model.phim.thoi_luong phút </span></div>
                         </li>
                         <li>
-                            <img src="@ViewBag.QrCodeUri" class="img-thumbnail" />
+                            <h6 class="subtitle"><span>Rạp: @Model.phong_chieu.rap_chieu.ten_rap</span></h6>
+
+                            <div class="info"><span>@Html.FormatValue(@Model.suat_chieu.ngay_chieu, "{0:dddd, dd/MM/yyyy}") - @time.Time</span></div>
                         </li>
+                        <li>
+
+                        </li>
+
                     </ul>
                     <ul class="side-shape">
                         <li>
+                            <h6 class="subtitle"><span>Số lượng: @Model.so_luong_ve vé</span></h6>
 
                         </li>
                         <li>
-                            <h6 class="subtitle">
-                                <span>
-                                    Vị trí:
-                                </span>
-                            </h6>
+                            <h6 class="subtitle mb-0"><span>Vị trí: @ViewBag.ghe</span></h6>
                         </li>
+                        @foreach (var item in orderdetail)
+                        {
+                            <li>
+                                <h6 class="info"><span>Ghế @item.ghe_ngoi.Row@item.ghe_ngoi.Col </span>@Html.Raw(String.Format("{0:0,0} VNĐ", @item.ghe_ngoi.gia))</h6>
+                            </li>
+                        }
+
                     </ul>
+                </div>
+                <div class="proceed-area  text-center">
+                    <h6 class="subtitle"><span>Số tiền cần thanh toán:</span><span>@Html.Raw(String.Format("{0:0,0} VNĐ", Model.tong_tien))</span></h6>
                 </div>
             </div>
         </div>

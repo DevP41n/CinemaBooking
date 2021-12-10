@@ -293,13 +293,13 @@ namespace CinemaBooking.Controllers
                     var numrd = rd.Next(1, 1000000).ToString();
                     new SendMail().SendMailTo(kh.email.ToString(), "Xác nhận thanh toán [CINEMA" + numrd + "]", mail);
                     TempData["Message"] = "Thanh toán thành công!";
-                    return RedirectToAction("TransHistory", "User", new { id = kh.id });
+                    return RedirectToAction("PaySuccess", "Home", new { id = addorder.id });
                 }
                 catch (Exception)
                 {
 
                     TempData["Message"] = "Thanh toán thành công!";
-                    return RedirectToAction("TransHistory", "User", new { id = kh.id });
+                    return RedirectToAction("PaySuccess", "Home", new { id = addorder.id });
                 }
 
             }

@@ -225,6 +225,7 @@ namespace CinemaBooking.Controllers
             ViewBag.ghe = dayghe;
             TimeSpan tinhgio = new TimeSpan(0, 15, 0); // 15 phút
             var tinhthem = ord.ngay_mua + tinhgio;
+            ViewBag.timetopay = Convert.ToDateTime(tinhthem).ToString("HH:mm");
             ViewBag.time = Convert.ToDateTime(tinhthem).ToString("MM/dd/yyyy HH:mm:ss");
             return View(ord);
         }
