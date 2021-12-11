@@ -52,14 +52,14 @@
                                 }
                                 <li>
                                     <div class="blog-thumb">
-                                        <a href="@Url.Action("NewsDetail","News", new {id=item.id })">
+                                        <a href="@Url.Action("NewsDetail","News", new {slug=item.slug })">
                                             <img src="~/images/news/@item.anh" alt="sukien">
                                         </a>
                                     </div>
                                     <div class="blog-thumb-info">
                                         <span>@item.create_at</span>
                                         <h6 class="title">
-                                            <a href="@Url.Action("NewsDetail","News", new {id=item.id })" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                            <a href="@Url.Action("NewsDetail","News", new {slug=item.slug })" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                                 @item.tieu_de
                                             </a>
                                         </h6>
