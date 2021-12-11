@@ -156,7 +156,7 @@
                                             <a href="@Url.Action("MovieDetail","Movie", new { id=movie.slug })" class="title-movie-home overflow-text-2">@movie.ten_phim</a>
                                         </h5>
                                         <ul class="movie-rating-percent" style="padding: 5px 0px;">
-                                            <li style=" margin-left: auto;">
+                                            <li style=" margin: auto;">
                                                 <span class="content">Công chiếu: @Html.FormatValue(movie.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                             </li>
                                         </ul>
@@ -195,7 +195,7 @@
                                             <a href="@Url.Action("MovieDetail","Movie", new { id=moviesoon.slug })" class="title-movie-home overflow-text-2">@moviesoon.ten_phim</a>
                                         </h5>
                                         <ul class="movie-rating-percent">
-                                            <li style=" margin-left: auto;">
+                                            <li style=" margin: auto;">
                                                 <span class="content">@Html.FormatValue(moviesoon.ngay_cong_chieu, "{0:dd/MM/yyyy}")</span>
                                             </li>
                                         </ul>
@@ -239,7 +239,7 @@
                             <div class="item">
                                 <div class="event-grid">
                                     <div class="movie-thumb c-thumb">
-                                        <a href="@Url.Action("NewsDetail","News", new {id = item.id })">
+                                        <a href="@Url.Action("NewsDetail","News", new {slug = item.slug })">
                                             <img src="~/images/news/@item.anh" alt="event" height="345" style="">
                                         </a>
                                         @*<div class="event-date">
@@ -249,7 +249,7 @@
                                     </div>
                                     <div class="movie-content bg-one">
                                         <h5 class="title m-0" style="padding: 13px 0px;">
-                                            <a href="@Url.Action("NewsDetail","News", new {id = item.id })" class="title-movie-home overflow-text-2" >@item.tieu_de</a>
+                                            <a href="@Url.Action("NewsDetail","News", new {slug = item.slug })" class="title-movie-home overflow-text-2" >@item.tieu_de</a>
                                         </h5>
                                         @*<div class="movie-rating-percent" style="padding: 5px 0px;">
                                             <span style="margin-left: auto;">@Html.FormatValue(item.create_at, "{0:dd/MM/yyyy}")</span>

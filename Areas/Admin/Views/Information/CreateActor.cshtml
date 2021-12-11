@@ -10,7 +10,7 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Tin tức</h4>
+                        <h4 class="font-size-18">Diễn viên</h4>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
                             <li class="breadcrumb-item active">Tạo mới</li>
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <div class="float-right d-none d-md-block">
+                   @* <div class="float-right d-none d-md-block">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-settings mr-2"></i> Settings
@@ -32,7 +32,7 @@
                                 <a class="dropdown-item" href="#">Separated link</a>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <!-- end page title -->
@@ -70,13 +70,13 @@
                                         @Html.ValidationMessageFor(model => model.quoc_tich, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                @*<div class="form-group row">
                                     <label>Chiều cao</label>
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.chieu_cao, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.chieu_cao, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="form-group row">
                                     <label>Ngày sinh</label>
                                     <div class="col-md-10">
@@ -84,13 +84,13 @@
                                         @Html.ValidationMessageFor(model => model.ngay_sinh, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                @*<div class="form-group row">
                                     <label>Chi tiết</label>
                                     <div class="col-md-10">
                                         @Html.TextAreaFor(model => model.chi_tiet, new { @class = "form-control", @id = "chitietsanpham" })
                                         @Html.ValidationMessageFor(model => model.chi_tiet, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="form-group row">
                                     <label>Ảnh</label>
                                     <div class="col-md-10">

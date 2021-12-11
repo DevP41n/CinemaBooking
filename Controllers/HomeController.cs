@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace CinemaBooking.Controllers
@@ -40,12 +41,13 @@ namespace CinemaBooking.Controllers
         {
             if (name == null || name == "")
             {
-                return RedirectToAction("Error404", "Home");
+                TempData["Error"] = "Hãy nhập từ khóa tìm kiếm!";
+                return RedirectToAction("Index", "Home");
             }
-            ViewBag.tukhoa = name;
+            ViewBag.tukhoa = name;  
             try
             {
-                return View(db.phims.Where(p => p.ten_phim.Contains(name)).OrderByDescending(x => x.ten_phim));
+                return View(db.phims.Where(p => p.ten_phim.Contains(name)).OrderByDescending(x => x.ngay_cong_chieu));
             }
             catch (Exception)
             {

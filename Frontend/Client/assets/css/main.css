@@ -9965,4 +9965,28 @@ aside {
     color: #ff2f2f;
 }
 
+.catemoviedetail {
+    margin-bottom: 0px;
+    color: #66b6ff;
+    font-weight: 600;
+}
+    .catemoviedetail::after {
+        content: ",";
+    }
+    .catemoviedetail:hover {
+        margin-bottom: 0px;
+        color: #b29405;
+        font-weight: 600;
+    }
+.catesymbolmoviedetail:last-child .catemoviedetail::after {
+    content: none;
+}
+.info2moviedetail {
+    margin-left: 5px;
+    font-weight: 600;
+    font-family: 'Open Sans';
+    color: #fd9393 !important;
+    font-style: italic;
+}
+
 /*# sourceMappingURL=main.css.map */

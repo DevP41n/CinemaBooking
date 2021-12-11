@@ -15,20 +15,20 @@ namespace CinemaBooking.Controllers
         public ActionResult Index(string title, int? page)
         {
             ViewBag.titleDisplay = title;
-            int pageSize = 3;
+            int pageSize = 6;
             int pageNumber = (page ?? 1);
             return View(db.su_kien.OrderByDescending(s => s.create_at).ToPagedList(pageNumber, pageSize));
         }
         // GET: News/NewsDetail
-        public ActionResult NewsDetail(int id)
+        public ActionResult NewsDetail(String slug)
         {
             try
             {
-                if (id < 0)
+                if (slug == null)
                 {
                     return RedirectToAction("Error404", "Home");
                 }
-                return View(db.su_kien.SingleOrDefault(s => s.id.Equals(id)));
+                return View(db.su_kien.SingleOrDefault(s => s.slug.Equals(slug)));
             }
             catch(Exception)
             {

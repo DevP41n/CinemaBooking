@@ -11,7 +11,7 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title-box">
-                        <h4 class="font-size-18">Tin tức</h4>
+                        <h4 class="font-size-18">Diễn viên</h4>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
                             <li class="breadcrumb-item active">Chỉnh Sửa</li>
@@ -26,7 +26,7 @@
                                 <i class="mdi mdi-settings mr-2"></i> Settings
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                @*<a class="dropdown-item" href="#">Something else here</a>*@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="@Url.Action("DeleteActorConfirmed", "Information", new { id = Model.id})">Xóa</a>
                             </div>
@@ -66,21 +66,21 @@
                                     @Html.EditorFor(model => model.quoc_tich, new { htmlAttributes = new { @class = "form-control " } })
                                     @Html.ValidationMessageFor(model => model.quoc_tich, "", new { @class = "text-danger" })
                                 </div>
-                                <label class="paddingadmin">Chiều cao</label>
+                                @*<label class="paddingadmin">Chiều cao</label>
                                 <div class="col-md-10 marginadmin">
                                     @Html.EditorFor(model => model.chieu_cao, new { htmlAttributes = new { @class = "form-control " } })
                                     @Html.ValidationMessageFor(model => model.chieu_cao, "", new { @class = "text-danger" })
-                                </div>
+                                </div>*@
                                 <label class="paddingadmin">Ngày sinh</label>
                                 <div class="col-md-10 marginadmin">
                                     @Html.EditorFor(model => model.ngay_sinh, new { htmlAttributes = new { @class = "form-control " } })
                                     @Html.ValidationMessageFor(model => model.ngay_sinh, "", new { @class = "text-danger" })
                                 </div>
-                                <label class="paddingadmin">Chi tiết</label>
+                                @*<label class="paddingadmin">Chi tiết</label>
                                 <div class="col-md-10 marginadmin">
                                     @Html.TextAreaFor(model => model.chi_tiet, new { @class = "form-control marrginadmin", @id = "chitietsanpham" })
                                     @Html.ValidationMessageFor(model => model.chi_tiet, "", new { @class = "text-danger" })
-                                </div>
+                                </div>*@
 
                                 <label class="paddingadmin">Ảnh</label>
                                 <div class="col-md-10 marginadmin">

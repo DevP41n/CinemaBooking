@@ -7,10 +7,8 @@
             $("#txtSearch").keyup(function () {
                 var searchField = $('#txtSearch').val();
                 var expression = RegExp(searchField, "i");
-
                 $('.tt-dataset').remove();
                 var data = JSON.parse(response);
-                data = data.slice(0, 7);
                 if (searchField != "") {
                     var html_body = ` <div class="tt-dataset tt-dataset-states"></div>`
                 } $('.tt-menu').append(html_body);
