@@ -55,22 +55,22 @@
                     <!-- LOGO -->
                     <div class="navbar-brand-box" style="background: #090e3c">
                         <a href="/"> <img src="~/Frontend/Client/assets/images/logo/Logo-Hyper-Cinema-Booking.png" alt="logo" style="width: -webkit-fill-available;"></a>
-                        <!--<a href="@Url.Action("Dashboard","Admin")" class="logo logo-dark">-->
-                            @*<span class="logo-sm">
-                <img src="~/images/logo/LOGO6.png" alt="" height="22">
-            </span>
-            <span class="logo-lg">
-                <img src="~/images/logo/LOGO6.png" alt="" height="17">
-            </span>*@
+                        <!--<a href="@Url.Action("Dashboard", "Admin")" class="logo logo-dark">-->
+                        @*<span class="logo-sm">
+                            <img src="~/images/logo/LOGO6.png" alt="" height="22">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="~/images/logo/LOGO6.png" alt="" height="17">
+                        </span>*@
                         <!--</a>
 
-                        <a href="@Url.Action("Dashboard","Admin")" class="logo logo-light">-->
-                            @*<span class="logo-sm">
-                <img src="~/images/logo/logo8.png" alt="" height="35">
-            </span>
-            <span class="logo-lg">
-                <img src="~/images/logo/LOGO6.png" alt="" height="50">
-            </span>*@
+                    <a href="@Url.Action("Dashboard", "Admin")" class="logo logo-light">-->
+                        @*<span class="logo-sm">
+                            <img src="~/images/logo/logo8.png" alt="" height="35">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="~/images/logo/LOGO6.png" alt="" height="50">
+                        </span>*@
                         <!--</a>-->
                     </div>
 
@@ -243,7 +243,7 @@
                             <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings font-size-17 align-middle mr-1"></i> Settings</a>
                             <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline font-size-17 align-middle mr-1"></i> Lock screen</a>*@
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="@Url.Action("Logout","Auth")"><i class="bx bx-power-off font-size-17 align-middle mr-1 text-danger"></i> Logout</a>
+                            <a class="dropdown-item text-danger" href="@Url.Action("Logout", "Auth")"><i class="bx bx-power-off font-size-17 align-middle mr-1 text-danger"></i> Logout</a>
                         </div>
                     </div>
 
@@ -256,7 +256,7 @@
                 </div>
             </div>
         </header>
-
+        @{var role = Convert.ToInt16(Session["Role"]);}
         <!-- ========== Left Sidebar Start ========== -->
         <div class="vertical-menu" style=" background: #090e3c;">
 
@@ -269,37 +269,44 @@
                         @*<li class="menu-title">Main</li>*@
 
                         <li>
-                            <a href="@Url.Action("Dashboard","Admin")" class="waves-effect">
+                            <a href="@Url.Action("Dashboard", "Admin")" class="waves-effect">
                                 <i class="fas fa-home"></i>@*<span class="badge badge-pill badge-primary float-right">2</span>*@
                                 <span>Dashboard</span>
                             </a>
                         </li>
+                        @if (role == 1)
+                        {
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-film"></i>
+                                    <span>Phim</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("ListMovie", "Movie")">Danh sách phim</a></li>
+                                    <li><a href="@Url.Action("ListCate", "Movie")">Danh sách thể loại</a></li>
+                                    <li><a href="@Url.Action("ListContentRating", "Movie")">Danh sách đánh giá phim</a></li>
+                                </ul>
+                            </li>
+                        }
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="fas fa-film"></i>
-                                <span>Phim</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListMovie","Movie")">Danh sách phim</a></li>
-                                <li><a href="@Url.Action("ListCate","Movie")">Danh sách thể loại</a></li>
-                                <li><a href="@Url.Action("ListContentRating","Movie")">Danh sách đánh giá phim</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="ti-home"></i>
-                                <span>Rạp chiếu/Suất chiếu</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("CinemaList","CinemaRoom")">Danh sách rạp chiếu</a></li>
-                                <li><a href="@Url.Action("ListCinemaRoom","CinemaRoom")">Danh sách phòng</a></li>
-                                <li><a href="@Url.Action("ListShowTime","Showtime")">Danh sách suất chiếu</a></li>
-                                <li><a href="@Url.Action("ListShowTimeFrame","Showtime")">Danh sách giờ chiếu</a></li>
-                                <li><a href="@Url.Action("ListSeatType","CinemaRoom")">Danh sách loại ghế</a></li>
-                            </ul>
+                        @if (role == 1)
+                        {
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="ti-home"></i>
+                                    <span>Rạp chiếu/Suất chiếu</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("CinemaList","CinemaRoom")">Danh sách rạp chiếu</a></li>
+                                    <li><a href="@Url.Action("ListCinemaRoom","CinemaRoom")">Danh sách phòng</a></li>
+                                    <li><a href="@Url.Action("ListShowTime","Showtime")">Danh sách suất chiếu</a></li>
+                                    <li><a href="@Url.Action("ListShowTimeFrame","Showtime")">Danh sách giờ chiếu</a></li>
+                                    <li><a href="@Url.Action("ListSeatType","CinemaRoom")">Danh sách loại ghế</a></li>
+                                </ul>
 
-                        </li>
+                            </li>
+                        }
+
 
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -307,7 +314,11 @@
                                 <span>Người dùng</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListUser","User")">Danh sách nhân viên</a></li>
+                                @if (role == 1)
+                                {
+                                    <li><a href="@Url.Action("ListUser","User")">Danh sách nhân viên</a></li>
+                                }
+
                                 <li><a href="@Url.Action("ListKH","User")">Danh sách người dùng</a></li>
                             </ul>
                         </li>
@@ -319,19 +330,23 @@
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="@Url.Action("ListFeedback","Feedback")">Danh sách feedback</a></li>
                             </ul>
-                        </li>                        
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="mdi mdi-newspaper"></i>
-                                <span>Thông Tin/Sự Kiện</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="@Url.Action("ListNews","News")">Danh Sách Tin Tức</a></li>
-                                <li><a href="@Url.Action("ListActor","Information")">Diễn viên</a></li>
-                                <li><a href="@Url.Action("ListDirector","Information")">Đạo diễn</a></li>
-                            </ul>
-
                         </li>
+                        @if (role == 1)
+                        {
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="mdi mdi-newspaper"></i>
+                                    <span>Thông Tin/Sự Kiện</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="@Url.Action("ListNews","News")">Danh Sách Tin Tức</a></li>
+                                    <li><a href="@Url.Action("ListActor","Information")">Diễn viên</a></li>
+                                    <li><a href="@Url.Action("ListDirector","Information")">Đạo diễn</a></li>
+                                </ul>
+
+                            </li>
+                        }
+
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fas fa-ticket-alt"></i>

@@ -42,6 +42,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     Session["HoTen"] = data.FirstOrDefault().ho_ten;
                     Session["Username"] = data.FirstOrDefault().username;
                     Session["Id"] = data.FirstOrDefault().id;
+                    Session["Role"] = data.FirstOrDefault().role;
                     var ten = Convert.ToString(Session["HoTen"]);
                     TempData["Message"] = "Đăng nhập thành công!</br>" + "Xin chào " + ten;
                     return RedirectToAction("Dashboard", "Admin");
