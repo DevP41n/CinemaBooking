@@ -96,7 +96,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     TempData["Warning"] = "Đã xảy ra lỗi! Phim này chưa công chiếu hoặc đã bị ẩn";
                     return RedirectToAction("CreateShowTime");
                 }
-       
+
+                //check ngày công chiếu với ngày chiếu
+                string ngaycongchieu = Convert.ToDateTime(phim.ngay_cong_chieu).ToString("dd/MM/yyyy");
+                if (phim.ngay_cong_chieu > suatChieu.ngay_chieu)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi! Ngày công chiếu phải từ " + ngaycongchieu + " trở đi" ;
+                    return RedirectToAction("CreateShowTime");
+                }
+
                 //check lại nếu có suất chiếu trùng ngày + trùng phòng (cùng rạp) => không cho tạo
                 var rc = db.phong_chieu.Find(suatChieu.phong_chieu_id);
                 var checksc = db.suat_chieu.Where(x => x.phim_id == suatChieu.phim_id && x.ngay_chieu == suatChieu.ngay_chieu
@@ -214,6 +222,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     return RedirectToAction("ListShowTime");
                 }
 
+
+                string ngaycongchieu = Convert.ToDateTime(phim.ngay_cong_chieu).ToString("dd/MM/yyyy");
+                //check ngày công chiếu với ngày chiếu
+                if (phim.ngay_cong_chieu > suatChieu.ngay_chieu)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi! Ngày công chiếu phải từ " + ngaycongchieu + " trở đi";
+                    return RedirectToAction("EditShowTime", new { id = suatChieu.id });
+                }
 
                 // không cho đặt suất chiếu ngày hiện tại Hoặc đặt suất chiếu trước 10 ngày
                 string now = (DateTime.Now).ToString("dd/MM/yyyy");
