@@ -42,7 +42,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 var loaighe = db.loai_ghe.OrderBy(x => x.phu_thu).FirstOrDefault();
                 string[] room = new string[5] { "A", "B", "C", "D", "E" };
                 ghe_ngoi ghe = new ghe_ngoi();
-                phongChieu.so_luong_cot = 10;
+                phongChieu.so_luong_cot = 50;
                 phongChieu.status = 1;
                 var checkopc = db.phong_chieu.Where(x => x.ten_phong == phongChieu.ten_phong && x.id_rapchieu == phongChieu.id_rapchieu).Count();
                 if (checkopc != 0)
