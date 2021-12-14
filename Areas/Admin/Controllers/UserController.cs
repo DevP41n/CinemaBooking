@@ -15,15 +15,37 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //list nhan vien
         public ActionResult ListUser()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             return View(db.users.OrderByDescending(m => m.id).ToList());
         }
         public ActionResult ListKH()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }          
             return View(db.khach_hang.OrderByDescending(m => m.create_at).ToList());
         }
         //Tạo nhan vien
         public ActionResult CreateUser()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             List<SelectListItem> gender = new List<SelectListItem>() {
             new SelectListItem {
                 Text = "Nam", Value = "true"
@@ -95,6 +117,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult EditUser(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             List<SelectListItem> roleUser = new List<SelectListItem>() {
             new SelectListItem {
                 Value = "1", Text = "Admin"
@@ -141,6 +172,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             //if (Session["HoTen"] == null)
             //{
             //    return RedirectToAction("Login", "Auth");

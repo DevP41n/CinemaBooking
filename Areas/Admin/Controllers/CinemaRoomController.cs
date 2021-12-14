@@ -18,6 +18,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             ViewBag.khd = db.phong_chieu.Where(x => x.status == 2).Count();
             return View(db.phong_chieu.OrderByDescending(m => m.id));
         }
@@ -28,6 +33,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             ViewBag.id_rapchieu = new SelectList(db.rap_chieu.ToList().OrderBy(n => n.id), "id", "ten_rap");
             return View();
@@ -81,6 +91,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             if (id == null || id < 1)
             {
@@ -152,6 +167,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             if (id == null || id < 1)
             {
                 return RedirectToAction("AError404", "Admin");
@@ -206,6 +226,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             if (id == null || id < 1)
             {
@@ -263,6 +288,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             if (id == null || id < 1)
             {
                 return RedirectToAction("AError404", "Admin");
@@ -300,6 +330,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             if (id == null || id < 1)
             {
@@ -572,6 +607,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             return View(db.rap_chieu.OrderByDescending(n => n.id).ToList());
         }
 
@@ -581,6 +621,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             return View();
         }
@@ -604,6 +649,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             if (id == null || id < 1)
             {
@@ -648,6 +698,20 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult DeleteCinema(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            if (id == null || id < 1)
+            {
+                return RedirectToAction("AError404", "Admin");
+            }
+
             if (db.phong_chieu.Where(n => n.id_rapchieu == id).ToList().Count() == 0)
             {
                 rap_chieu rapChieu = db.rap_chieu.Find(id);
@@ -670,6 +734,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             return View(db.loai_ghe.ToList().OrderBy(n => n.id));
         }
 
@@ -678,6 +747,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             return View();
         }
@@ -712,6 +786,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
             }
             if (id == null || id < 1)
             {
@@ -764,6 +843,19 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult DeleteSeatType(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            if (id == null || id < 1)
+            {
+                return RedirectToAction("AError404", "Admin");
+            }
             if (db.ghe_ngoi.Where(n => n.loai_ghe_id == id && n.phong_chieu.status != 0).ToList().Count() == 0)
             {
                 loai_ghe loaiGhe = db.loai_ghe.Find(id);

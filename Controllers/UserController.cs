@@ -119,7 +119,11 @@ namespace CinemaBooking.Controllers
 
         public ActionResult SignOut()
         {
-            Session.Clear();
+            Session["TenKH"] = null;
+            Session["TenCus"] = null;
+            Session["EmailCus"] = null;
+            Session["MaKH"] = null;
+            Session["SDT"] = null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -213,7 +217,11 @@ namespace CinemaBooking.Controllers
         }
         public ActionResult Logout()
         {
-            Session.Clear();
+            Session["TenKH"] = null;
+            Session["TenCus"] = null;
+            Session["EmailCus"] = null;
+            Session["MaKH"] = null;
+            Session["SDT"] = null;
             TempData["Message"] = "Đã đăng xuất!";
             return RedirectToAction("Index", "Home");
         }
