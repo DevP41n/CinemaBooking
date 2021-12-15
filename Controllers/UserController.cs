@@ -17,8 +17,22 @@ namespace CinemaBooking.Controllers
         private CinemaBookingEntities db = new CinemaBookingEntities();
         public static string urlpre = null;
         // GET: User
+        public ActionResult checkLink(string url, string idtimee)
+        {
+            url += "&idtimee=" + idtimee;
+            urlpre = url;
+            return RedirectToAction("SignIn", "User", new { url ="checkedlogin"});
+        }
         public ActionResult SignIn(string url)
         {
+            if (url != "checkedlogin")
+            {
+                urlpre = null;
+            }
+            else
+            {
+                url = null;
+            }
             if (Session["TenCus"] != null)
             {
                 if (url != null)
@@ -33,7 +47,6 @@ namespace CinemaBooking.Controllers
                 {
                     urlpre = url;
                 }
-
                 return View();
             }
 

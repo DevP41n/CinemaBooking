@@ -3,7 +3,18 @@
     ViewBag.Title = "Hyper Cinema | Trang chủ";
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
-@{ int count = 1;int count2 = 1; int b = 0; CinemaBooking.Models.CinemaBookingEntities dbmovie = new CinemaBooking.Models.CinemaBookingEntities();}
+@{ int count = 1; int count2 = 1; int b = 0; CinemaBooking.Models.CinemaBookingEntities dbmovie = new CinemaBooking.Models.CinemaBookingEntities();}
+
+<style>
+    .event-search::before, .search-tab::before {
+        background-image: none;
+    }
+
+    .search-tab .tab-area::before {
+        opacity: 1;
+        background-color: #011122;
+    }
+</style>
 <!-- ==========Banner-Section========== -->
 <!-- owl-carousel Banner Start -->
 <section class="pt-0 pb-0">
@@ -108,6 +119,67 @@
     </div>
 </section>
 <!-- owl-carousel Banner End -->
+<!--Book ticket fast-->
+<!-- ==========Ticket-Search========== -->
+<section class="search-ticket-section">
+    <div class="container">
+        <div class="search-tab">
+            <div class="tab-area">
+                <div class="tab-item active">
+                    <form class="ticket-search-form contact-form">
+                        <div class="form-group">
+                            <a style="font-weight:bold; padding-right:0;">ĐẶT VÉ NHANH</a>
+                        </div>
+                        <div class="form-group">
+                            <div class="thumb">
+                                <img src="~/Frontend/Client/assets/images/ticket/city.png" alt="ticket">
+                            </div>
+                            <span class="type">Rạp</span>
+                            <select class="select-bar" id="cinemalist">
+                                <option value="0">Chọn rạp</option>
+                                @foreach (var i in ViewBag.cinema)
+                                {
+                                    <option value="@i.id">@i.ten_rap</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group" id="film">
+                            <div class="thumb">
+                                <img src="~/Frontend/Client/assets/images/ticket/cinema.png" alt="ticket">
+                            </div>
+                            <span class="type">Phim</span>
+                            <select class="select-bar" id="filmlist">
+                                <option value="0">Chọn phim</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="date">
+                            <div class="thumb">
+                                <img src="~/Frontend/Client/assets/images/ticket/date.png" alt="ticket">
+                            </div>
+                            <span class="type">Ngày: </span>
+                            <select class="select-bar" id="datelist">
+                                <option value="0">Chọn Ngày</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="time">
+                            <div class="thumb">
+                                <img src="~/Frontend/Client/assets/images/ticket/exp.png" alt="ticket">
+                            </div>
+                            <span class="type">Giờ chiếu</span>
+                            <select class="select-bar" id="timelist">
+                                <option value="0">Chọn giờ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="custom-button back-button text-center" value="MUA VÉ" style="padding:10px; height:40px" id="bookseat">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Ticket-Search========== -->
 <!-- ==========Movie-Section========== -->
 <section class="movie-section padding-bottom" style="padding-top: 35px !important; padding-bottom: 100px !important; background-image: -webkit-linear-gradient( 270deg, #05050a45 17%, #0e0c0c87 63%, #010917 100%); ">
     <div class="container">
@@ -249,11 +321,11 @@
                                     </div>
                                     <div class="movie-content bg-one">
                                         <h5 class="title m-0" style="padding: 13px 0px;">
-                                            <a href="@Url.Action("NewsDetail","News", new {slug = item.slug })" class="title-movie-home overflow-text-2" >@item.tieu_de</a>
+                                            <a href="@Url.Action("NewsDetail","News", new {slug = item.slug })" class="title-movie-home overflow-text-2">@item.tieu_de</a>
                                         </h5>
                                         @*<div class="movie-rating-percent" style="padding: 5px 0px;">
-                                            <span style="margin-left: auto;">@Html.FormatValue(item.create_at, "{0:dd/MM/yyyy}")</span>
-                                        </div>*@
+                                                <span style="margin-left: auto;">@Html.FormatValue(item.create_at, "{0:dd/MM/yyyy}")</span>
+                                            </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -296,3 +368,157 @@
     window.onload = codeAddress;
 </script>
 
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var listfilmnull = '<option value="0">Chọn phim</option>';
+            var listdatenull = '<option value="0">Chọn ngày</option>';
+            var listulnull = "";
+            var listtimenull = '<option value="0">Chọn giờ</option>';
+            $('#cinemalist').change(function () {
+                var id = $("#cinemalist option:selected").val();
+                loadFilm(id);
+                //Chuyển film đã chọn thành value 0
+                $('#film .current').html(listfilmnull);
+                //Chuyển ngày đã chọn thành value 0 và list ngày null
+                $('#date .current').html(listdatenull);
+                $('#date .list').html(listulnull);
+                //Chuyển time đã chọn thành value 0 và list time null
+                $('#time .current').html(listdatenull);
+                $('#time .list').html(listulnull);
+            });
+
+            $('#filmlist').change(function () {
+                var idfilm = $("#filmlist option:selected").val();
+                loadDate(idfilm);
+                //Chuyển ngày đã chọn thành value 0
+                $('#date .current').html(listdatenull);
+                //Chuyển time đã chọn thành value 0 và list time null
+                $('#time .current').html(listdatenull);
+                $('#time .list').html(listulnull);
+            });
+
+            $('#datelist').change(function () {
+                var idtime = $("#datelist option:selected").val();
+                loadTime(idtime);
+                //Chuyển time đã chọn thành value 0
+                $('#time .current').html(listtimenull);
+            });
+
+            //load to book seat
+            $('#bookseat').click(function () {
+                //var idcinemachecked = $("#cinemalist option:selected").val();
+                //var idfilmchecked = $("#filmlist option:selected").val();
+                var checktimee = $('#time .list .selected').data('value');
+                var idscchecked = $("#datelist option:selected").val();
+                var idtimechecked = $("#timelist option:selected").val();
+                if (checktimee == 0 || checktimee == undefined) {
+                    //toastr.warning("Bạn chưa chọn suất chiếu");
+                    alert("Bạn chưa chọn suất chiếu");
+                }
+                else {
+                    var url = "/Movie/BookSeat?idd=" + idscchecked + "&idtimee=" + idtimechecked;
+                    checkLogin(url);
+                }
+            });
+
+            function loadFilm(id) {
+                $.ajax({
+                    url: '/Home/loadFilm/',
+                    type: 'GET',
+                    data: {
+                        id: id,
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var idfilm = res.idfilm;
+                            var filmname = res.filmname;
+                            var listul = "";
+                            var html = "";
+                            //html += '<option value="0">'+"Chọn phim"+'</option>';
+                            for (let i = 0; i < res.count; i++) {
+                                html += '<option value="' + idfilm[i] + '">' + filmname[i] + '</option>';
+                                listul += '<li data-value="' + idfilm[i] + '" class="option focus">' + filmname[i] +'</li>'
+                            }
+                            $('#filmlist').html(html);
+                            $('#film .list').html(listul);
+                        }
+                    }
+                })
+            }
+
+
+            function loadDate(id) {
+                $.ajax({
+                    url: '/Home/loadDate/',
+                    type: 'GET',
+                    data: {
+                        id: id,
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var idsc = res.idsc;
+                            var date = res.date;
+                            var listul = "";
+                            var html = "";
+                            //html += '<option value="0">'+"Chọn phim"+'</option>';
+                            for (let i = 0; i < res.count; i++) {
+                                html += '<option value="' + idsc[i] + '">' + date[i] + '</option>';
+                                listul += '<li data-value="' + idsc[i] + '" class="option focus">' + date[i] + '</li>'
+                            }
+                            $('#datelist').html(html);
+                            $('#date .list').html(listul);
+                        }
+                    }
+                })
+            }
+
+            function loadTime(id) {
+                $.ajax({
+                    url: '/Home/loadTime/',
+                    type: 'GET',
+                    data: {
+                        id: id,
+                    },
+                    success: function (res) {
+                        if (res.count != null) {
+                            var idtime = res.idtime;
+                            var time = res.time;
+                            var listul = "";
+                            var html = "";
+                            //html += '<option value="0">'+"Chọn phim"+'</option>';
+                            for (let i = 0; i < res.count; i++) {
+                                html += '<option value="' + idtime[i] + '">' + time[i] + '</option>';
+                                listul += '<li data-value="' + idtime[i] + '" class="option focus">' + time[i] + '</li>'
+                            }
+                            $('#timelist').html(html);
+                            $('#time .list').html(listul);
+                        }
+                    }
+                })
+            }
+
+            //check
+            function checkLogin(url) {
+                $.ajax({
+                    url: '/Home/checkLogin/',
+                    type: 'POST',
+                    data: {
+                        url: url,
+                    },
+                    success: function (res) {
+                        if (res.success == false) {
+                            var host = window.location.protocol+ "//" + window.location.host;
+                            window.location.href = "/User/checkLink?url=" + host + url;
+                        }
+                        else if (res.success == true) {
+                            window.location.href = url;
+                        }
+                    }
+                })
+            }
+
+        });
+    </script>
+
+}
