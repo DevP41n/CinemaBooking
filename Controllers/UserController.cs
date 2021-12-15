@@ -1,9 +1,12 @@
 ﻿using CinemaBooking.Library;
 using CinemaBooking.Models;
 using Facebook;
+using PagedList;
+using QRCoder;
 using System;
 using System.Configuration;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -226,9 +229,20 @@ namespace CinemaBooking.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult TransHistory(int? id)
+        public ActionResult TransHistory(int? id, int? page)
         {
+
             var idkh = Convert.ToInt32(Session["MaKH"]);
+            if (idkh == null)
+            {
+                string CurrentURL = Request.UrlReferrer.ToString(); //Request.UrlReferrer.ToString() Lấy ra url hiện tại
+                TempData["Warning"] = "Vui lòng đăng nhập";
+                return RedirectToAction("SignIn", "User", new { url = CurrentURL });
+            }
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (idkh != id)
             {
                 TempData["Warning"] = "Không đúng tài khoản của bạn!";
@@ -246,8 +260,33 @@ namespace CinemaBooking.Controllers
                 }
             }
             db.SaveChanges();
-            var orders = db.orders.Where(n => n.id_khachhang == idkh).OrderByDescending(n => n.id).ToList();
+            int pageNumber = (page ?? 1);
+            int pageSize = 7;
+            var amount = db.orders.Where(n => n.id_khachhang == idkh && n.status == 1);
+            decimal? amountorder = 0;
+            foreach (var item in amount)
+            {
+                amountorder += item.tong_tien;
+            }
+            ViewBag.Amount = amountorder;
+
+            var orders = db.orders.Where(n => n.id_khachhang == idkh).OrderByDescending(n => n.id).ToPagedList(pageNumber, pageSize);
             return View(orders);
+        }
+
+        public JsonResult qrCode(int id)
+        {
+            var order = db.orders.Find(id);
+            string path = Server.MapPath("~/images/qrcode/");
+
+            QRCodeData qrCodeData1 = new QRCodeData(path + order.code_ticket + ".qrr", QRCodeData.Compression.Uncompressed);
+            QRCode QrCode = new QRCode(qrCodeData1);
+            Bitmap QrBitmap = QrCode.GetGraphic(60);
+            byte[] BitmapArray = QrBitmap.BitmapToByteArray();
+            string QrUri = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(BitmapArray));
+            //Ảnh qr code
+
+            return Json(new { QrUri, success = true }, JsonRequestBehavior.AllowGet);
         }
 
         //Facebook
