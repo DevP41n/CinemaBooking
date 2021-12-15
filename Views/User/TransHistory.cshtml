@@ -89,7 +89,9 @@
                                                             {
 
                                                                 <tr>
-                                                                    @{ var time = db.TimeFrames.Find(item.idtime); }
+                                                                    @{ var time = db.TimeFrames.Find(item.idtime);
+                                                                        string[] sc = time.Time.ToString().Split(':');
+                                                                        var suatchieu = sc[0] + ":" + sc[1]; }
                                                                     <td>@Html.FormatValue(item.ngay_mua, "{0:dd/MM/yyyy}")</td>
                                                                     <td>@item.phim.ten_phim </td>
                                                                     <td>
@@ -115,7 +117,7 @@
                                                                     </td>
 
                                                                     <td>@item.phong_chieu.rap_chieu.ten_rap </td>
-                                                                    <td>@time.Time</td>
+                                                                    <td>@suatchieu</td>
 
                                                                     @if (item.status == 0)
                                                                     {

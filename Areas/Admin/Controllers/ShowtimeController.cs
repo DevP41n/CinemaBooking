@@ -49,7 +49,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 }
             }
             ViewBag.cbcongchieu = db.suat_chieu.Where(x => x.status == 2).Count();
-            return View(db.suat_chieu.ToList());
+            return View(db.suat_chieu.ToList().OrderBy(x => x.ngay_chieu));
         }
 
         public ActionResult CreateShowTime()
@@ -110,7 +110,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 string ngaycongchieu = Convert.ToDateTime(phim.ngay_cong_chieu).ToString("dd/MM/yyyy");
                 if (phim.ngay_cong_chieu > suatChieu.ngay_chieu)
                 {
-                    TempData["Warning"] = "Đã xảy ra lỗi! Ngày công chiếu phải từ " + ngaycongchieu + " trở đi" ;
+                    TempData["Warning"] = "Đã xảy ra lỗi! Ngày công chiếu phải từ " + ngaycongchieu + " trở đi";
                     return RedirectToAction("CreateShowTime");
                 }
 
@@ -126,10 +126,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
 
                 //check khác film cùng rạp thì không cho tạo
-                var checkkhac = db.suat_chieu.Where(x => x.phong_chieu_id == suatChieu.phong_chieu_id && x.phim_id != suatChieu.phim_id 
+                var checkkhac = db.suat_chieu.Where(x => x.phong_chieu_id == suatChieu.phong_chieu_id && x.phim_id != suatChieu.phim_id
                                                        && x.ngay_chieu == suatChieu.ngay_chieu && x.status != 0 && x.id != suatChieu.id).Count();
 
-                if(checkkhac !=0)
+                if (checkkhac != 0)
                 {
                     TempData["Warning"] = "Đã xảy ra lỗi! Phòng chiếu đã chọn đã có suất chiếu. Vui lòng kiểm tra lại!";
                     return View();

@@ -766,7 +766,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 {
                     Random rd = new Random();
                     var numrd = rd.Next(1, 100).ToString();
-                    string filename = "seattype" + DateTime.Now.ToString("MMMM'-'dd'-'yyyy") + file.FileName.Substring(file.FileName.LastIndexOf("."));
+                    string filename = "seattype" + DateTime.Now.ToString("dd-MM-yyyy") + file.FileName.Substring(file.FileName.LastIndexOf("."));
                     loaiGhe.anh = filename;
                     string path = Server.MapPath("~/images/seattype/");
                     string StrPath = Path.Combine(path, filename);
@@ -796,6 +796,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("AError404", "Admin");
             }
+            if (db.ghe_ngoi.Where(n => n.loai_ghe_id == id && n.status != 0 && n.phong_chieu.status != 0).Count() != 0)
+            {
+                TempData["Warning"] = "Không thể sửa vì có phòng đang dùng loại ghế này!";
+                return RedirectToAction("ListSeatType");
+            }
             try
             {
 
@@ -815,22 +820,26 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditSeatType(loai_ghe loaiGhe)
         {
+            if (db.ghe_ngoi.Where(n => n.loai_ghe_id == loaiGhe.id && n.status != 0 && n.phong_chieu.status != 0).ToList().Count() != 0)
+            {
+                TempData["Warning"] = "Không thể sửa vì có phòng đang dùng loại ghế này!";
+                return RedirectToAction("ListSeatType");
+            }
             if (ModelState.IsValid)
             {
-
                 var file = Request.Files["anh"];
                 if (file != null && file.ContentLength > 0)
                 {
                     Random rd = new Random();
                     var numrd = rd.Next(1, 100).ToString();
-                    string filename = "seattype" + DateTime.Now.ToString("MMMM'-'dd'-'yyyy") + file.FileName.Substring(file.FileName.LastIndexOf("."));
+                    string filename = "seattype" + DateTime.Now.ToString("dd-MM-yyyy") + file.FileName.Substring(file.FileName.LastIndexOf("."));
                     loaiGhe.anh = filename;
                     string path = Server.MapPath("~/images/seattype/");
                     string StrPath = Path.Combine(path, filename);
                     file.SaveAs(StrPath);
                 }
                 db.Entry(loaiGhe).State = EntityState.Modified;
-                TempData["Error"] = "Cập nhật thành công!";
+                TempData["Message"] = "Cập nhật thành công!";
                 db.SaveChanges();
                 return RedirectToAction("ListSeatType");
             }
@@ -856,18 +865,18 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 return RedirectToAction("AError404", "Admin");
             }
-            if (db.ghe_ngoi.Where(n => n.loai_ghe_id == id && n.phong_chieu.status != 0).ToList().Count() == 0)
+            if (db.ghe_ngoi.Where(n => n.loai_ghe_id == id && n.status != 0 && n.phong_chieu.status != 0).ToList().Count() == 0)
             {
                 loai_ghe loaiGhe = db.loai_ghe.Find(id);
                 db.loai_ghe.Remove(loaiGhe);
                 TempData["Message"] = "Xóa thành công!";
                 db.SaveChanges();
-                return RedirectToAction("CinemaList");
+                return RedirectToAction("ListSeatType");
             }
             else
             {
                 TempData["Error"] = "Không thể xóa vì loại ghế đang tồn tại trong rạp chiếu!";
-                return RedirectToAction("CinemaList");
+                return RedirectToAction("ListSeatType");
             }
         }
 
