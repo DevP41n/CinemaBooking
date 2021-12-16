@@ -366,6 +366,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateSeat(string hang, int ghe, int id, int idloaighe)
         {
+            if(ghe>20)
+            {
+                return Json(new { checkslg = false });
+            }
             if (hang == null || ghe < 1 || id < 1)
             {
                 return Json(new { checkr = false });
@@ -450,6 +454,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditSeat(string hang, int ghe, int id, int idloaighe)
         {
+            if (ghe > 20)
+            {
+                return Json(new { checkslg = false });
+            }
             var ghn = db.ghe_ngoi.Where(n => n.Row == hang && n.phong_chieu_id == id && n.status == 1).ToList();
             var tong = ghn.Count();
             ghe_ngoi ghengoi = new ghe_ngoi();
