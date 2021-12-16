@@ -63,7 +63,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 TempData["Warning"] = "Bạn không phải là admin!";
                 return RedirectToAction("Dashboard", "Admin");
             }
-            ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.Time), "id", "Time");
+            ViewBag.Timeid = new SelectList(db.TimeFrames.Where(x => x.status == 1).ToList().OrderBy(n => n.Time), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().Where(n => n.loai_phim_chieu == 1 && n.status == 1).OrderBy(n => n.id), "id", "ten_phim");
             ViewBag.rapchieu = db.rap_chieu.ToList();
 
@@ -81,7 +81,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                ViewBag.Timeid = new SelectList(db.TimeFrames.ToList().OrderBy(n => n.Time), "id", "Time");
+                ViewBag.Timeid = new SelectList(db.TimeFrames.Where(n=>n.status==1).ToList().OrderBy(n => n.Time), "id", "Time");
                 ViewBag.phim_id = new SelectList(db.phims.Where(n => n.loai_phim_chieu == 1 && n.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phim");
                 ViewBag.rapchieu = db.rap_chieu.ToList();
                 suatchieu_timeframe sctime = new suatchieu_timeframe();
@@ -515,7 +515,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 id.Add(item.id);
                 var contime = Convert.ToString(item.TimeFrame.Time);
-                Times.Add(contime);
+                string[] t = contime.Split(':');
+                //Format lại bỏ phần milisecond
+                Times.Add(t[0] + ":" + t[1]);
             }
             var count = list.Count();
             return Json(data: new { id, Times, count, idsuatchieu }, JsonRequestBehavior.AllowGet);
@@ -532,7 +534,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
             {
                 id.Add(item.id);
                 var contime = Convert.ToString(item.TimeFrame.Time);
-                Times.Add(contime);
+                string[] t = contime.Split(':');
+                //Format lại bỏ phần milisecond
+                Times.Add(t[0] + ":"+ t[1]);
             }
             var count = list.Count();
             return Json(data: new { id, Times, count, idsuatchieu }, JsonRequestBehavior.AllowGet);
@@ -553,7 +557,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult ShowCreateTimeFr(int? id)
         {
             var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id);
-            var timeframe = db.TimeFrames.ToList().OrderBy(n => n.Time);
+            var timeframe = db.TimeFrames.Where(x => x.status == 1).ToList().OrderBy(n => n.Time);
             List<int> idtimes = new List<int>();
             List<String> times = new List<String>();
             foreach (var item in timeframe)
@@ -570,7 +574,9 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 {
                     idtimes.Add(item.id);
                     var g = Convert.ToString(item.Time);
-                    times.Add(g);
+                    string[] t = g.Split(':');
+                    //Format lại bỏ phần milisecond
+                    times.Add(t[0] + ":" + t[1]);
                 }
             }
             var count = idtimes.Count();
@@ -601,7 +607,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 TempData["Warning"] = "Bạn không phải là admin!";
                 return RedirectToAction("Dashboard", "Admin");
             }
-            return View(db.TimeFrames.ToList().OrderBy(n => n.Time));
+            return View(db.TimeFrames.Where(x=>x.status == 1).ToList().OrderBy(n => n.Time));
         }
 
         public ActionResult CreateShowTimeFrame()
@@ -620,8 +626,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateShowTimeFrame(TimeFrame timeFrame)
         {
+            var check = db.TimeFrames.Where(x => x.Time == timeFrame.Time  && x.status == 1).Count();
+            if(check!=0)
+            {
+                TempData["Warning"] = "Đã tồn tại thời gian trên!";
+                return View();
+            }
             if (ModelState.IsValid)
             {
+                timeFrame.status = 1;
                 db.TimeFrames.Add(timeFrame);
                 TempData["Message"] = "Tạo thành công!";
                 db.SaveChanges();
@@ -632,6 +645,23 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult EditShowTimeFrame(int? id)
         {
+            var check = db.suatchieu_timeframe.Where(x => x.id_Timeframe == id);
+            int dem = 0;
+            foreach (var item in check)
+            {
+                var checksc = db.suat_chieu.Find(item.id_Suatchieu);
+                if (checksc.status != 0)
+                {
+                    dem++;
+                    break;
+                }
+            }
+            if (dem > 0)
+            {
+                TempData["Warning"] = "Giờ này đang tồn tại trong suất chiếu đang có!";
+                return RedirectToAction("ListShowTimeFrame");
+            }
+
             if (Session["HoTen"] == null)
             {
                 return RedirectToAction("Login", "Auth");
@@ -652,6 +682,14 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditShowTimeFrame(TimeFrame timeFrame)
         {
+
+
+            var check = db.TimeFrames.Where(x => x.Time == timeFrame.Time && x.id != timeFrame.id && x.status == 1).Count();
+            if (check != 0)
+            {
+                TempData["Warning"] = "Đã tồn tại thời gian trên!";
+                return RedirectToAction("EditShowTimeFrame","Showtime", new { id = timeFrame.id});
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(timeFrame).State = EntityState.Modified;
@@ -677,9 +715,26 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 TempData["Warning"] = "Bạn không phải là admin!";
                 return RedirectToAction("Dashboard", "Admin");
             }
+            var check = db.suatchieu_timeframe.Where(x => x.id_Timeframe == id);
+            int dem = 0;
+            foreach(var item in check)
+            {
+                var checksc = db.suat_chieu.Find(item.id_Suatchieu);
+                if(checksc.status !=0)
+                {
+                    dem++;
+                    break;
+                }
+            }
+            if(dem>0)
+            {
+                TempData["Warning"] = "Giờ này đang tồn tại trong suất chiếu đang có!";
+                return RedirectToAction("ListShowTimeFrame");
+            }
             TimeFrame timeFrame = db.TimeFrames.Find(id);
-            db.TimeFrames.Remove(timeFrame);
+            timeFrame.status = 0;
             TempData["Message"] = "Xóa thành công!";
+            db.Entry(timeFrame).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("ListShowTimeFrame");
         }

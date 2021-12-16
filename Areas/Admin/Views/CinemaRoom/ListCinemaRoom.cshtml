@@ -162,6 +162,9 @@
                                                     Tên phòng
                                                 </th>
                                                 <th>
+                                                    Rạp
+                                                </th>
+                                                <th>
                                                     Số ghế
                                                 </th>
                                                 <th>
@@ -180,6 +183,9 @@
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.ten_phong)
+                                                    </td>
+                                                    <td>
+                                                        @item.rap_chieu.ten_rap
                                                     </td>
                                                     <td>
                                                         @item.so_luong_cot

@@ -21,6 +21,7 @@ namespace CinemaBooking.Controllers
         {
             url += "&idtimee=" + idtimee;
             urlpre = url;
+            TempData["Warning"] = "Bạn phải đăng nhập trước khi mua vé!";
             return RedirectToAction("SignIn", "User", new { url ="checkedlogin"});
         }
         public ActionResult SignIn(string url)
@@ -246,7 +247,7 @@ namespace CinemaBooking.Controllers
         {
 
             var idkh = Convert.ToInt32(Session["MaKH"]);
-            if (idkh == null)
+            if (Session["MaKH"] == null)
             {
                 string CurrentURL = Request.UrlReferrer.ToString(); //Request.UrlReferrer.ToString() Lấy ra url hiện tại
                 TempData["Warning"] = "Vui lòng đăng nhập";

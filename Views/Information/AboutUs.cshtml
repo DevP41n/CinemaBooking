@@ -19,6 +19,12 @@
                         <p>
                             Hyper Cinema Việt Nam sẽ tiếp tục cuộc hành trình bền bỉ trong việc góp phần xây dựng một nền công nghiệp điện ảnh Việt Nam ngày càng vững mạnh hơn cùng các khách hàng tiềm năng, các nhà làm phim, các đối tác kinh doanh uy tín, và cùng toàn thể xã hội.
                         </p>
+                        <span>Hiện chúng tôi đã có các chi nhánh:</span>
+                        @foreach (var item in ViewBag.cinema)
+                        {
+                            <span><p style="font-weight:bold">@item.ten_rap</p>Địa chỉ: @item.dia_chi</span>
+
+                        }
                     </div>
                 </div>
             </div>
