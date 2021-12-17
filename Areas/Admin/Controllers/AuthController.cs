@@ -59,7 +59,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult Logout()
         {
-            Session.Clear();
+            Session["HoTen"] = null;
+            Session["Username"] = null;
+            Session["Id"] = null;
+            Session["Role"] = null;
             return RedirectToAction("Login");
         }
     }

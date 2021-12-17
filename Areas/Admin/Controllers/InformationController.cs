@@ -15,15 +15,27 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // GET: Admin/Information
         public ActionResult ListActor()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             return View(db.dien_vien.OrderByDescending(s => s.ho_ten));
         }
         public ActionResult ListDirector()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             return View(db.dao_dien.OrderByDescending(s => s.ho_ten));
         }
         //Tạo dien vien /dao dien
         public ActionResult CreateActor()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             return View();
         }
         [HttpPost, ValidateInput(false)]
@@ -54,6 +66,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult CreateDirector()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             return View();
         }
         [HttpPost, ValidateInput(false)]
@@ -84,6 +100,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Admin/Information/Edit dien vien/ dao dien
         public ActionResult EditActor(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             dien_vien dienvien = db.dien_vien.Find(id);
             if (dienvien == null)
             {
@@ -124,6 +144,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult EditDirector(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             dao_dien daodien = db.dao_dien.Find(id);
             if (daodien == null)
             {
@@ -164,6 +188,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // POST: Admin/Information/Delete
         public ActionResult DeleteActorConfirmed(int id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             var del = from dele in db.list_phim_dienvien
                       where dele.id_dienvien == id
                       select dele;
@@ -185,6 +213,10 @@ namespace CinemaBooking.Areas.Admin.Controllers
         }
         public ActionResult DeleteDirectorConfirmed(int id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             var del = from dele in db.phims
                       where dele.dao_dien_id == id
                       select dele;

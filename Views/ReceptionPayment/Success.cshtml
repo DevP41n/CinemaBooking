@@ -136,8 +136,9 @@
                         </li>
                         @foreach (var item in orderdetail)
                         {
+                            var dongia = item.ghe_ngoi.gia + item.ghe_ngoi.loai_ghe.phu_thu;
                             <li>
-                                <h6 class="info"><span>Ghế @item.ghe_ngoi.Row@item.ghe_ngoi.Col </span>@Html.Raw(String.Format("{0:0,0} VNĐ", @item.ghe_ngoi.gia))</h6>
+                                <h6 class="info"><span>Ghế @item.ghe_ngoi.Row@item.ghe_ngoi.Col </span>@Html.Raw(String.Format("{0:0,0} VNĐ", dongia))</h6>
                             </li>
                         }
 

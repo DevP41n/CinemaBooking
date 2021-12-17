@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CinemaBooking.Models.order>
+﻿@model PagedList.IPagedList<CinemaBooking.Models.order>
+@using PagedList.Mvc
 
 @{
     ViewBag.Title = "TransHistory";
@@ -10,7 +11,7 @@
     var id = Convert.ToInt32(Session["MaKH"].ToString());
 }
 <!-- ==========Banner-Section========== -->
-<section class="main-page-header speaker-banner bg_img" data-background="./assets/images/banner/banner07.jpg" style="padding: 130px 0 10px;">
+<section class="main-page-header speaker-banner bg_img" data-background="./assets/images/banner/banner07.jpg" style="padding: 80px 0 10px;">
     <div class="container">
         @*<div class="speaker-banner-content">
                 <h2 class="title">ĐỔI MẬT KHẨU</h2>
@@ -29,7 +30,23 @@
 </section>
 <!-- ==========Banner-Section========== -->
 <!-- ==========Contact-Section========== -->
-<section class="contact-section padding-top" style="padding-top:50px;">
+<section class="page-title bg-one" style="padding: 15px 0px;background-image: -webkit-linear-gradient( 271deg,#01172c,#01172c,#01172c);border-top: 1px solid #01172c; border-bottom: 1px solid #01172c;" >
+    <div class="container">
+        <div class="page-title-area">
+            <div class="item md-order-1">
+                <input type="button" onclick="window.history.go(-1)" class="custom-button back-button" value="Trở về">
+            </div>
+            <div class="item date-item">
+                <div class="tags">
+                    <a class="bookseat-taskbar">TÀI KHOẢN</a>
+                </div>
+            </div>
+            <div class="item">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="contact-section padding-top" style="padding-top:30px;">
     <div class="contact-container">
         <div class="container">
             <div class="row justify-content-between">
@@ -42,24 +59,129 @@
 
                                     </div>
                                 </div>
-                                <div class="col-lg-9 mb-50">
+                                <div class="col-lg-12 mb-50">
                                     <div class="movie-details">
                                         <div class="tab summery-review">
                                             <ul class="tab-menu">
-                                                <li class="active">
-                                                    Quản lý tài khoản
-                                                </li>
-                                                <li>
+                                                <li class="active" id="transaction">
                                                     Lịch sử giao dịch
+                                                </li>
+                                                <li id="infouser">
+                                                    Quản lý tài khoản
                                                 </li>
                                             </ul>
                                             <div class="tab-area">
                                                 <div class="tab-item active">
+                                                    <style>
+                                                        table {
+                                                            font-family: arial, sans-serif;
+                                                            border-collapse: collapse;
+                                                            width: 100%;
+                                                        }
+
+                                                        td, th {
+                                                            text-align: left;
+                                                            border: 0.5px solid #12387e;
+                                                            padding: 8px;
+                                                        }
+                                                    </style>
+                                                    <div class="checkout-widget checkout-contact" style="padding-bottom:60px">
+                                                        <span style="float:left; font-weight:bold; font-size:30px">LỊCH SỬ GIAO DỊCH</span>
+                                                        <h5 class="title"> </h5>
+                                                        <table>
+                                                            <tr>
+                                                                <th>Ngày mua</th>
+                                                                <th>Phim</th>
+                                                                <th>Ghế</th>
+                                                                <th>Rạp</th>
+                                                                <th>Thời gian</th>
+                                                                <th>Trạng thái</th>
+                                                                <th>Tiền đã thanh toán</th>
+                                                                <th>Mã QR</th>
+                                                            </tr>
+                                                            <caption class="title"></caption>
+                                                            @{ double tongtien = 0;}
+                                                            @foreach (var item in Model)
+                                                            {
+
+                                                                <tr>
+                                                                    @{ var time = db.TimeFrames.Find(item.idtime);
+                                                                        string[] sc = time.Time.ToString().Split(':');
+                                                                        var suatchieu = sc[0] + ":" + sc[1]; }
+                                                                    <td>@Html.FormatValue(item.ngay_mua, "{0:dd/MM/yyyy}")</td>
+                                                                    <td>@item.phim.ten_phim </td>
+                                                                    <td>
+
+                                                                        @{var ghe = db.order_details.Where(n => n.id_orders == item.id).ToList();
+                                                                            var count = ghe.Count;
+                                                                            var dem = 1;
+                                                                            string dau = ", ";}
+                                                                        @foreach (var idghe in ghe)
+                                                                        {
+                                                                            var tenghe = db.ghe_ngoi.Find(idghe.id_ghe);
+
+                                                                            if (dem == count)
+                                                                            {
+                                                                                @tenghe.Row@tenghe.Col
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @tenghe.Row@tenghe.Col@dau
+                                                                            }
+                                                                            dem++;
+                                                                        }
+                                                                    </td>
+
+                                                                    <td>@item.phong_chieu.rap_chieu.ten_rap </td>
+                                                                    <td>@suatchieu</td>
+
+                                                                    @if (item.status == 0)
+                                                                    {
+                                                                        <td style="color:#dc3545">Vé đã hủy</td>
+                                                                    }
+                                                                    else if (item.status == 1)
+                                                                    {
+                                                                        <td style="color:#28a745">thanh toán thành công</td>
+                                                                    }
+                                                                    else if (item.status == 2)
+                                                                    {
+                                                                        <td style="color:#ffc107">Đang chờ thanh toán</td>
+                                                                    }
+                                                                    <td>
+                                                                        @Html.Raw(String.Format("{0:0,0} VNĐ", item.tong_tien))
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="btn btn-info code"  id="showqr" data-id ="@item.id"><i class="fas fa-qrcode"></i></a>
+
+                                                                        
+                                                                    </td>
+                                                                    @if (item.status == 1)
+                                                                    {
+                                                                        tongtien = tongtien + (Double)item.tong_tien;
+                                                                    }
+
+                                                                    @if (item.status == 2)
+                                                                    {
+                                                                        <td>
+                                                                            <a href="/User/CancelTicket?id=@item.id" class="btn btn-primary">Hủy dặt</a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </table>
+
+                                                        <span style="float:right; font-weight:bold; font-size:20px">Tổng tiền: @Html.Raw(String.Format("{0:0,0} VNĐ", ViewBag.Amount))</span>
+                                                        <div class="pagination-area text-center">
+                                                            @Html.PagedListPager(Model, page => Url.Action("TransHistory", "User", new { id = id, page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-item ">
                                                     <div class="item">
-                                                        <div class="col-lg-12">
+                                                        <div style="width: 1350px">
                                                             @{var kh = db.khach_hang.Where(x => x.id == id).FirstOrDefault();}
 
-                                                            <form class="contact-form" id="info" style="float:left; width:500px" action="/User/ProfileAccount/" method="post">
+                                                            <form class="contact-form" id="info" style="float:left; width:700px" action="/User/ProfileAccount/" method="post">
                                                                 <span class="title">Thông tin tài khoản<br /><br /></span>
                                                                 @Html.AntiForgeryToken()
                                                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -98,7 +220,7 @@
                                                                 </div>
                                                             </form>
 
-                                                            <form class="contact-form" id="password" style="float:right" action="/User/ChangePass/" method="post">
+                                                            <form class="contact-form" id="password" style="float: right; width: 580px" action="/User/ChangePass/" method="post">
                                                                 @Html.AntiForgeryToken()
                                                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                                                 <span class="title" style="font:bold">ĐỔI MẬT KHẨU<br /><br /></span>
@@ -138,97 +260,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="tab-item ">
-                                                    <style>
-                                                        table {
-                                                            font-family: arial, sans-serif;
-                                                            border-collapse: collapse;
-                                                            width: 100%;
-                                                        }
 
-                                                        td, th {
-                                                            text-align: left;
-                                                            border: 0.5px solid #12387e;
-                                                            padding: 8px;
-                                                        }
-                                                    </style>
-                                                    <div class="checkout-widget checkout-contact" style="padding-bottom:60px">
-                                                        <span style="float:left; font-weight:bold; font-size:30px">LỊCH SỬ GIAO DỊCH</span>
-                                                        <h5 class="title"> </h5>
-                                                        <table>
-                                                            <tr>
-                                                                <th>Ngày mua</th>
-                                                                <th>Phim</th>
-                                                                <th>Số lượng vé</th>
-                                                                <th>Rạp - phòng chiếu - suất</th>
-                                                                <th>Trạng thái</th>
-                                                                <th>Tiền đã thanh toán</th>
-                                                            </tr>
-                                                            <caption class="title"></caption>
-                                                            @{ double tongtien = 0;}
-                                                            @foreach (var item in Model)
-                                                            {
-                                                                <tr>
-                                                                    <td>@item.ngay_mua</td>
-                                                                    <td>@item.phim.ten_phim</td>
-                                                                    <td>
-                                                                        @item.so_luong_ve vé:
-                                                                        @{var ghe = db.order_details.Where(n => n.id_orders == item.id).ToList();
-                                                                            var count = ghe.Count;
-                                                                            var dem = 1;
-                                                                            string dau = ", ";}
-                                                                        @foreach (var idghe in ghe)
-                                                                        {
-                                                                            var tenghe = db.ghe_ngoi.Find(idghe.id_ghe);
-
-                                                                            if (dem == count)
-                                                                            {
-                                                                                @tenghe.Row@tenghe.Col
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                @tenghe.Row@tenghe.Col@dau
-                                                                            }
-                                                                            dem++;
-                                                                        }
-                                                                    </td>
-                                                                    @{ var time = db.TimeFrames.Find(item.idtime); }
-                                                                    <td>@item.phong_chieu.rap_chieu.ten_rap - @item.phong_chieu.ten_phong - @time.Time</td>
-
-                                                                    @if (item.status == 0)
-                                                                    {
-                                                                        <td style="color:#dc3545">Vé đã hủy</td>
-                                                                    }
-                                                                    else if (item.status == 1)
-                                                                    {
-                                                                        <td style="color:#28a745">thanh toán thành công</td>
-                                                                    }
-                                                                    else if (item.status == 2)
-                                                                    {
-                                                                        <td style="color:#ffc107">Đang chờ thanh toán</td>
-                                                                    }
-                                                                    <td>
-                                                                        @Html.Raw(String.Format("{0:0,0} VNĐ", item.tong_tien))
-                                                                    </td>
-                                                                    @if (item.status == 1)
-                                                                    {
-                                                                        tongtien = tongtien + (Double)item.tong_tien;
-                                                                    }
-
-                                                                    @if (item.status == 2)
-                                                                    {
-                                                                        <td>
-                                                                            <a href="/User/CancelTicket?id=@item.id" class="btn btn-primary">Hủy dặt</a>
-                                                                        </td>
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        </table>
-
-                                                        <span style="float:right; font-weight:bold; font-size:20px">Tổng tiền: @Html.Raw(String.Format("{0:0,0} VNĐ", tongtien))</span>
-
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -242,10 +274,45 @@
     </div>
 </section>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="qr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" >
+        <div class="modal-content" width="auto">
+            
+            <div class="modal-body">
+                <img src="" id="qrCodeUser" style="width: 300px; height: 300px; display: block; margin-left: auto; margin-right: auto;" >
+            </div>
+            <div class="modal-footer">
+                <a  class="btn btn-info" data-dismiss="modal">Đóng</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-content {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: auto;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.2);
+        border-radius: 0.3rem;
+        outline: 0;
+    }
+</style>
 @section Scripts{
     <script>
         $(document).ready(function () {
             $('body').on('click', '#saveinfo', function () {
+
                 document.getElementById('info').submit();
                 //document.getElementById('hiddenformCreate').submit();
             });
@@ -256,5 +323,29 @@
                 //document.getElementById('hiddenformCreate').submit();
             });
         });
+        $(document).ready(function () {
+            $('body').on('click', '#showqr', function () {
+                var id = $(this).data("id");
+                qrCode(id);
+                //document.getElementById('hiddenformCreate').submit();
+            });
+        });
+
+        function qrCode(id) {
+            $.ajax({
+                url: '/User/qrCode/',
+                type: 'Get',
+                data: {
+                    id:id,
+                },
+                success: function (res) {
+                    if (res.success == true) {
+
+                        document.getElementById("qrCodeUser").src = res.QrUri;
+                        $('#qr').modal('show');
+                    }
+                }
+            });
+        }
     </script>
 }

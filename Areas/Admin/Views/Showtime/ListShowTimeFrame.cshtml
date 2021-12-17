@@ -56,7 +56,11 @@
                                                 @(rownumber ++)
                                             </td>
                                             <td>
-                                                @item.Time
+                                                @*@item.Time*@
+                                                @{ string converttime = item.Time.ToString();
+                                                    string[] tach = converttime.Split(':') ;
+                                                    string timmee = tach[0] + ":" + tach[1];}
+                                                @timmee
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">

@@ -32,13 +32,13 @@
                 </div>
 
                 <div class="item " style=" margin-left: 6%;">
-                    @*<span style="font-size: 21px;">Tên phim:</span>*@ <a style="font-size: 24px; padding: 10px; background: #233d7e; border-radius: 14px; font-weight: 700;">
+                    @*<span style="font-size: 21px;">Tên phim:</span>*@ <a style="font-size: 14px; padding: 5px; background: #233d7e; border-radius: 14px; font-weight: 700;">
                         @ViewBag.tenphim.ten_phim
                     </a>
                 </div>
                 <div class="item">
                     @*<h5 class="title">05:00</h5>
-                        <p>Mins Left</p>*@
+        <p>Mins Left</p>*@
                     <a class="bookseat-taskbar">Giờ chiếu: @ViewBag.giochieu</a>
                     <br />
                     <a class="bookseat-taskbar">Ngày @Html.FormatValue(@ViewBag.ngaychieu, "{0:dd/MM/yyyy}")</a>
@@ -46,11 +46,10 @@
                     <a class="bookseat-taskbar">Thời lượng: @ViewBag.tenphim.thoi_luong phút</a>
                 </div>
             </div>
-            <h4 class="screen" @*style="width:250px"*@>Màn hình</h4>
+            <h4 class="screen" style="font-size:20px">Màn hình</h4>
             <div class="screen-thumb">
-                <img src="/Frontend/Client/assets/images/movie/screen-thumb.png" alt="movie">
+                <img src="/Frontend/Client/assets/images/movie/screen-thumb.png" style="width:70%;display:block; margin-left:auto;margin-right:auto" alt="movie">
             </div>
-            <h5 class="subtitle"></h5>
             <div class="screen-wrapper">
                 <ul class="seat-area">
 
@@ -59,7 +58,7 @@
                     {
                         if (item.Col == 1)
                         {
-                            <li class="seat-line" style=" width: 50%; margin: auto;">
+                            <li class="seat-line" style=" width: 80%; margin: auto;">
                                 <span>@item.Row</span>
                                 <ul class="seat--area" style="width: calc(70% - 60 px );">
                                     @foreach (var it in Model.Where(m => m.Row == item.Row))
@@ -70,8 +69,7 @@
                                                 <ul>
                                                     @foreach (var seat3 in Model.Where(m => m.Row == item.Row))
                                                     {
-                                                        if (seat3.Col <= 3)
-                                                        {
+
                                                             { count = 0; }
                                                             foreach (var igdd in ViewBag.idghedat)
                                                             {
@@ -85,9 +83,9 @@
 
                                                             if (count == 0)
                                                             {
-                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat3.loai_ghe.anh" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col" data-gia="@seat3.gia" data-phuthu="@seat3.loai_ghe.phu_thu">
-                                                                    <img src="~/images/seattype/@seat3.loai_ghe.anh" alt="seat" class="ghe-@seat3.Row@seat3.Col">
-                                                                    <span class="sit-num">@seat3.Row@seat3.Col</span>
+                                                                <li class="single-seat seat-free-two UnAct" style="margin:0px" data-anh="@seat3.loai_ghe.anh" data-ten="@seat3.Row@seat3.Col" data-idghe="@seat3.id" id="@seat3.Row@seat3.Col" data-gia="@seat3.gia" data-phuthu="@seat3.loai_ghe.phu_thu">
+                                                                    <img src="~/images/seattype/@seat3.loai_ghe.anh" style="width:95%;display:block; margin-left:auto;margin-right:auto" alt="seat" class="ghe-@seat3.Row@seat3.Col">
+                                                                    <span class="sit-num" style="font-size:12px">@seat3.Row@seat3.Col</span>
                                                                 </li>
                                                             }
                                                             else if (count == 1)
@@ -97,81 +95,7 @@
                                                                 </li>
                                                             }
 
-                                                        }
-                                                    }
-                                                </ul>
-                                            </li>
-                                        }
-                                        else if (it.Col == 4)
-                                        {
-                                            <li class="front-seat">
-                                                <ul>
-                                                    @foreach (var seat7 in Model.Where(m => m.Row == item.Row))
-                                                    {
-                                                        if (seat7.Col >= 4 && seat7.Col <= 7)
-                                                        {
-                                                            { count = 0; }
-                                                            foreach (var igdd in ViewBag.idghedat)
-                                                            {
-                                                                if (seat7.id == igdd)
-                                                                {
-
-                                                                    { count = 1; }
-
-                                                                }
-                                                            }
-
-                                                            if (count == 0)
-                                                            {
-                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat7.loai_ghe.anh" data-ten="@seat7.Row@seat7.Col" id="@seat7.Row@seat7.Col" data-idghe="@seat7.id" data-gia="@seat7.gia" data-phuthu="@seat7.loai_ghe.phu_thu">
-                                                                    <img src="~/images/seattype/@seat7.loai_ghe.anh" alt="seat" class="ghe-@seat7.Row@seat7.Col">
-                                                                    <span class="sit-num">@seat7.Row@seat7.Col</span>
-                                                                </li>
-                                                            }
-                                                            else if (count == 1)
-                                                            {
-                                                                <li class="single-seat">
-                                                                    <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                                                </li>
-                                                            }
-                                                        }
-                                                    }
-                                                </ul>
-                                            </li>
-                                        }
-                                        else if (it.Col == 8)
-                                        {
-                                            <li class="front-seat">
-                                                <ul>
-                                                    @foreach (var seat10 in Model.Where(m => m.Row == item.Row))
-                                                    {
-                                                        if (seat10.Col >= 8 && seat10.Col <= 10)
-                                                        {
-                                                            { count = 0; }
-                                                            foreach (var igdd in ViewBag.idghedat)
-                                                            {
-                                                                if (seat10.id == igdd)
-                                                                {
-
-                                                                    { count = 1; }
-
-                                                                }
-                                                            }
-
-                                                            if (count == 0)
-                                                            {
-                                                                <li class="single-seat seat-free-two UnAct" data-anh="@seat10.loai_ghe.anh" data-ten="@seat10.Row@seat10.Col" data-idghe="@seat10.id" id="@seat10.Row@seat10.Col" data-gia="@seat10.gia" data-phuthu="@seat10.loai_ghe.phu_thu">
-                                                                    <img src="~/images/seattype/@seat10.loai_ghe.anh" alt="seat" class="ghe-@seat10.Row@seat10.Col">
-                                                                    <span class="sit-num">@seat10.Row@seat10.Col</span>
-                                                                </li>
-                                                            }
-                                                            else if (count == 1)
-                                                            {
-                                                                <li class="single-seat">
-                                                                    <img src="/Frontend/Client/assets/images/movie/seat01.png" alt="seat">
-                                                                </li>
-                                                            }
-                                                        }
+                                                        
                                                     }
                                                 </ul>
                                             </li>

@@ -208,8 +208,9 @@
                         {
                             var id = Convert.ToInt32(idghengoi);
                             var giaghe = db.ghe_ngoi.Find(id);
+                            var dongia = giaghe.gia + giaghe.loai_ghe.phu_thu;
                             <li>
-                                <h6 class="info"><span>Ghế @giaghe.Row@giaghe.Col </span>@Html.Raw(String.Format("{0:0,0} VNĐ", giaghe.gia))</h6>
+                                <h6 class="info"><span>Ghế @giaghe.Row@giaghe.Col </span>@Html.Raw(String.Format("{0:0,0} VNĐ", dongia))</h6>
                             </li>
                         }
 

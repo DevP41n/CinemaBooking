@@ -17,6 +17,7 @@ namespace CinemaBooking.Controllers
         public ActionResult Index()
         {
             ViewBag.sk = db.su_kien.FirstOrDefault();
+            ViewBag.cinema = db.rap_chieu.Where(x => x.status == 1);
             return View();
         }
         public ActionResult SearchMovie()
@@ -44,7 +45,7 @@ namespace CinemaBooking.Controllers
                 TempData["Error"] = "Hãy nhập từ khóa tìm kiếm!";
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.tukhoa = name;  
+            ViewBag.tukhoa = name;
             try
             {
                 return View(db.phims.Where(p => p.ten_phim.Contains(name)).OrderByDescending(x => x.ngay_cong_chieu));
@@ -91,6 +92,80 @@ namespace CinemaBooking.Controllers
             //Ảnh qr code
             ViewBag.QrCodeUri = QrUri;
             return View(order);
+        }
+
+        //load film 
+        [HttpGet]
+        public JsonResult loadFilm(int id)
+        {
+            List<int> idfilm = new List<int>();
+            List<int> idfilmDistinct = new List<int>();
+            List<String> filmname = new List<string>();
+            var listsc = db.suat_chieu.Where(x => x.phong_chieu.rap_chieu.id == id && x.status == 1).ToList();
+            foreach (var item in listsc)
+            {
+                idfilm.Add(Convert.ToInt32(item.phim_id));
+            }
+            foreach (var i in idfilm.Distinct())
+            {
+                phim p = db.phims.Find(i);
+                idfilmDistinct.Add(i);
+                filmname.Add(p.ten_phim);
+            }
+            var count = idfilmDistinct.Count();
+            return Json(new { idfilm = idfilmDistinct, filmname = filmname, count }, JsonRequestBehavior.AllowGet);
+        }
+
+        //load date
+        [HttpGet]
+        public JsonResult loadDate(int id)
+        {
+            List<String> date = new List<string>();
+            List<int> sc = new List<int>();
+            var listsc = db.suat_chieu.Where(x => x.phim_id == id && x.status == 1).ToList();
+            foreach (var item in listsc)
+            {
+                date.Add(Convert.ToDateTime(item.ngay_chieu).ToString("dddd, dd/MM/yyyy"));
+                sc.Add(item.id);
+            }
+            var count = sc.Count();
+            return Json(new {idsc = sc, date = date, count }, JsonRequestBehavior.AllowGet);
+        }
+
+        //load time
+        [HttpGet]
+        public JsonResult loadTime(int id)
+        {
+            List<String> time = new List<string>();
+            List<int> idtime = new List<int>();
+            var list = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id).ToList();
+            foreach (var item in list)
+            {
+                idtime.Add(Convert.ToInt32(item.id_Timeframe));
+            }
+            foreach(var i in idtime)
+            {
+                var stringtime = db.TimeFrames.Find(i);
+                string[] tach = stringtime.Time.ToString().Split(':');
+                time.Add(tach[0] + ":" + tach[1]);
+            }
+            var count = idtime.Count();
+            return Json(new { idtime = idtime, time = time, count }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //check book seat
+        [HttpPost]
+        public ActionResult checkLogin(string url)
+        {
+            if (Session["TenCus"] == null)
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                return Json(new { success = true });
+            }
         }
     }
 }

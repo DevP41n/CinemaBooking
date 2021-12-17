@@ -48,7 +48,7 @@
                     @foreach (var date in ViewBag.date)
                     {
 
-                        <option>@Html.FormatValue(@date, "{0:dd/MM/yyyy}")</option>
+                        <option>@Html.FormatValue(@date, "{0:dddd, dd/MM/yyyy}")</option>
 
                     }
                 </select>

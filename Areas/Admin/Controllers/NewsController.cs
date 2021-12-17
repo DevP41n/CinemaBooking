@@ -16,12 +16,30 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // GET: Admin/News
         public ActionResult ListNews()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             ViewBag.trash = db.su_kien.Where(m => m.status == 0).Count();
             return View(db.su_kien.OrderByDescending(s => s.create_at));
         }
         //Tạo bài viết  
         public ActionResult CreateNews()
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             return View();
         }
         [HttpPost, ValidateInput(false)]
@@ -55,6 +73,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
         //Admin/News/Edit
         public ActionResult EditNews(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             su_kien Sukien = db.su_kien.Find(id);
             if (Sukien == null)
             {
@@ -106,6 +133,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
         }
         public ActionResult DelToTrash(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             su_kien Sukien = db.su_kien.Find(id);
             Sukien.status = 0;
             Sukien.update_at = DateTime.Now;
@@ -117,6 +153,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
         public ActionResult Undo(int? id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             su_kien Sukien = db.su_kien.Find(id);
             Sukien.status = 2;
             Sukien.update_at = DateTime.Now;
@@ -130,6 +175,15 @@ namespace CinemaBooking.Areas.Admin.Controllers
         // POST: Admin/News/Delete
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["HoTen"] == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            if (Convert.ToInt32(Session["Role"]) != 1)
+            {
+                TempData["Warning"] = "Bạn không phải là admin!";
+                return RedirectToAction("Dashboard", "Admin");
+            }
             su_kien Sukien = db.su_kien.Find(id);
             db.su_kien.Remove(Sukien);
             TempData["Message"] = "Xóa thành công!";
