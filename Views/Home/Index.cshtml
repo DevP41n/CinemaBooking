@@ -399,8 +399,10 @@
             });
 
             $('#datelist').change(function () {
-                var idtime = $("#datelist option:selected").val();
-                loadTime(idtime);
+                var idcinema = $("#cinemalist option:selected").val();
+                var filmid = $("#filmlist option:selected").val();
+                var date = $("#datelist option:selected").val();
+                loadTime(idcinema,filmid,date);
                 //Chuyển time đã chọn thành value 0
                 $('#time .current').html(listtimenull);
             });
@@ -409,16 +411,19 @@
             $('#bookseat').click(function () {
                 //var idcinemachecked = $("#cinemalist option:selected").val();
                 //var idfilmchecked = $("#filmlist option:selected").val();
+                var idcinema = $("#cinemalist option:selected").val();
+                var filmid = $("#filmlist option:selected").val();
                 var checktimee = $('#time .list .selected').data('value');
-                var idscchecked = $("#datelist option:selected").val();
+                var datee = $("#datelist option:selected").val();
                 var idtimechecked = $("#timelist option:selected").val();
                 if (checktimee == 0 || checktimee == undefined) {
                     //toastr.warning("Bạn chưa chọn suất chiếu");
                     alert("Bạn chưa chọn suất chiếu");
                 }
                 else {
-                    var url = "/Movie/BookSeat?idd=" + idscchecked + "&idtimee=" + idtimechecked;
-                    checkLogin(url);
+                    CheckShowTime(idcinema, filmid, datee, idtimechecked);
+                    //var url = "/Movie/BookSeat?idd=" + idscchecked + "&idtimee=" + idtimechecked;
+                    //checkLogin(url);
                 }
             });
 
@@ -473,12 +478,14 @@
                 })
             }
 
-            function loadTime(id) {
+            function loadTime(idcinema,filmid,date) {
                 $.ajax({
                     url: '/Home/loadTime/',
                     type: 'GET',
                     data: {
-                        id: id,
+                        idcinema: idcinema,
+                        filmid : filmid,
+                        date: date,
                     },
                     success: function (res) {
                         if (res.count != null) {
@@ -497,6 +504,27 @@
                     }
                 })
             }
+
+
+            function CheckShowTime(idcinema, filmid, date, idt) {
+                $.ajax({
+                    url: '/Home/CheckShowTime/',
+                    type: 'GET',
+                    data: {
+                        idcinema: idcinema,
+                        filmid: filmid,
+                        date: date,
+                        idt: idt,
+                    },
+                    success: function (res) {
+                        if (res.idsc != null) {
+                            var url = "/Movie/BookSeat?idd=" + res.idsc + "&idtimee=" + res.idtime;
+                            checkLogin(url);
+                        }
+                    }
+                })
+            }
+
 
             //check
             function checkLogin(url) {
