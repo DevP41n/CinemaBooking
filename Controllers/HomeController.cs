@@ -121,36 +121,61 @@ namespace CinemaBooking.Controllers
         public JsonResult loadDate(int id)
         {
             List<String> date = new List<string>();
-            List<int> sc = new List<int>();
+            List<string> sc = new List<string>();
+            List<DateTime?> datetime = new List<DateTime?>();
             var listsc = db.suat_chieu.Where(x => x.phim_id == id && x.status == 1).ToList();
             foreach (var item in listsc)
             {
-                date.Add(Convert.ToDateTime(item.ngay_chieu).ToString("dddd, dd/MM/yyyy"));
-                sc.Add(item.id);
+                int dem = 0;
+                foreach (var i in datetime)
+                {
+                    if (i == item.ngay_chieu)
+                    {
+                        dem ++;
+                    }
+                }
+                if(dem == 0)
+                {
+                    date.Add(Convert.ToDateTime(item.ngay_chieu).ToString("dddd, dd/MM/yyyy"));
+                    datetime.Add(item.ngay_chieu);
+                    sc.Add(item.ngay_chieu.ToString());
+                }
             }
             var count = sc.Count();
-            return Json(new {idsc = sc, date = date, count }, JsonRequestBehavior.AllowGet);
+            return Json(new { idsc = sc, date = date, count }, JsonRequestBehavior.AllowGet);
         }
 
         //load time
         [HttpGet]
-        public JsonResult loadTime(int id)
+        public JsonResult loadTime(int idcinema, int filmid, string date)
         {
             List<String> time = new List<string>();
             List<int> idtime = new List<int>();
-            var list = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id).ToList();
+            //string[] dateco = date.Split(' ');
+            DateTime? datesc = Convert.ToDateTime(date);
+            var sc = db.suat_chieu.Where(x => x.phong_chieu.id_rapchieu == idcinema && x.phim_id == filmid && x.ngay_chieu == datesc).FirstOrDefault();
+            var list = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == sc.id).ToList();
             foreach (var item in list)
             {
                 idtime.Add(Convert.ToInt32(item.id_Timeframe));
             }
-            foreach(var i in idtime)
+            foreach (var i in idtime)
             {
                 var stringtime = db.TimeFrames.Find(i);
                 string[] tach = stringtime.Time.ToString().Split(':');
                 time.Add(tach[0] + ":" + tach[1]);
             }
             var count = idtime.Count();
-            return Json(new { idtime = idtime, time = time, count }, JsonRequestBehavior.AllowGet);
+            return Json(new { idtime = idtime, time = time, count}, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckShowTime(int idcinema, int filmid, string date, int idt)
+        {
+            DateTime? datesc = Convert.ToDateTime(date);
+            var sc = db.suat_chieu.Where(x => x.phong_chieu.id_rapchieu == idcinema && x.phim_id == filmid && x.ngay_chieu == datesc).FirstOrDefault();
+            var idtime = idt;
+            var idsc = sc.id;
+            return Json(new { idtime = idtime, idsc }, JsonRequestBehavior.AllowGet);
         }
 
 
