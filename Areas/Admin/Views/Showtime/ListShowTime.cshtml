@@ -640,7 +640,13 @@
                         idtime: idtime,
                     },
                     success: function (res) {
-                        $('#CreateTimeFr').modal('hide');
+                        if (res.success == true) {
+                            $('#CreateTimeFr').modal('hide');
+                        }
+                        else {
+                            toastr.warning("Đã xảy ra lỗi, vui lòng thử lại!");
+                            $('#CreateTimeFr').modal('hide');
+                        }
                     }
                 });
             }

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -16,6 +17,31 @@ namespace CinemaBooking.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            //check sc
+            var listsc = db.suat_chieu.Where(x => x.status == 1 || x.status == 2).ToList();
+            foreach (var item in listsc)
+            {
+                var listtime = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id).OrderByDescending(x => x.TimeFrame.Time).FirstOrDefault();
+                if (listtime != null)
+                {
+                    if (item.ngay_chieu + listtime.TimeFrame.Time < DateTime.Now)
+                    {
+                        //Chuyển sang hết hạn
+                        item.status = 0;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                else if (listtime == null)
+                {
+                    if (item.ngay_chieu <= DateTime.Now)
+                    {
+                        item.status = 0;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+            }
             ViewBag.sk = db.su_kien.FirstOrDefault();
             ViewBag.cinema = db.rap_chieu.Where(x => x.status == 1);
             return View();
@@ -126,6 +152,8 @@ namespace CinemaBooking.Controllers
             var listsc = db.suat_chieu.Where(x => x.phim_id == id && x.status == 1).ToList();
             foreach (var item in listsc)
             {
+                var listtime = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id).OrderByDescending(x => x.TimeFrame.Time).FirstOrDefault();
+                var check = item.ngay_chieu + listtime.TimeFrame.Time;
                 int dem = 0;
                 foreach (var i in datetime)
                 {
@@ -134,7 +162,7 @@ namespace CinemaBooking.Controllers
                         dem ++;
                     }
                 }
-                if(dem == 0)
+                if(dem == 0 && check > DateTime.Now)
                 {
                     date.Add(Convert.ToDateTime(item.ngay_chieu).ToString("dddd, dd/MM/yyyy"));
                     datetime.Add(item.ngay_chieu);
@@ -154,10 +182,14 @@ namespace CinemaBooking.Controllers
             //string[] dateco = date.Split(' ');
             DateTime? datesc = Convert.ToDateTime(date);
             var sc = db.suat_chieu.Where(x => x.phong_chieu.id_rapchieu == idcinema && x.phim_id == filmid && x.ngay_chieu == datesc).FirstOrDefault();
-            var list = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == sc.id).ToList();
+            var list = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == sc.id).OrderBy(x=>x.TimeFrame.Time).ToList();
+            //TimeSpan timenow = DateTime.Now.TimeOfDay;
             foreach (var item in list)
             {
-                idtime.Add(Convert.ToInt32(item.id_Timeframe));
+                if (sc.ngay_chieu + item.TimeFrame.Time > DateTime.Now)
+                {
+                    idtime.Add(Convert.ToInt32(item.id_Timeframe));
+                }
             }
             foreach (var i in idtime)
             {

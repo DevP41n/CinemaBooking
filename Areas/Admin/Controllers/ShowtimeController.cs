@@ -23,8 +23,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 return RedirectToAction("Dashboard", "Admin");
             }
             var listsc = db.suat_chieu.Where(x => x.status == 1 || x.status == 2).ToList();
-            TimeSpan timecheck = new TimeSpan(0, 30, 0);
-            //suất chiếu + giờ chiếu cuối cùng - đi 30 phút < giờ hiện tại thì sc hết hạn
+            TimeSpan timecheck = new TimeSpan(0, 10, 0);
+            //suất chiếu + giờ chiếu cuối cùng - đi 10 phút < giờ hiện tại thì sc hết hạn
             foreach (var item in listsc)
             {
                 var listtime = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == item.id).OrderByDescending(x => x.TimeFrame.Time).FirstOrDefault();
@@ -586,6 +586,11 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateTimeFr(int? id, int? idtime)
         {
+            var check = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).Count();
+            if(check!=0)
+            {
+                return Json(new { success = false });
+            }
             suatchieu_timeframe time = new suatchieu_timeframe();
             time.id_Suatchieu = id;
             time.id_Timeframe = idtime;

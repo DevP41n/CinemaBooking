@@ -383,6 +383,13 @@ namespace CinemaBooking.Controllers
                 var idtime = Convert.ToInt32(idtimee);
                 var idsc = db.suat_chieu.Find(id);
                 var time = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).FirstOrDefault();
+
+                var checktime = db.TimeFrames.Find(idtime);
+                if(idsc.ngay_chieu + checktime.Time < DateTime.Now)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi, vui lòng chọn lại!";
+                    return RedirectToAction("Error404", "Home");
+                }
                 var checkfilm = db.phims.Find(idsc.phim_id);
                 //ràng buộc
                 if (time == null || idsc == null || checkfilm == null)
