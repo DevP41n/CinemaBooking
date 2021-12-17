@@ -366,7 +366,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateSeat(string hang, int ghe, int id, int idloaighe)
         {
-            if(ghe>20)
+            if (ghe > 20)
             {
                 return Json(new { checkslg = false });
             }
@@ -644,6 +644,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 rapChieu.create_at = DateTime.Now;
+                rapChieu.status = 1;
                 //rapChieu.create_by = Session["HoTen"].ToString();
                 db.rap_chieu.Add(rapChieu);
                 TempData["Message"] = "Tạo thành công!";

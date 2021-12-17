@@ -191,7 +191,7 @@ namespace CinemaBooking.Controllers
                 ViewBag.date = ng.Distinct();
 
 
-                ViewBag.rap = db.rap_chieu.ToList().Distinct();
+                ViewBag.rap = db.rap_chieu.Where(n => n.status == 1).Distinct();
                 var checkdate = ng.Distinct().Count();
 
                 if (checkdate <= 0)
@@ -446,7 +446,7 @@ namespace CinemaBooking.Controllers
                 {
                     var idghe = db.order_details.Where(n => n.id_orders == item.id);
                     foreach (var i in idghe)
-                    {                        
+                    {
                         idghedd.Add((int)i.id_ghe);
                     }
                 }

@@ -763,6 +763,7 @@
     <Content Include="Areas\Admin\Views\CinemaRoom\ListSeatType.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\CreateSeatType.cshtml" />
     <Content Include="Areas\Admin\Views\CinemaRoom\EditSeatType.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\TurnOver.cshtml" />
     <None Include="Areas\Admin\Views\Information\ListDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\EditDirector.cshtml" />
     <Content Include="Areas\Admin\Views\Information\CreateDirector.cshtml" />

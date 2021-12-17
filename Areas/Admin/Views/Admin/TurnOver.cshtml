@@ -1,0 +1,305 @@
+﻿
+@{
+    ViewBag.Title = "Doanh Thu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<!--Body Admin-->
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title-box">
+                        <h4 class="font-size-18">Doanh Thu</h4>
+                        
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="float-right d-none d-md-block">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle waves-effect waves-light"
+                                    type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-settings mr-2"></i> Settings
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <!-- end row -->
+
+            <div class="row">
+                <!--<div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Số vé bán được theo từng tháng</h4>
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div>
+                                    <div id="chart-with-area-ticket" class="ct-chart earning ct-golden-section">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            <p class="text-muted mb-4">Doanh thu tháng này</p>
+                                            <h3>@Html.Raw(String.Format("{0:0,0} đ", @ViewBag.tienthangnay))</h3>
+                                            <p class="text-muted mb-5">
+                                                It will be as simple as in fact it
+                                                will be occidental.
+                                            </p>
+                                            <span class="peity-donut"
+                                                  data-peity='{ "fill": ["#02a499", "#f2f2f2"], "innerRadius": 28, "radius": 32 }'
+                                                  data-width="72" data-height="72">4/5</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            <p class="text-muted mb-4">Doanh thu tháng trước</p>
+                                            <h3>@Html.Raw(String.Format("{0:0,0} đ", @ViewBag.tienthangtruoc))</h3>
+                                            <p class="text-muted mb-5">
+                                                It will be as simple as in fact it
+                                                will be occidental.
+                                            </p>
+                                            <span class="peity-donut"
+                                                  data-peity='{ "fill": ["#02a499", "#f2f2f2"], "innerRadius": 28, "radius": 32 }'
+                                                  data-width="72" data-height="72">3/5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                <!-- end row -->
+                <!--</div>
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Số vé bán được theo từng tháng</h4>
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div>
+                                <div id="chart-with-area-ticket" class="ct-chart earning ct-golden-section">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <p class="text-muted mb-4">Doanh thu tháng này</p>
+                                        <h3>@Html.Raw(String.Format("{0:0,0} đ", @ViewBag.tienthangnay))</h3>
+                                        <p class="text-muted mb-5">
+                                            It will be as simple as in fact it
+                                            will be occidental.
+                                        </p>
+                                        <span class="peity-donut"
+                                              data-peity='{ "fill": ["#02a499", "#f2f2f2"], "innerRadius": 28, "radius": 32 }'
+                                              data-width="72" data-height="72">4/5</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <p class="text-muted mb-4">Doanh thu tháng trước</p>
+                                        <h3>@Html.Raw(String.Format("{0:0,0} đ", @ViewBag.tienthangtruoc))</h3>
+                                        <p class="text-muted mb-5">
+                                            It will be as simple as in fact it
+                                            will be occidental.
+                                        </p>
+                                        <span class="peity-donut"
+                                              data-peity='{ "fill": ["#02a499", "#f2f2f2"], "innerRadius": 28, "radius": 32 }'
+                                              data-width="72" data-height="72">3/5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                <!-- end row -->
+                <!--</div>
+                </div>-->
+                <!-- end card -->
+                <!--</div>-->
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="card-title mb-4">Thống kê số vé đã bán theo tháng của năm @DateTime.Now.ToString("yyyy")</h4>
+
+
+                            <canvas id="bar" height="300"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <p class="text-muted mb-4">Doanh thu tháng này</p>
+                                        <h3>@Html.Raw(String.Format("{0:0,0} đ", @ViewBag.tienthangnay))</h3>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <p class="text-muted mb-4">Doanh thu tháng trước</p>
+                                        <h3>@Html.Raw(String.Format("{0:0,0} đ", @ViewBag.tienthangtruoc))</h3>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+            <!-- end row -->
+
+        </div>
+
+    </div> <!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+
+
+@section Scripts{
+    <script>
+
+
+
+        $(document).ready(function () {
+            //var amountt = [];
+            //chartAmount();
+            //function chartAmount() {
+            //    $.ajax({
+            //        url: '/Admin/ChartByMonth/',
+            //        type: 'GET',
+            //        success: function (res) {
+            //            if (res.count > 0) {
+            //                var amountofmonth = res.amount;
+            //                amountt = amountofmonth;
+            //            }
+            //        }
+
+            //    });
+            //}
+            @*var arraylist = @Html.Raw(Json.Encode(@ViewBag.AmountOfMonth))
+            var arraylistticket = @Html.Raw(Json.Encode(@ViewBag.TicketOfMonth))
+            new Chartist.Line(
+                "#chart-with-area",
+                { labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], series: [arraylist] },
+                { low: 0, showArea: !0, plugins: [Chartist.plugins.tooltip()] }
+                );
+            new Chartist.Line(
+                "#chart-with-area-ticket",
+                { labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], series: [arraylistticket] },
+                { low: 0, showArea: !0, plugins: [Chartist.plugins.tooltip()] }
+            );
+            var chart = new Chartist.Pie(
+                "#ct-donut",
+                { series: [54, 28 ,17 ], labels: [1, 2, 3] },
+                { donut: !0, showLabel: !1, plugins: [Chartist.plugins.tooltip()] }
+            );
+            $(".peity-donut").each(function () {
+                $(this).peity("donut", $(this).data());
+            }),
+                $(".peity-line").each(function () {
+                    $(this).peity("line", $(this).data());
+                });*@
+
+
+            !(function (d) {
+                "use strict";
+                function r() { }
+                (r.prototype.respChart = function (r, o, e, a) {
+                    (Chart.defaults.global.defaultFontColor = "#adb5bd"),
+                        (Chart.defaults.scale.gridLines.color = "rgba(108, 120, 151, 0.1)");
+                    var t = r.get(0).getContext("2d"),
+                        n = d(r).parent();
+                    function i() {
+                        r.attr("width", d(n).width());
+                        switch (o) {
+                            case "Line":
+                                new Chart(t, { type: "line", data: e, options: a });
+                                break;
+                            case "Doughnut":
+                                new Chart(t, { type: "doughnut", data: e, options: a });
+                                break;
+                            case "Pie":
+                                new Chart(t, { type: "pie", data: e, options: a });
+                                break;
+                            case "Bar":
+                                new Chart(t, { type: "bar", data: e, options: a });
+                                break;
+                            case "Radar":
+                                new Chart(t, { type: "radar", data: e, options: a });
+                                break;
+                            case "PolarArea":
+                                new Chart(t, { data: e, type: "polarArea", options: a });
+                        }
+                    }
+                    d(window).resize(i), i();
+                }),
+                    (r.prototype.init = function () {
+                        this.respChart(d("#bar"), "Bar", {
+                            labels: [
+                                "Tháng 1",
+                                "Tháng 2",
+                                "Tháng 3",
+                                "Tháng 4",
+                                "Tháng 5",
+                                "Tháng 6",
+                                "Tháng 7",
+                                "Tháng 8",
+                                "Tháng 9",
+                                "Tháng 10",
+                                "Tháng 11",
+                                "Tháng 12",
+                            ],
+                            datasets: [
+                                {
+                                    label: "Số vé đã bán",
+                                    backgroundColor: "#02a499",
+                                    borderColor: "#02a499",
+                                    borderWidth: 1,
+                                    hoverBackgroundColor: "#02a499",
+                                    hoverBorderColor: "#02a499",
+                                    data: @Html.Raw(Json.Encode(@ViewBag.TicketOfMonth)),
+                                },
+                            ],
+                        });
+                    }),
+                    (d.ChartJs = new r()),
+                    (d.ChartJs.Constructor = r);
+            })(window.jQuery),
+                (function () {
+                    "use strict";
+                    window.jQuery.ChartJs.init();
+                })();
+
+        });
+
+
+    </script>
+
+}
