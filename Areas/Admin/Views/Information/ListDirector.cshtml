@@ -69,9 +69,6 @@
                                                     Ảnh
                                                 </th>
                                                 <th>
-                                                    Mô tả
-                                                </th>
-                                                <th>
                                                     Ngày sinh
                                                 </th>
                                                 <th>
@@ -101,10 +98,7 @@
                                                     <img class="img-thumbnail" src="~/images/information/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.mo_ta)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.ngay_sinh)
+                                                    @Html.FormatValue(item.ngay_sinh,"{0:dd/MM/yyyy}")
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.quoc_tich)

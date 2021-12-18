@@ -2,6 +2,7 @@
 using CinemaBooking.Models;
 using PayPal;
 using PayPal.Api;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -252,7 +253,11 @@ namespace CinemaBooking.Controllers
                     check = true;
                 }
             }
+            QRCodeGenerator QrGenerator = new QRCodeGenerator();
+            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(addorder.code_ticket, QRCodeGenerator.ECCLevel.Q);
 
+            string path = Server.MapPath("~/images/qrcode/");
+            QrCodeInfo.SaveRawData(path + addorder.code_ticket + ".qrr", QRCodeData.Compression.Uncompressed);
             db.orders.Add(addorder);
             db.SaveChanges();
 

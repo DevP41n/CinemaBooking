@@ -22,7 +22,7 @@ namespace CinemaBooking.Controllers
             url += "&idtimee=" + idtimee;
             urlpre = url;
             TempData["Warning"] = "Bạn phải đăng nhập trước khi mua vé!";
-            return RedirectToAction("SignIn", "User", new { url ="checkedlogin"});
+            return RedirectToAction("SignIn", "User", new { url = "checkedlogin" });
         }
         public ActionResult SignIn(string url)
         {
@@ -367,8 +367,9 @@ namespace CinemaBooking.Controllers
                 var resultInsert = new khach_hang().InsertForFacebook(user);
                 if (resultInsert > 0)
                 {
+                    var khachh = db.khach_hang.Find(resultInsert);
                     Session["MaKH"] = resultInsert;
-                    Session["TenCus"] = user.ho_ten;
+                    Session["TenCus"] = khachh.ho_ten;
                     Session["EmailCus"] = user.email;
                 }
                 TempData["Message"] = "Đăng nhập thành công";

@@ -46,7 +46,7 @@
                 <h6 style=" margin-bottom: 7px; margin-top: 55px;">Các phim đã tham gia</h6>
                 <div class="actor-list-movies">
                     @{CinemaBooking.Models.CinemaBookingEntities db = new CinemaBooking.Models.CinemaBookingEntities();}
-                    @foreach (var item in db.phims.Where(x => x.id == Model.id))
+                    @foreach (var item in db.phims.Where(x => x.dao_dien_id == Model.id))
                     {
                         <div class="thumb-list-movie" style="padding: 15px; flex: none; width: 25%; ">
                             <a href="@Url.Action("MovieDetail", "Movie", new { id = item.slug })">

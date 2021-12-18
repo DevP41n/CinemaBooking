@@ -81,7 +81,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                ViewBag.Timeid = new SelectList(db.TimeFrames.Where(n=>n.status==1).ToList().OrderBy(n => n.Time), "id", "Time");
+                ViewBag.Timeid = new SelectList(db.TimeFrames.Where(n => n.status == 1).ToList().OrderBy(n => n.Time), "id", "Time");
                 ViewBag.phim_id = new SelectList(db.phims.Where(n => n.loai_phim_chieu == 1 && n.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phim");
                 ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
                 suatchieu_timeframe sctime = new suatchieu_timeframe();
@@ -114,16 +114,23 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     return RedirectToAction("CreateShowTime");
                 }
 
-                //check lại nếu có suất chiếu trùng ngày + trùng phòng (cùng rạp) => không cho tạo
-                var rc = db.phong_chieu.Find(suatChieu.phong_chieu_id);
-                var checksc = db.suat_chieu.Where(x => x.phim_id == suatChieu.phim_id && x.ngay_chieu == suatChieu.ngay_chieu
-                                                        && x.phong_chieu.rap_chieu.id == rc.rap_chieu.id && x.status != 0).Count();
-                if (checksc != 0)
+                try
                 {
-                    TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 suất chiếu tại rạp này. Vui lòng kiểm tra lại!";
+                    //check lại nếu có suất chiếu trùng ngày + trùng phòng (cùng rạp) => không cho tạo
+                    var rc = db.phong_chieu.Find(suatChieu.phong_chieu_id);
+                    var checksc = db.suat_chieu.Where(x => x.phim_id == suatChieu.phim_id && x.ngay_chieu == suatChieu.ngay_chieu
+                                                            && x.phong_chieu.rap_chieu.id == rc.rap_chieu.id && x.status != 0).Count();
+                    if (checksc != 0)
+                    {
+                        TempData["Warning"] = "Đã xảy ra lỗi! Đã tồn 1 suất chiếu tại rạp này. Vui lòng kiểm tra lại!";
+                        return View();
+                    }
+                }
+                catch (Exception)
+                {
+                    TempData["Warning"] = "Đã xảy ra lỗi! Vui lòng kiểm tra lại!";
                     return View();
                 }
-
 
                 //check khác film cùng rạp thì không cho tạo
                 var checkkhac = db.suat_chieu.Where(x => x.phong_chieu_id == suatChieu.phong_chieu_id && x.phim_id != suatChieu.phim_id
@@ -536,7 +543,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 var contime = Convert.ToString(item.TimeFrame.Time);
                 string[] t = contime.Split(':');
                 //Format lại bỏ phần milisecond
-                Times.Add(t[0] + ":"+ t[1]);
+                Times.Add(t[0] + ":" + t[1]);
             }
             var count = list.Count();
             return Json(data: new { id, Times, count, idsuatchieu }, JsonRequestBehavior.AllowGet);
@@ -587,7 +594,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult CreateTimeFr(int? id, int? idtime)
         {
             var check = db.suatchieu_timeframe.Where(x => x.id_Suatchieu == id && x.id_Timeframe == idtime).Count();
-            if(check!=0)
+            if (check != 0)
             {
                 return Json(new { success = false });
             }
@@ -612,7 +619,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                 TempData["Warning"] = "Bạn không phải là admin!";
                 return RedirectToAction("Dashboard", "Admin");
             }
-            return View(db.TimeFrames.Where(x=>x.status == 1).ToList().OrderBy(n => n.Time));
+            return View(db.TimeFrames.Where(x => x.status == 1).ToList().OrderBy(n => n.Time));
         }
 
         public ActionResult CreateShowTimeFrame()
@@ -631,8 +638,8 @@ namespace CinemaBooking.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateShowTimeFrame(TimeFrame timeFrame)
         {
-            var check = db.TimeFrames.Where(x => x.Time == timeFrame.Time  && x.status == 1).Count();
-            if(check!=0)
+            var check = db.TimeFrames.Where(x => x.Time == timeFrame.Time && x.status == 1).Count();
+            if (check != 0)
             {
                 TempData["Warning"] = "Đã tồn tại thời gian trên!";
                 return View();
@@ -693,7 +700,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             if (check != 0)
             {
                 TempData["Warning"] = "Đã tồn tại thời gian trên!";
-                return RedirectToAction("EditShowTimeFrame","Showtime", new { id = timeFrame.id});
+                return RedirectToAction("EditShowTimeFrame", "Showtime", new { id = timeFrame.id });
             }
             if (ModelState.IsValid)
             {
@@ -722,16 +729,16 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             var check = db.suatchieu_timeframe.Where(x => x.id_Timeframe == id);
             int dem = 0;
-            foreach(var item in check)
+            foreach (var item in check)
             {
                 var checksc = db.suat_chieu.Find(item.id_Suatchieu);
-                if(checksc.status !=0)
+                if (checksc.status != 0)
                 {
                     dem++;
                     break;
                 }
             }
-            if(dem>0)
+            if (dem > 0)
             {
                 TempData["Warning"] = "Giờ này đang tồn tại trong suất chiếu đang có!";
                 return RedirectToAction("ListShowTimeFrame");

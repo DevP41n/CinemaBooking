@@ -68,10 +68,7 @@
                                                 </th>
                                                 <th>
                                                     Nội dung
-                                                </th>
-                                                <th>
-                                                    Tạo bởi
-                                                </th>
+                                                </th>                                               
                                                 <th>
                                                     Tạo ngày
                                                 </th>
@@ -101,10 +98,8 @@
                                                     <img class="img-thumbnail" src="~/images/news/@item.anh" alt="" height="100" width="100" />
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.noi_dung)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.create_by)
+                                                    <p>@Html.Raw(item.noi_dung)</p>
+                                                    
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.create_at)
