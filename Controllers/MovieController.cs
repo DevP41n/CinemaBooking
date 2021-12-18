@@ -548,6 +548,8 @@ namespace CinemaBooking.Controllers
         [HttpPost]
         public ActionResult withpay(FormCollection f)
         {
+            string currentUrl = Request.UrlReferrer.ToString();
+            TempData["Url"] = currentUrl;
             TempData["idghe"] = Request.Form["idghe"];
             TempData["idsuatc"] = Request.Form["idsuatc"];
             TempData["idtime"] = Request.Form["idtime"];

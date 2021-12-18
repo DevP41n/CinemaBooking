@@ -334,47 +334,54 @@ namespace CinemaBooking.Controllers
         public ActionResult FacebookCallback(string code)
         {
             var fb = new FacebookClient();
-            dynamic result = fb.Post("oauth/access_token", new
+            try
             {
-                client_id = ConfigurationManager.AppSettings["FbAppId"],
-                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
-                redirect_uri = RedirectUri.AbsoluteUri,
-                code = code
-            });
-
-
-            var accessToken = result.access_token;
-            if (!string.IsNullOrEmpty(accessToken))
-            {
-                fb.AccessToken = accessToken;
-                // Get the user's information, like email,name etc
-                dynamic me = fb.Get("me?fields=name,id,email");
-                string email = me.email;
-                string userName = me.email;
-                string hoten = me.name;
-
-
-                var user = new khach_hang();
-                user.email = email;
-                user.username = userName;
-                user.ho_ten = hoten;
-                user.gioi_tinh = true;
-                user.update_at = DateTime.Now;
-                user.ngay_sinh = null;
-                user.sdt = "0123456789";
-                user.password = "@Cinema123";
-                user.confirmpassword = "@Cinema123";
-                var resultInsert = new khach_hang().InsertForFacebook(user);
-                if (resultInsert > 0)
+                dynamic result = fb.Post("oauth/access_token", new
                 {
-                    var khachh = db.khach_hang.Find(resultInsert);
-                    Session["MaKH"] = resultInsert;
-                    Session["TenCus"] = khachh.ho_ten;
-                    Session["EmailCus"] = user.email;
+                    client_id = ConfigurationManager.AppSettings["FbAppId"],
+                    client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+                    redirect_uri = RedirectUri.AbsoluteUri,
+                    code = code
+                });
+
+
+                var accessToken = result.access_token;
+                if (!string.IsNullOrEmpty(accessToken))
+                {
+                    fb.AccessToken = accessToken;
+                    // Get the user's information, like email,name etc
+                    dynamic me = fb.Get("me?fields=name,id,email");
+                    string email = me.email;
+                    string userName = me.email;
+                    string hoten = me.name;
+
+
+                    var user = new khach_hang();
+                    user.email = email;
+                    user.username = userName;
+                    user.ho_ten = hoten;
+                    user.gioi_tinh = true;
+                    user.update_at = DateTime.Now;
+                    user.ngay_sinh = null;
+                    user.sdt = "0123456789";
+                    user.password = "@Cinema123";
+                    user.confirmpassword = "@Cinema123";
+                    var resultInsert = new khach_hang().InsertForFacebook(user);
+                    if (resultInsert > 0)
+                    {
+                        var khachh = db.khach_hang.Find(resultInsert);
+                        Session["MaKH"] = resultInsert;
+                        Session["TenCus"] = khachh.ho_ten;
+                        Session["EmailCus"] = user.email;
+                    }
+                    TempData["Message"] = "Đăng nhập thành công";
                 }
-                TempData["Message"] = "Đăng nhập thành công";
+                return Redirect("/");
+            }catch(Exception)
+            {
+                TempData["Warning"] = "Đăng nhập thất bại!";
+                return RedirectToAction("SignIn");
             }
-            return Redirect("/");
         }
         [HttpPost]
         public ActionResult Forgot(string email)

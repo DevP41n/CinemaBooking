@@ -29,9 +29,9 @@ namespace CinemaBooking.Controllers
             };
             return this.payment.Execute(apiContext, paymentExecution);
         }
-        private Payment CreatePayment(APIContext apicontext, string redirectURl, string idghe, string idsc, string idtime)
+        private Payment CreatePayment(APIContext apicontext, string redirectURl, string idghe, string idsc, string idtime, string urlPre)
         {
-
+            //urlPre là link cancel
             var ItemLIst = new ItemList() { items = new List<PayPal.Api.Item>() };
             var sc = db.suat_chieu.Find(Convert.ToInt32(idsc));
             var time = db.TimeFrames.Find(Convert.ToInt32(idtime));
@@ -90,7 +90,7 @@ namespace CinemaBooking.Controllers
             // Configure Redirect Urls here with RedirectUrls object  
             var redirUrls = new RedirectUrls()
             {
-                cancel_url = redirectURl + "&Cancel=true",
+                cancel_url = urlPre + "&Cancel=true",
                 return_url = redirectURl
             };
             // Adding Tax, shipping and Subtotal details  
@@ -129,6 +129,7 @@ namespace CinemaBooking.Controllers
         }
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
+            string urlPre = TempData["Url"].ToString();
             string idghe = TempData["idghe"].ToString();
             string idsc = TempData["idsuatc"].ToString();
             string idtime = TempData["idtime"].ToString();
@@ -173,7 +174,7 @@ namespace CinemaBooking.Controllers
                                      "/Payment/PaymentWithPaypal?";
 
                     var Guid = Convert.ToString((new Random()).Next(100000000));
-                    var createdPayment = this.CreatePayment(apicontext, baseURi + "guid=" + Guid, idghe, idsc, idtime);
+                    var createdPayment = this.CreatePayment(apicontext, baseURi + "guid=" + Guid, idghe, idsc, idtime, urlPre);
 
                     var links = createdPayment.links.GetEnumerator();
                     string paypalRedirectURL = string.Empty;
