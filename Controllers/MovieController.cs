@@ -110,9 +110,15 @@ namespace CinemaBooking.Controllers
             {
                 if (Session["TenCus"] == null)
                 {
-                    string CurrentURL = Request.UrlReferrer.ToString(); //Request.UrlReferrer.ToString() Lấy ra url hiện tại
-                    TempData["Warning"] = "Vui lòng đăng nhập";
-                    return RedirectToAction("SignIn", "User", new { url = CurrentURL });
+                    try
+                    {
+                        string CurrentURL = Request.UrlReferrer.ToString(); //Request.UrlReferrer.ToString() Lấy ra url hiện tại
+                        TempData["Warning"] = "Vui lòng đăng nhập";
+                        return RedirectToAction("SignIn", "User", new { url = CurrentURL });
+                    }catch(Exception)
+                    {
+                        return RedirectToAction("SignIn", "User");
+                    }
                 }
                 //check film
                 try

@@ -65,7 +65,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
             }
             ViewBag.Timeid = new SelectList(db.TimeFrames.Where(x => x.status == 1).ToList().OrderBy(n => n.Time), "id", "Time");
             ViewBag.phim_id = new SelectList(db.phims.ToList().Where(n => n.loai_phim_chieu == 1 && n.status == 1).OrderBy(n => n.id), "id", "ten_phim");
-            ViewBag.rapchieu = db.rap_chieu.ToList();
+            ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
 
             return View();
         }
@@ -83,7 +83,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
 
                 ViewBag.Timeid = new SelectList(db.TimeFrames.Where(n=>n.status==1).ToList().OrderBy(n => n.Time), "id", "Time");
                 ViewBag.phim_id = new SelectList(db.phims.Where(n => n.loai_phim_chieu == 1 && n.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phim");
-                ViewBag.rapchieu = db.rap_chieu.ToList();
+                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
                 suatchieu_timeframe sctime = new suatchieu_timeframe();
                 suatChieu.status = 2;
 
@@ -185,7 +185,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
                     return RedirectToAction("ListShowTime");
                 }
                 ViewBag.phim_id = new SelectList(db.phims.Where(n => n.loai_phim_chieu == 1 && n.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phim");
-                ViewBag.rapchieu = db.rap_chieu.ToList();
+                ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
                 if (suatChieu == null)
                 {
                     return RedirectToAction("AError404", "Admin");
@@ -202,7 +202,7 @@ namespace CinemaBooking.Areas.Admin.Controllers
         public ActionResult EditShowTime(suat_chieu suatChieu)
         {
             ViewBag.phim_id = new SelectList(db.phims.Where(n => n.loai_phim_chieu == 1 && n.status == 1).ToList().OrderBy(n => n.id), "id", "ten_phim");
-            ViewBag.rapchieu = db.rap_chieu.ToList();
+            ViewBag.rapchieu = db.rap_chieu.Where(x => x.status == 1).ToList();
             if (ModelState.IsValid)
             {
                 //// check xem có sửa gì không nếu không thì trả về

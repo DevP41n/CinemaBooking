@@ -71,7 +71,7 @@ namespace CinemaBooking.Controllers
         }
         public ActionResult AboutUs()
         {
-            ViewBag.cinema = db.rap_chieu.ToList();
+            ViewBag.cinema = db.rap_chieu.Where(x=>x.status==1).ToList();
             return View();
         }
         public ActionResult TermConditions()
