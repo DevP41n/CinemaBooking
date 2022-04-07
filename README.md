@@ -4,4 +4,4 @@
 * Nguyễn Huỳnh Thanh Tân
 * Nguyễn Hoàng Anh Phước
 
-# 9.5 Point
+# GPA : 9.5/10
