@@ -3117,6 +3117,7 @@ Copyright (c) 2013 Daniel Eden
   -webkit-animation-name: zoomOutUp;
   animation-name: zoomOutUp
 }
+
 @media (max-width: 575px) {
   .animated {
     -webkit-animation: unset !important;
@@ -3124,4 +3125,9 @@ Copyright (c) 2013 Daniel Eden
     -webkit-transition: none !important;
     transition: none !important;
   }
+}
+
+.primary-button-login {
+  color: red;
+  font-size: 20px;
 }
